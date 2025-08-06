@@ -1,0 +1,150 @@
+import React, { useState } from 'react';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { FaEdit } from 'react-icons/fa';
+import Table, { ColumnType } from 'antd/es/table';
+import revalidateTag from 'components/ServerActons/ServerAction';
+import { Admin } from 'types/type';
+import { useMutation } from '@apollo/client';
+import { REMOVE_ADMIN } from 'graphql/mutations';
+
+function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-disable-line
+  const [delLoading, setDelLoading] = useState<string | number | undefined>(undefined);
+  const [removeAdmin] = useMutation(REMOVE_ADMIN);
+
+
+  const handleDelete = async (id?: string | number) => {
+    try {
+      setDelLoading(id);
+      await removeAdmin({ variables: { id: Number(id) } });
+      revalidateTag('Admins')
+    } catch (error) {
+      throw error;
+    } finally {
+      setDelLoading(undefined);
+    }
+  };
+
+
+
+
+  const columns: Array<ColumnType<Admin>> = [
+    {
+      title: 'Name',
+      dataIndex: 'fullname',
+      key: 'fullname',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Can Add Product',
+      dataIndex: 'canAddProduct',
+      key: 'canAddProduct',
+      render: (text: string, record: Admin) => (
+        <span>{record.canAddProduct ? 'Yes' : 'No'}</span>
+      ),
+    },
+    {
+      title: 'Can Delete Product',
+      dataIndex: 'canDeleteProduct',
+      key: 'canDeleteProduct',
+      render: (text: string, record: Admin) => (
+        <span>{record.canDeleteProduct ? 'Yes' : 'No'}</span>
+      ),
+    },
+    {
+      title: 'Can Add Category',
+      dataIndex: 'canAddCategory',
+      key: 'canAddCategory',
+      render: (text: string, record: Admin) => (
+        <span>{record.canAddCategory ? 'Yes' : 'No'}</span>
+      ),
+    },
+    {
+      title: 'Can View Product',
+      dataIndex: 'canDeleteCategory',
+      key: 'canDeleteCategory',
+      render: (text: string, record: Admin) => (
+        <span>{record.canDeleteCategory ? 'Yes' : 'No'}</span>
+      ),
+    },
+    {
+      title: 'Can view Profit',
+      dataIndex: 'canCheckProfit',
+      key: 'canCheckProfit',
+      render: (text: string, record: Admin) => (
+        <span>{record.canCheckProfit ? 'Yes' : 'No'}</span>
+      ),
+    },
+    {
+      title: 'Can View Total user',
+      dataIndex: 'canViewUsers',
+      key: 'canViewUsers',
+      render: (text: string, record: Admin) => (
+        <span>{record.canViewUsers ? 'Yes' : 'No'}</span>
+      ),
+    },
+
+    {
+      title: 'Edit',
+      key: 'edit',
+      render: (text: string, record: Admin) => (
+        <FaEdit
+          className="cursor-pointer text-slate-500"
+          size={20}
+          onClick={() => {
+            setEditAdmin(record);
+            setselecteMenu('');
+          }}
+        />
+      ),
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (text: string, record: Admin) =>
+        delLoading === record.id ? ( // Check if loading state matches current admin ID
+          <p>loading...</p>
+        ) : (
+          <RiDeleteBin6Line
+            className="cursor-pointer text-red-500 dark:text-red-700"
+            size={20}
+            onClick={() => handleDelete(record?.id)}
+          />
+        ),
+    },
+  ];
+
+  return (
+
+    <>
+      <div className="flex justify-between mb-4 items-center text-black dark:text-white ">
+        <p>Admins</p>
+        <div>
+          <button
+            onClick={() => setselecteMenu('Add Admin')}
+            className="bg-primary text-white"
+          >
+            Add new Admin
+          </button>
+        </div>
+      </div>
+      {AllAdmins && AllAdmins.length > 0 ? (
+        <Table
+          className="overflow-auto dark:border-strokedark dark:bg-boxdark"
+          dataSource={AllAdmins}
+          columns={columns}
+          pagination={false}
+          rowKey="id"
+        />
+      ) : (
+        <div className="flex justify-center"> No Admin found</div>
+      )}
+    </>
+
+  );
+}
+
+export default Alladmins;

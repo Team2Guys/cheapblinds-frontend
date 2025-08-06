@@ -1,5 +1,36 @@
 @import "tailwindcss";
 
+@layer components {
+  .primary-input {
+    @apply w-full rounded-lg border px-3 py-3 outline-none transition border-white text-white focus:border-black;
+  }
+}
+
+@layer components {
+  .primary-label {
+    @apply mb-3 block text-sm font-medium mt-3;
+  }
+}
+
+@layer components {
+  .dashboard_side_bar {
+    @apply relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:bg-black;
+  }
+}
+
+
+@layer components {
+  .dashboard_side_bar_links {
+    @apply relative flex items-center gap-2.5 rounded-md px-4 font-medium duration-300 ease-in-out hover:text-white;
+  }
+}
+
+@layer components {
+  .active {
+    @apply text-white bg-black;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
