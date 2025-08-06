@@ -5,6 +5,12 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
+    preset: 'ts-jest',
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.test.json'
+    }
+  },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
   moduleDirectories: ['node_modules', '<rootDir>/src'],
