@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next lint && pnpm run test && next build",
+    "build": "next build",
+    "ci:check": "pnpm run lint && pnpm run test",
     "start": "next start",
     "lint": "next lint",
     "test": "jest"
