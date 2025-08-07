@@ -21,7 +21,7 @@ import { subcategoryInitialValues } from 'data/InitialValues';
 import { subcategoryValidationSchema } from 'data/Validations';
 import { uploadPhotosToBackend } from 'utils/fileUploadhandlers';
 import { useSession } from 'next-auth/react';
-import { CREATE_SUBCATEGORY } from 'graphql/categories';
+import { CREATE_SUBCATEGORY, GET_ALL_SUBCATEGORIES, UPDATE_SUBCATEGORY } from 'graphql/categories';
 
 const AddSubcategory = ({
   seteditCategory,
@@ -62,7 +62,7 @@ const AddSubcategory = ({
   const finalToken = session.data?.accessToken
 
   const [createSubCategory] = useMutation(CREATE_SUBCATEGORY);
-  // const [updateSubCategory] = useMutation(UPDATE_SUBCATEGORY);
+  const [updateSubCategory] = useMutation(UPDATE_SUBCATEGORY);
   // const dragImage = useRef<number | null>(null);
   // const draggedOverImage = useRef<number | null>(null);
 
@@ -75,27 +75,27 @@ const AddSubcategory = ({
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
-      const newValue = { ...values, posterImageUrl: posterImageUrl || {} , Banners: Banner };
+      const newValue = { ...values, posterImageUrl: posterImageUrl || {} , Banners: Banner, last_editedBy: '', category: Number(values.category) };
 
       const updateFlag = editCategoryName ? true : false;
       console.log(newValue,'newValue')
       if (updateFlag) {
         // Update Existing SubCategory
-        // await updateSubCategory({
-        //   variables: {
-        //     input: {
-        //       id: Number(editCategory?.id),
-        //       ...newValue,
-        //     },
-        //   },
-        //   refetchQueries: [{ query: FETCH_ALL_SUB_CATEGORIES }],
+        await updateSubCategory({
+          variables: {
+            input: {
+              id: Number(editCategory?.id),
+              ...newValue,
+            },
+          },
+          refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
         //   context: {
         //     headers: {
         //       authorization: `Bearer ${finalToken}`,
 
         //     },
         //   },
-        // })
+        })
         showToast('success', 'Sub Category has been successfully updated!');
       } else {
         // Create New SubCategory
@@ -103,7 +103,7 @@ const AddSubcategory = ({
           variables: {
             input: newValue,
           },
-          // refetchQueries: [{ query: FETCH_ALL_SUB_CATEGORIES }],
+          refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
         //   context: {
         //     headers: {
         //       authorization: `Bearer ${finalToken}`,
@@ -184,7 +184,7 @@ const AddSubcategory = ({
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
 
         // Upload the cropped image to your backend or Cloudinary
-        const response = await uploadPhotosToBackend([file]);
+        const response = await uploadPhotosToBackend(file);
         if (!response) return;
 
         // Use the base URL from your environment variables
@@ -361,7 +361,7 @@ const AddSubcategory = ({
                         })}
                       </div>
                     ) : (
-                      <ImageUploader setposterimageUrl={setposterimageUrl} />
+                      <ImageUploader setImagesUrl={setposterimageUrl} />
                     )}
                   </div>
 
@@ -449,7 +449,7 @@ const AddSubcategory = ({
                         })}
                       </div>
                     ) : (
-                      <ImageUploader setposterimageUrl={setBannerImageUrl} video s3Flag />
+                      <ImageUploader setImagesUrl={setBannerImageUrl} video s3Flag />
                     )}
                   </div>
 

@@ -112,61 +112,6 @@ export const FETCH_ALL_CATEGORIES_HOME = gql`
   }
 `;
 
-export const FETCH_ALL_SUB_CATEGORIES = gql`
-  query SubCategories {
-    subcategories {
-        id
-        name
-        description
-        createdAt
-        updatedAt
-        posterImageUrl
-        last_editedBy
-        short_description
-        custom_url
-        Banners
-        BannerText
-        BannerHeading
-        leftHeading
-        categoryText
-        categoryHeroImages
-        categoryHeroToptext
-        categoryHeroHeading
-        categoryHeroText
-        categoryFaqs
-        collectionHeading
-        collectionMainHeading
-        QualityHeadings
-        QualityText
-        QualityImages
-        CustomHeading
-        CustomText
-        Product_Section_heading
-        bottomText
-        bodyHeading
-        bodyMainHeading
-        bodyText
-        explore_Heading
-        explore_main_heading
-        explore_description
-        professionalServiceImage
-        Canonical_Tag
-        status
-        Meta_Description
-        Meta_Title
-             InnersubCategories {
-                id
-            name
-        }
-      category {
-        id
-        name
-
-      }
-    }
-  }
-`;
-
 
 export const FETCH_ALL_APPOINTMENTS = gql`
   query Get_Appointments {

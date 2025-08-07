@@ -11,7 +11,7 @@ import revalidateTag from 'components/ServerActons/ServerAction';
 import Swal from 'sweetalert2';
 import { Category } from 'types/cat';
 import { useMutation } from '@apollo/client';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 import { REMOVE_CATEGORY } from 'graphql/categories';
 // import { getPermission } from 'utils/permissionHandlers';
 
@@ -30,8 +30,8 @@ const DashboardCat = ({
   const [category, setCategory] = useState<Category[] | undefined>(cetagories);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [removeCategory] = useMutation(REMOVE_CATEGORY);
-  const { data: session } = useSession()
-  const finalToken = session?.accessToken
+  // const { data: session } = useSession()
+  // const finalToken = session?.accessToken
   useEffect(() => {
 
     setCategory(cetagories)

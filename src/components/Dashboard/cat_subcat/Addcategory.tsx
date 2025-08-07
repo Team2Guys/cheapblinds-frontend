@@ -71,8 +71,7 @@ const AddCategory = ({
       const posterImageUrl = posterimageUrl && posterimageUrl[0] || {};
       const Banner = BannerImageUrl && BannerImageUrl[0];
       if (!posterImageUrl) return Toaster('error', 'Please select relevant Images');
-      const newValue = { ...values, posterImageUrl, Banners: Banner, last_editedBy: '', stock: 0, discountPrice: 0, };
-      console.log(newValue, 'newValue')
+      const newValue = { ...values, posterImageUrl, Banners: Banner, last_editedBy: '', };
       const updateFlag = editCategoryName ? true : false;
       setloading(true);
       if (updateFlag) {
@@ -175,7 +174,7 @@ const AddCategory = ({
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
 
         // Upload the cropped image to your backend or Cloudinary
-        const response = await uploadPhotosToBackend([file]);
+        const response = await uploadPhotosToBackend(file);
         if (!response) return
         // Use the base URL from your environment variables
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
@@ -268,7 +267,7 @@ const AddCategory = ({
 
                             return (
                               <div
-                                className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                className="relative group rounded-lg overflow-hidden shadow-md border transform transition-transform duration-300 hover:scale-105 flex flex-col"
                                 key={index}
                               >
                                 <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
@@ -297,7 +296,7 @@ const AddCategory = ({
                                 />
 
                                 <input
-                                  className="border  mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="border w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -316,7 +315,7 @@ const AddCategory = ({
                           })}
                         </div>
                       ) : (
-                        <ImageUploader setposterimageUrl={setposterimageUrl} />
+                        <ImageUploader setImagesUrl={setposterimageUrl} />
                       )}
                     </div>
                     <Modal
@@ -430,7 +429,7 @@ const AddCategory = ({
                           })}
                         </div>
                       ) : (
-                        <ImageUploader setposterimageUrl={setBannerImageUrl} video s3Flag />
+                        <ImageUploader setImagesUrl={setBannerImageUrl} video s3Flag />
                       )}
                     </div>
 

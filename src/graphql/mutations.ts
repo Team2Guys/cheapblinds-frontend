@@ -20,13 +20,6 @@ export const UPDATE_SUBCATEGORY = gql`
 `;
 
 
-export const REMOVE_SUBCATEGORY = gql`
-  mutation RemoveSubCategory($id: Int!) {
-    Removesubcategory(id: $id) {
-      id
-    }
-  }
-`;
 export const REMOVE_INNER_SUBCATEGORY = gql`
   mutation RemovesInnerubcategory($id: Int!) {
     RemovesInnerubcategory(id: $id) {

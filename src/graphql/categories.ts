@@ -28,8 +28,6 @@ export const GET_ALL_CATEGORIES = gql`
       custom_url
       Banners
       breadCrum
-      discountPrice
-      stock
       hoverImageUrl
       Meta_Title
       Meta_Description
@@ -65,8 +63,6 @@ export const GET_ALL_CATEGORIES = gql`
         custom_url
         Banners
         breadCrum
-        discountPrice
-        stock
         hoverImageUrl
         Meta_Title
         Meta_Description
@@ -120,20 +116,38 @@ export const REMOVE_CATEGORY = gql`
 
 // SubCategories 
 export const CREATE_SUBCATEGORY = gql`
-  mutation CreateSubCategory($input: createCategoryInput!) {
-    subCategory(createCategoryInput: $input) {
-      id
+  mutation CreateSubCategory($input: CreateSubCategoryInput!) {
+    subCategory(createSubCategoryInput: $input) {
+      name
+      description
+      posterImageUrl
+      Canonical_Tag
+      Meta_Description
+      Meta_Title
+      last_editedBy
+      custom_url
     }
   }
 `;
 
-export const GET_ALL_SUBCATEGORIES = `
-  query {
+export const GET_ALL_SUBCATEGORIES = gql`
+   query SubCategories {
     subCategories {
-      id
-      name
-      custom_url
-      # add other fields here
+            id
+            name
+            description
+            posterImageUrl
+            last_editedBy
+            short_description
+            custom_url
+            Banners
+            breadCrum
+            hoverImageUrl
+            Meta_Title
+            Meta_Description
+            Canonical_Tag
+            status
+            seoSchema
     }
   }
 `;
@@ -149,24 +163,18 @@ export const GET_SUBCATEGORY_BY_CUSTOM_URL = `
   }
 `;
 
-export const UPDATE_SUBCATEGORY = `
-  mutation UpdateSubCategory($updateCategoryInput: UpdatesubCategoryInput!) {
-    subCategoryupdateCategory(updateCategoryInput: $updateCategoryInput) {
+export const UPDATE_SUBCATEGORY = gql`
+  mutation UpdateSubCategory($input: UpdatesubCategoryInput!) {
+    subCategoryupdateCategory(updateCategoryInput: $input) {
       id
-      name
-      custom_url
-      # add other fields here
     }
   }
 `;
 
-export const REMOVE_SUBCATEGORY = `
+export const REMOVE_SUBCATEGORY = gql`
   mutation RemoveSubCategory($id: Int!) {
     subCategoryremoveCategory(id: $id) {
       id
-      name
-      custom_url
-      # add other fields here
     }
   }
 `;

@@ -11,8 +11,6 @@ const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
   const [menuType, setMenuType] = useState<string>('Categories');
   const [editCategory, seteditCategory] = useState<Category | undefined | null>();
   const [AllCategories, setAllCategories] = useState<Category[]>([]);
-  // const { data, loading, error } = useQuery(FETCH_ALL_CATEGORIES);
-  // console.log(data,'data' , loading, 'loading', error)
   useEffect(() => {
 
     setAllCategories(cetagories)
