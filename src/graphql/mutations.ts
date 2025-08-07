@@ -1,47 +1,6 @@
 import { gql } from '@apollo/client';
 
 
-export const CREATE_CATEGORY = gql`
-  mutation CreateCategory($input: CreateCategoryInput!) {
-    createCategory(createCategoryInput: $input) {
-      id
-      name
-      description
-      posterImageUrl
-      Canonical_Tag
-      Meta_Description
-      Meta_Title
-      last_editedBy
-      custom_url
-    }
-  }
-`;
-
-
-
-export const UPDATE_CATEGORY = gql`
-  mutation UpdateCategory($input: UpdateCategoryInput!) {
-    updateCategory(updateCategoryInput: $input) {
-      id
-      name
-      description
-      posterImageUrl
-      Canonical_Tag
-      Meta_Description
-      Meta_Title
-      last_editedBy
-      custom_url
-    }
-  }
-`;
-
-export const REMOVE_CATEGORY = gql`
-  mutation RemoveCategory($id: Int!) {
-    RemoveCategory(id: $id) {
-      id
-    }
-  }
-`;
 
 
 export const CREATE_SUBCATEGORY = gql`

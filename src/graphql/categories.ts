@@ -1,26 +1,83 @@
+import { gql } from "@apollo/client";
 
 // categories
-export const CREATE_CATEGORY = `
-  mutation CreateCategory($createCategoryInput: CreateCategoryInput!) {
-    createCategory(createCategoryInput: $createCategoryInput) {
-      id
+export const CREATE_CATEGORY = gql`
+  mutation CreateCategory($input: CreateCategoryInput!) {
+    createCategory(createCategoryInput: $input) {
       name
+      description
+      posterImageUrl
+      Canonical_Tag
+      Meta_Description
+      Meta_Title
+      last_editedBy
       custom_url
-      # add other fields here
     }
   }
 `;
 
-export const GET_ALL_CATEGORIES = `
-  query {
+export const GET_ALL_CATEGORIES = gql`
+  query Categories {
     categories {
       id
       name
+      description
+      posterImageUrl
+      last_editedBy
+      short_description
       custom_url
-      # add other fields here
+      Banners
+      breadCrum
+      discountPrice
+      stock
+      hoverImageUrl
+      Meta_Title
+      Meta_Description
+      Canonical_Tag
+      status
+      seoSchema
+      Products {
+        id
+        name
+        description
+        posterImageUrl
+        last_editedBy
+        short_description
+        custom_url
+        Banners
+        breadCrum
+        discountPrice
+        stock
+        hoverImageUrl
+        Meta_Title
+        Meta_Description
+        Canonical_Tag
+        status
+        seoSchema
+      }
+      subCategories {
+        id
+        name
+        description
+        posterImageUrl
+        last_editedBy
+        short_description
+        custom_url
+        Banners
+        breadCrum
+        discountPrice
+        stock
+        hoverImageUrl
+        Meta_Title
+        Meta_Description
+        Canonical_Tag
+        status
+        seoSchema
+      }
     }
   }
 `;
+
 
 export const GET_CATEGORY_BY_CUSTOM_URL = `
   query FindOneCategory($custom_url: String!) {
@@ -33,24 +90,27 @@ export const GET_CATEGORY_BY_CUSTOM_URL = `
   }
 `;
 
-export const UPDATE_CATEGORY = `
-  mutation UpdateCategory($updateCategoryInput: UpdateCategoryInput!) {
-    updateCategory(updateCategoryInput: $updateCategoryInput) {
+
+export const UPDATE_CATEGORY = gql`
+  mutation UpdateCategory($input: UpdateCategoryInput!) {
+    updateCategory(updateCategoryInput: $input) {
       id
       name
+      description
+      posterImageUrl
+      Canonical_Tag
+      Meta_Description
+      Meta_Title
+      last_editedBy
       custom_url
-      # add other fields here
     }
   }
 `;
 
-export const REMOVE_CATEGORY = `
+export const REMOVE_CATEGORY = gql`
   mutation RemoveCategory($id: Int!) {
     removeCategory(id: $id) {
       id
-      name
-      custom_url
-      # add other fields here
     }
   }
 `;
@@ -59,13 +119,10 @@ export const REMOVE_CATEGORY = `
 
 
 // SubCategories 
-export const CREATE_SUBCATEGORY = `
-  mutation CreateSubCategory($createCategoryInput: CreateSubCategoryInput!) {
-    subCategory(createCategoryInput: $createCategoryInput) {
+export const CREATE_SUBCATEGORY = gql`
+  mutation CreateSubCategory($input: createCategoryInput!) {
+    subCategory(createCategoryInput: $input) {
       id
-      name
-      custom_url
-      # add other fields here
     }
   }
 `;

@@ -1,10 +1,11 @@
-import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_CATEGORIES, FETCH_ALL_INNER_SUB_CATEGORIES, FETCH_ALL_ORDERS, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, GET_ALL_RECORDS } from 'graphql/queries';
+import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_INNER_SUB_CATEGORIES, FETCH_ALL_ORDERS, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, GET_ALL_RECORDS } from 'graphql/queries';
 
 import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ECOMERECE, FIND_ONE_Accessory } from 'graphql/Accessories';
 import { Category } from 'types/cat';
 // import { getToken } from 'components/ServerActons/ServerAction';
 import ApoloClient from 'utils/AppoloClient';
+import { GET_ALL_CATEGORIES } from 'graphql/categories';
 
 
 
@@ -31,7 +32,7 @@ export const fetchProducts = async (CUSTOMIZE_QUERY?: DocumentNode) => {
 export const fetchCategories = async (FETCH_HEADER_CATEGORIES?: DocumentNode) => {
   try {
     const { data } = await ApoloClient.query({
-      query: FETCH_HEADER_CATEGORIES ? FETCH_HEADER_CATEGORIES : FETCH_ALL_CATEGORIES,
+      query: FETCH_HEADER_CATEGORIES ? FETCH_HEADER_CATEGORIES : GET_ALL_CATEGORIES,
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["categories"] } },

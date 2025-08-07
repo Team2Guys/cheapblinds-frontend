@@ -4,31 +4,12 @@ import { IProductValues } from "types/prod";
 export const categoryInitialValues: EDIT_CATEGORY = {
   name: '', //done
   description: '', // done
+  short_description: '',
   Meta_Description: '', //done
   Meta_Title: '', //done
   Canonical_Tag: '', //done
   custom_url: "", //done
-  topHeading: "", //done
-  categoryHeroText: [],
-  categoryFaqs: [],
-  categoryText: [],
-  paras: [],
-  categoryHeroToptext: "", //done
-  categoryHeroHeading: "",
-  leftHeading: "",
-  Heading: "",
-  bottomText: "",
-  bodyHeading: "",
-  bodyMainHeading: "",
-  Bannerdiscount: "",
-  salesBannerHeading: "",
-  bodyText: "",
-  paraText: "",
-  explore_Heading: "",
-  explore_main_heading: "",
-  explore_description: "",
   seoSchema: "",
-  Bannercounter: '',
   status: 'DRAFT',
 };
 
@@ -43,13 +24,7 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   custom_url: "",
   category: "",
   Canonical_Tag: "",
-  categoryHeroHeading: '',
-
-  categoryHeroText: [],
-  categoryFaqs: [],
-  categoryHeroImages: [],
-  categoryText: [],
-
+  status: 'DRAFT',
 };
 
 export const innerSubcategoryInitialValues: INNERSUBCATEGORY = {

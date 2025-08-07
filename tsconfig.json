@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-        "jsx": "react-jsx",
+    "jsx": "preserve",
     "baseUrl": "./src/",
     "types": [
       "vitest",
@@ -38,10 +38,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "vitest.config.mts"  ],
-  
-  "exclude": ["node_modules"]
-
-
+    ".next/types/**/*.ts",
+    "vitest.config.mts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

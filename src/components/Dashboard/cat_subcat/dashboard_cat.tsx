@@ -11,8 +11,8 @@ import revalidateTag from 'components/ServerActons/ServerAction';
 import Swal from 'sweetalert2';
 import { Category } from 'types/cat';
 import { useMutation } from '@apollo/client';
-import { REMOVE_CATEGORY } from 'graphql/mutations';
 import { useSession } from 'next-auth/react';
+import { REMOVE_CATEGORY } from 'graphql/categories';
 // import { getPermission } from 'utils/permissionHandlers';
 
 interface CategoryProps {
@@ -89,12 +89,12 @@ const DashboardCat = ({
 
 
       await removeCategory({ variables: { id: Number(key) },
-          context: {
-            headers: {
-              authorization: `Bearer ${finalToken}`,
-            },
-            credentials: 'include',
-          },
+          // context: {
+          //   headers: {
+          //     authorization: `Bearer ${finalToken}`,
+          //   },
+          //   credentials: 'include',
+          // },
     });
 
       setCategory((prev: Category[] | undefined) => (prev ? prev.filter((item) => item.id !== key) : []));
