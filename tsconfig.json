@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+        "jsx": "react-jsx",
     "baseUrl": "./src/",
     "types": [
-      "jest",
+      "vitest",
       "node"
     ],
     "target": "ES2017",
@@ -20,7 +21,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    // "jsx": "preserve",
     "incremental": true,
     "plugins": [
       {
@@ -38,7 +39,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "vitest.config.mts"  ],
   
   "exclude": ["node_modules"]
 

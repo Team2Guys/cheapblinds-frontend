@@ -1,4 +1,5 @@
 'use client';
+import React from 'react'; // ✅ Required for JSX
 
 import { render, screen } from '@testing-library/react';
 import Home from './page';
