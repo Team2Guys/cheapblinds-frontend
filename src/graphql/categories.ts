@@ -60,8 +60,8 @@ export const REMOVE_CATEGORY = `
 
 // SubCategories 
 export const CREATE_SUBCATEGORY = `
-  mutation CreateSubCategory($createCategoryInput: CreateSubCategoryInput!) {
-    subCategory(createCategoryInput: $createCategoryInput) {
+  mutation CreateSubCategory($createSubCategoryInput: CreateSubCategoryInput!) {
+    subCategory(createSubCategoryInput: $createCategoryInput) {
       id
       name
       custom_url
