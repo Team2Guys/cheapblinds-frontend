@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+## Install Dependencies 
+ <!-- used -->
+pnpm install
+///////////////
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Start Development Server 
+<!-- used -->
+pnpm run dev
+///////////////
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run Tests
+<!--  used -->
+pnpm run test
+///////////////
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Setup Copy 
+<!--  used -->
+.env.example to .env.local
+Ask team lead for actual values
+////////////////////////////////////////////////////////////
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Branching Strategy
+<!--  used -->
+main : Stable production code
+dev : Latest development version
 
-## Learn More
+[feature/<task-name>] : Your working branch
+Example: [feature/login-page]
 
-To learn more about Next.js, take a look at the following resources:
+////////////////////////////////////////////////////////////
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Font-Family (2)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1-: Open_Sans   [font-open_Sans]                <!--  Add in body dont need to call in class -->
+2-: Rubik       [font-rubik]                    <!--  Majorly used for Headings -->
 
-## Deploy on Vercel
+////////////////////////////////////////////////////////////
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Color
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1-: Main Color  [yellow-----------(#FFB803)]     [text-primary]    [bg-primary]     <!--  ## Mostly used in Background -->
+2-: Secondary Color  [light-gray--(#EFEFEF)]     [text-secondary]  [bg-secondary]   <!--  ## Mostly used in Background -->
+3-: gray Color [gray-------------(##606060)]     [text-gray]       [bg-gray]
+4-: Black Color
+5-: White Color
+
+////////////////////////////////////////////////////////////
+
+## Text-Size (in Desktop and mobile)
+
+text-size= 14px                                 <!--  Add in body dont need to call in class -->
+
+text-heading {
+    @apply text-2xl md:text-3xl lg:text-4xl;    <!--  See text size 36 used """=> ( text-heading ) <=""" Desktop and mobile  -->
+}
+
+text-medium {
+    @apply text-xl;                             <!--  See text size 20 used """=> ( text-medium ) <=""" Desktop and mobile  -->
+}
+
+Button Size = 16px   

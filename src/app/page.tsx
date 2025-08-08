@@ -19,7 +19,9 @@ export default function Home() {
       )}
     </div>
       <ImageUploader setImagesUrl={setimages} multiple/>
-    
+    <div>
+      <p className="text-primary">asdsad</p>
+    </div>
     </>
   );
 }
