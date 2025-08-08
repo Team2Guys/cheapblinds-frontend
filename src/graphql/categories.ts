@@ -55,9 +55,6 @@ export const REMOVE_CATEGORY = `
   }
 `;
 
-
-
-
 // SubCategories 
 export const CREATE_SUBCATEGORY = `
   mutation CreateSubCategory($createSubCategoryInput: CreateSubCategoryInput!) {
