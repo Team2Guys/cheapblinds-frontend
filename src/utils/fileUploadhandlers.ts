@@ -1,5 +1,5 @@
-import showToast from "components/Toaster/Toaster";
-import { FILE_UPLOAD_MUTATION, FILE_UPLOAD_MUTATION_S3 } from "graphql/Fileupload";
+import showToast from "../components/Toaster/Toaster";
+import { FILE_UPLOAD_MUTATION, FILE_UPLOAD_MUTATION_S3 } from "../graphql/Fileupload";
 
 
 export const uploadPhotosToBackend = async (file: File, s3Flag?: boolean, resumeflag?: boolean) => {

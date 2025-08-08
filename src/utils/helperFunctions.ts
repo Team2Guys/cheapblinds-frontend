@@ -3,8 +3,8 @@ import axios from 'axios';
 import React, { RefObject, SetStateAction } from 'react';
 import { IEcomerece, IProductValues, ProductImage } from 'types/prod';
 import { Category } from 'types/cat';
-import { excludedKeys, excludedKeysFroProducts } from 'data/data';
-import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from 'graphql/Fileupload';
+import { excludedKeys, excludedKeysFroProducts } from '../data/data';
+import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from '../graphql/Fileupload';
 
 export const ImageRemoveHandler = async (imagePublicId: string, setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
   finalToken?: string
