@@ -13,6 +13,12 @@
 }
 
 @layer components {
+  .dashboard_primary_button {
+    @apply px-4 py-2 rounded-md text-sm border bg-black text-white border-black flex justify-center items-center gap-2 cursor-pointer w-fit;
+  }
+}
+
+@layer components {
   .input_container {
     @apply flex gap-4 mt-2 flex-wrap sm:flex-nowrap;
   }
@@ -76,4 +82,19 @@ body {
   color: var(--foreground);
   font-family: var(--font-open-sans);
   font-size: 14px;
+}
+
+
+:where(.css-dev-only-do-not-override-1vjf2v5).ant-btn-variant-solid {
+  background-color: var(--primary);
+}
+:where(.css-dev-only-do-not-override-1vjf2v5).ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
+  background-color: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+:where(.css-dev-only-do-not-override-1vjf2v5).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+  color: var(--primary);
+  border-color: var(--primary);
 }

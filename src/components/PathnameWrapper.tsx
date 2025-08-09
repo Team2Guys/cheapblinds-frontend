@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import ApoloClient from 'utils/AppoloClient';
 import { SessionProvider } from 'next-auth/react';
+import '@ant-design/v5-patch-for-react-19';
 
 
 const PathnameWrapper = ({ children }: { children: ReactNode }) => {

@@ -13,6 +13,7 @@ import { Category } from 'types/cat';
 import { useMutation } from '@apollo/client';
 // import { useSession } from 'next-auth/react';
 import { REMOVE_CATEGORY } from 'graphql/categories';
+import { DateFormatHandler } from 'utils/helperFunctions';
 // import { getPermission } from 'utils/permissionHandlers';
 
 interface CategoryProps {
@@ -53,8 +54,8 @@ const DashboardCat = ({
                 .includes(searchTerm.toLowerCase())),
         )
         .sort((a, b) => {
-          const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
-          const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+          const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : b.createdAt ? new Date(b.createdAt).getTime() : 0;
           return dateB - dateA;
         })) ||
     [];
@@ -128,6 +129,7 @@ const DashboardCat = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
+      width: 100,
       render: (_: string, record: Category) =>
         record.posterImageUrl ? (
           record.posterImageUrl.resource_type == 'vidoe' ?
@@ -161,41 +163,39 @@ const DashboardCat = ({
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      width: 100,
     },
     {
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'date',
+      width: 170,
       render: (_: string, record: Category) => {
-        const createdAt = new Date(record?.createdAt ?? new Date());
-
-        const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
-          createdAt.getDate(),
-        ).padStart(2, '0')}`;
-        return <span>{formattedDate}</span>;
+        const createdAt = new Date(record?.createdAt ?? '');
+        return <span>{DateFormatHandler(createdAt)}</span>;
       },
     },
 
     {
       title: 'Updated At',
-      dataIndex: 'createdAt',
+      dataIndex: 'updatedAt',
       key: 'date',
+      width: 170,
       render: (_: string, record: Category) => {
-        const createdAt = new Date(record?.updatedAt ?? new Date());
-        const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
-          createdAt.getDate(),
-        ).padStart(2, '0')}`;
-        return <span>{formattedDate}</span>;
+        const updatedAt = new Date(record?.updatedAt ?? '');
+        return <span>{DateFormatHandler(updatedAt)}</span>;
       },
     },
     {
       title: 'Edited By',
       dataIndex: 'last_editedBy',
       key: 'last_editedBy',
+      width: 150
     },
     {
       title: 'Edit',
       key: 'Edit',
+      width: 60,
       render: (_: string, record: Category) => (
         <LiaEdit aria-label="Edit Category"
           className={`${canEditCategory && 'text-black cursor-pointer  '} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
@@ -213,6 +213,7 @@ const DashboardCat = ({
     {
       title: 'Action',
       key: 'action',
+      width: 80,
       render: (text: string, record: Category) => (
         <RiDeleteBin6Line  aria-label="Delete Category"
           className={` ${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'

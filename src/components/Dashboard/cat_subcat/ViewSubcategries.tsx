@@ -21,7 +21,7 @@ const ViewSubcategries = ({
   subCategories,
 }: DASHBOARD_VIEW_SUBCATEGORIES_PROPS) => {
   const [category, setCategory] = useState<ISUBCATEGORY[] | undefined>(subCategories);
-    // const { data: session } = useSession()
+  // const { data: session } = useSession()
 
   useEffect(() => {
     setCategory(subCategories)
@@ -39,11 +39,11 @@ const ViewSubcategries = ({
     (category) =>
       category.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
-   .sort((a, b) => {
-    const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
-    const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
-    return dateB - dateA;
-  });
+    .sort((a, b) => {
+      const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return dateB - dateA;
+    });
 
 
 
@@ -53,14 +53,14 @@ const ViewSubcategries = ({
   // const canAddCategory = getPermission(session, 'canAddCategory');
 
   // const canEditCategory = getPermission(session, "canEditCategory" );
-      const canDeleteCategory = true;
+  const canDeleteCategory = true;
   const canAddCategory = true;
   const canEditCategory = true;
   // const canEditCategory =
   //   loggedInUser &&
   //   (loggedInUser.role == 'Admin' ? loggedInUser.canEditCategory : true);
 
-  
+
 
   const confirmDelete = (key: number) => {
     Swal.fire({
@@ -120,6 +120,7 @@ const ViewSubcategries = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
+      width: 100,
       render: (_: string, record: ISUBCATEGORY) =>
         record.posterImageUrl !== null ? (
           <Image
@@ -142,16 +143,16 @@ const ViewSubcategries = ({
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      width: 100,
     },
     {
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'date',
+      width: 170,
       render: (_: string, record: ISUBCATEGORY) => {
         const createdAt = new Date(record?.createdAt ?? "");
         DateFormatHandler(createdAt)
-
-
         return <span>{DateFormatHandler(createdAt)}</span>;
       },
     },
@@ -159,6 +160,7 @@ const ViewSubcategries = ({
       title: 'Updated At',
       dataIndex: 'createdAt',
       key: 'date',
+      width: 170,
       render: (_: string, record: ISUBCATEGORY) => {
         const createdAt = new Date(record?.updatedAt ?? "");
         return <span>{DateFormatHandler(createdAt)}</span>;
@@ -168,12 +170,12 @@ const ViewSubcategries = ({
       title: 'Edited By',
       dataIndex: 'last_editedBy',
       key: 'last_editedBy',
-      width:100
+      width: 150
     },
     {
       title: 'Edit',
       key: 'Edit',
-      width:100,
+      width: 60,
       render: (_: string, record: ISUBCATEGORY) => (
         <LiaEdit
           className={`cursor-pointer ${canEditCategory && 'text-black '} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
@@ -185,7 +187,7 @@ const ViewSubcategries = ({
     {
       title: 'Action',
       key: 'action',
-      width:100,
+      width: 80,
       render: (_: string, record: ISUBCATEGORY) => (
         <RiDeleteBin6Line
           className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'

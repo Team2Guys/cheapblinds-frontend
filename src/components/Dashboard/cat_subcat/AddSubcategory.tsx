@@ -42,6 +42,7 @@ const AddSubcategory = ({
       custom_url: editCategory.custom_url || "",
       breadCrum: editCategory.breadCrum || "",
       status: editCategory?.status || 'DRAFT',
+      category: editCategory?.category?.id || ''
     }
     : undefined;
 
@@ -75,7 +76,7 @@ const AddSubcategory = ({
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
-      const newValue = { ...values, posterImageUrl: posterImageUrl || {} , Banners: Banner, last_editedBy: '', category: Number(values.category) };
+      const newValue = { ...values, posterImageUrl: posterImageUrl || {} , Banners: Banner, last_editedBy: session.data?.user.fullname , category: Number(values.category) };
 
       const updateFlag = editCategoryName ? true : false;
       console.log(newValue,'newValue')
@@ -236,6 +237,44 @@ const AddSubcategory = ({
     setIsCropModalVisible(false);
     setCroppedImage(null);
   };
+  
+  const handleBack = (values: ISUBCATEGORY_EDIT) => {
+    const initialFormValues = editCategoryName || subcategoryInitialValues;
+    
+      let isPosterChanged: boolean;
+      let isBannerChanged: boolean;
+  
+      if (editCategory) {
+        // Editing mode
+        isPosterChanged =
+          JSON.stringify(editCategory.posterImageUrl ? [editCategory.posterImageUrl] : undefined) !==
+          JSON.stringify(posterimageUrl);
+  
+        isBannerChanged =
+          JSON.stringify(editCategory.Banners ? [editCategory.Banners] : undefined) !==
+          JSON.stringify(BannerImageUrl);
+      } else {
+        // Adding mode (initially no images)
+        isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
+        isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
+      }
+  
+      const isFormChanged = JSON.stringify(initialFormValues) !== JSON.stringify({...values , category: values.category === '' ? values.category : Number(values.category)});
+      if (isPosterChanged || isBannerChanged || isFormChanged) {
+        Modal.confirm({
+          title: "Unsaved Changes",
+          content: "You have unsaved changes. Do you want to discard them?",
+          okText: "Discard Changes",
+          cancelText: "Cancel",
+          onOk: () => {
+            setMenuType("Sub Categories");
+          },
+        });
+        return;
+      }
+      setMenuType("Sub Categories");
+      return;
+    };
 
 
   return (
@@ -253,9 +292,7 @@ const AddSubcategory = ({
             <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
               <p
                 className="dashboard_primary_button"
-                onClick={() => {
-                  setMenuType('Sub Categories');
-                }}
+                onClick={() => handleBack(formik.values)}
               >
                 <IoMdArrowRoundBack /> Back
               </p>
@@ -303,7 +340,7 @@ const AddSubcategory = ({
                   <div className="rounded-sm border border-stroke">
                     <div className="border-b border-stroke py-4 px-2 bg-primary">
                       <h3 className="font-medium  ">
-                        Add Sub Category Poster Image
+                        Add Poster Image
 
                       </h3>
                     </div>
@@ -366,7 +403,7 @@ const AddSubcategory = ({
                   </div>
 
                   <div className="rounded-sm border border-stroke dark:border-strokedark dark:bg-boxdark">
-                    <div className="border-b bg-primary border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black text-white dark:bg-boxdark dark:border-white">
+                    <div className="border-b border-stroke py-4 px-2 bg-primary">
                       <h3 className="font-medium text-white">
                         Add Banner Image
                       </h3>

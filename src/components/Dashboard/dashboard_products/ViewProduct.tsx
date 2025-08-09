@@ -65,8 +65,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     const aStartsWith = a?.name?.toLowerCase().startsWith(searchText) ? -1 : 1;
     const bStartsWith = b?.name?.toLowerCase().startsWith(searchText) ? -1 : 1;
 
-    const dateA = new Date(a.updatedAt || a.createdAt || '').getTime();
-    const dateB = new Date(b.updatedAt || b.createdAt || '').getTime();
+    const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : b.createdAt ? new Date(b.createdAt).getTime() : 0;
 
 
     if (!searchText) return dateB - dateA;
@@ -121,6 +121,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
+      width: 100,
       render: (text: string, record: (IProduct)) => (
         <Image
           src={record.posterImageUrl?.imageUrl || ""}
@@ -141,17 +142,15 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      width: 100,
     },
     {
       title: "Stock Quantity",
       dataIndex: "stock",
       key: "stock",
-      width: 150,
+      width: 130,
       render: (text: string, record: (IProduct)) => {
-
-
         return (
-
           <p>{record.stock}</p>
         )
       },
@@ -160,6 +159,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      width: 170,
       render: (text: string, record: (IProduct)) => {
         const createdAt = new Date(record?.createdAt ?? "");
         return <span>{DateFormatHandler(createdAt)}</span>;
@@ -169,10 +169,10 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Updated At',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
-
+      width: 170,
       render: (text: string, record: (IProduct)) => {
-        const createdAt = new Date(record?.createdAt ?? "");
-        return <span>{DateFormatHandler(createdAt)}</span>;
+        const updatedAt = new Date(record?.updatedAt ?? "");
+        return <span>{DateFormatHandler(updatedAt)}</span>;
       }
     },
 
@@ -180,14 +180,13 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Edited By',
       dataIndex: 'last_editedBy',
       key: 'last_editedBy',
-      width: 150,
+      width: 120,
 
     },
     {
       title: 'Preview',
       key: 'Preview',
-      width: 150,
-
+      width: 90,
       render: (text: string, record: (IProduct)) => {
         let urls;
         if (record.subcategory?.custom_url) {
@@ -196,9 +195,6 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
         else {
           urls = `/${record.category?.custom_url + "/" + record.custom_url}/`
         }
-
-
-        console.log(urls, "urls")
 
         return (
           <Link
@@ -214,7 +210,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     {
       title: 'Edit',
       key: 'Edit',
-      width: 150,
+      width: 60,
 
       render: (text: string, record: (IProduct)) => (
         <LiaEdit
@@ -223,7 +219,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
           size={20}
           onClick={() => {
             if (canEditproduct) {
-              const { updatedAt, createdAt , __typename , ...rest } = record;
+              const { updatedAt, createdAt, __typename, ...rest } = record;
               console.log(updatedAt, createdAt, __typename)
               setEditProduct(rest);
               setselecteMenu('Add Products');

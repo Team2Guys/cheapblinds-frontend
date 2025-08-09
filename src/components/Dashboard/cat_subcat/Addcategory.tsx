@@ -71,7 +71,7 @@ const AddCategory = ({
       const posterImageUrl = posterimageUrl && posterimageUrl[0] || {};
       const Banner = BannerImageUrl && BannerImageUrl[0];
       if (!posterImageUrl) return Toaster('error', 'Please select relevant Images');
-      const newValue = { ...values, posterImageUrl, Banners: Banner, last_editedBy: '', };
+      const newValue = { ...values, posterImageUrl, Banners: Banner, last_editedBy: session.data?.user.fullname };
       const updateFlag = editCategoryName ? true : false;
       setloading(true);
       if (updateFlag) {
@@ -231,34 +231,70 @@ const AddCategory = ({
     setCroppedImage(null);
   };
 
-  return (
-    <>
-      <p
-        className="dashboard_primary_button w-fit"
-        onClick={() => {
-          setMenuType('Categories');
-        }}
-      >
-        <IoMdArrowRoundBack /> Back
-      </p>
+  const handleBack = (values: EDIT_CATEGORY) => {
+    const initialFormValues = editCategoryName || categoryInitialValues;
 
-      <Formik
-        initialValues={
-          editCategoryName ? editCategoryName : categoryInitialValues
-        }
-        validationSchema={categoryValidationSchema}
-        onSubmit={onSubmit}
-      >
-        {(formik) => {
-          return (
+    let isPosterChanged: boolean;
+    let isBannerChanged: boolean;
+
+    if (editCategory) {
+      // Editing mode
+      isPosterChanged =
+        JSON.stringify(editCategory.posterImageUrl ? [editCategory.posterImageUrl] : undefined) !==
+        JSON.stringify(posterimageUrl);
+
+      isBannerChanged =
+        JSON.stringify(editCategory.Banners ? [editCategory.Banners] : undefined) !==
+        JSON.stringify(BannerImageUrl);
+    } else {
+      // Adding mode (initially no images)
+      isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
+      isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
+    }
+
+    const isFormChanged = JSON.stringify(initialFormValues) !== JSON.stringify(values);
+
+    if (isPosterChanged || isBannerChanged || isFormChanged) {
+      Modal.confirm({
+        title: "Unsaved Changes",
+        content: "You have unsaved changes. Do you want to discard them?",
+        okText: "Discard Changes",
+        cancelText: "Cancel",
+        onOk: () => {
+          setMenuType("Categories");
+        },
+      });
+      return;
+    }
+    setMenuType("Categories");
+    return;
+  };
+
+  return (
+    <Formik
+      initialValues={
+        editCategoryName ? editCategoryName : categoryInitialValues
+      }
+      validationSchema={categoryValidationSchema}
+      onSubmit={onSubmit}
+    >
+      {(formik) => {
+        return (
+          <>
+            <p
+              className="dashboard_primary_button"
+              onClick={() => handleBack(formik.values)}
+            >
+              <IoMdArrowRoundBack /> Back
+            </p>
             <Form onSubmit={formik.handleSubmit}>
               <div className="flex justify-center  bg-primary ">
                 <div className="flex flex-col gap-5 bg-primary md:gap-9 w-full lg:w-4/5 xl:w-3/5  ">
                   <div className="rounded-sm border border-stroke bg-primary  p-3">
                     <div className="rounded-sm border bg-primary border-stroke">
-                      <div className="border-b bg-primary border-stroke py-4 px-2 hover:bg-black">
+                      <div className="border-b bg-primary border-stroke py-4 px-2">
                         <h3 className="font-medium  text-white">
-                          Add Category Images
+                          Add Poster Image
                         </h3>
                       </div>
                       {posterimageUrl && posterimageUrl.length > 0 ? (
@@ -631,7 +667,7 @@ const AddCategory = ({
                   </div>
                 </div>
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center mt-4">
                 <button
                   type="submit"
                   className="dashboard_primary_button "
@@ -641,10 +677,10 @@ const AddCategory = ({
                 </button>
               </div>
             </Form>
-          );
-        }}
-      </Formik>
-    </>
+          </>
+        );
+      }}
+    </Formik>
   );
 };
 

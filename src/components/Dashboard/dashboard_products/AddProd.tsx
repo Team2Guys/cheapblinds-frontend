@@ -31,7 +31,7 @@ import { uploadPhotosToBackend } from "utils/fileUploadhandlers";
 import { ISUBCATEGORY } from "types/cat";
 import { Modal } from 'antd';
 import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "graphql/prod";
-// import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 
 const initialErrors = {
@@ -52,24 +52,20 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   // const editProductFlag = editProduct?.type == "product"
   const [imagesUrl, setImagesUrl] = useState<ProductImage[] | undefined>((editProduct && editProduct?.productImages.length > 0) ? editProduct?.productImages : []);
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(editProduct && editProduct.posterImageUrl ? [editProduct.posterImageUrl] : []);
-  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(editProduct?.hoverImageUrl ? [{ ...editProduct.hoverImageUrl }] : []);
+  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(editProduct?.hoverImageUrl ? [{ ...editProduct.hoverImageUrl }] : undefined);
 
   const router = useRouter()
 
-
+  const session = useSession()
 
   const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editProduct && editProduct?.Banners ? [editProduct?.Banners] : undefined);
 
   const [loading, setloading] = useState<boolean>(false);
   const [productInitialValue, setProductInitialValue] = useState<IProductValues | null | undefined>();
   const [imgError, setError] = useState<string | null | undefined>();
-  const [selectedCategory, setSelectedCategory] = useState(editProduct ? editProduct.category.id : categoriesList?.[0]?.id);
+  const [selectedCategory, setSelectedCategory] = useState(editProduct ? editProduct.category.id : '');
   const [subcategories, setSubcategories] = useState<ISUBCATEGORY[]>([]);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(() =>
-    editProduct?.subcategory?.id ??
-    categoriesList?.[0]?.subcategory?.id ??
-    ''
-  );
+  const [selectedSubcategory, setSelectedSubcategory] = useState(editProduct?.subcategory?.id ?? '');
   const [categorySubCatError, setcategorySubCatError] = useState(initialErrors);
   const dragImage = useRef<number | null>(null);
   const draggedOverImage = useRef<number | null>(null);
@@ -119,10 +115,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         throw err;
       }
     };
-    
+
     CategoryHandler();
   }, [editProduct]);
-  console.log(productInitialValue,'productInitialValue')
 
   const onSubmit = async (values: IProductValues, { resetForm }: FormikHelpers<IProductValues>) => {
     try {
@@ -176,14 +171,18 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         Banners: Banner,
         category: +selectedCategory,
         subcategory: +selectedSubcategory,
-        last_editedBy: ''
+        last_editedBy: session.data?.user.fullname
       };
       const updateFlag = EditProductValue && editProduct ? true : false;
       const { data } = updateFlag
         ? await updateProduct({
-          variables: { input: { ...newValues, id: Number(editProduct?.id) } , refetchQueries: [{ query: GET_ALL_PRODUCTS }]},
+          variables: { input: { ...newValues, id: Number(editProduct?.id) }},
+          refetchQueries: [{ query: GET_ALL_PRODUCTS }]
         })
-        : await createProduct({ variables: { input: newValues } , refetchQueries: [{ query: GET_ALL_PRODUCTS }] });
+        : await createProduct({ 
+          variables: { input: newValues },
+          refetchQueries: [{ query: GET_ALL_PRODUCTS }]
+        });
 
       if (!data) {
         throw new Error("Mutation failed. No data returned.");
@@ -233,7 +232,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     setSubcategories(selectedCat?.subCategories || []);
     setSelectedSubcategory("");
   };
-
+  
+  const handleInnerSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const categoryId = Number(e.target.value);
+    setSelectedSubcategory(categoryId)
+  };
 
   const handleCropClick = (imageUrl: string) => {
     setImageSrc(imageUrl);
@@ -245,6 +248,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     const newCrop = centerAspectCrop(width, height, 16 / 9);
     setCrop(newCrop);
   };
+
   const onCropComplete = (crop: Crop) => {
     const image = imgRef.current;
     if (!image || !crop.width || !crop.height) return;
@@ -274,12 +278,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     const base64Image = canvas.toDataURL('image/jpeg');
     setCroppedImage(base64Image);
   };
-
-  const handleInnerSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const categoryId = e.target.value;
-    setSelectedSubcategory(categoryId)
-  };
-
 
   const handleCropModalOk = async () => {
     if (croppedImage && imageSrc) {
@@ -352,6 +350,56 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   };
 
 
+  const handleBack = (values: IProductValues) => {
+    const initialFormValues = productInitialValue || AddproductsinitialValues;
+
+    let isPosterChanged: boolean;
+    let isBannerChanged: boolean;
+    let isProductImagesChanged: boolean;
+    let isHoverImageChanged: boolean;
+
+    if (editProduct) {
+      // Editing mode
+      isPosterChanged =
+        JSON.stringify(editProduct.posterImageUrl ? [editProduct.posterImageUrl] : undefined) !== JSON.stringify(posterimageUrl);
+
+      isBannerChanged =
+        JSON.stringify(editProduct.Banners ? [editProduct.Banners] : undefined) !== JSON.stringify(BannerImageUrl);
+
+        isProductImagesChanged =
+        JSON.stringify((editProduct?.productImages.length > 0) ? editProduct?.productImages : []) !== JSON.stringify(imagesUrl);
+
+         isHoverImageChanged =
+        JSON.stringify((editProduct?.hoverImageUrl) ? editProduct?.hoverImageUrl : null) !== JSON.stringify((hoverImage && hoverImage.length > 0) ? hoverImage : null);
+    } else {
+      // Adding mode (initially no images)
+      isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
+      isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
+      isProductImagesChanged = !!imagesUrl && imagesUrl.length > 0;
+      isHoverImageChanged = !!hoverImage && hoverImage.length > 0;
+    }
+     // eslint-disable-next-line
+    const isFormChanged = JSON.stringify({...initialFormValues, category: initialFormValues.category === '' ? initialFormValues.category : Number((initialFormValues.category as any).id) , subcategory: initialFormValues.subcategory === '' ? initialFormValues.subcategory : Number((initialFormValues.subcategory as any).id) }) !== JSON.stringify({...values , category: selectedCategory === '' ? selectedCategory : Number(selectedCategory), subcategory: selectedSubcategory === '' ? selectedSubcategory : Number(selectedSubcategory)});
+
+    if (isPosterChanged || isBannerChanged || isProductImagesChanged || isHoverImageChanged || isFormChanged) {
+      Modal.confirm({
+        title: "Unsaved Changes",
+        content: "You have unsaved changes. Do you want to discard them?",
+        okText: "Discard Changes",
+        cancelText: "Cancel",
+        onOk: () => {
+          setselecteMenu("Add All Products");
+          setEditProduct?.(() => undefined);
+        },
+      });
+      return;
+    }
+    setselecteMenu("Add All Products");
+    setEditProduct?.(() => undefined);
+    return;
+  };
+
+
 
   return (
 
@@ -374,10 +422,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
               <p
                 className="dashboard_primary_button"
-                onClick={() => {
-                  setselecteMenu("Add All Products");
-                  setEditProduct?.(() => undefined);
-                }}
+                onClick={() => handleBack(formik.values)}
               >
                 <IoMdArrowRoundBack /> Back
               </p>
@@ -437,7 +482,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               <div className="relative group rounded-lg overflow-hidden shadow-md  transform transition-transform duration-300 hover:scale-105">
                                 <div className="absolute top-1 right-1 invisible group-hover:visible text-red  rounded-full">
                                   <RxCross2
-                                    className="cursor-pointer border border-black  text-red-500 dark:text-red-700"
+                                    className="cursor-pointer border border-black text-red-500 dark:text-red-700"
                                     size={17}
                                     onClick={() => {
                                       ImageRemoveHandler(
