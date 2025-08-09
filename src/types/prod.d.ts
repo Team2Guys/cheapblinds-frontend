@@ -1,4 +1,4 @@
-import { EDIT_CATEGORY, INNERSUBCATEGORY, ISUBCATEGORY_EDIT } from "./cat";
+import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from "./cat";
 import { BlogStatus } from "./general";
 import { AdditionalInformation } from "./type";
 
@@ -76,6 +76,7 @@ interface CommonProductsTypes {
   id: number;
   name: string | undefined;
   price: number;
+  short_description?: string;
   description: string;
   stock: number;
   discountPrice?: number;
@@ -97,46 +98,16 @@ interface CommonProductsTypes {
   subcategory: ISUBCATEGORY_EDIT
   categoryId?: number;
   subCategoryId?: number;
+  __typename?: string;
 }
 
 
 export interface IProduct extends CommonProductsTypes {
   type: 'product';
-  innersubCategoryId?: number
   // Banners
-  BannerText?: string;
-  BannerHeading?: string;
-  salesBannerImage?: ProductImage;
-  altText?: string;
-  // After hero sections
-  categoryHeroImages: ProductImage[];
-  categoryHeroToptext?: string;
-  categoryHeroHeading?: string;
-  categoryHeroText: AdditionalInformation[];
-  categoryFaqs: AdditionalInformation[];
-
-  // Right side text
-  right_side_Heading?: string;
-  left_side_Text: AdditionalInformation[];
-  left_side_image?: ProductImage;
-
-  // Product section
-  Product_Section_heading?: string;
-  bottomText?: string;
-
-  // Capabilities section
-  explore_Heading?: string;
-  explore_main_heading?: string;
-  explore_description?: string;
-  professionalServiceImage?: ProductImage;
   stock?: string;
   // Schema
-
-  Innersubcategory?: INNERSUBCATEGORY
   subcategory?: ISUBCATEGORY_EDIT
-  displayName?: string
-  colorName?: string
-  sizeName?: string
   status?:BlogStatus
 }
 
@@ -150,39 +121,17 @@ export interface Shipping {
   freeShippingFee?: number;
 }
 
-export interface IEcomerece extends CommonProductsTypes {
-  type: 'ecommerce';
-  DescriptionBullets?: AdditionalInformation[]
-  Additionalinformation?: AdditionalInformation[]
-  Questions?: AdditionalInformation[]
-  materialType?: AdditionalInformation[]
-  colors?: AdditionalInformation[]
-  sizes?: ISizes[]
-  variant?: AdditionalInformation[]
-  stock: string;
-  posterImageUrl: ProductImage;
-  displayName?: string;
-  sizeName?: string;
-  colorName?: string;
-  dimension?: string[];
-  shippingOptions?:Shipping
-  status?:BlogStatus
-}
 
 
 
-
-export interface IProductValues extends Omit<CommonProductsTypes, 'posterImageUrl' | 'category' | 'subcategory' | 'Innersubcategory'>, IEcomerece, IProduct {
+export interface IProductValues extends Omit<CommonProductsTypes, 'posterImageUrl' | 'category' | 'subcategory'>, IProduct {
   hoverImageUrl?: ProductImage,
   productImages?: ProductImage[],
   createdAt?: Date;
   updatedAt?: Date;
   Banners?: ProductImage;
-  categoryHeroImages?: ProductImage;
-  left_side_image?: ProductImage;
   category?: string | number
   subcategory?: string | number
-  Innersubcategory?: string | number
   id?: number
   posterImageUrl?: ProductImage;
   type?: string

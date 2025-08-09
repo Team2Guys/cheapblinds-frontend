@@ -1,10 +1,9 @@
 
 import axios from 'axios';
 import React, { RefObject, SetStateAction } from 'react';
-import { IEcomerece, IProductValues, ProductImage } from 'types/prod';
+import { ProductImage } from 'types/prod';
 import { Category } from 'types/cat';
-import { excludedKeys, excludedKeysFroProducts } from '../data/data';
-import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from '../graphql/Fileupload';
+import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from 'graphql/Fileupload';
 
 export const ImageRemoveHandler = async (imagePublicId: string, setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
   finalToken?: string
@@ -238,136 +237,11 @@ export const CategoriesSortingHanlder = (categories: (Category | any)[]) => {
 
 
 
-export const removedValuesHandler = (ChangedValue: IProductValues, ecomerece?: boolean) => {
-  const modifiedProductValues = Object.fromEntries(Object.entries(ChangedValue).filter(([key]) => !(ecomerece ? excludedKeys : excludedKeysFroProducts).includes(key))
-  ) as IProductValues;
-  return modifiedProductValues
-};
 export const formatAED = (price: number | undefined | null): string => {
   if (!price || isNaN(price)) return "0";
   return price.toLocaleString("en-AE", {
     minimumFractionDigits: price % 1 === 0 ? 0 : 2,
     maximumFractionDigits: 2,
-  });
-};
-
-export const variationProducts = ({ products }: { products: IEcomerece[] }) => {
-  return products?.flatMap((prod) => {
-    const variations: IEcomerece[] = [];
-
-    const hasSizes = (prod.sizes?.length ?? 0) > 0;
-    const hasVariants = (prod.variant?.length ?? 0) > 0;
-
-    // Case 1: Both size and variant exist
-    if (hasSizes && hasVariants) {
-      prod.sizes?.forEach((size) => {
-        const variantName = size.variantName;
-        const sizeName = size.name;
-        const dimension =
-          size.dimension?.toLowerCase() === 'all'
-            ? prod.sizes
-              ?.filter(s => s.dimension && s.dimension.toLowerCase() !== 'all')
-              .map(s => `${s.name}: ${s.dimension}`) ?? []
-            : size.dimension
-              ? [size.dimension]
-              : [];
-        const matchImage = prod.productImages.filter(
-          (img) =>
-            img.size?.toLowerCase() === sizeName?.toLowerCase() &&
-            img.variant?.toLowerCase() === variantName.toLowerCase()
-        );
-        variations.push({
-          ...prod,
-          name: prod.name,
-          displayName: `${prod.name} - ${sizeName} (${variantName})`,
-          sizeName,
-          colorName: variantName,
-          dimension: dimension,
-          price: Number(size.price),
-          discountPrice: Number(size.discountPrice),
-          stock: size.stock ?? prod.stock,
-          posterImageUrl: matchImage[0] || prod.posterImageUrl,
-          hoverImageUrl: (matchImage[1] || matchImage[0]) || prod.hoverImageUrl,
-        });
-      });
-    }
-
-    // Case 2: Only color variants exist
-    else if (!hasSizes && hasVariants) {
-      prod.variant?.forEach((variant) => {
-        const variantName = variant.name;
-        const dimension = variant.dimension;
-        const matchImage = prod.productImages.find(
-          (img) => img.variant?.toLowerCase() === variantName.toLowerCase()
-        );
-
-        variations.push({
-          ...prod,
-          name: prod.name,
-          displayName: `${prod.name} (${variantName})`,
-          sizeName: undefined,
-          colorName: variantName,
-          dimension: [dimension],
-          price: Number(variant.price),
-          discountPrice: Number(variant.discountPrice),
-          stock: variant.stock ?? prod.stock,
-          posterImageUrl: matchImage || prod.posterImageUrl,
-        });
-      });
-    }
-    else if (hasSizes && !hasVariants) {
-      prod.sizes?.forEach((size) => {
-        const sizeName = size.name;
-        const dimension =
-          size.dimension?.toLowerCase() === 'all'
-            ? prod.sizes
-              ?.filter(s => s.dimension && s.dimension.toLowerCase() !== 'all')
-              .map(s => `${s.name}: ${s.dimension}`) ?? []
-            : size.dimension
-              ? [size.dimension]
-              : [];
-        const matchImage = prod.productImages.find(
-          (img) => img.size?.toLowerCase() === sizeName?.toLowerCase()
-        );
-
-        variations.push({
-          ...prod,
-          name: prod.name,
-          displayName: `${prod.name} - ${sizeName}`,
-          sizeName,
-          dimension: dimension,
-          colorName: undefined,
-          price: Number(size.price),
-          discountPrice: Number(size.discountPrice),
-          stock: size.stock ?? prod.stock,
-          posterImageUrl: matchImage || prod.posterImageUrl,
-        });
-      });
-    }
-    else {
-       const filtered = prod.Additionalinformation?.filter(item => item.name?.toLowerCase().includes('dimensions') && item.detail);
-
-      const dimensions = (filtered && filtered.length > 1)
-        ? filtered.map(s => {
-          const cleanedName = s.name
-            .replace(/dimensions/i, '')     
-            .replace(/[()]/g, '')           
-            .trim();                        
-          return `${cleanedName}: ${s.detail}`;
-        })
-        : filtered?.map(s => s.detail);
-      variations.push({
-        ...prod,
-        name: prod.name,
-        displayName: prod.name,
-        sizeName: undefined,
-        colorName: undefined,
-        dimension: dimensions,
-        posterImageUrl: prod.posterImageUrl,
-      });
-    }
-
-    return variations;
   });
 };
 

@@ -239,7 +239,7 @@ useEffect(() => {
                   ))}
                 </div>
               ) : (
-                <ImageUploader setposterimageUrl={setposterImage} />
+                <ImageUploader setImagesUrl={setposterImage} />
               )}
               </div>
             <TextInputField name="title" label="Title" />

@@ -11,18 +11,17 @@ import Swal from 'sweetalert2';
 import { DASHBOARD_VIEW_SUBCATEGORIES_PROPS } from 'types/PagesProps';
 import { ISUBCATEGORY } from 'types/cat';
 import { useMutation } from '@apollo/client';
-import { REMOVE_SUBCATEGORY } from 'graphql/mutations';
-import { FETCH_ALL_SUB_CATEGORIES } from 'graphql/queries';
 import { DateFormatHandler } from 'utils/helperFunctions';
 // import { getPermission } from 'utils/permissionHandlers';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
+import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from 'graphql/categories';
 const ViewSubcategries = ({
   setMenuType,
   seteditCategory,
   subCategories,
 }: DASHBOARD_VIEW_SUBCATEGORIES_PROPS) => {
   const [category, setCategory] = useState<ISUBCATEGORY[] | undefined>(subCategories);
-    const { data: session } = useSession()
+    // const { data: session } = useSession()
 
   useEffect(() => {
     setCategory(subCategories)
@@ -78,17 +77,17 @@ const ViewSubcategries = ({
     });
   };
 
-  const finalToken = session?.accessToken
+  // const finalToken = session?.accessToken
 
   const handleDelete = async (key: number) => {
     try {
       await removeCategory({
-        variables: { id: Number(key) }, refetchQueries: [{ query: FETCH_ALL_SUB_CATEGORIES }],
-        context: {
-          headers: {
-            authorization: `Bearer ${finalToken}`,
-          },
-        },
+        variables: { id: Number(key) }, refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
+        // context: {
+        //   headers: {
+        //     authorization: `Bearer ${finalToken}`,
+        //   },
+        // },
       });
       setCategory((prev: ISUBCATEGORY[] | undefined) => prev ? prev.filter((item: ISUBCATEGORY) => item.id != key) : []);
       revalidateTag('subcategories');

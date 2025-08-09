@@ -11,8 +11,8 @@ import revalidateTag from 'components/ServerActons/ServerAction';
 import Swal from 'sweetalert2';
 import { Category } from 'types/cat';
 import { useMutation } from '@apollo/client';
-import { REMOVE_CATEGORY } from 'graphql/mutations';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
+import { REMOVE_CATEGORY } from 'graphql/categories';
 // import { getPermission } from 'utils/permissionHandlers';
 
 interface CategoryProps {
@@ -30,8 +30,8 @@ const DashboardCat = ({
   const [category, setCategory] = useState<Category[] | undefined>(cetagories);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [removeCategory] = useMutation(REMOVE_CATEGORY);
-  const { data: session } = useSession()
-  const finalToken = session?.accessToken
+  // const { data: session } = useSession()
+  // const finalToken = session?.accessToken
   useEffect(() => {
 
     setCategory(cetagories)
@@ -89,12 +89,12 @@ const DashboardCat = ({
 
 
       await removeCategory({ variables: { id: Number(key) },
-          context: {
-            headers: {
-              authorization: `Bearer ${finalToken}`,
-            },
-            credentials: 'include',
-          },
+          // context: {
+          //   headers: {
+          //     authorization: `Bearer ${finalToken}`,
+          //   },
+          //   credentials: 'include',
+          // },
     });
 
       setCategory((prev: Category[] | undefined) => (prev ? prev.filter((item) => item.id !== key) : []));
@@ -197,7 +197,7 @@ const DashboardCat = ({
       title: 'Edit',
       key: 'Edit',
       render: (_: string, record: Category) => (
-        <LiaEdit
+        <LiaEdit aria-label="Edit Category"
           className={`${canEditCategory && 'text-black cursor-pointer  '} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
           size={20}
           onClick={() => {
@@ -214,7 +214,7 @@ const DashboardCat = ({
       title: 'Action',
       key: 'action',
       render: (text: string, record: Category) => (
-        <RiDeleteBin6Line
+        <RiDeleteBin6Line  aria-label="Delete Category"
           className={` ${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
             }`}
           // className="cursor-pointer text-red-500"

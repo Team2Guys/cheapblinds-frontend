@@ -88,7 +88,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <div className="flex items-center justify-between gap-2 px-6 py-2 h-20 w-auto">
         <Link href="/">
           <Image width={120} height={32}
-            src="/assets/images/header/logo.png"
+            src="/assets/images/dashboard_logo.png"
             alt="logo"
           />
         </Link>
@@ -234,16 +234,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               View Sub Categories
                             </Link>
                           </li>
-                          <li>
-                            <Link
-                              href="/dashboard/inner-subcategory/"
-                              className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/inner-subcategory/' &&
-                                'bg-black text-white'
-                                }`}
-                            >
-                              View Inner Sub Categories
-                            </Link>
-                          </li>
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
@@ -300,61 +290,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
-
-
-              <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/ecomerece/'}
-              >
-                {(handleClick, open) => {
-                  return (
-                    <>
-                      <Link
-                        href="/dashboard/ecomerece/"
-                        className={`dashboard_side_bar group ${pathname === '/dashboard/ecomerece/' &&
-                          'bg-black text-white'
-                          }`}
-                        onClick={(e) => {
-                          e.preventDefault(); // Prevent default link behavior
-                          if (sidebarExpanded) {
-                            handleClick();
-                          } else {
-                            setSidebarExpanded(true);
-                          }
-                        }}
-                      >
-                        <GrCodeSandbox size={20} className="text-white" />
-                        Ecomerece Products
-                        <MdOutlineKeyboardArrowDown
-                          size={30}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && 'rotate-180'
-                            }`}
-                        />
-                      </Link>
-                      {/* <!-- Dropdown Menu Start --> */}
-                      <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
-                          }`}
-                      >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
-                              href="/dashboard/ecomerece/"
-                              className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/ecomerece/' &&
-                                'bg-black text-white'
-                                } `}
-                            >
-                              View ecomerece Products
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </>
-                  );
-                }}
-              </SidebarLinkGroup>
-
-
-
 
               <SidebarLinkGroup
                 activeCondition={pathname === '/dashboard/orders/'}

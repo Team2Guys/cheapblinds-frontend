@@ -7,38 +7,33 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { LiaEdit } from 'react-icons/lia';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
-import { IEcomerece, IProduct } from 'types/prod';
+import { IProduct } from 'types/prod';
 import { DASHBOARD_MAIN_PRODUCT_PROPS } from 'types/PagesProps';
 import { useMutation } from '@apollo/client';
-import { REMOVE_PRODUCT } from 'graphql/mutations';
-import { FETCH_ALL_PRODUCTS } from 'graphql/queries';
-import { REMOVE_ECOMERECE } from 'graphql/Accessories';
 import showToast from 'components/Toaster/Toaster';
-// import { getPermission } from 'utils/permissionHandlers';
-import { useSession } from 'next-auth/react';
 import { DateFormatHandler } from 'utils/helperFunctions';
 import { BsEyeFill } from 'react-icons/bs';
+import { GET_ALL_PRODUCTS, REMOVE_PRODUCT } from 'graphql/prod';
 
 const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   products,
   setProducts,
   setselecteMenu,
   setEditProduct,
-  ecomerece
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const { data: session } = useSession()
-  const finalToken = session?.accessToken;
-  const [removeProduct] = useMutation(ecomerece ? REMOVE_ECOMERECE : REMOVE_PRODUCT, {
+  // const { data: session } = useSession()
+  // const finalToken = session?.accessToken;
+  const [removeProduct] = useMutation(REMOVE_PRODUCT, {
     fetchPolicy: "no-cache",
     context: {
       fetchOptions: {
-        credentials: "include",
-        next: { tags: [ecomerece ? "Ecomerece" : "products"] }
+        // credentials: "include",
+        next: { tags: ["products"] }
       },
-      headers: {
-        authorization: `Bearer ${finalToken}`,      
-      }
+      // headers: {
+      //   authorization: `Bearer ${finalToken}`,      
+      // }
     }
   });
 
@@ -49,12 +44,12 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   // const canAddProduct = getPermission(session, "canAddProduct")
   // const canDeleteProduct = getPermission(session, "canDeleteProduct")
   // const canEditproduct = getPermission(session, "canEditProduct")
-      const canAddProduct = true;
+  const canAddProduct = true;
   const canDeleteProduct = true;
   const canEditproduct = true;
 
 
-  const filteredProducts: ((IProduct | IEcomerece) | IEcomerece)[] = products?.filter((product) => {
+  const filteredProducts: IProduct[] = products?.filter((product) => {
     const searchtext = searchTerm.trim().toLowerCase();
     return (
       product?.name?.toLowerCase().includes(searchtext) ||
@@ -71,8 +66,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     const bStartsWith = b?.name?.toLowerCase().startsWith(searchText) ? -1 : 1;
 
     const dateA = new Date(a.updatedAt || a.createdAt || '').getTime();
-      const dateB = new Date(b.updatedAt || b.createdAt || '').getTime();
-      
+    const dateB = new Date(b.updatedAt || b.createdAt || '').getTime();
+
 
     if (!searchText) return dateB - dateA;
 
@@ -86,7 +81,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
 
 
   const confirmDelete = (key: string | number) => {
-    const type = ecomerece ? "e-comerece" : "product";
+    const type = "product";
     Swal.fire({
       title: 'Are you sure?',
       text: `Once deleted, the ${type} cannot be recovered.`,
@@ -106,9 +101,9 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
 
       await removeProduct({
         variables: { id: +key },
-        refetchQueries: [{ query: FETCH_ALL_PRODUCTS }],
+        refetchQueries: [{ query: GET_ALL_PRODUCTS }],
       });
-      setProducts((prev: (IProduct | IEcomerece)[]) => prev.filter((item) => item.id !== key) || []);
+      setProducts((prev: IProduct[]) => prev.filter((item) => item.id !== key) || []);
 
       showToast("success", `${type.charAt(0).toUpperCase() + type.slice(1)} Deleted`,
 
@@ -126,7 +121,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
-      render: (text: string, record: (IProduct | IEcomerece)) => (
+      render: (text: string, record: (IProduct)) => (
         <Image
           src={record.posterImageUrl?.imageUrl || ""}
           alt={`Image of ${record?.name}`}
@@ -152,7 +147,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       dataIndex: "stock",
       key: "stock",
       width: 150,
-      render: (text: string, record: (IProduct | IEcomerece)) => {
+      render: (text: string, record: (IProduct)) => {
 
 
         return (
@@ -165,27 +160,19 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (text: string, record: (IProduct | IEcomerece)) =>{
-               const createdAt = new Date(record?.createdAt ?? "");
-                        return <span>{DateFormatHandler(createdAt)}</span>;
+      render: (text: string, record: (IProduct)) => {
+        const createdAt = new Date(record?.createdAt ?? "");
+        return <span>{DateFormatHandler(createdAt)}</span>;
       }
     },
-
-    //     {
-    //   title: 'Updated At',
-    //   dataIndex: 'updatedAt',
-    //   key: 'updatedAt',
-    //   render: (text: string, record: (IProduct | IEcomerece)) =>
-    //     record?.updatedAt ? new Date(record.updatedAt).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
-    // },
     {
       title: 'Updated At',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
 
-      render: (text: string, record: (IProduct | IEcomerece)) =>{
-           const createdAt = new Date(record?.createdAt ?? "");
-                        return <span>{DateFormatHandler(createdAt)}</span>;
+      render: (text: string, record: (IProduct)) => {
+        const createdAt = new Date(record?.createdAt ?? "");
+        return <span>{DateFormatHandler(createdAt)}</span>;
       }
     },
 
@@ -201,7 +188,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       key: 'Preview',
       width: 150,
 
-      render: (text: string, record: (IProduct | IEcomerece)) => {
+      render: (text: string, record: (IProduct)) => {
         let urls;
         if (record.subcategory?.custom_url) {
           urls = `/${record.category?.custom_url + "/" + record.subcategory?.custom_url}/`
@@ -219,7 +206,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
             target="_blank"
             href={urls}
           >
-          <BsEyeFill className="text-primary cursor-pointer text-base transition duration-300 ease-in-out hover:scale-200"/>
+            <BsEyeFill className="text-primary cursor-pointer text-base transition duration-300 ease-in-out hover:scale-200" />
           </Link>
         );
       },
@@ -229,14 +216,16 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       key: 'Edit',
       width: 150,
 
-      render: (text: string, record: (IProduct | IEcomerece)) => (
+      render: (text: string, record: (IProduct)) => (
         <LiaEdit
           className={`${canEditproduct ? 'cursor-pointer' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
           size={20}
           onClick={() => {
             if (canEditproduct) {
-              setEditProduct(record);
+              const { updatedAt, createdAt , __typename , ...rest } = record;
+              console.log(updatedAt, createdAt, __typename)
+              setEditProduct(rest);
               setselecteMenu('Add Products');
             }
           }}
@@ -247,7 +236,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Action',
       key: 'action',
       width: 100,
-      render: (text: string, record: (IProduct | IEcomerece)) => (
+      render: (text: string, record: (IProduct)) => (
         <RiDeleteBin6Line
           className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
@@ -287,24 +276,24 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
               }
             }}
           >
-            {`Add ${ecomerece ? "e-Comerece products" : "Products"}`}
+            Add Products
           </p>
         </div>
       </div>
       <div style={{ overflowX: 'auto' }}>
 
-      {filteredProducts && filteredProducts.length > 0 ? (
-        <Table
-        className=" !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
-        dataSource={filteredProducts}
-        columns={columns}
-        rowKey="id"
-        scroll={{ y: 550, x: "max-content" }}
-        pagination={false}
-        />
-      ) : (
-        <p className="text-primary dark:text-white">No products found</p>
-      )}
+        {filteredProducts && filteredProducts.length > 0 ? (
+          <Table
+            className=" !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
+            dataSource={filteredProducts}
+            columns={columns}
+            rowKey="id"
+            scroll={{ y: 550, x: "max-content" }}
+            pagination={false}
+          />
+        ) : (
+          <p className="text-primary dark:text-white">No products found</p>
+        )}
       </div>
     </>
   );

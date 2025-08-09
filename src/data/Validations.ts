@@ -6,12 +6,6 @@ export const subcategoryValidationSchema = Yup.object({
     custom_url: Yup.string().required('Custom URL is required'),
   });
   
-
-  export const innersubcategoryValidationSchema = Yup.object({
-    name: Yup.string().required('Add Sub Category Name'),
-    subCategoryId: Yup.string().required('Select sub Category'),
-    custom_url: Yup.string().required('Custom URL is required'),
-  });
   
   export const categoryValidationSchema = Yup.object({
     name: Yup.string().required('Add  Category Name'),
@@ -25,9 +19,9 @@ export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Too Short!').required('Product Name is Required'),
   description: Yup.string().required('Description is  Required'),
   custom_url: Yup.string().required('Custom Url is Required'),
-  price: Yup.number()
-    .min(1, 'Minimum sales price must be at least 1')
-    .required('Required'),
+  // price: Yup.number()
+  //   .min(1, 'Minimum sales price must be at least 1')
+  //   .required('Required'),
   discountPrice: Yup.number().nullable(),
 });
 

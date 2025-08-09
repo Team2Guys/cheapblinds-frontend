@@ -11,7 +11,9 @@ export function middleware(req: NextRequest) {
       req.cookies.get('__Secure-next-auth.session-token')?.value;
 
     const pathname = req.nextUrl.pathname;
-    const isAuthRoute = pathname === "/dashboard/Admin-login/";
+    const isAuthRoute =
+      pathname === "/dashboard/Admin-login" ||
+      pathname === "/dashboard/Admin-login/";
     const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute;
 
 
@@ -23,7 +25,7 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/dashboard/Admin-login/", req.url));
     }
 
- 
+
 
 
     return NextResponse.next();

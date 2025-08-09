@@ -1,4 +1,4 @@
-import { Category, EDIT_CATEGORY, INNERSUBCATEGORY, ISUBCATEGORY } from "./cat";
+import { Category, EDIT_CATEGORY, ISUBCATEGORY } from "./cat";
 import { ProductReviews } from "./general";
 import { IEcomerece, IProduct } from "./prod";
 
@@ -40,8 +40,6 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
   export interface DASHBOARD_MAINPAGE_PROPS {
     categories: ICategory[], 
     productsData?: IProduct[],
-    ecomereceProducts?:IEcomerece[]
-    ecomerece?:boolean
   }
 
 
@@ -50,7 +48,6 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     setProducts: React.Dispatch<SetStateAction<IProduct | IEcomerece[]>>;
     setselecteMenu: React.Dispatch<SetStateAction<string>>;
     setEditProduct: React.Dispatch<SetStateAction<| IEcomerece | undefined>>;
-    ecomerece?:boolean
   
   }
   
@@ -79,12 +76,4 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     features: Feature[];
     categoryData?: ICategory;
     subCategoryFlag?: boolean;
-  }
-
-  export interface DASHBOARD_ADD_INNERSUBCATEGORY_PROPS {
-    setMenuType: React.Dispatch<SetStateAction<string>>;
-    seteditCategory?: React.Dispatch<SetStateAction<INNERSUBCATEGORY | undefined | null>>;
-    editCategory?: INNERSUBCATEGORY | undefined | null;
-    subCategories?: ISUBCATEGORY[];
-    Innersubcategory?: INNERSUBCATEGORY[]
   }
