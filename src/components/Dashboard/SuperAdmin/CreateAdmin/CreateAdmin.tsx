@@ -6,8 +6,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Admin, AdminValues } from 'types/type';
 import showToast from 'components/Toaster/Toaster';
-import { CREATE_ADMIN, UPDATE_ADMIN } from 'graphql/mutations';
 import revalidateTag from 'components/ServerActons/ServerAction';
+import { CREATE_ADMIN,UPDATE_ADMIN } from 'graphql/Admins';
 
 interface CheckBox {
   canAddProduct: boolean;

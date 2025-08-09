@@ -13,7 +13,8 @@ export interface ImagesProps {
 }
 
 interface PROPS {
-  setImagesUrl?: React.Dispatch<SetStateAction<ImagesProps[] | ProductImage[] | undefined>>;  video?: boolean
+  setImagesUrl?: React.Dispatch<SetStateAction<ImagesProps[] | ProductImage[] | undefined>>;  
+  video?: boolean
   multiple?: boolean
   s3Flag?: boolean
   Ispdf?: boolean

@@ -30,7 +30,7 @@ const Header = (props: {
             className="block flex-shrink-0 lg:hidden w-20 xs:w-[100px]"
             href="/"
           >
-            <Image width={100} height={100} src="/assets/images/header/logo.png" alt="Logo" />
+            <Image width={100} height={100} src="/assets/images/dashboard_logo.png" alt="Logo" />
           </Link>
         </div>
 

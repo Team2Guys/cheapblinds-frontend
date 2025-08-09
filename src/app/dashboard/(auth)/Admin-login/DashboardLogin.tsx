@@ -50,7 +50,7 @@ const DashboardLogin = () => {
       });
       console.log(result, "result")
       if (result?.error) {
-        setError(result.error); // This is where incorrect credentials error will appear
+        setError(result.error,); 
         return;
       }
 

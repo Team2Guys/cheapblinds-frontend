@@ -12,8 +12,6 @@ export interface GlobalCommontypes {
       short_description?: string;
       custom_url: string;
       Banners?: ProductImage;
-      BannerText?: string;
-      BannerHeading?: string;
       breadCrum?: string;
 
       Canonical_Tag?: string;

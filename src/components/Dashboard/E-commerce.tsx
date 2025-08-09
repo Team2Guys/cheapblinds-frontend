@@ -86,12 +86,6 @@ console.log(chartData,"chartData")
       condition: true,
     },
     {
-      title: 'Ecommerce Products',
-      total: records?.ecomereceProducts ?? '',
-      icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
-      condition: true,
-    },
-    {
       title: 'Blogs',
       total: records?.blogs ?? '',
       icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
