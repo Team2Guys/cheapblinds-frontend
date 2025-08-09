@@ -1,4 +1,4 @@
-import { EDIT_CATEGORY, INNERSUBCATEGORY, ISUBCATEGORY_EDIT } from "types/cat";
+import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from "types/cat";
 import { IProductValues } from "types/prod";
 
 export const categoryInitialValues: EDIT_CATEGORY = {
@@ -27,11 +27,6 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   status: 'DRAFT',
 };
 
-export const innerSubcategoryInitialValues: INNERSUBCATEGORY = {
-
-  name: '',
-  custom_url: "",
-};
 
 
 
@@ -39,6 +34,7 @@ export const AddproductsinitialValues: IProductValues = {
   name: '',
   price: 0,
   description: '',
+  short_description: '',
   stock: 0,
   discountPrice: 0,
   custom_url: '',
@@ -46,25 +42,6 @@ export const AddproductsinitialValues: IProductValues = {
   Canonical_Tag: '',
   Meta_Description: '',
   seoSchema: "",
-  explore_description: "",
-  explore_main_heading: "",
-  explore_Heading: "",
-  bottomText: "",
-  Product_Section_heading: "",
-  left_side_Text: [],
-  right_side_Heading: "",
-  categoryFaqs: [],
-  categoryHeroText: [],
-  categoryHeroHeading: "",
-  BannerHeading: "",
-  categoryHeroToptext: "",
-  BannerText: "",
   breadCrum: "",
-  DescriptionBullets: [],
-  Additionalinformation: [],
-  Questions: [],
-  materialType: [],
-  colors: [],
-  sizes: [],
-  variant:[],
+  status: 'DRAFT'
 };

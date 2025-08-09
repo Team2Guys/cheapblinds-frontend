@@ -34,6 +34,8 @@ export const GET_ALL_CATEGORIES = gql`
       Canonical_Tag
       status
       seoSchema
+      updatedAt
+      createdAt
       Products {
         id
         name
@@ -148,6 +150,8 @@ export const GET_ALL_SUBCATEGORIES = gql`
             Canonical_Tag
             status
             seoSchema
+            updatedAt
+            createdAt
     }
   }
 `;

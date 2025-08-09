@@ -1,6 +1,6 @@
 import { GlobalCommontypes } from "./CommonTypes";
 import { BlogStatus } from "./general";
-import { AdditionalInformation, IProduct, ProductImage } from "./prod";
+import { IProduct, ProductImage } from "./prod";
 
 export interface CategoryHeroImage {
   imageUrl: string;
@@ -70,18 +70,6 @@ export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
   
 }
 
-export interface INNERSUBCATEGORY {
-  id?: number | string,
-  name:          string
-  custom_url:    string
-  subCategoryId?: number | string
-  subCategory?:   ISUBCATEGORY
-  createdAt?: Date;
-  updatedAt?: Date;
-  last_editedBy?: string
-  products?: IProduct[]
-  catalogue?:ProductImage
-}
 
 export interface SUBNCATEGORIES_PAGES_PROPS {
   catgories: Category[];

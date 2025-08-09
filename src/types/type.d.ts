@@ -208,6 +208,7 @@ export interface spacification { specsDetails: string };
 export interface FormValues {
   name: string;
   description: string;
+  short_description: string
   salePrice: string;
   purchasePrice: string;
   discountPrice: string;

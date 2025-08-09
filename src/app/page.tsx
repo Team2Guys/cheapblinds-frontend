@@ -2,7 +2,7 @@
 
 import ImageUploader from "components/ImageUploader/ImageUploader";
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import { ProductImage } from "types/prod";
 import { ImageRemoveHandler } from "utils/helperFunctions";
 

@@ -1,4 +1,4 @@
-import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_INNER_SUB_CATEGORIES, FETCH_ALL_ORDERS, FETCH_ALL_PRODUCTS, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, GET_ALL_RECORDS } from 'graphql/queries';
+import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_INNER_SUB_CATEGORIES, FETCH_ALL_ORDERS, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, GET_ALL_RECORDS } from 'graphql/queries';
 
 import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ECOMERECE, FIND_ONE_Accessory } from 'graphql/Accessories';
@@ -6,26 +6,28 @@ import { Category } from 'types/cat';
 // import { getToken } from 'components/ServerActons/ServerAction';
 import ApoloClient from 'utils/AppoloClient';
 import { GET_ALL_CATEGORIES, GET_ALL_SUBCATEGORIES } from 'graphql/categories';
+import { GET_ALL_PRODUCTS } from 'graphql/prod';
 
 
 
 export const fetchProducts = async (CUSTOMIZE_QUERY?: DocumentNode) => {
   try {
     const { data } = await ApoloClient.query({
-      query: CUSTOMIZE_QUERY ? CUSTOMIZE_QUERY : FETCH_ALL_PRODUCTS,
+      query: CUSTOMIZE_QUERY ? CUSTOMIZE_QUERY : GET_ALL_PRODUCTS,
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: {
-          credentials: "include",
           next: { tags: ["products"] }
         },
       },
     });
 
-    return data?.All_products || [];
+    return data.products || [];
   } catch (error) {
     return []
-    throw error;
+    // console.log(error.networkError.result.errors[0])
+    throw error
+;
   }
 };
 

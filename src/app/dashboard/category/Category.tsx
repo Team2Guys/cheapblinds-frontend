@@ -25,7 +25,6 @@ const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
           <DashboardCat
             setMenuType={setMenuType}
             seteditCategory={seteditCategory}
-            // editCategory={editCategory}
             cetagories={AllCategories || []}
           />
         </div>

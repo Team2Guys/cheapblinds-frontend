@@ -6,9 +6,8 @@ const Productspage = async () => {
   const [categories, products, ] = await Promise.all([
     fetchCategories(),
     fetchProducts(),
-
   ]);
-
+  console.log(products,'products')
   return <Product categories={categories} productsData={products}  />;
 
 };

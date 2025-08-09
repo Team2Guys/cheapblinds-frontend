@@ -208,7 +208,7 @@ function AddReview({ editReview, setEditsetReview, setselecteMenu }: I_Add_Revie
                   })}
                 </div>
               ) : (
-                <ImageUploader setposterimageUrl={setposterimageUrl} />
+                <ImageUploader setImagesUrl={setposterimageUrl} />
               )}
             </div>
             <div>

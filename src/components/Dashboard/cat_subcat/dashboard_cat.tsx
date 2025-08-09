@@ -197,7 +197,7 @@ const DashboardCat = ({
       title: 'Edit',
       key: 'Edit',
       render: (_: string, record: Category) => (
-        <LiaEdit
+        <LiaEdit aria-label="Edit Category"
           className={`${canEditCategory && 'text-black cursor-pointer  '} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
           size={20}
           onClick={() => {
@@ -214,7 +214,7 @@ const DashboardCat = ({
       title: 'Action',
       key: 'action',
       render: (text: string, record: Category) => (
-        <RiDeleteBin6Line
+        <RiDeleteBin6Line  aria-label="Delete Category"
           className={` ${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
             }`}
           // className="cursor-pointer text-red-500"
