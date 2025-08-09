@@ -13,6 +13,7 @@ import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { useMutation } from '@apollo/client';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import ReactCrop, { Crop } from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 import { Modal } from 'antd';
 import { centerAspectCrop } from 'types/product-crop';
 import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
@@ -361,72 +362,6 @@ const AddSubcategory = ({
                       </div>
                     ) : (
                       <ImageUploader setImagesUrl={setposterimageUrl} />
-                    )}
-                  </div>
-
-
-                  <div className="rounded-sm border border-stroke bg-white">
-                    <div className="border-b border-stroke py-4 px-2 bg-primary">
-                      <h3 className="font-medium  ">
-                        Add Sub Category professional service Image
-
-                      </h3>
-                    </div>
-                    {professionalServiceImageurl?.[0] && professionalServiceImageurl.length > 0 ? (
-                      <div className="p-4 bg-primary">
-                        {professionalServiceImageurl.map((item: ProductImage, index: number) => {
-                          return (
-                            <div
-                              className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                              key={index}
-                            >
-                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
-                                <RxCross2
-                                  className="cursor-pointer border rounded text-red-500 dark:text-red-700"
-                                  size={17}
-                                  onClick={() => {
-                                    ImageRemoveHandler(
-                                      item.public_id,
-                                      setprofessionalServiceImageurl,
-                                      finalToken
-                                    );
-                                  }}
-                                />
-
-                              </div>
-                              <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
-                                key={index}
-                                className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
-
-                                width={200}
-                                height={500}
-                                loading='lazy'
-
-                                src={item?.imageUrl || ""}
-                                alt={`productImage-${index}`}
-                              />
-                              <input
-                                className="border  mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                placeholder="Alt Text"
-                                type="text"
-                                name="altText"
-                                value={item?.altText || ""}
-                                onChange={(e) =>
-                                  handleImageAltText(
-                                    index,
-                                    String(e.target.value),
-                                    setprofessionalServiceImageurl,
-                                    "altText"
-                                  )
-                                }
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <ImageUploader setImagesUrl={setprofessionalServiceImageurl} />
                     )}
                   </div>
 

@@ -174,7 +174,6 @@ const AddCategory = ({
 
         // Upload the cropped image to your backend or Cloudinary
         const response = await uploadPhotosToBackend(file);
-        const response = await uploadPhotosToBackend(file);
         if (!response) return
         // Use the base URL from your environment variables
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';

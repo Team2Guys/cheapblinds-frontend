@@ -22,6 +22,7 @@ import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from "types/PagesP
 import { useMutation } from "@apollo/client";
 import showToast from "components/Toaster/Toaster";
 import ReactCrop, { Crop } from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 import { centerAspectCrop } from "types/product-crop";
 import { useRouter } from "next/navigation";
 import { AddproductsinitialValues } from "data/InitialValues";
@@ -288,7 +289,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
         // Upload the cropped image to your backend or Cloudinary
         const response = await uploadPhotosToBackend(file);
-        const response = await uploadPhotosToBackend(file);
         if (!response) return
 
         // Use the base URL from your environment variables
@@ -481,7 +481,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         })}
                       </div>
                     ) : (
-                      <ImageUploader setImagesUrl={setposterimageUrl} />
                       <ImageUploader setImagesUrl={setposterimageUrl} />
                     )}
                   </div>
@@ -910,7 +909,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     </div>
                   ) : (
                     <ImageUploader setImagesUrl={sethoverImage} />
-                    <ImageUploader setImagesUrl={sethoverImage} />
                   )}
                 </div>
 
@@ -999,7 +997,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     </div>
                   ) : (
                     <ImageUploader setImagesUrl={setBannerImageUrl} video s3Flag />
-                    <ImageUploader setImagesUrl={setBannerImageUrl} video s3Flag />
                   )}
                 </div>
 
@@ -1084,178 +1081,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     {categorySubCatError.prodImages}
                   </p>
                 ) : null}
-
-              </div>
-
-                      {left_side_image && left_side_image.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                          {left_side_image.map((item: ProductImage, index) => {
-                            return (
-                              <div key={index}>
-                                <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
-                                  <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
-                                    <RxCross2
-                                      className="cursor-pointer text-red-500 dark:text-red-700"
-                                      size={17}
-                                      onClick={() => {
-                                        ImageRemoveHandler(
-                                          item.public_id,
-                                          setleft_side_image,
-                                          finalToken
-                                        );
-                                      }}
-                                    />
-                                  </div>
-                                  <Image
-                                    onClick={() => handleCropClick(item.imageUrl)}
-                                    key={index}
-                                    className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
-                                    width={100}
-                                    height={100}
-                                    loading="lazy"
-                                    src={item?.imageUrl ? item?.imageUrl : ""}
-                                    alt={`productImage-${index}`}
-                                  />
-                                </div>
-                                <input
-                                  className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                  placeholder="altText"
-                                  type="text"
-                                  name="altText"
-                                  value={item?.altText || ""}
-                                  onChange={(e) =>
-                                    handleImageAltText(
-                                      index,
-                                      String(e.target.value),
-                                      setleft_side_image,
-                                      "altText"
-                                    )
-                                  }
-                                />
-                              </div>
-                            );
-                          })}
-                        </div>
-                      ) : (
-                        <ImageUploader setImagesUrl={setleft_side_image} />
-                      )}
-                    </div>
-
-                    <div className="rounded-sm border border-stroke ">
-                      <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                        <h3 className="font-medium ">
-                          categoryHeroImages
-                        </h3>
-                      </div>
-                      <ImageUploader setImagesUrl={setfeatureImagesImagesUrl} multiple />
-
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                        {featureImagesimagesUrl?.map(
-                          (item: ProductImage, index) => {
-
-
-
-                            return (
-                              <div
-                                key={index}
-                                draggable
-                                onDragStart={() => (dragFeatureImage.current = index)}
-                                onDragEnter={() =>
-                                  (draggedOverfeatureImage.current = index)
-                                }
-                                onDragEnd={handleFeatreSort}
-                                onDragOver={(e) => e.preventDefault()}
-                              >
-                                <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
-                                  <div
-                                    className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full"
-                                    draggable
-                                  >
-                                    <RxCross2
-                                      className="cursor-pointer text-red-500 dark:text-red-700"
-                                      size={17}
-                                      onClick={() => {
-                                        ImageRemoveHandler(
-                                          item.public_id,
-                                          setfeatureImagesImagesUrl,
-                                          finalToken
-                                        );
-                                      }}
-                                    />
-                                  </div>
-                                  <Image
-                                    onClick={() => handleCropClick(item.imageUrl)}
-                                    key={index}
-                                    className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
-                                    width={300}
-                                    height={200}
-                                    loading="lazy"
-                                    src={item?.imageUrl || ""}
-                                    alt={`productImage-${index}` || ""}
-                                  />
-                                </div>
-
-                                <input
-                                  className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                  placeholder="altText"
-                                  type="text"
-                                  name="altText"
-                                  value={item?.altText || ""}
-                                  onChange={(e) =>
-                                    handleImageAltText(
-                                      index,
-                                      String(e.target.value),
-                                      setfeatureImagesImagesUrl,
-                                      "altText"
-                                    )
-                                  }
-                                />
-
-                                {ecomerece && (
-                                  <>
-                                    <input
-                                      className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                      placeholder="color"
-                                      type="text"
-                                      name="color"
-                                      value={item?.color || ""}
-                                      onChange={(e) =>
-                                        handleImageAltText(
-                                          index,
-                                          String(e.target.value),
-                                          setfeatureImagesImagesUrl,
-                                          "color"
-                                        )
-                                      }
-                                    />
-                                    <input
-                                      className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                      placeholder="colorName"
-                                      type="text"
-                                      name="colorName"
-                                      value={item?.colorName}
-                                      onChange={(e) =>
-                                        handleImageAltText(
-                                          index,
-                                          String(e.target.value),
-                                          setfeatureImagesImagesUrl,
-                                          "colorName"
-                                        )
-                                      }
-                                    />
-                                  </>
-                                )}
-                              </div>
-                            );
-                          }
-                        )}
-                      </div>
-
-
-                    </div>
-                  </>
-                }
 
               </div>
 
