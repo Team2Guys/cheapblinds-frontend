@@ -88,7 +88,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <div className="flex items-center justify-between gap-2 px-6 py-2 h-20 w-auto">
         <Link href="/">
           <Image width={120} height={32}
-            src="/assets/images/header/logo.png"
+            src="/assets/images/dashboard_logo.png"
             alt="logo"
           />
         </Link>

@@ -7,6 +7,8 @@ import { fetchSingeEComProduct, fetchSingeProduct, fetchSingeSubCategory, fetchS
 import { Metadata } from 'next';
 import { ISEO_TAGS, SEARCH_PARAMS } from 'types/CommonTypes';
 import ApoloClient from 'utils/AppoloClient';
+import { getServerSession } from 'next-auth';
+import { authOptions } from 'components/auth/authOptions';
 
 
 async function revalidateTag(name: string) {
@@ -156,8 +158,8 @@ export const SeoTagsHandlerpproduct = async (productname: string, maincategory: 
 }
 
 export const getAdminDetails = async () => {
-  // const user = await getServerSession(authOptions)
-  const user = 'hello';
+  const user = await getServerSession(authOptions)
+  // const user = 'hello';
 
   return user ? user : "this is my user object";
 }
