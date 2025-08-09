@@ -113,9 +113,6 @@ export const REMOVE_CATEGORY = gql`
   }
 `;
 
-
-
-
 // SubCategories 
 export const CREATE_SUBCATEGORY = gql`
   mutation CreateSubCategory($input: CreateSubCategoryInput!) {

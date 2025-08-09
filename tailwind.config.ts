@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
   content: [
@@ -14,7 +15,10 @@ export default {
         'xs': '375px',
         'xsm': '450px',
       },
-
+      fontFamily: {
+        open_Sans: ["var(--font-open-sans)", ...defaultTheme.fontFamily.sans],
+        rubik: ["var(--font-rubik)", ...defaultTheme.fontFamily.sans],
+      },
   
       colors: {
         primary: "var(--primary)",

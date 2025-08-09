@@ -161,7 +161,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/"
-                              className={`dashboard_side_bar_links group p-2 ${pathname === '/dashboard/' && 'bg-black text-white'
+                              className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/' && 'bg-black text-white'
                                 }`}
                             >
                               eCommerce
@@ -217,7 +217,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/category/"
-                              className={`dashboard_side_bar_links group p-2 ${pathname === '/dashboard/category/' &&
+                              className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/category/' &&
                                 'bg-black text-white'
                                 }`}
                             >
@@ -227,7 +227,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/subcategory/"
-                              className={`dashboard_side_bar_links group p-2 ${pathname === '/dashboard/subcategory/' &&
+                              className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/subcategory/' &&
                                 'bg-black text-white'
                                 }`}
                             >
@@ -277,7 +277,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/products"
-                              className={`dashboard_side_bar_links group p-2 ${pathname === '/dashboard/products/' &&
+                              className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/products/' &&
                                 'bg-black text-white'
                                 } `}
                             >
@@ -327,7 +327,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/orders/"
-                              className={`dashboard_side_bar_links group p-2 ${pathname === '/dashboard/orders/' && 'bg-black text-white'
+                              className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/orders/' && 'bg-black text-white'
                                 } `}
                             >
                               View Orders
@@ -377,7 +377,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/abundant/"
-                              className={`dashboard_side_bar_links group p-2 ${pathname === '/dashboard/abundant/' &&
+                              className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/abundant/' &&
                                 'bg-black text-white'
                                 } `}
                             >
@@ -429,7 +429,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/measurement-appointment/"
-                              className={`dashboard_side_bar_links group p-2 ${pathname === '/dashboard/measurement-appointment/' &&
+                              className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/measurement-appointment/' &&
                                 'bg-black text-white'
                                 } `}
                             >
@@ -498,7 +498,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <li key={link.href}>
                               <Link
                                 href={link.href}
-                                className={`dashboard_side_bar_links group p-2 ${pathname === link.href ? 'bg-black text-white' : ''
+                                className={`dashboard_side_bar group p-2 ${pathname === link.href ? 'bg-black text-white' : ''
                                   }`}
                               >
                                 {link.label}
