@@ -15,7 +15,6 @@ import { CREATE_SUBCATEGORY, UPDATE_SUBCATEGORY } from 'graphql/mutations';
 import { FETCH_ALL_SUB_CATEGORIES } from 'graphql/queries';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import ReactCrop, { Crop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 import { Modal } from 'antd';
 import { centerAspectCrop } from 'types/product-crop';
 import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
@@ -229,7 +228,7 @@ const AddSubcategory = ({
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
 
         // Upload the cropped image to your backend or Cloudinary
-        const response = await uploadPhotosToBackend([file]);
+        const response = await uploadPhotosToBackend(file);
         if (!response) return;
 
         // Use the base URL from your environment variables
@@ -419,7 +418,7 @@ const AddSubcategory = ({
                         })}
                       </div>
                     ) : (
-                      <ImageUploader setposterimageUrl={setposterimageUrl} />
+                      <ImageUploader setImagesUrl={setposterimageUrl} />
                     )}
                   </div>
 
@@ -485,7 +484,7 @@ const AddSubcategory = ({
                         })}
                       </div>
                     ) : (
-                      <ImageUploader setposterimageUrl={setprofessionalServiceImageurl} />
+                      <ImageUploader setImagesUrl={setprofessionalServiceImageurl} />
                     )}
                   </div>
 
@@ -573,7 +572,7 @@ const AddSubcategory = ({
                         })}
                       </div>
                     ) : (
-                      <ImageUploader setposterimageUrl={setBannerImageUrl} video s3Flag />
+                      <ImageUploader setImagesUrl={setBannerImageUrl} video s3Flag />
                     )}
                   </div>
 

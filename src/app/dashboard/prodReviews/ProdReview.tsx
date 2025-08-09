@@ -9,9 +9,8 @@ import { Switch, Table } from 'antd';
 import { DELETE_PROD_REVIEW, UPDATE_PROD_REVIEWS, } from 'graphql/general';
 import { useMutation } from '@apollo/client';
 import revalidateTag from 'components/ServerActons/ServerAction';
-import showToast from 'components/Toaster/Toaster';
+import showToast from '../../../components/Toaster/Toaster';
 import { useSession } from 'next-auth/react';
-
 const DefaultLayout = dynamic(() => import('components/Dashboard/DefaultLayout'))
 
 

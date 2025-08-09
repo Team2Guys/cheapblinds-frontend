@@ -223,7 +223,7 @@ console.log(catalogue, "catalogue")
                     </div> 
                         : null}
 
-                    <ImageUploader setposterimageUrl={setcatalogue} s3Flag Ispdf />
+                    <ImageUploader setImagesUrl={setcatalogue} s3Flag Ispdf />
                   </div>
 
                 </div>

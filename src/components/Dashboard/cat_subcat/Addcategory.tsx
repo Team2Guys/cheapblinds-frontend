@@ -12,7 +12,6 @@ import { Category, EDIT_CATEGORY } from 'types/cat';
 import { CREATE_CATEGORY, UPDATE_CATEGORY } from 'graphql/mutations';
 import { FETCH_ALL_CATEGORIES } from 'graphql/queries';
 import ReactCrop, { Crop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 import { Modal } from 'antd';
 import { centerAspectCrop } from 'types/product-crop';
 import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
@@ -214,7 +213,7 @@ const AddCategory = ({
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
 
         // Upload the cropped image to your backend or Cloudinary
-        const response = await uploadPhotosToBackend([file]);
+        const response = await uploadPhotosToBackend(file);
         if (!response) return
         // Use the base URL from your environment variables
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
@@ -360,7 +359,7 @@ const AddCategory = ({
                           })}
                         </div>
                       ) : (
-                        <ImageUploader setposterimageUrl={setposterimageUrl} />
+                        <ImageUploader setImagesUrl={setposterimageUrl} />
                       )}
                     </div>
                     <Modal
@@ -474,7 +473,7 @@ const AddCategory = ({
                           })}
                         </div>
                       ) : (
-                        <ImageUploader setposterimageUrl={setBannerImageUrl} video s3Flag />
+                        <ImageUploader setImagesUrl={setBannerImageUrl} video s3Flag />
                       )}
                     </div>
                     <div className="rounded-sm border border-stroke dark:border-strokedark ">
@@ -539,7 +538,7 @@ const AddCategory = ({
                           })}
                         </div>
                       ) : (
-                        <ImageUploader setposterimageUrl={setsalesBannerImageUrl} />
+                        <ImageUploader setImagesUrl={setsalesBannerImageUrl} />
                       )}
                     </div>
                     <div className="rounded-sm border border-stroke bg-white  dark:bg-black">

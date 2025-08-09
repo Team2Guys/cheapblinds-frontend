@@ -28,7 +28,6 @@ import {
 import { CREATE_ECOMERECE_PRODUCT, UPDATE_ECOMERECE_PRODUCTS } from "graphql/Accessories";
 import showToast from "components/Toaster/Toaster";
 import ReactCrop, { Crop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 import { centerAspectCrop } from "types/product-crop";
 import { useRouter } from "next/navigation";
 import { AddproductsinitialValues } from "data/InitialValues";
@@ -347,7 +346,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
 
         // Upload the cropped image to your backend or Cloudinary
-        const response = await uploadPhotosToBackend([file]);
+        const response = await uploadPhotosToBackend(file);
         if (!response) return
 
         // Use the base URL from your environment variables
@@ -591,7 +590,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         })}
                       </div>
                     ) : (
-                      <ImageUploader setposterimageUrl={setposterimageUrl} />
+                      <ImageUploader setImagesUrl={setposterimageUrl} />
                     )}
                   </div>
                   {categorySubCatError.posterImageError ? (
@@ -2023,7 +2022,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       })}
                     </div>
                   ) : (
-                    <ImageUploader sethoverImage={sethoverImage} />
+                    <ImageUploader setImagesUrl={sethoverImage} />
                   )}
                 </div>
 
@@ -2111,7 +2110,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       })}
                     </div>
                   ) : (
-                    <ImageUploader setposterimageUrl={setBannerImageUrl} video s3Flag />
+                    <ImageUploader setImagesUrl={setBannerImageUrl} video s3Flag />
                   )}
                 </div>
 
@@ -2348,7 +2347,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           })}
                         </div>
                       ) : (
-                        <ImageUploader sethoverImage={setleft_side_image} />
+                        <ImageUploader setImagesUrl={setleft_side_image} />
                       )}
                     </div>
 
