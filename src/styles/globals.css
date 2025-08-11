@@ -40,14 +40,14 @@
 }
 @layer components {
   .text-heading {
-    @apply text-2xl md:text-3xl lg:text-4xl;
+    @apply text-2xl md:text-3xl lg:text-4xl font-rubik font-semibold;
   }
 }
 @layer components {
   .text-medium {
-    @apply text-xl;
+    @apply text-xl font-rubik font-medium;
   }
-} 
+}
 
 :root {
   --background: #ffffff;
@@ -75,7 +75,7 @@
 }
 
 body {
-  background: var(--background);
+  background: var(-- );
   color: var(--foreground);
   font-family: var(--font-open-sans);
   font-size: 14px;
