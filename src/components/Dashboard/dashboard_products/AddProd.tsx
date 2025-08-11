@@ -466,10 +466,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
             <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
               <div className="flex flex-col gap-9 ">
-                <div className="rounded-sm border border-stroke  py-4 px-6">
+                <div className="rounded-sm border border-stroke bg-white dark:bg-black p-4 xs:p-6">
                   <div className="rounded-sm border border-stroke ">
                     <div className="border-b border-stroke py-4 px-4 ">
-                      <h3 className="font-medium ">
+                      <h3 className="font-medium text-black dark:text-white">
                         Add Poster Image
                       </h3>
                     </div>
@@ -506,7 +506,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               </div>
                               <div className="my-7 space-y-3">
                                 <input
-                                  className="primary-input"
+                                  className="dashboard_input"
                                   placeholder="altText"
                                   type="text"
                                   name="altText"
@@ -537,7 +537,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                   <div className="flex flex-col ">
 
-                    <label className="primary-label ">
+                    <label className="primary-label">
                       Product Title
                     </label>
 
@@ -545,7 +545,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       type="text"
                       name="name"
                       placeholder="Title"
-                      className={`primary-input ${formik.touched.name && formik.errors.name
+                      className={`dashboard_input ${formik.touched.name && formik.errors.name
                         ? "border-red-500"
                         : ""
                         }`}
@@ -828,13 +828,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             name="category"
                             value={selectedCategory ? selectedCategory : ''}
                             onChange={handleCategoryChange}
-                            className="primary-input opt"
+                            className="dashboard_input"
                           >
-                            <option value="" disabled className="bg-primary text-gray-500">
+                            <option value="" disabled className="">
                               Select Category
                             </option>
                             {categoriesList?.map((category) => (
-                              <option key={category.id} value={category.id} className="bg-primary option text-black">
+                              <option key={category.id} value={category.id}>
                                 {category.name}
                               </option>
                             ))}
@@ -851,7 +851,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                         {subcategories.length > 0 && (
                           <div className="mt-4">
-                            <h2 className="text-lg font-medium mb-3">
+                            <h2 className="primary-label">
                               Subcategories
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -861,14 +861,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 onChange={
                                   handleInnerSubCategoryChange
                                 }
-                                className="primary-input bg-primary"
+                                className="dashboard_input"
                               >
-                                <option value="" disabled className="bg-gray-500 text-black">
+                                <option value="" disabled>
                                   Select Subcategory
                                 </option>
                                 {subcategories.map(
                                   (subCat: ISUBCATEGORY) => (
-                                    <option key={subCat.id} value={subCat.id} className="bg-primary option text-black">
+                                    <option key={subCat.id} value={subCat.id}>
                                       {subCat.name}
                                     </option>
                                   )
@@ -895,10 +895,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-5 rounded-sm border border-stroke bg-white dark:bg-black p-4 xs:p-6 h-fit">
                 <div className="rounded-sm border border-stroke ">
                   <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium ">
+                    <h3 className="font-medium text-black dark:text-white">
                       Add Hover Image
                     </h3>
                   </div>
@@ -934,7 +934,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               />
                             </div>
                             <input
-                              className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                              className="dashboard_input"
                               placeholder="altText"
                               type="text"
                               name="altText"
@@ -958,17 +958,17 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="rounded-sm border border-stroke dark:border-strokedark ">
-                  <div className="border-b bg-primary border-stroke py-4 px-2  ">
-                    <h3 className="font-medium text-white">
+                  <div className="border-b border-stroke py-4 px-2  ">
+                    <h3 className="font-medium text-black dark:text-white">
                       Add Banner Image / Video
                     </h3>
                   </div>
                   {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
-                    <div className=" p-4 bg-primary">
+                    <div className=" p-4">
                       {BannerImageUrl.map((item: ProductImage, index: number) => {
                         return (
                           <div
-                            className="relative border group bg-primary rounded-lg w-fit  overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-105"
+                            className="relative border group rounded-lg w-fit  overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-105"
                             key={index}
                           >
                             <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full cursor-pointer z-20">
@@ -1020,7 +1020,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 />
 
                                 <input
-                                  className="border  mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input"
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -1050,7 +1050,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                 <div className="rounded-sm border border-stroke ">
                   <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium ">
+                    <h3 className="font-medium text-black dark:text-white">
                       Add Product Images
                     </h3>
                   </div>
@@ -1101,7 +1101,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             </div>
 
                             <input
-                              className="primary-input"
+                              className="dashboard_input"
                               placeholder="altText"
                               type="text"
                               name="altText"

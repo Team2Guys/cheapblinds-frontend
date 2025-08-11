@@ -1,7 +1,7 @@
 'use client';
 
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { Table, notification } from 'antd';
+import { notification } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 // import axios from 'axios';
@@ -14,6 +14,7 @@ import { useMutation } from '@apollo/client';
 // import { useSession } from 'next-auth/react';
 import { REMOVE_CATEGORY } from 'graphql/categories';
 import { DateFormatHandler } from 'utils/helperFunctions';
+import Table from 'components/ui/table';
 // import { getPermission } from 'utils/permissionHandlers';
 
 interface CategoryProps {
@@ -64,7 +65,7 @@ const DashboardCat = ({
   // const canDeleteCategory = getPermission(session, 'canDeleteCategory');
   // const canAddCategory = getPermission(session, 'canAddCategory');
   // const canEditCategory = getPermission(session, 'canEditCategory');
-    const canDeleteCategory = true;
+  const canDeleteCategory = true;
   const canAddCategory = true;
   const canEditCategory = true;
 
@@ -89,14 +90,15 @@ const DashboardCat = ({
     try {
 
 
-      await removeCategory({ variables: { id: Number(key) },
-          // context: {
-          //   headers: {
-          //     authorization: `Bearer ${finalToken}`,
-          //   },
-          //   credentials: 'include',
-          // },
-    });
+      await removeCategory({
+        variables: { id: Number(key) },
+        // context: {
+        //   headers: {
+        //     authorization: `Bearer ${finalToken}`,
+        //   },
+        //   credentials: 'include',
+        // },
+      });
 
       setCategory((prev: Category[] | undefined) => (prev ? prev.filter((item) => item.id !== key) : []));
       revalidateTag('categories');
@@ -124,115 +126,99 @@ const DashboardCat = ({
   };
 
 
-  const columns = [
-    {
-      title: 'Image',
-      dataIndex: 'posterImageUrl',
-      key: 'posterImageUrl',
-      width: 100,
-      render: (_: string, record: Category) =>
-        record.posterImageUrl ? (
-          record.posterImageUrl.resource_type == 'vidoe' ?
-            <video
-              src={record.posterImageUrl.imageUrl || ''}
-
-            >
-
-
-            </video>
-            :
-
-            <Image
-              src={record.posterImageUrl.imageUrl || ''}
-              alt={`Image of ${record.name}`}
-              loading='lazy'
-              width={50}
-              height={50}
-            />
-
-        ) : (
-          <div>No Image Available </div>
-        ),
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-      {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      width: 100,
-    },
-    {
-      title: 'Create At',
-      dataIndex: 'createdAt',
-      key: 'date',
-      width: 170,
-      render: (_: string, record: Category) => {
-        const createdAt = new Date(record?.createdAt ?? '');
-        return <span>{DateFormatHandler(createdAt)}</span>;
-      },
-    },
-
-    {
-      title: 'Updated At',
-      dataIndex: 'updatedAt',
-      key: 'date',
-      width: 170,
-      render: (_: string, record: Category) => {
-        const updatedAt = new Date(record?.updatedAt ?? '');
-        return <span>{DateFormatHandler(updatedAt)}</span>;
-      },
-    },
-    {
-      title: 'Edited By',
-      dataIndex: 'last_editedBy',
-      key: 'last_editedBy',
-      width: 150
-    },
-    {
-      title: 'Edit',
-      key: 'Edit',
-      width: 60,
-      render: (_: string, record: Category) => (
-        <LiaEdit aria-label="Edit Category"
-          className={`${canEditCategory && 'text-black cursor-pointer  '} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
-          size={20}
-          onClick={() => {
-            if (canEditCategory) {
-              handleEdit(record)
-            }
-
-          }
-          }
+const columns = [
+  {
+    title: 'Image',
+    dataIndex: 'posterImageUrl',
+    key: 'posterImageUrl',
+    width: 100,
+    render: (record: Category) =>
+      record.posterImageUrl ? (
+        <Image
+          src={record.posterImageUrl.imageUrl || ''}
+          alt={`Image of ${record.name}`}
+          loading="lazy"
+          width={50}
+          height={50}
         />
+      ) : (
+        <div>No Image Available</div>
       ),
+  },
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    width: 100,
+  },
+  {
+    title: 'Create At',
+    dataIndex: 'createdAt',
+    key: 'date',
+    width: 170,
+    render: (record: Category) => {
+      const createdAt = new Date(record?.createdAt ?? '');
+      return <span>{DateFormatHandler(createdAt)}</span>;
     },
-    {
-      title: 'Action',
-      key: 'action',
-      width: 80,
-      render: (text: string, record: Category) => (
-        <RiDeleteBin6Line  aria-label="Delete Category"
-          className={` ${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
-            }`}
-          // className="cursor-pointer text-red-500"
-          size={20}
-          onClick={() => {
-            if (canDeleteCategory) {
-              confirmDelete(record.id);
-            }
-          }}
-        />
-      ),
+  },
+  {
+    title: 'Updated At',
+    dataIndex: 'updatedAt',
+    key: 'date',
+    width: 170,
+    render: (record: Category) => {
+      const updatedAt = new Date(record?.updatedAt ?? '');
+      return <span>{DateFormatHandler(updatedAt)}</span>;
     },
-  ];
+  },
+  {
+    title: 'Edited By',
+    dataIndex: 'last_editedBy',
+    key: 'last_editedBy',
+    width: 150,
+  },
+  {
+    title: 'Edit',
+    key: 'Edit',
+    width: 60,
+    render: (record: Category) => (
+      <LiaEdit
+        aria-label="Edit Category"
+        className={`${canEditCategory && 'text-black dark:text-white cursor-pointer'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+        size={20}
+        onClick={() => {
+          if (canEditCategory) handleEdit(record);
+        }}
+      />
+    ),
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    width: 80,
+    render: (record: Category) => (
+      <RiDeleteBin6Line
+        aria-label="Delete Category"
+        className={`${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'}`}
+        size={20}
+        onClick={() => {
+          if (canDeleteCategory) {
+            confirmDelete(record.id);
+          }
+        }}
+      />
+    ),
+  },
+];
 
   return (
-    <div className='bg-primary dard:text-white'>
-      <div className="flex justify-between mb-4 bg-primary items-center ">
+    <div>
+      <div className="flex_between mb-4 text-dark dark:text-white">
         <input
           className="primary-input w-fit"
           type="search"
@@ -256,16 +242,9 @@ const DashboardCat = ({
       </div>
 
       {filteredCategories && filteredCategories.length > 0 ? (
-        <Table
-          className="overflow-x-scroll lg:overflow-auto bg-primary"
-          dataSource={filteredCategories}
-          columns={columns}
-          pagination={false}
-          scroll={{ y: 550, x: "max-content" }}
-          rowKey="id"
-        />
+        <Table<Category> data={filteredCategories} columns={columns} rowKey="id" />
       ) : (
-        'No Categories found'
+        <p className="text-primary dark:text-white">No Categories found</p>
       )}
     </div>
   );

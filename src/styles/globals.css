@@ -1,56 +1,48 @@
 @import "tailwindcss";
-
-@layer components {
-  .primary-input {
-    @apply w-full rounded-lg border px-3 py-3 outline-none transition border-white text-white focus:border-black;
-  }
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer components {
   .primary-label {
-    @apply mb-3 block text-sm font-medium mt-3;
+    @apply mb-3 block text-sm font-medium mt-3 text-black dark:text-white;
   }
-}
 
-@layer components {
   .dashboard_primary_button {
-    @apply px-4 py-2 rounded-md text-sm border bg-black text-white border-black flex justify-center items-center gap-2 cursor-pointer w-fit;
+    @apply px-4 py-2 rounded-md text-sm border bg-black text-white dark:bg-primary dark:border-0 border-black flex justify-center items-center gap-2 cursor-pointer w-fit;
   }
-}
 
-@layer components {
+  .dashboard_input,
+  .primary-input {
+    @apply w-full rounded-lg border border-[#e5e7eb] bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-white dark:bg-black dark:text-white dark:focus:border-primary;
+  }
+
   .input_container {
     @apply flex gap-4 mt-2 flex-wrap sm:flex-nowrap;
   }
-}
 
-@layer components {
   .input_iner_container {
     @apply w-full md:w-2/4;
   }
-}
 
-@layer components {
   .dashboard_side_bar {
-    @apply relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:bg-black;
+    @apply relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 hover:bg-black dark:hover:bg-primary border-b-2 border-b-primary border-transparent;
   }
-}
 
-@layer components {
-  .active {
-    @apply text-white bg-black;
+  .flex_between {
+    @apply flex items-center justify-between;
   }
-}
-@layer components {
+
+  .active {
+    @apply text-white bg-black dark:bg-primary;
+  }
+
   .text-heading {
     @apply text-2xl md:text-3xl lg:text-4xl;
   }
-}
-@layer components {
-  .text-medium {
-    @apply text-xl;
+
+  .border , .border-stroke {
+    @apply border-[#e5e7eb] dark:border-white
   }
-} 
+}
 
 :root {
   --background: #ffffff;
@@ -88,6 +80,7 @@ body {
 :where(.css-dev-only-do-not-override-1vjf2v5).ant-btn-variant-solid {
   background-color: var(--primary);
 }
+
 :where(.css-dev-only-do-not-override-1vjf2v5).ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
   background-color: transparent;
   color: var(--primary);
@@ -97,4 +90,9 @@ body {
 :where(.css-dev-only-do-not-override-1vjf2v5).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
   color: var(--primary);
   border-color: var(--primary);
+}
+
+#apexchartshtb0gf44i .apexcharts-svg,
+#apexchartsu1td0pj1 .apexcharts-svg {
+  background-color: transparent !important;
 }

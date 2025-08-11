@@ -1,6 +1,7 @@
 "use client";
 import { useMutation } from '@apollo/client';
-import { notification, Table } from 'antd';
+import { notification } from 'antd';
+import Table from 'components/ui/table';
 import { REMOVE_BLOG } from 'graphql/blogs';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -93,9 +94,8 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
     {
       title: 'Image',
       dataIndex: 'posterImageUrl',
-      width: 150,
       key: 'posterImageUrl',
-      render: (_: string, record: IBlog) => (
+      render: (record: IBlog) => (
         <Image
           src={record?.posterImage?.imageUrl || "/assets/images/dummy-avatar.jpg"}
           alt={record?.posterImage?.altText || 'Blog image'}
@@ -109,32 +109,29 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      width: 200,
     },
     {
       title: 'Custom URL',
       dataIndex: 'custom_url',
       key: 'custom_url',
-      width: 200,
     },
     {
       title: 'category',
       dataIndex: 'category',
       key: 'category',
-      width: 200,
     },
     {
       title: 'Created At',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (_: string, record: IBlog) =>
+      render: (record: IBlog) =>
         record?.createdAt ? new Date(record.createdAt).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
     },
     {
       title: 'Updated At',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
-      render: (_: string, record: IBlog) => (
+      render: (record: IBlog) => (
         <span>{DateFormatHandler(new Date(record.updatedAt ?? ""))}</span>
       ),
     },
@@ -142,13 +139,11 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 200,
     },
     {
       title: 'Edit',
       key: 'edit',
-      width: 80,
-      render: (_: string, record: IBlog) => (
+      render: (record: IBlog) => (
         <LiaEdit
           className={`text-primary ${canEditProduct ? 'cursor-pointer' : 'cursor-not-allowed text-slate-300'}`}
           size={20}
@@ -164,8 +159,7 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
     {
       title: 'Delete',
       key: 'delete',
-      width: 80,
-      render: (_: string, record: IBlog) =>
+      render: (record: IBlog) =>
         loading ? (
           'Deleting...'
         ) : (
@@ -206,13 +200,7 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
           Add Blog
         </button>
       </div>
-      <Table
-        dataSource={filteredBlogs}
-        columns={columns}
-        rowKey="id"
-        scroll={{ y: 550, x: "max-content" }}
-        pagination={{ pageSize: 10 }}
-      />
+      <Table<IBlog> data={filteredBlogs} columns={columns} rowKey="id" />
     </>
   );
 };

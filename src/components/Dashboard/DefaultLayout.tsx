@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Sidebar from 'components/Dashboard/Sidebar';
 import Header from 'components/Dashboard/Header';
 
@@ -9,40 +9,23 @@ export default function DefaultLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsTablet(window.innerWidth < 1024);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   return (
-    <div className="flex bg-primary min-h-screen">
-      {/* Overlay for mobile */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0  bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <div
-        className={`fixed top-0 left-0 z-50 h-full w-72 overflow-y-auto overflow-x-hidden bg-white dark:bg-boxdark transition-transform duration-300 ease-in-out scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
-      >
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+    <div className="flex h-screen overflow-hidden relative bg-white dark:bg-black">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute w-[600px] h-[600px] bg-primary opacity-30 rounded-full blur-3xl top-1/3 left-[10%] mix-blend-overlay" />
+        <div className="absolute w-[500px] h-[500px] bg-primary opacity-20 rounded-full blur-2xl -top-20 right-[5%] mix-blend-overlay" />
+        <div className="absolute w-[400px] h-[400px] bg-blue-500 opacity-20 rounded-full blur-2xl bottom-0 right-0 mix-blend-overlay" />
       </div>
 
-      {/* Main Content */}
-      <div className={`flex flex-1 flex-col ${!isTablet ? 'lg:ml-72' : ''} overflow-hidden`}>
+      {/* Sidebar and Content */}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden ">
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <main className="flex-1 bg-primary dark:bg-boxdark text-white border dark:border-strokedark p-4 md:p-6 2xl:p-10 relative">
-          {children}
+        <main className="border-white border">
+          <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            {children}
+          </div>
         </main>
       </div>
     </div>

@@ -274,5 +274,14 @@ export interface ContactData {
   para?: string;
  }
 
-
-
+export interface TableProps<T> {
+  data: T[];
+  columns: Column<T>[];
+  rowKey: keyof T;
+  emptyMessage?: string;
+}
+interface Column<T> {
+  title: string;
+  key: string;
+  render?: (_record: T) => React.ReactNode;
+}

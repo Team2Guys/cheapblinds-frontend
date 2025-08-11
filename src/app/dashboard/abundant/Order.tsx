@@ -1,7 +1,8 @@
 'use client'
-import { Modal, Table } from 'antd'
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb'
 import DefaultLayout from 'components/Dashboard/DefaultLayout'
+import Modal from 'components/ui/modal'
+import Table from 'components/ui/table'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { BsEyeFill } from 'react-icons/bs'
@@ -39,68 +40,60 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
    const columns = [
       {
          title: "Order Id",
-         dataIndex: "orderId",
          key: "orderId",
-         width: 100,
       },
       {
          title: "Name",
-         dataIndex: "firstName",
          key: "firstName",
-         width: 200,
-         render: (_: number, record: prodOrder) => `${record.firstName} ${record.lastName}`
+         render: (record: prodOrder) => `${record.firstName} ${record.lastName}`
       },
       {
          title: "Email",
-         dataIndex: "email",
          key: "email",
-         width: 250,
       },
       {
          title: "Phone Number",
-         dataIndex: "phone",
          key: "phone",
-         width: 150,
       },
       {
          title: "Country",
-         dataIndex: "country",
          key: "country",
-         width: 200,
       },
       {
          title: "Emirate",
-         dataIndex: "emirate",
          key: "emirate",
-         width: 100,
       },
-      {
-         title: "Address",
-         dataIndex: "address",
-         key: "address",
-         width: 120,
-      },
-      hasTransactionDate ? {
-         title: "Transaction Date",
-         dataIndex: "transactionDate",
-         key: "transactionDate",
-         width: 120,
-         render: (date: string) => new Date(date).toLocaleString(),
-      } : {
-         title: "Checkout Date",
-         dataIndex: "checkoutDate",
-         key: "checkoutDate",
-         width: 120,
-         render: (date: string) => new Date(date).toLocaleString(),
-      },
+      ...(hasTransactionDate
+         ? [
+            {
+               title: "Transaction Date",
+               key: "transactionDate",
+               render: (record: prodOrder) => new Date(record.transactionDate).toLocaleString(),
+            },
+            {
+               title: "Total Amount",
+               key: "totalPrice",
+            },
+         ]
+         : [
+            {
+               title: "Checkout Date",
+               key: "checkoutDate",
+               render: (record: prodOrder) => new Date(record.transactionDate).toLocaleString(),
+            },
+            {
+               title: "Total Amount",
+               dataIndex: "totalPrice",
+               key: "totalPrice",
+               width: 100,
+            },
+         ]),
       {
          title: "View",
-         dataIndex: "view",
          key: "view",
-         width: 100,
-         render: (_: unknown, record: prodOrder) => (
+         render: (record: prodOrder) => (
             <button onClick={() => showModal(record)} className="cursor-pointer">
-           <BsEyeFill className="text-primary cursor-pointer text-base transition duration-300 ease-in-out hover:scale-200"/>
+               <BsEyeFill className="text-primary cursor-pointer transition duration-300 ease-in-out hover:scale-200" />
             </button>
          ),
       },
@@ -121,17 +114,8 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
          </div>
          {ordersData && ordersData.length > 0 ? (
             <>
-               <Table
-                  className="xl:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
-                  // dataSource={ordersData}
-                  columns={columns}
-                  dataSource={filteredOrders}
-                  rowKey="id"
-                  scroll={{ y: 550, x: "max-content" }}
-                  pagination={false}
-               />
-
-               <Modal title="Order Details" open={isModalOpen} onCancel={handleCancel} footer={null}>
+               <Table<prodOrder> data={filteredOrders} columns={columns} rowKey="orderId" />
+               <Modal isOpen={isModalOpen} onClose={handleCancel} >
                   {selectedOrder && (
                      <div className='space-y-3 max-h-[75vh] overflow-y-auto'>
                         <p><strong>OrderId:</strong> {selectedOrder?.orderId}</p>

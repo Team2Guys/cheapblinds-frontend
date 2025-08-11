@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Table } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { LiaEdit } from 'react-icons/lia';
@@ -14,6 +13,7 @@ import showToast from 'components/Toaster/Toaster';
 import { DateFormatHandler } from 'utils/helperFunctions';
 import { BsEyeFill } from 'react-icons/bs';
 import { GET_ALL_PRODUCTS, REMOVE_PRODUCT } from 'graphql/prod';
+import Table from 'components/ui/table';
 
 const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   products,
@@ -122,7 +122,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
       width: 100,
-      render: (text: string, record: (IProduct)) => (
+      render: (record: (IProduct)) => (
         <Image
           src={record.posterImageUrl?.imageUrl || ""}
           alt={`Image of ${record?.name}`}
@@ -149,7 +149,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       dataIndex: "stock",
       key: "stock",
       width: 130,
-      render: (text: string, record: (IProduct)) => {
+      render: (record: (IProduct)) => {
         return (
           <p>{record.stock}</p>
         )
@@ -160,7 +160,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 170,
-      render: (text: string, record: (IProduct)) => {
+      render: (record: (IProduct)) => {
         const createdAt = new Date(record?.createdAt ?? "");
         return <span>{DateFormatHandler(createdAt)}</span>;
       }
@@ -170,7 +170,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       dataIndex: 'updatedAt',
       key: 'updatedAt',
       width: 170,
-      render: (text: string, record: (IProduct)) => {
+      render: (record: (IProduct)) => {
         const updatedAt = new Date(record?.updatedAt ?? "");
         return <span>{DateFormatHandler(updatedAt)}</span>;
       }
@@ -187,7 +187,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Preview',
       key: 'Preview',
       width: 90,
-      render: (text: string, record: (IProduct)) => {
+      render: (record: (IProduct)) => {
         let urls;
         if (record.subcategory?.custom_url) {
           urls = `/${record.category?.custom_url + "/" + record.subcategory?.custom_url}/`
@@ -212,9 +212,9 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       key: 'Edit',
       width: 60,
 
-      render: (text: string, record: (IProduct)) => (
+      render: (record: (IProduct)) => (
         <LiaEdit
-          className={`${canEditproduct ? 'cursor-pointer' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
+          className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
           size={20}
           onClick={() => {
@@ -232,7 +232,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Action',
       key: 'action',
       width: 100,
-      render: (text: string, record: (IProduct)) => (
+      render: (record: (IProduct)) => (
         <RiDeleteBin6Line
           className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
@@ -279,14 +279,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       <div style={{ overflowX: 'auto' }}>
 
         {filteredProducts && filteredProducts.length > 0 ? (
-          <Table
-            className=" !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
-            dataSource={filteredProducts}
-            columns={columns}
-            rowKey="id"
-            scroll={{ y: 550, x: "max-content" }}
-            pagination={false}
-          />
+          <Table<IProduct> data={filteredProducts} columns={columns} rowKey="id" />
         ) : (
           <p className="text-primary dark:text-white">No products found</p>
         )}

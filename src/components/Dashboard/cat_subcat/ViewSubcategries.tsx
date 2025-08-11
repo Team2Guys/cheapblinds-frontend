@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Table, notification } from 'antd';
+import { notification } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { LiaEdit } from 'react-icons/lia';
@@ -15,6 +15,7 @@ import { DateFormatHandler } from 'utils/helperFunctions';
 // import { getPermission } from 'utils/permissionHandlers';
 // import { useSession } from 'next-auth/react';
 import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from 'graphql/categories';
+import Table from 'components/ui/table';
 const ViewSubcategries = ({
   setMenuType,
   seteditCategory,
@@ -120,8 +121,7 @@ const ViewSubcategries = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
-      width: 100,
-      render: (_: string, record: ISUBCATEGORY) =>
+      render: ( record: ISUBCATEGORY) =>
         record.posterImageUrl !== null ? (
           <Image
             src={record?.posterImageUrl?.imageUrl || 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1740655318/download_krzc9s.jpg'}
@@ -143,14 +143,12 @@ const ViewSubcategries = ({
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 100,
     },
     {
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'date',
-      width: 170,
-      render: (_: string, record: ISUBCATEGORY) => {
+      render: ( record: ISUBCATEGORY) => {
         const createdAt = new Date(record?.createdAt ?? "");
         DateFormatHandler(createdAt)
         return <span>{DateFormatHandler(createdAt)}</span>;
@@ -160,8 +158,7 @@ const ViewSubcategries = ({
       title: 'Updated At',
       dataIndex: 'createdAt',
       key: 'date',
-      width: 170,
-      render: (_: string, record: ISUBCATEGORY) => {
+      render: ( record: ISUBCATEGORY) => {
         const createdAt = new Date(record?.updatedAt ?? "");
         return <span>{DateFormatHandler(createdAt)}</span>;
       },
@@ -175,10 +172,9 @@ const ViewSubcategries = ({
     {
       title: 'Edit',
       key: 'Edit',
-      width: 60,
-      render: (_: string, record: ISUBCATEGORY) => (
+      render: (record: ISUBCATEGORY) => (
         <LiaEdit
-          className={`cursor-pointer ${canEditCategory && 'text-black '} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+          className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -187,8 +183,7 @@ const ViewSubcategries = ({
     {
       title: 'Action',
       key: 'action',
-      width: 80,
-      render: (_: string, record: ISUBCATEGORY) => (
+      render: (record: ISUBCATEGORY) => (
         <RiDeleteBin6Line
           className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
             }`}
@@ -233,14 +228,7 @@ const ViewSubcategries = ({
       </div>
 
       {filteredSubCategories && filteredSubCategories.length > 0 ? (
-        <Table
-          className="overflow-x-scroll lg:overflow-auto"
-          dataSource={filteredSubCategories}
-          columns={columns}
-          pagination={false}
-          scroll={{ y: 550, x: "max-content" }}
-          rowKey="id"
-        />
+        <Table<ISUBCATEGORY> data={filteredSubCategories} columns={columns} rowKey="id" />
       ) : (
         'No Sub Categories found'
       )}

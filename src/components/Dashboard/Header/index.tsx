@@ -3,6 +3,7 @@ import Link from 'next/link';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import DropdownUser from './DropdownUser';
 import Image from 'next/image';
+import logoimage from '../../../../public/assets/images/dashboard_logo.png';
 import { FaBars } from 'react-icons/fa';
 
 const Header = (props: {
@@ -10,11 +11,9 @@ const Header = (props: {
   //eslint-disable-next-line
   setSidebarOpen: any;
 }) => {
-
-  
   return (
-    <header className="sticky top-0 z-40 flex w-full bg-primary dark:bg-black text-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none border dark:border-blue-50 border-t-0 border-l-0">
-      <div className="flex flex-grow items-center justify-between px-4 py-1 shadow-2 md:px-6 2xl:px-11">
+    <header className="sticky top-0 z-40 flex w-full bg-primary dark:bg-black text-white dark:drop-shadow-none border dark:border-blue-50 border-t-0 border-l-0">
+      <div className="flex-grow flex_between px-4 py-1 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-1 xs:gap-2 sm:gap-4 lg:hidden text-black dark:text-white">
           <FaBars
             className="text-white"
@@ -30,7 +29,7 @@ const Header = (props: {
             className="block flex-shrink-0 lg:hidden w-20 xs:w-[100px]"
             href="/"
           >
-            <Image width={100} height={100} src="/assets/images/dashboard_logo.png" alt="Logo" />
+            <Image width={100} height={100} src={logoimage} alt="Logo" />
           </Link>
         </div>
 
@@ -39,7 +38,7 @@ const Header = (props: {
             <div className="relative">
               <button className="absolute left-0 top-1/2 -translate-y-1/2">
                 <svg
-                  className="fill-body hover:fill-primary dark:fill-bodydark dark:hover:fill-primary"
+                  className="fill-body hover:fill-primary dark:hover:fill-primary"
                   width="20"
                   height="20"
                   viewBox="0 0 20 20"
@@ -61,21 +60,16 @@ const Header = (props: {
                 </svg>
               </button>
 
-  
             </div>
           </form>
         </div>
 
         <div className="flex items-center gap-3">
           <ul className="flex items-center gap-2  text-black dark:text-white">
-   
             <DarkModeSwitcher />
- 
           </ul>
 
-
           <DropdownUser />
-     
         </div>
       </div>
     </header>
