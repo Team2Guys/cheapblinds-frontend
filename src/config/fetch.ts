@@ -61,7 +61,7 @@ export const fetchSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
     })
     return data?.subCategories || []
   } catch (error) {
-    // return []
+    return []
     throw error
 
   }
@@ -151,6 +151,7 @@ export const get_allAdmins = async (token: string | undefined) => {
     })
     return data?.admins || []
   } catch (error) {
+    return [];
     return error;
   }
 

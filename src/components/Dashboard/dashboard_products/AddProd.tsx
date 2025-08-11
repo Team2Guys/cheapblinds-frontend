@@ -31,7 +31,7 @@ import { uploadPhotosToBackend } from "utils/fileUploadhandlers";
 import { ISUBCATEGORY } from "types/cat";
 import { Modal } from 'antd';
 import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "graphql/prod";
-// import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 
 const initialErrors = {
@@ -52,24 +52,20 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   // const editProductFlag = editProduct?.type == "product"
   const [imagesUrl, setImagesUrl] = useState<ProductImage[] | undefined>((editProduct && editProduct?.productImages.length > 0) ? editProduct?.productImages : []);
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(editProduct && editProduct.posterImageUrl ? [editProduct.posterImageUrl] : []);
-  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(editProduct?.hoverImageUrl ? [{ ...editProduct.hoverImageUrl }] : []);
+  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(editProduct?.hoverImageUrl ? [{ ...editProduct.hoverImageUrl }] : undefined);
 
   const router = useRouter()
 
-
+  const session = useSession()
 
   const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editProduct && editProduct?.Banners ? [editProduct?.Banners] : undefined);
 
   const [loading, setloading] = useState<boolean>(false);
   const [productInitialValue, setProductInitialValue] = useState<IProductValues | null | undefined>();
   const [imgError, setError] = useState<string | null | undefined>();
-  const [selectedCategory, setSelectedCategory] = useState(editProduct ? editProduct.category.id : categoriesList?.[0]?.id);
+  const [selectedCategory, setSelectedCategory] = useState(editProduct ? editProduct.category.id : '');
   const [subcategories, setSubcategories] = useState<ISUBCATEGORY[]>([]);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(() =>
-    editProduct?.subcategory?.id ??
-    categoriesList?.[0]?.subcategory?.id ??
-    ''
-  );
+  const [selectedSubcategory, setSelectedSubcategory] = useState(editProduct?.subcategory?.id ?? '');
   const [categorySubCatError, setcategorySubCatError] = useState(initialErrors);
   const dragImage = useRef<number | null>(null);
   const draggedOverImage = useRef<number | null>(null);
@@ -119,10 +115,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         throw err;
       }
     };
-    
+
     CategoryHandler();
   }, [editProduct]);
-  console.log(productInitialValue,'productInitialValue')
 
   const onSubmit = async (values: IProductValues, { resetForm }: FormikHelpers<IProductValues>) => {
     try {
@@ -176,14 +171,18 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         Banners: Banner,
         category: +selectedCategory,
         subcategory: +selectedSubcategory,
-        last_editedBy: ''
+        last_editedBy: session.data?.user.fullname
       };
       const updateFlag = EditProductValue && editProduct ? true : false;
       const { data } = updateFlag
         ? await updateProduct({
-          variables: { input: { ...newValues, id: Number(editProduct?.id) } , refetchQueries: [{ query: GET_ALL_PRODUCTS }]},
+          variables: { input: { ...newValues, id: Number(editProduct?.id) }},
+          refetchQueries: [{ query: GET_ALL_PRODUCTS }]
         })
-        : await createProduct({ variables: { input: newValues } , refetchQueries: [{ query: GET_ALL_PRODUCTS }] });
+        : await createProduct({ 
+          variables: { input: newValues },
+          refetchQueries: [{ query: GET_ALL_PRODUCTS }]
+        });
 
       if (!data) {
         throw new Error("Mutation failed. No data returned.");
@@ -233,7 +232,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     setSubcategories(selectedCat?.subCategories || []);
     setSelectedSubcategory("");
   };
-
+  
+  const handleInnerSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const categoryId = Number(e.target.value);
+    setSelectedSubcategory(categoryId)
+  };
 
   const handleCropClick = (imageUrl: string) => {
     setImageSrc(imageUrl);
@@ -245,6 +248,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     const newCrop = centerAspectCrop(width, height, 16 / 9);
     setCrop(newCrop);
   };
+
   const onCropComplete = (crop: Crop) => {
     const image = imgRef.current;
     if (!image || !crop.width || !crop.height) return;
@@ -274,12 +278,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     const base64Image = canvas.toDataURL('image/jpeg');
     setCroppedImage(base64Image);
   };
-
-  const handleInnerSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const categoryId = e.target.value;
-    setSelectedSubcategory(categoryId)
-  };
-
 
   const handleCropModalOk = async () => {
     if (croppedImage && imageSrc) {
@@ -352,6 +350,56 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   };
 
 
+  const handleBack = (values: IProductValues) => {
+    const initialFormValues = productInitialValue || AddproductsinitialValues;
+
+    let isPosterChanged: boolean;
+    let isBannerChanged: boolean;
+    let isProductImagesChanged: boolean;
+    let isHoverImageChanged: boolean;
+
+    if (editProduct) {
+      // Editing mode
+      isPosterChanged =
+        JSON.stringify(editProduct.posterImageUrl ? [editProduct.posterImageUrl] : undefined) !== JSON.stringify(posterimageUrl);
+
+      isBannerChanged =
+        JSON.stringify(editProduct.Banners ? [editProduct.Banners] : undefined) !== JSON.stringify(BannerImageUrl);
+
+        isProductImagesChanged =
+        JSON.stringify((editProduct?.productImages.length > 0) ? editProduct?.productImages : []) !== JSON.stringify(imagesUrl);
+
+         isHoverImageChanged =
+        JSON.stringify((editProduct?.hoverImageUrl) ? editProduct?.hoverImageUrl : null) !== JSON.stringify((hoverImage && hoverImage.length > 0) ? hoverImage : null);
+    } else {
+      // Adding mode (initially no images)
+      isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
+      isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
+      isProductImagesChanged = !!imagesUrl && imagesUrl.length > 0;
+      isHoverImageChanged = !!hoverImage && hoverImage.length > 0;
+    }
+     // eslint-disable-next-line
+    const isFormChanged = JSON.stringify({...initialFormValues, category: initialFormValues.category === '' ? initialFormValues.category : Number((initialFormValues.category as any).id) , subcategory: initialFormValues.subcategory === '' ? initialFormValues.subcategory : Number((initialFormValues.subcategory as any).id) }) !== JSON.stringify({...values , category: selectedCategory === '' ? selectedCategory : Number(selectedCategory), subcategory: selectedSubcategory === '' ? selectedSubcategory : Number(selectedSubcategory)});
+
+    if (isPosterChanged || isBannerChanged || isProductImagesChanged || isHoverImageChanged || isFormChanged) {
+      Modal.confirm({
+        title: "Unsaved Changes",
+        content: "You have unsaved changes. Do you want to discard them?",
+        okText: "Discard Changes",
+        cancelText: "Cancel",
+        onOk: () => {
+          setselecteMenu("Add All Products");
+          setEditProduct?.(() => undefined);
+        },
+      });
+      return;
+    }
+    setselecteMenu("Add All Products");
+    setEditProduct?.(() => undefined);
+    return;
+  };
+
+
 
   return (
 
@@ -374,10 +422,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
               <p
                 className="dashboard_primary_button"
-                onClick={() => {
-                  setselecteMenu("Add All Products");
-                  setEditProduct?.(() => undefined);
-                }}
+                onClick={() => handleBack(formik.values)}
               >
                 <IoMdArrowRoundBack /> Back
               </p>
@@ -421,10 +466,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
             <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
               <div className="flex flex-col gap-9 ">
-                <div className="rounded-sm border border-stroke  py-4 px-6">
+                <div className="rounded-sm border border-stroke bg-white dark:bg-black p-4 xs:p-6">
                   <div className="rounded-sm border border-stroke ">
                     <div className="border-b border-stroke py-4 px-4 ">
-                      <h3 className="font-medium ">
+                      <h3 className="font-medium text-black dark:text-white">
                         Add Poster Image
                       </h3>
                     </div>
@@ -437,7 +482,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               <div className="relative group rounded-lg overflow-hidden shadow-md  transform transition-transform duration-300 hover:scale-105">
                                 <div className="absolute top-1 right-1 invisible group-hover:visible text-red  rounded-full">
                                   <RxCross2
-                                    className="cursor-pointer border border-black  text-red-500 dark:text-red-700"
+                                    className="cursor-pointer border border-black text-red-500 dark:text-red-700"
                                     size={17}
                                     onClick={() => {
                                       ImageRemoveHandler(
@@ -461,7 +506,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               </div>
                               <div className="my-7 space-y-3">
                                 <input
-                                  className="primary-input"
+                                  className="dashboard_input"
                                   placeholder="altText"
                                   type="text"
                                   name="altText"
@@ -492,7 +537,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                   <div className="flex flex-col ">
 
-                    <label className="primary-label ">
+                    <label className="primary-label">
                       Product Title
                     </label>
 
@@ -500,7 +545,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       type="text"
                       name="name"
                       placeholder="Title"
-                      className={`primary-input ${formik.touched.name && formik.errors.name
+                      className={`dashboard_input ${formik.touched.name && formik.errors.name
                         ? "border-red-500"
                         : ""
                         }`}
@@ -783,13 +828,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             name="category"
                             value={selectedCategory ? selectedCategory : ''}
                             onChange={handleCategoryChange}
-                            className="primary-input opt"
+                            className="dashboard_input"
                           >
-                            <option value="" disabled className="bg-primary text-gray-500">
+                            <option value="" disabled className="">
                               Select Category
                             </option>
                             {categoriesList?.map((category) => (
-                              <option key={category.id} value={category.id} className="bg-primary option text-black">
+                              <option key={category.id} value={category.id}>
                                 {category.name}
                               </option>
                             ))}
@@ -806,7 +851,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                         {subcategories.length > 0 && (
                           <div className="mt-4">
-                            <h2 className="text-lg font-medium mb-3">
+                            <h2 className="primary-label">
                               Subcategories
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -816,14 +861,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 onChange={
                                   handleInnerSubCategoryChange
                                 }
-                                className="primary-input bg-primary"
+                                className="dashboard_input"
                               >
-                                <option value="" disabled className="bg-gray-500 text-black">
+                                <option value="" disabled>
                                   Select Subcategory
                                 </option>
                                 {subcategories.map(
                                   (subCat: ISUBCATEGORY) => (
-                                    <option key={subCat.id} value={subCat.id} className="bg-primary option text-black">
+                                    <option key={subCat.id} value={subCat.id}>
                                       {subCat.name}
                                     </option>
                                   )
@@ -850,10 +895,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-5 rounded-sm border border-stroke bg-white dark:bg-black p-4 xs:p-6 h-fit">
                 <div className="rounded-sm border border-stroke ">
                   <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium ">
+                    <h3 className="font-medium text-black dark:text-white">
                       Add Hover Image
                     </h3>
                   </div>
@@ -889,7 +934,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               />
                             </div>
                             <input
-                              className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                              className="dashboard_input"
                               placeholder="altText"
                               type="text"
                               name="altText"
@@ -913,17 +958,17 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="rounded-sm border border-stroke dark:border-strokedark ">
-                  <div className="border-b bg-primary border-stroke py-4 px-2  ">
-                    <h3 className="font-medium text-white">
+                  <div className="border-b border-stroke py-4 px-2  ">
+                    <h3 className="font-medium text-black dark:text-white">
                       Add Banner Image / Video
                     </h3>
                   </div>
                   {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
-                    <div className=" p-4 bg-primary">
+                    <div className=" p-4">
                       {BannerImageUrl.map((item: ProductImage, index: number) => {
                         return (
                           <div
-                            className="relative border group bg-primary rounded-lg w-fit  overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-105"
+                            className="relative border group rounded-lg w-fit  overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-105"
                             key={index}
                           >
                             <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full cursor-pointer z-20">
@@ -975,7 +1020,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 />
 
                                 <input
-                                  className="border  mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input"
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -1005,7 +1050,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                 <div className="rounded-sm border border-stroke ">
                   <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium ">
+                    <h3 className="font-medium text-black dark:text-white">
                       Add Product Images
                     </h3>
                   </div>
@@ -1056,7 +1101,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             </div>
 
                             <input
-                              className="primary-input"
+                              className="dashboard_input"
                               placeholder="altText"
                               type="text"
                               name="altText"

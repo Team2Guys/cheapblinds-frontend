@@ -43,5 +43,7 @@ export const AddproductsinitialValues: IProductValues = {
   Meta_Description: '',
   seoSchema: "",
   breadCrum: "",
-  status: 'DRAFT'
+  status: 'DRAFT',
+  category: '',
+  subcategory: ''
 };
