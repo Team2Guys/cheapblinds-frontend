@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Table } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { LiaEdit } from 'react-icons/lia';
@@ -14,6 +13,7 @@ import showToast from 'components/Toaster/Toaster';
 import { DateFormatHandler } from 'utils/helperFunctions';
 import { BsEyeFill } from 'react-icons/bs';
 import { GET_ALL_PRODUCTS, REMOVE_PRODUCT } from 'graphql/prod';
+import Table from 'components/ui/table';
 
 const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   products,
@@ -65,8 +65,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     const aStartsWith = a?.name?.toLowerCase().startsWith(searchText) ? -1 : 1;
     const bStartsWith = b?.name?.toLowerCase().startsWith(searchText) ? -1 : 1;
 
-    const dateA = new Date(a.updatedAt || a.createdAt || '').getTime();
-    const dateB = new Date(b.updatedAt || b.createdAt || '').getTime();
+    const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : b.createdAt ? new Date(b.createdAt).getTime() : 0;
 
 
     if (!searchText) return dateB - dateA;
@@ -121,7 +121,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
-      render: (text: string, record: (IProduct)) => (
+      width: 100,
+      render: (record: (IProduct)) => (
         <Image
           src={record.posterImageUrl?.imageUrl || ""}
           alt={`Image of ${record?.name}`}
@@ -141,17 +142,15 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      width: 100,
     },
     {
       title: "Stock Quantity",
       dataIndex: "stock",
       key: "stock",
-      width: 150,
-      render: (text: string, record: (IProduct)) => {
-
-
+      width: 130,
+      render: (record: (IProduct)) => {
         return (
-
           <p>{record.stock}</p>
         )
       },
@@ -160,7 +159,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (text: string, record: (IProduct)) => {
+      width: 170,
+      render: (record: (IProduct)) => {
         const createdAt = new Date(record?.createdAt ?? "");
         return <span>{DateFormatHandler(createdAt)}</span>;
       }
@@ -169,10 +169,10 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Updated At',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
-
-      render: (text: string, record: (IProduct)) => {
-        const createdAt = new Date(record?.createdAt ?? "");
-        return <span>{DateFormatHandler(createdAt)}</span>;
+      width: 170,
+      render: (record: (IProduct)) => {
+        const updatedAt = new Date(record?.updatedAt ?? "");
+        return <span>{DateFormatHandler(updatedAt)}</span>;
       }
     },
 
@@ -180,15 +180,14 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Edited By',
       dataIndex: 'last_editedBy',
       key: 'last_editedBy',
-      width: 150,
+      width: 120,
 
     },
     {
       title: 'Preview',
       key: 'Preview',
-      width: 150,
-
-      render: (text: string, record: (IProduct)) => {
+      width: 90,
+      render: (record: (IProduct)) => {
         let urls;
         if (record.subcategory?.custom_url) {
           urls = `/${record.category?.custom_url + "/" + record.subcategory?.custom_url}/`
@@ -196,9 +195,6 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
         else {
           urls = `/${record.category?.custom_url + "/" + record.custom_url}/`
         }
-
-
-        console.log(urls, "urls")
 
         return (
           <Link
@@ -214,16 +210,16 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     {
       title: 'Edit',
       key: 'Edit',
-      width: 150,
+      width: 60,
 
-      render: (text: string, record: (IProduct)) => (
+      render: (record: (IProduct)) => (
         <LiaEdit
-          className={`${canEditproduct ? 'cursor-pointer' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
+          className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
           size={20}
           onClick={() => {
             if (canEditproduct) {
-              const { updatedAt, createdAt , __typename , ...rest } = record;
+              const { updatedAt, createdAt, __typename, ...rest } = record;
               console.log(updatedAt, createdAt, __typename)
               setEditProduct(rest);
               setselecteMenu('Add Products');
@@ -236,7 +232,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Action',
       key: 'action',
       width: 100,
-      render: (text: string, record: (IProduct)) => (
+      render: (record: (IProduct)) => (
         <RiDeleteBin6Line
           className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
@@ -283,14 +279,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       <div style={{ overflowX: 'auto' }}>
 
         {filteredProducts && filteredProducts.length > 0 ? (
-          <Table
-            className=" !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
-            dataSource={filteredProducts}
-            columns={columns}
-            rowKey="id"
-            scroll={{ y: 550, x: "max-content" }}
-            pagination={false}
-          />
+          <Table<IProduct> data={filteredProducts} columns={columns} rowKey="id" />
         ) : (
           <p className="text-primary dark:text-white">No products found</p>
         )}

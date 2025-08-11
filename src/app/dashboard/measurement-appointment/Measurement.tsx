@@ -1,8 +1,8 @@
 'use client'
-import { Modal, Table } from 'antd'
-import { ColumnsType } from 'antd/es/table'
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb'
 import DefaultLayout from 'components/Dashboard/DefaultLayout'
+import Modal from 'components/ui/modal'
+import Table from 'components/ui/table'
 import React, { useState } from 'react'
 import { BsEyeFill } from 'react-icons/bs'
 import { IAppointment } from 'types/types'
@@ -45,7 +45,7 @@ const Measurement = ({ appointments, title }: { appointments: IAppointment[], ti
       setSelectedAppointment(null);
    };
 
-   const columns: ColumnsType<IAppointment> = [
+   const columns = [
       {
          title: "Name",
          dataIndex: "name",
@@ -76,7 +76,7 @@ const Measurement = ({ appointments, title }: { appointments: IAppointment[], ti
          dataIndex: "view",
          key: "view",
          width: 100,
-         render: (_: unknown, record: IAppointment) => (
+         render: (record: IAppointment) => (
             <button onClick={() => showModal(record)}>
             <BsEyeFill className="text-primary cursor-pointer text-base transition duration-300 ease-in-out hover:scale-200"/>
             </button>
@@ -97,16 +97,8 @@ const Measurement = ({ appointments, title }: { appointments: IAppointment[], ti
          </div>
          {appointments && appointments.length > 0 ? (
             <>
-               <Table
-                  className="xl:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
-                  // dataSource={appointments}
-                  dataSource={filteredOrders}
-                  columns={columns}
-                  rowKey="id"
-                  scroll={{ y: 550, x: "max-content" }}
-                  pagination={false}
-               />
-               <Modal title="Appointment Details" open={isModalOpen} onCancel={handleCancel} footer={null}>
+               <Table<IAppointment> data={filteredOrders} columns={columns} rowKey="id" />
+               <Modal isOpen={isModalOpen} onClose={handleCancel} onCancel={handleCancel} >
                   {selectedAppointment && (
                      <div className='space-y-3'>
                         <p><strong>Email:</strong> {selectedAppointment.email}</p>

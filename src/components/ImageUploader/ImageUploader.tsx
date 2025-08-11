@@ -83,7 +83,7 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
 
   return (
     <div
-      className={`m-4 cursor-pointer bg-primary ${isDraggableArea ? 'border border-sky-500' : 'border border-stroke'}`}
+      className={`m-4 cursor-pointer ${isDraggableArea ? 'border border-sky-500' : 'border border-stroke'}`}
       onDrop={handleDrop}
       onDragOver={(e) => {
         e.preventDefault();
@@ -110,9 +110,9 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
           multiple={multiple ? true : false}
         />
         {isDraggableArea ? (
-          <BsCloudDownload className="inline-block mb-2 text-4xl  text-white" />
+          <BsCloudDownload className="inline-block mb-2 text-4xl text-black dark:text-white" />
         ) : (
-          <BsCloudUpload className="inline-block mb-2 text-4xl text-white" />
+          <BsCloudUpload className="inline-block mb-2 text-4xl text-black dark:text-white" />
         )}
         <p className="text-black dark:text-white">
           Drag & Drop or Click to Upload
