@@ -46,6 +46,7 @@ const validationSchema = Yup.object().shape({
   canVeiwTotalCategories: Yup.boolean(),
 });
 
+
 const initialValues: Admin = {
   fullname: '',
   email: '',

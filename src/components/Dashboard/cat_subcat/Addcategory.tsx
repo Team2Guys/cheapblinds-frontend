@@ -10,7 +10,6 @@ import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { ProductImage } from 'types/prod';
 import { Category, EDIT_CATEGORY } from 'types/cat';
 import ReactCrop, { Crop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 import { Modal } from 'antd';
 import { centerAspectCrop } from 'types/product-crop';
 import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
