@@ -35,13 +35,17 @@
   .flex_between {
     @apply flex items-center justify-between;
   }
-
+  @layer components {
+  .text-medium {
+    @apply text-xl font-rubik font-medium;
+  }
+  }
   .active {
     @apply text-white bg-black dark:bg-primary;
   }
 
   .text-heading {
-    @apply text-2xl md:text-3xl lg:text-4xl;
+    @apply text-2xl md:text-3xl lg:text-4xl font-rubik font-semibold;
   }
 
   .border , .border-stroke {
@@ -75,29 +79,29 @@
 }
 
 body {
-  background: var(--background);
+  background: var(-- );
   color: var(--foreground);
   font-family: var(--font-open-sans);
   font-size: 14px;
 }
 
 
-:where(.css-dev-only-do-not-override-1vjf2v5).ant-btn-variant-solid {
+.ant-btn-variant-solid {
   background-color: var(--primary);
 }
 
-:where(.css-dev-only-do-not-override-1vjf2v5).ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
+.ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
   background-color: transparent;
   color: var(--primary);
   border-color: var(--primary);
 }
 
-:where(.css-dev-only-do-not-override-1vjf2v5).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+.ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
   color: var(--primary);
   border-color: var(--primary);
 }
 
-#apexchartshtb0gf44i .apexcharts-svg,
+#apexchartshtb0gf44i .apexcharts-svg, 
 #apexchartsu1td0pj1 .apexcharts-svg {
   background-color: transparent !important;
 }
