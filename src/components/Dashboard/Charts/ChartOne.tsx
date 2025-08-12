@@ -103,9 +103,7 @@ const ChartOne = ({ chartData }: { chartData: MONTHLYGRAPH }) => {
   };
 
   return (
-    <div className="col-span-12 border shadow-md shadow-black/10 dark:shadow-primary/30 dark:border-primary/30 p-5 rounded-xl sm:px-7 xl:col-span-8 space-y-4 bg-white dark:bg-white/20 hover:shadow-lg hover:dark:shadow-primary/50
-        transition-all duration-400
-        hover:-translate-y-1">
+    <div className="col-span-12 border shadow-md shadow-black/10 dark:shadow-primary/30 dark:border-primary/30 p-5 rounded-xl sm:px-7 xl:col-span-8 space-y-4 bg-white dark:bg-white/20 hover:shadow-lg hover:dark:shadow-primary/50 transition-all duration-400 hover:-translate-y-1">
       <p className="font-semibold dark:text-primary">
         Monthly Statistics
       </p>
