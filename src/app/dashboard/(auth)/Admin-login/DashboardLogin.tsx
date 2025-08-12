@@ -48,7 +48,8 @@ const DashboardLogin = () => {
         redirect: false,
 
       });
-      console.log(result, "result")
+
+      
       if (result?.error) {
         setError(result.error,); 
         return;

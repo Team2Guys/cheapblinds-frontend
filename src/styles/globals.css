@@ -28,6 +28,13 @@
     @apply w-full md:w-2/4;
   }
 
+
+
+  .dashboard_primary_button {
+    @apply px-5 py-2 bg-black text-white rounded-md shadow-md flex items-center gap-2 cursor-pointer;
+  }
+
+
   .dashboard_side_bar {
     @apply relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 hover:bg-black dark:hover:bg-primary border-b-2 border-b-primary border-transparent;
   }
@@ -35,11 +42,13 @@
   .flex_between {
     @apply flex items-center justify-between;
   }
-  @layer components {
+
+
+
   .text-medium {
     @apply text-xl font-rubik font-medium;
   }
-  }
+
   .active {
     @apply text-white bg-black dark:bg-primary;
   }
@@ -80,7 +89,7 @@
 }
 
 body {
-  background: var(-- );
+  background: var(--);
   color: var(--foreground);
   font-family: var(--font-open-sans);
   font-size: 14px;
@@ -102,7 +111,7 @@ body {
   border-color: var(--primary);
 }
 
-#apexchartshtb0gf44i .apexcharts-svg, 
+#apexchartshtb0gf44i .apexcharts-svg,
 #apexchartsu1td0pj1 .apexcharts-svg {
   background-color: transparent !important;
 }
