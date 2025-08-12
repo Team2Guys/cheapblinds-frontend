@@ -12,17 +12,17 @@ import { DASHBOARD_VIEW_SUBCATEGORIES_PROPS } from 'types/PagesProps';
 import { ISUBCATEGORY } from 'types/cat';
 import { useMutation } from '@apollo/client';
 import { DateFormatHandler } from 'utils/helperFunctions';
-// import { getPermission } from 'utils/permissionHandlers';
-// import { useSession } from 'next-auth/react';
 import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from 'graphql/categories';
 import Table from 'components/ui/table';
+import { useSession } from 'next-auth/react';
 const ViewSubcategries = ({
   setMenuType,
   seteditCategory,
   subCategories,
 }: DASHBOARD_VIEW_SUBCATEGORIES_PROPS) => {
   const [category, setCategory] = useState<ISUBCATEGORY[] | undefined>(subCategories);
-  // const { data: session } = useSession()
+  const session = useSession()
+  const finalToken = session.data?.accessToken
 
   useEffect(() => {
     setCategory(subCategories)
@@ -84,11 +84,11 @@ const ViewSubcategries = ({
     try {
       await removeCategory({
         variables: { id: Number(key) }, refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
-        // context: {
-        //   headers: {
-        //     authorization: `Bearer ${finalToken}`,
-        //   },
-        // },
+        context: {
+          headers: {
+            authorization: `Bearer ${finalToken}`,
+          },
+        },
       });
       setCategory((prev: ISUBCATEGORY[] | undefined) => prev ? prev.filter((item: ISUBCATEGORY) => item.id != key) : []);
       revalidateTag('subcategories');
