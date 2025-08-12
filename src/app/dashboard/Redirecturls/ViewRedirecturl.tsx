@@ -1,8 +1,8 @@
 "use client"
 
 import { useMutation } from '@apollo/client';
-import { Table } from 'antd';
 import revalidateTag from 'components/ServerActons/ServerAction';
+import Table from 'components/ui/table';
 import { REMOVE_REVIEW } from 'graphql/mutations';
 import { useSession } from 'next-auth/react';
 import React, { SetStateAction, useState } from 'react'
@@ -88,14 +88,13 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
             title: 'Url',
             dataIndex: 'url',
             key: 'url',
-            width: 200,
         },
 
         {
             title: 'Create At',
             dataIndex: 'createdAt',
             key: 'createdAt',
-            render: (_: string, record: RedirectUrls) => {
+            render: (record: RedirectUrls) => {
                 const createdAt = new Date(record?.createdAt ?? "");
                 return <span>{DateFormatHandler(createdAt)}</span>;
             }
@@ -104,7 +103,7 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
             title: 'Updated At',
             dataIndex: 'createdAt',
             key: 'date',
-            render: (_: string, record: RedirectUrls) => {
+            render: (record: RedirectUrls) => {
                 const createdAt = new Date(record?.updatedAt ?? "");
                 return <span>{DateFormatHandler(createdAt)}</span>;
             }
@@ -112,10 +111,9 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
         {
             title: 'Edit',
             key: 'Edit',
-            width: 150,
-            render: (text: string, record: RedirectUrls) => (
+            render: (record: RedirectUrls) => (
                 <LiaEdit
-                    className={`${canEditproduct ? 'cursor-pointer' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
+                    className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
                         }`}
                     size={20}
                     onClick={() => {
@@ -130,8 +128,7 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
         {
             title: 'Action',
             key: 'action',
-            width: 150,
-            render: (text: string, record: RedirectUrls) => (
+            render: (record: RedirectUrls) => (
                 loading ? "Deleting" :
                     <RiDeleteBin6Line
                         className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
@@ -175,16 +172,7 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
                     </p>
                 </div>
             </div>
-            <Table
-            key={filteredRedirectUrls?.map(r => r.id).join(',')}
-            className="lg:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
-            dataSource={filteredRedirectUrls}
-            columns={columns}
-            rowKey="id"
-            scroll={{ y: 550, x: "max-content" }}
-            pagination={false}
-            />
-
+            <Table<RedirectUrls>  data={filteredRedirectUrls} columns={columns} rowKey="id" />
 
         </>
     )

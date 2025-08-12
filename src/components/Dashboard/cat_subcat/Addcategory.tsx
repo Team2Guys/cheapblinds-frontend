@@ -10,7 +10,6 @@ import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { ProductImage } from 'types/prod';
 import { Category, EDIT_CATEGORY } from 'types/cat';
 import ReactCrop, { Crop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 import { Modal } from 'antd';
 import { centerAspectCrop } from 'types/product-crop';
 import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
@@ -73,7 +72,7 @@ const AddCategory = ({
       const posterImageUrl = posterimageUrl && posterimageUrl[0] || {};
       const Banner = BannerImageUrl && BannerImageUrl[0];
       if (!posterImageUrl) return Toaster('error', 'Please select relevant Images');
-      const newValue = { ...values, posterImageUrl, Banners: Banner, last_editedBy: '', };
+      const newValue = { ...values, posterImageUrl, Banners: Banner, last_editedBy: session.data?.user.fullname };
       const updateFlag = editCategoryName ? true : false;
       setloading(true);
       if (updateFlag) {
@@ -233,34 +232,70 @@ const AddCategory = ({
     setCroppedImage(null);
   };
 
-  return (
-    <>
-      <p
-        className="dashboard_primary_button w-fit"
-        onClick={() => {
-          setMenuType('Categories');
-        }}
-      >
-        <IoMdArrowRoundBack /> Back
-      </p>
+  const handleBack = (values: EDIT_CATEGORY) => {
+    const initialFormValues = editCategoryName || categoryInitialValues;
 
-      <Formik
-        initialValues={
-          editCategoryName ? editCategoryName : categoryInitialValues
-        }
-        validationSchema={categoryValidationSchema}
-        onSubmit={onSubmit}
-      >
-        {(formik) => {
-          return (
+    let isPosterChanged: boolean;
+    let isBannerChanged: boolean;
+
+    if (editCategory) {
+      // Editing mode
+      isPosterChanged =
+        JSON.stringify(editCategory.posterImageUrl ? [editCategory.posterImageUrl] : undefined) !==
+        JSON.stringify(posterimageUrl);
+
+      isBannerChanged =
+        JSON.stringify(editCategory.Banners ? [editCategory.Banners] : undefined) !==
+        JSON.stringify(BannerImageUrl);
+    } else {
+      // Adding mode (initially no images)
+      isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
+      isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
+    }
+
+    const isFormChanged = JSON.stringify(initialFormValues) !== JSON.stringify(values);
+
+    if (isPosterChanged || isBannerChanged || isFormChanged) {
+      Modal.confirm({
+        title: "Unsaved Changes",
+        content: "You have unsaved changes. Do you want to discard them?",
+        okText: "Discard Changes",
+        cancelText: "Cancel",
+        onOk: () => {
+          setMenuType("Categories");
+        },
+      });
+      return;
+    }
+    setMenuType("Categories");
+    return;
+  };
+
+  return (
+    <Formik
+      initialValues={
+        editCategoryName ? editCategoryName : categoryInitialValues
+      }
+      validationSchema={categoryValidationSchema}
+      onSubmit={onSubmit}
+    >
+      {(formik) => {
+        return (
+          <>
+            <p
+              className="dashboard_primary_button"
+              onClick={() => handleBack(formik.values)}
+            >
+              <IoMdArrowRoundBack /> Back
+            </p>
             <Form onSubmit={formik.handleSubmit}>
-              <div className="flex justify-center  bg-primary ">
-                <div className="flex flex-col gap-5 bg-primary md:gap-9 w-full lg:w-4/5 xl:w-3/5  ">
-                  <div className="rounded-sm border border-stroke bg-primary  p-3">
-                    <div className="rounded-sm border bg-primary border-stroke">
-                      <div className="border-b bg-primary border-stroke py-4 px-2 hover:bg-black">
-                        <h3 className="font-medium  text-white">
-                          Add Category Images
+              <div className="flex justify-center ">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-9 w-full my-10 rounded-sm border border-stroke p-4 bg-white dark:bg-black">
+                  <div className="">
+                    <div className="rounded-sm border border-stroke">
+                      <div className="border-b  border-stroke py-4 px-2">
+                        <h3 className="font-medium text-black dark:text-white">
+                          Add Poster Image
                         </h3>
                       </div>
                       {posterimageUrl && posterimageUrl.length > 0 ? (
@@ -298,7 +333,7 @@ const AddCategory = ({
                                 />
 
                                 <input
-                                  className="border w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input"
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -347,18 +382,18 @@ const AddCategory = ({
                         </ReactCrop>
                       )}
                     </Modal>
-                    <div className="rounded-sm border border-stroke dark:border-strokedark ">
-                      <div className="border-b bg-primary border-stroke py-4 px-2  ">
-                        <h3 className="font-medium text-white">
+                    <div className="rounded-sm border mt-4 border-stroke dark:border-strokedark ">
+                      <div className="border-b border-stroke py-4 px-2  ">
+                        <h3 className="font-medium text-black dark:text-white">
                           Add Banner Image / Video
                         </h3>
                       </div>
                       {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
-                        <div className=" p-4 bg-primary">
+                        <div className=" p-4 ">
                           {BannerImageUrl.map((item: ProductImage, index: number) => {
                             return (
                               <div
-                                className="relative border group bg-primary rounded-lg w-fit  overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-105"
+                                className="relative border group rounded-lg w-fit  overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-105"
                                 key={index}
                               >
                                 <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full cursor-pointer z-20">
@@ -410,7 +445,7 @@ const AddCategory = ({
                                     />
 
                                     <input
-                                      className="border  mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                      className="dashboard_input"
                                       placeholder="Alt Text"
                                       type="text"
                                       name="altText"
@@ -437,7 +472,7 @@ const AddCategory = ({
 
                     <div className="flex flex-col">
                       <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium  text-white">
+                        <label className="mb-3 block pb-1 pt-4 px-2 text-sm font-medium text-black dark:text-white">
                           Category Title
                         </label>
                         <Field
@@ -453,7 +488,7 @@ const AddCategory = ({
 
                       <div className='flex gap-0 sm:gap-10 flex-wrap sm:flex-nowrap'>
                         <div className='w-full'>
-                          <label className=" block py-4 px-2 text-sm font-medium text-white">
+                          <label className=" block pb-3 pt-4 px-2 text-sm font-medium text-black dark:text-white">
                             Custom URL
                           </label>
                           <Field
@@ -467,7 +502,7 @@ const AddCategory = ({
                         </div>
 
                         <div className='w-full '>
-                          <label className="block py-4 px-2 text-sm font-medium text-white">
+                          <label className="block pb-3 pt-4 px-2 text-sm font-medium text-black dark:text-white">
 
                             Bread Crum
                           </label>
@@ -481,19 +516,10 @@ const AddCategory = ({
                           <ErrorMessage name="breadCrum" component="div" className="text-red-500 text-sm" />
                         </div>
 
-
-                      </div>
-
-                      <div>
-                        <label className=" block py-4 px-2 text-sm font-medium text-white">
-                          Category Description
-                        </label>
-                        <TinyMCEEditor name="description" />
-                        <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
                       </div>
                       <div className="input_container">
-                        <div className='w-full mb-3'>
-                          <label className="mb-3 block text-sm font-medium text-white">
+                        <div className='w-full my-3'>
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                             Short Description
                           </label>
                           <input
@@ -517,95 +543,11 @@ const AddCategory = ({
                           ) : null}
                         </div>
                       </div>
-                      <div className="input_container">
-                        <div className="input_iner_container">
-                          <label className="mb-3 block text-sm font-medium text-white">
-                            Meta Title
-                          </label>
-                          <input
-                            type="text"
-                            name="Meta_Title"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.Meta_Title}
-                            placeholder="Meta Title"
-                            className={`primary-input ${formik.touched.Meta_Title &&
-                              formik.errors.Meta_Title
-                              ? 'red_border'
-                              : ''
-                              }`}
-                          />
-                          {formik.touched.Meta_Title &&
-                            formik.errors.Meta_Title ? (
-                            <div className="text-red text-sm">
-                              {formik.errors.Meta_Title as string}
-                            </div>
-                          ) : null}
-                        </div>
-
-
-                        <div className="input_iner_container">
-                          <label className="mb-3 block text-sm font-medium text-white">
-                            Canonical Tag
-                          </label>
-                          <Field
-                            type='text'
-                            name="Canonical_Tag"
-
-                            placeholder="Canonical Tag"
-                            className={`primary-input ${formik.touched.Canonical_Tag &&
-                              formik.errors.Canonical_Tag
-                              ? 'red_border'
-                              : ''
-                              }`}
-                          />
-
-
-                        </div>
-
-
-                      </div>
-
-
-
-
-
-                      <div className="mt-4">
-                        <label className="mb-3 block text-sm font-medium  text-white">
-                          Meta Description
-                        </label>
-                        <Field
-                          as="textarea"
-                          name="Meta_Description"
-                          placeholder="Meta Description"
-                          className={`primary-input ${formik.touched.Meta_Description && formik.errors.Meta_Description
-                            ? "red_border"
-                            : ""
-                            }`}
-                        />
-                        <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
-                      </div>
-                      <div className="mt-4">
-                        <label className="mb-3 block text-sm font-medium  text-white">
-                          Seo Schema
-                        </label>
-                        <Field
-                          as="textarea"
-                          name="seoSchema"
-                          placeholder="Seo Schema"
-                          className={`primary-input ${formik.touched.seoSchema && formik.errors.seoSchema
-                            ? "red_border"
-                            : ""
-                            }`}
-                        />
-                        <ErrorMessage name="seoSchema" component="div" className="text-red text-sm" />
-                      </div>
-
                     </div>
 
                     <Field name="status">
                       {({ field, form }: import('formik').FieldProps) => (
-                        <div className="flex gap-4 items-center my-4">
+                        <div className="flex gap-4 items-center my-4 md:pt-10">
                           <label className="font-semibold">Category Status:</label>
 
                           {['DRAFT', 'PUBLISHED'].map((status) => {
@@ -619,7 +561,7 @@ const AddCategory = ({
                                 disabled={isActive}
                                 className={`px-4 py-2 rounded-md text-sm border
                                   ${isActive
-                                    ? 'bg-black text-white border-black cursor-not-allowed'
+                                    ? 'dashboard_primary_button cursor-not-allowed'
                                     : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
                                   }`}
                               >
@@ -631,9 +573,97 @@ const AddCategory = ({
                       )}
                     </Field>
                   </div>
+                  <div>
+                    <div>
+                      <label className=" block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                        Category Description
+                      </label>
+                      <TinyMCEEditor name="description" />
+                      <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
+                    </div>
+                    <div className="input_container">
+                      <div className="input_iner_container">
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          Meta Title
+                        </label>
+                        <input
+                          type="text"
+                          name="Meta_Title"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.Meta_Title}
+                          placeholder="Meta Title"
+                          className={`primary-input ${formik.touched.Meta_Title &&
+                            formik.errors.Meta_Title
+                            ? 'red_border'
+                            : ''
+                            }`}
+                        />
+                        {formik.touched.Meta_Title &&
+                          formik.errors.Meta_Title ? (
+                          <div className="text-red text-sm">
+                            {formik.errors.Meta_Title as string}
+                          </div>
+                        ) : null}
+                      </div>
+
+
+                      <div className="input_iner_container">
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          Canonical Tag
+                        </label>
+                        <Field
+                          type='text'
+                          name="Canonical_Tag"
+
+                          placeholder="Canonical Tag"
+                          className={`primary-input ${formik.touched.Canonical_Tag &&
+                            formik.errors.Canonical_Tag
+                            ? 'red_border'
+                            : ''
+                            }`}
+                        />
+
+
+                      </div>
+
+
+                    </div>
+
+                    <div className="mt-4">
+                      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Meta Description
+                      </label>
+                      <Field
+                        as="textarea"
+                        name="Meta_Description"
+                        placeholder="Meta Description"
+                        className={`primary-input ${formik.touched.Meta_Description && formik.errors.Meta_Description
+                          ? "red_border"
+                          : ""
+                          }`}
+                      />
+                      <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
+                    </div>
+                    <div className="mt-4">
+                      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Seo Schema
+                      </label>
+                      <Field
+                        as="textarea"
+                        name="seoSchema"
+                        placeholder="Seo Schema"
+                        className={`primary-input ${formik.touched.seoSchema && formik.errors.seoSchema
+                          ? "red_border"
+                          : ""
+                          }`}
+                      />
+                      <ErrorMessage name="seoSchema" component="div" className="text-red text-sm" />
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center mt-4">
                 <button
                   type="submit"
                   className="dashboard_primary_button "
@@ -643,10 +673,10 @@ const AddCategory = ({
                 </button>
               </div>
             </Form>
-          );
-        }}
-      </Formik>
-    </>
+          </>
+        );
+      }}
+    </Formik>
   );
 };
 

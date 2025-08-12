@@ -116,7 +116,7 @@ const session = useSession()
         {() => (
 
 
-          <Form className="space-y-4 max-w-2xl mx-auto">
+          <Form className="space-y-4 max-w-2xl mx-auto bg-white dark:bg-black rounded-sm border border-strok p-4 xs:p-6">
 
             <div>
               <label htmlFor="name">Url Endpoint </label>

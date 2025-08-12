@@ -3,11 +3,7 @@ import dynamic from 'next/dynamic';
 const Product = dynamic(() => import('./Products'));
 
 const Productspage = async () => {
-  const [categories, products, ] = await Promise.all([
-    fetchCategories(),
-    fetchProducts(),
-  ]);
-  console.log(products,'products')
+  const [categories, products, ] = await Promise.all([fetchCategories(), fetchProducts()]);
   return <Product categories={categories} productsData={products}  />;
 
 };

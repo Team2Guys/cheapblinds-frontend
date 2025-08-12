@@ -149,6 +149,10 @@ export const GET_ALL_SUBCATEGORIES = gql`
             seoSchema
             updatedAt
             createdAt
+            category {
+              id
+              name
+            }
     }
   }
 `;

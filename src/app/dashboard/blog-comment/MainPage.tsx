@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useMemo } from "react";
 import { useMutation } from "@apollo/client";
 import { UPDATE_COMMENT_STATUS, UPDATE_REPLY_STATUS } from "graphql/blogs";
