@@ -65,6 +65,8 @@ const AddCategory = ({
   // const dragImage = useRef<number | null>(null);
   // const draggedOverImage = useRef<number | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+
+  console.log(finalToken, "finalToken")
   const onSubmit = async (values: EDIT_CATEGORY, { resetForm }: FormikHelpers<EDIT_CATEGORY>) => {
     try {
 
@@ -77,12 +79,12 @@ const AddCategory = ({
       if (updateFlag) {
         await ApoloClient.mutate({
           mutation: UPDATE_CATEGORY,
-          //   context: {
-          //     headers: {
-          //       authorization: `Bearer ${finalToken}`,
-          //     },
-          //     credentials: 'include',
-          //   },
+            context: {
+              headers: {
+                authorization: `Bearer ${finalToken}`,
+              },
+              credentials: 'include',
+            },
           variables: { input: { id: Number(editCategory?.id), ...newValue } },
           refetchQueries: [{ query: GET_ALL_CATEGORIES }],
         });
@@ -91,12 +93,12 @@ const AddCategory = ({
           mutation: CREATE_CATEGORY,
           variables: { input: newValue },
           refetchQueries: [{ query: GET_ALL_CATEGORIES }],
-          // context: {
-          //   headers: {
-          //     authorization: `Bearer ${finalToken}`,
-          //   },
-          //   credentials: 'include',
-          // },
+          context: {
+            headers: {
+              authorization: `Bearer ${finalToken}`,
+            },
+            credentials: 'include',
+          },
 
         });
       }

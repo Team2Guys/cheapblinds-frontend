@@ -89,12 +89,12 @@ const AddSubcategory = ({
             },
           },
           refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
-        //   context: {
-        //     headers: {
-        //       authorization: `Bearer ${finalToken}`,
+          context: {
+            headers: {
+              authorization: `Bearer ${finalToken}`,
 
-        //     },
-        //   },
+            },
+          },
         })
         showToast('success', 'Sub Category has been successfully updated!');
       } else {
@@ -104,12 +104,12 @@ const AddSubcategory = ({
             input: newValue,
           },
           refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
-        //   context: {
-        //     headers: {
-        //       authorization: `Bearer ${finalToken}`,
+          context: {
+            headers: {
+              authorization: `Bearer ${finalToken}`,
 
-        //     },
-        //   },
+            },
+          },
         });
         showToast('success', 'Sub Category has been successfully created!');
       }

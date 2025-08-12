@@ -4,17 +4,14 @@ import React, { SetStateAction, useEffect, useState } from 'react';
 import { Table, notification } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
-// import axios from 'axios';
 import { LiaEdit } from 'react-icons/lia';
 import revalidateTag from 'components/ServerActons/ServerAction';
-// import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 import { Category } from 'types/cat';
 import { useMutation } from '@apollo/client';
-// import { useSession } from 'next-auth/react';
 import { REMOVE_CATEGORY } from 'graphql/categories';
-// import { getPermission } from 'utils/permissionHandlers';
-
+import { useSession } from 'next-auth/react';
+import { DateFormatHandler } from 'utils/helperFunctions';
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
   seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -30,8 +27,8 @@ const DashboardCat = ({
   const [category, setCategory] = useState<Category[] | undefined>(cetagories);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [removeCategory] = useMutation(REMOVE_CATEGORY);
-  // const { data: session } = useSession()
-  // const finalToken = session?.accessToken
+  const { data: session } = useSession()
+  const finalToken = session?.accessToken
   useEffect(() => {
 
     setCategory(cetagories)
@@ -63,7 +60,7 @@ const DashboardCat = ({
   // const canDeleteCategory = getPermission(session, 'canDeleteCategory');
   // const canAddCategory = getPermission(session, 'canAddCategory');
   // const canEditCategory = getPermission(session, 'canEditCategory');
-    const canDeleteCategory = true;
+  const canDeleteCategory = true;
   const canAddCategory = true;
   const canEditCategory = true;
 
@@ -88,14 +85,15 @@ const DashboardCat = ({
     try {
 
 
-      await removeCategory({ variables: { id: Number(key) },
-          // context: {
-          //   headers: {
-          //     authorization: `Bearer ${finalToken}`,
-          //   },
-          //   credentials: 'include',
-          // },
-    });
+      await removeCategory({
+        variables: { id: Number(key) },
+        context: {
+          headers: {
+            authorization: `Bearer ${finalToken}`,
+          },
+          credentials: 'include',
+        },
+      });
 
       setCategory((prev: Category[] | undefined) => (prev ? prev.filter((item) => item.id !== key) : []));
       revalidateTag('categories');
@@ -135,8 +133,6 @@ const DashboardCat = ({
               src={record.posterImageUrl.imageUrl || ''}
 
             >
-
-
             </video>
             :
 
@@ -157,7 +153,7 @@ const DashboardCat = ({
       dataIndex: 'name',
       key: 'name',
     },
-      {
+    {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
@@ -168,11 +164,8 @@ const DashboardCat = ({
       key: 'date',
       render: (_: string, record: Category) => {
         const createdAt = new Date(record?.createdAt ?? new Date());
-
-        const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
-          createdAt.getDate(),
-        ).padStart(2, '0')}`;
-        return <span>{formattedDate}</span>;
+               return <span>{DateFormatHandler(createdAt)}</span>;
+       
       },
     },
 
@@ -182,10 +175,8 @@ const DashboardCat = ({
       key: 'date',
       render: (_: string, record: Category) => {
         const createdAt = new Date(record?.updatedAt ?? new Date());
-        const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
-          createdAt.getDate(),
-        ).padStart(2, '0')}`;
-        return <span>{formattedDate}</span>;
+ 
+               return <span>{DateFormatHandler(createdAt)}</span>;
       },
     },
     {
@@ -214,7 +205,7 @@ const DashboardCat = ({
       title: 'Action',
       key: 'action',
       render: (text: string, record: Category) => (
-        <RiDeleteBin6Line  aria-label="Delete Category"
+        <RiDeleteBin6Line aria-label="Delete Category"
           className={` ${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
             }`}
           // className="cursor-pointer text-red-500"
