@@ -288,7 +288,7 @@ const AddCategory = ({
             </p>
             <Form onSubmit={formik.handleSubmit}>
               <div className="flex justify-center ">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-9 w-full my-10 rounded-sm border border-stroke p-4 bg-white dark:bg-black">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-9 w-full my-10 rounded-sm border border-stroke p-4 bg-white dark:bg-black/50 backdrop-blur-3xl">
                   <div className="">
                     <div className="rounded-sm border border-stroke">
                       <div className="border-b  border-stroke py-4 px-2">
@@ -546,7 +546,7 @@ const AddCategory = ({
                     <Field name="status">
                       {({ field, form }: import('formik').FieldProps) => (
                         <div className="flex gap-4 items-center my-4 md:pt-10">
-                          <label className="font-semibold">Category Status:</label>
+                          <label className="font-semibold dark:text-white">Category Status:</label>
 
                           {['DRAFT', 'PUBLISHED'].map((status) => {
                             const isActive = field.value === status;
@@ -557,10 +557,10 @@ const AddCategory = ({
                                 type="button"
                                 onClick={() => form.setFieldValue('status', status)}
                                 disabled={isActive}
-                                className={`px-4 py-2 rounded-md text-sm border
+                                className={`px-4 py-2 rounded-md text-sm
                                   ${isActive
                                     ? 'dashboard_primary_button cursor-not-allowed'
-                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                    : 'bg-white text-black cursor-pointer'
                                   }`}
                               >
                                 {status}

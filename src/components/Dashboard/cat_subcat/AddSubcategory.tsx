@@ -332,7 +332,7 @@ const AddSubcategory = ({
                 </button>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-9 w-full rounded-sm border border-stroke p-4 bg-white dark:bg-black">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-9 w-full rounded-sm border border-stroke p-4 bg-white dark:bg-black/50 backdrop-blur-3xl">
               <div>
 
 
@@ -550,7 +550,7 @@ const AddSubcategory = ({
                   <Field name="status">
                     {({ field, form }: import('formik').FieldProps) => (
                       <div className="flex gap-4 items-center my-4">
-                        <label className="font-semibold">Sub Category Status:</label>
+                        <label className="font-semibold dark:text-white">Sub Category Status:</label>
 
                         {['DRAFT', 'PUBLISHED'].map((status) => {
                           const isActive = field.value === status;
@@ -561,10 +561,10 @@ const AddSubcategory = ({
                               type="button"
                               onClick={() => form.setFieldValue('status', status)}
                               disabled={isActive}
-                              className={`px-4 py-2 rounded-md text-sm border
+                              className={`px-4 py-2 rounded-md text-sm
                                   ${isActive
                                   ? 'dashboard_primary_button cursor-not-allowed'
-                                  : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                  : 'bg-white text-black cursor-pointer'
                                 }`}
                             >
                               {status}

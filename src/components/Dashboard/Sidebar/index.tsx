@@ -152,7 +152,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
+                          <li className="relative pl-4">
+                            <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
+                            <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
                             <Link
                               href="/dashboard/"
                               className={`dashboard_side_bar group p-2 ${pathname === '/dashboard' && 'active'
@@ -207,8 +209,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         className={`translate transform overflow-hidden ${!open && 'hidden'
                           }`}
                       >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
+                        <ul className="mb-3 mt-3 flex flex-col pl-6">
+                          <li className="relative pl-4">
+                            <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
+                            <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
                             <Link
                               href="/dashboard/category"
                               className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/category' &&
@@ -218,7 +222,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               View Categories
                             </Link>
                           </li>
-                          <li>
+                          <li className="relative pl-4">
+                            <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
+                            <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
                             <Link
                               href="/dashboard/subcategory"
                               className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/subcategory' &&
@@ -268,7 +274,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
+                          <li className="relative pl-4">
+                            <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
+                            <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
                             <Link
                               href="/dashboard/products"
                               className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/products' &&
@@ -293,7 +301,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard/orders"
-                        className={`dashboard_side_bar group ${pathname === '/dashboard/orders' || pathname === '/dashboard/abundant' &&
+                        className={`dashboard_side_bar group ${(pathname === '/dashboard/orders' || pathname === '/dashboard/abundant') &&
                           'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
@@ -317,8 +325,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         className={`translate transform overflow-hidden ${!open && 'hidden'
                           }`}
                       >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
+                        <ul className="mb-3 mt-3 flex flex-col pl-6">
+                          <li className="relative pl-4">
+                            <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
+                            <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
                             <Link
                               href="/dashboard/orders"
                               className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/orders' && 'active'
@@ -327,7 +337,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               View Orders
                             </Link>
                           </li>
-                          <li>
+                          <li className="relative pl-4">
+                            <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
+                            <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
                             <Link
                               href="/dashboard/abundant"
                               className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/abundant' && 'active'
@@ -378,8 +390,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         className={`translate transform overflow-hidden ${!open && 'hidden'
                           }`}
                       >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
+                        <ul className="mb-3 mt-3 flex flex-col pl-6">
+                          <li className="relative pl-4">
+                            <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
+                            <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
                             <Link
                               href="/dashboard/measurement-appointment"
                               className={`dashboard_side_bar group p-2 ${pathname === '/dashboard/measurement-appointment' &&
@@ -407,9 +421,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href='/dashboard/general'
-                        className={`dashboard_side_bar group ${pathname === '/dashboard/blogs'|| 
-                       pathname === '/dashboard/blog-comment' ||
-                       pathname === '/dashboard/Redirecturls'? 'bg-black dark:bg-primary'
+                        className={`dashboard_side_bar group ${pathname === '/dashboard/blogs' ||
+                          pathname === '/dashboard/blog-comment' ||
+                          pathname === '/dashboard/Redirecturls' ? 'bg-black dark:bg-primary'
                           : ''
                           }`}
                         onClick={(e) => {
@@ -434,9 +448,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         className={`translate transform overflow-hidden ${!open && 'hidden'
                           }`}
                       >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
+                        <ul className="mb-3 mt-3 flex flex-col pl-6">
                           {sidebarLinks.map((link) => (
-                            <li key={link.href}>
+                            <li key={link.href} className="relative pl-4">
+                            <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
+                            <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
                               <Link
                                 href={link.href}
                                 className={`dashboard_side_bar group p-2 ${pathname === link.href ? 'active' : ''
