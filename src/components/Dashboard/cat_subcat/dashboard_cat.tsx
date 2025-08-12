@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
 import { Category } from 'types/cat';
 import { useMutation } from '@apollo/client';
 import { REMOVE_CATEGORY } from 'graphql/categories';
-import { DateFormatHandler } from 'utils/helperFunctions';
 import Table from 'components/ui/table';
 import { useSession } from 'next-auth/react';
 import { DateFormatHandler } from 'utils/helperFunctions';
