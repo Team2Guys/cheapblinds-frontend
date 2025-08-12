@@ -8,6 +8,7 @@ import { Admin, AdminValues } from 'types/type';
 import showToast from 'components/Toaster/Toaster';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import { CREATE_ADMIN,UPDATE_ADMIN } from 'graphql/Admins';
+import { useSession } from 'next-auth/react';
 
 interface CheckBox {
   canAddProduct: boolean;
@@ -82,6 +83,8 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
 }) => {
   const updateFlag = EditAdminValue && EditInitialValues ? true : false;
   const initialFormValues: Admin = updateFlag && EditAdminValue ? EditAdminValue : initialValues;
+  const session = useSession()
+  const finalToken = session.data?.accessToken
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -126,9 +129,17 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
             setLoading(true);
             const input = updateFlag ? { id: EditInitialValues?.id, ...values } : values;
             if (updateFlag) {
-              await updateAdmin({ variables: { input } });
+              await updateAdmin({ variables: { input },   context: {
+          headers: {
+            authorization: `Bearer ${finalToken}`,
+          },
+        }, });
             } else {
-              await createAdmin({ variables: { input } });
+              await createAdmin({ variables: { input },   context: {
+          headers: {
+            authorization: `Bearer ${finalToken}`,
+          },
+        }, });
             }
 
 
