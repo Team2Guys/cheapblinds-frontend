@@ -41,13 +41,13 @@ console.log(chartData,"chartData")
     {
       title: 'Admins',
       total: records?.totalAdmins ?? '0',
-      icon: <IoMdEye size={25} className="fill-white dark:fill-black" />,
+      icon: <IoMdEye className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
     {
       title: 'Sub Categories',
       total: records?.totalSubCategories ?? '',
-      icon: <BiCategory size={25} className="text-white dark:text-black" />,
+      icon: <BiCategory className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
 
@@ -55,7 +55,7 @@ console.log(chartData,"chartData")
       title: 'Orders',
       total: records?.totalorders ?? '',
       icon: (
-        <FiShoppingCart size={25} className="text-white dark:text-black" />
+        <FiShoppingCart className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />
       ),
       condition: true,
     },
@@ -63,69 +63,69 @@ console.log(chartData,"chartData")
       title: 'Abandoned Orders',
       total: records?.Total_abandant_order ?? '',
       icon: (
-        <GrDocumentPerformance size={25} className="text-white dark:text-black" />
+        <GrDocumentPerformance className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />
       ),
       condition: true,
     },
     {
       title: 'Categories',
       total: records?.totalCategories ?? '',
-      icon: <IoBagOutline size={25} className="text-white dark:text-black" />,
+      icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
     {
       title: 'Product',
       total: records?.totalProducts ?? '',
-      icon: <IoBagOutline size={25} className="text-white dark:text-black" />,
+      icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
     {
       title: 'Users',
       total: records?.totalUsers ?? '',
-      icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
     {
       title: 'Blogs',
       total: records?.blogs ?? '',
-      icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
     {
       title: 'Blog Comments',
       total: records?.blogs_comments ?? '',
-      icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
     {
       title: 'Jobs',
       total: records?.jobs ?? '',
-      icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
 
     {
       title: 'Jobs Application',
       total: records?.jobApplication ?? '',
-      icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
     {
       title: 'Redirect Urls',
       total: records?.redirecturls ?? '',
-      icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
     {
       title: 'Admins',
       total: records?.totalAdmins ?? '',
-      icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
     {
       title: 'Appointments',
       total: records?.appointments ?? '',
-      icon: <PiUsersThreeFill size={25} className="fill-white dark:fill-black" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: true,
     },
 
@@ -137,7 +137,7 @@ console.log(chartData,"chartData")
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-6 xl:grid-cols-5 2xl:gap-7.5 ">
+      <div className="grid gap-3 xsm:gap-5 grid-cols-2 md:grid-cols-3 md:gap-6 xl:grid-cols-5 2xl:gap-7.5 pb-4">
         {cardStats
           .filter((card) => card.condition)
           .map((card, idx) => (

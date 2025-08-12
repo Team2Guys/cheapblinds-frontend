@@ -430,7 +430,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
               <div className="flex justify-center gap-4">
                 <Field name="status">
                   {({ field, form }: import('formik').FieldProps) => (
-                    <div className="flex gap-4 items-center border-r-2 px-2">
+                    <div className="flex gap-4 items-center border-r-2 dark:border-white px-2">
 
                       {['DRAFT', 'PUBLISHED'].map((status) => {
                         const isActive = field.value === status;
@@ -444,7 +444,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             className={`px-4 py-2 rounded-md text-sm
                                 ${isActive
                                 ? 'dashboard_primary_button cursor-not-allowed'
-                                : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                : 'bg-white text-black cursor-pointer'
                               }`}
                           >
                             {status}
@@ -467,7 +467,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
             <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
               <div className="flex flex-col gap-9 ">
-                <div className="rounded-sm border border-stroke bg-white dark:bg-black p-4 xs:p-6">
+                <div className="rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6">
                   <div className="rounded-sm border border-stroke ">
                     <div className="border-b border-stroke py-4 px-4 ">
                       <h3 className="font-medium text-black dark:text-white">
@@ -896,7 +896,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-5 rounded-sm border border-stroke bg-white dark:bg-black p-4 xs:p-6 h-fit">
+              <div className="flex flex-col gap-5 rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6 h-fit">
                 <div className="rounded-sm border border-stroke ">
                   <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
@@ -1143,7 +1143,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             <Field name="status">
               {({ field, form }: import('formik').FieldProps) => (
                 <div className="flex gap-4 items-center my-4">
-                  <label className="font-semibold">Product Status:</label>
+                  <label className="font-semibold dark:text-white">Product Status:</label>
 
                   {['DRAFT', 'PUBLISHED'].map((status) => {
                     const isActive = field.value === status;
@@ -1154,10 +1154,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         type="button"
                         onClick={() => form.setFieldValue('status', status)}
                         disabled={isActive}
-                        className={`px-4 py-2 rounded-md text-sm border
+                        className={`px-4 py-2 rounded-md text-sm
                           ${isActive
-                            ? 'bg-black text-white border-black cursor-not-allowed'
-                            : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                            ? 'dashboard_primary_button cursor-not-allowed'
+                            : 'bg-white text-black cursor-pointer'
                           }`}
                       >
                         {status}

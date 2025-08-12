@@ -32,13 +32,13 @@ const ChartOne = ({ chartData }: { chartData: MONTHLYGRAPH }) => {
       position: 'top',
       horizontalAlign: 'left',
       labels: {
-        colors: isDark ? '#ffffff' : '#000000',
+        colors: isDark ? '#FFB803' : '#000000',
       },
     },
     theme: { mode: isDark ? 'dark' : 'light' },
     colors: baseColorArray,
     chart: {
-      background: isDark ? '#000000' : '#ffffff', // Background color
+      background: isDark ? '#ffffff00' : '#ffffff', // Background color
       fontFamily: 'Satoshi, sans-serif',
       height: 335,
       type: 'area',
@@ -63,13 +63,13 @@ const ChartOne = ({ chartData }: { chartData: MONTHLYGRAPH }) => {
     grid: {
       xaxis: { lines: { show: true } },
       yaxis: { lines: { show: true } },
-      borderColor: isDark ? '#333' : '#e0e0e0',
+      borderColor: isDark ? '#FFB803' : '#e0e0e0',
     },
     dataLabels: {
       enabled: false,
       style: {
         fontSize: '12px',
-        colors: [isDark ? '#ffffff' : '#000000'],
+        colors: [isDark ? '#FFB803' : '#000000'],
       },
       background: {
         enabled: true,
@@ -90,21 +90,23 @@ const ChartOne = ({ chartData }: { chartData: MONTHLYGRAPH }) => {
       axisBorder: { show: false },
       axisTicks: { show: false },
       labels: {
-        style: { colors: isDark ? '#ffffff' : '#000000' },
+        style: { colors: isDark ? '#FFB803' : '#000000' },
       },
     },
     yaxis: {
       title: { style: { fontSize: '0px' } },
       min: 0,
       labels: {
-        style: { colors: isDark ? '#ffffff' : '#000000' },
+        style: { colors: isDark ? '#FFB803' : '#000000' },
       },
     },
   };
 
   return (
-    <div className="col-span-12 border p-5 shadow rounded-xl sm:px-7 xl:col-span-8 space-y-4 bg-white dark:bg-black">
-      <p className="font-semibold dark:text-white">
+    <div className="col-span-12 border shadow-md shadow-black/10 dark:shadow-primary/30 dark:border-primary/30 p-5 rounded-xl sm:px-7 xl:col-span-8 space-y-4 bg-white dark:bg-white/20 hover:shadow-lg hover:dark:shadow-primary/50
+        transition-all duration-400
+        hover:-translate-y-1">
+      <p className="font-semibold dark:text-primary">
         Monthly Statistics
       </p>
       {chartData && (

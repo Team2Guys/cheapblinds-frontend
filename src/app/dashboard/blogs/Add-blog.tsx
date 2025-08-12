@@ -173,7 +173,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
             <div className="flex justify-center gap-4 items-center">
               <Field name="status">
                 {({ field, form }: import('formik').FieldProps) => (
-                  <div className="flex gap-4 items-center border-r-2 px-2">
+                  <div className="flex gap-4 items-center border-r-2 dark:border-white px-2">
 
                     {['DRAFT', 'PUBLISHED'].map((status) => {
                       const isActive = field.value === status;
@@ -211,7 +211,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
             </div>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-4 bg-white dark:bg-black p-4 xs:p-6 rounded-sm border border-stroke'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4 bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6 rounded-sm border border-stroke'>
             <div className='space-y-4'>
 
               <div className="rounded-sm border border-stroke">
@@ -294,7 +294,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
               <Field name="status">
                 {({ field, form }: import('formik').FieldProps) => (
                   <div className="flex gap-4 items-center pt-4">
-                    <label className="font-semibold">Blog Status:</label>
+                    <label className="font-semibold dark:text-white">Blog Status:</label>
 
                     {['DRAFT', 'PUBLISHED'].map((status) => {
                       const isActive = field.value === status;
@@ -305,10 +305,10 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                           type="button"
                           onClick={() => form.setFieldValue('status', status)}
                           disabled={isActive}
-                          className={`px-4 py-2 rounded-md text-sm border
+                          className={`px-4 py-2 rounded-md text-sm
                           ${isActive
                               ? 'dashboard_primary_button cursor-not-allowed'
-                              : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                              : 'bg-white text-black cursor-pointer'
                             }`}
                         >
                           {status}

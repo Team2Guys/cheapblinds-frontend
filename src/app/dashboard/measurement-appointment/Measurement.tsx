@@ -117,7 +117,7 @@ const Measurement = ({ appointments, title }: { appointments: IAppointment[], ti
                </Modal>
             </>
          ) : (
-            <p className="text-primary dark:text-white">No products found</p>
+            <p className="text-primary dark:text-white">No Appointments found</p>
          )}
       </DefaultLayout>
    )
