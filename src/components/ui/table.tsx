@@ -24,7 +24,7 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
                 {columns.map(col => (
                   <td
                     key={col.key}
-                    className="px-4 py-3 text-sm  dark:text-neutral-200 whitespace-nowrap"
+                    className="px-4 py-3 text-sm  dark:text-neutral-200 whitespace-nowrap text-black"
                   >
                     {col.render ? col.render(item) : String(item[col.key as keyof T])}
                   </td>

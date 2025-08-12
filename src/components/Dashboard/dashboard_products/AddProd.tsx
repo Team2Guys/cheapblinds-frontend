@@ -75,30 +75,31 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const [crop, setCrop] = useState<Crop>();
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const finalToken = session.data?.accessToken
   const [updateProduct] = useMutation(UPDATE_PRODUCT,
-    // {
-    //   context: {
-    //     fetchOptions: {
-    //       credentials: "include",
-    //     },
-    //     headers: {
-    //       authorization: `Bearer ${finalToken}`,
-    //     }
-    //   },
-    // }
+    {
+      context: {
+        fetchOptions: {
+          credentials: "include",
+        },
+        headers: {
+          authorization: `Bearer ${finalToken}`,
+        }
+      },
+    }
   );
 
   const [createProduct] = useMutation(CREATE_PRODUCT,
-    //   {
-    //   context: {
-    //     fetchOptions: {
-    //       credentials: "include",
-    //     },
-    //     headers: {
-    //       authorization: `Bearer ${finalToken}`,
-    //     }
-    //   },
-    // }
+    {
+      context: {
+        fetchOptions: {
+          credentials: "include",
+        },
+        headers: {
+          authorization: `Bearer ${finalToken}`,
+        }
+      },
+    }
   );
 
 
@@ -176,10 +177,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       const updateFlag = EditProductValue && editProduct ? true : false;
       const { data } = updateFlag
         ? await updateProduct({
-          variables: { input: { ...newValues, id: Number(editProduct?.id) }},
+          variables: { input: { ...newValues, id: Number(editProduct?.id) } },
           refetchQueries: [{ query: GET_ALL_PRODUCTS }]
         })
-        : await createProduct({ 
+        : await createProduct({
           variables: { input: newValues },
           refetchQueries: [{ query: GET_ALL_PRODUCTS }]
         });
@@ -232,7 +233,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     setSubcategories(selectedCat?.subCategories || []);
     setSelectedSubcategory("");
   };
-  
+
   const handleInnerSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = Number(e.target.value);
     setSelectedSubcategory(categoryId)
@@ -366,10 +367,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       isBannerChanged =
         JSON.stringify(editProduct.Banners ? [editProduct.Banners] : undefined) !== JSON.stringify(BannerImageUrl);
 
-        isProductImagesChanged =
+      isProductImagesChanged =
         JSON.stringify((editProduct?.productImages.length > 0) ? editProduct?.productImages : []) !== JSON.stringify(imagesUrl);
 
-         isHoverImageChanged =
+      isHoverImageChanged =
         JSON.stringify((editProduct?.hoverImageUrl) ? editProduct?.hoverImageUrl : null) !== JSON.stringify((hoverImage && hoverImage.length > 0) ? hoverImage : null);
     } else {
       // Adding mode (initially no images)
@@ -378,8 +379,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       isProductImagesChanged = !!imagesUrl && imagesUrl.length > 0;
       isHoverImageChanged = !!hoverImage && hoverImage.length > 0;
     }
-     // eslint-disable-next-line
-    const isFormChanged = JSON.stringify({...initialFormValues, category: initialFormValues.category === '' ? initialFormValues.category : Number((initialFormValues.category as any).id) , subcategory: initialFormValues.subcategory === '' ? initialFormValues.subcategory : Number((initialFormValues.subcategory as any).id) }) !== JSON.stringify({...values , category: selectedCategory === '' ? selectedCategory : Number(selectedCategory), subcategory: selectedSubcategory === '' ? selectedSubcategory : Number(selectedSubcategory)});
+    // eslint-disable-next-line
+    const isFormChanged = JSON.stringify({ ...initialFormValues, category: initialFormValues.category === '' ? initialFormValues.category : Number((initialFormValues.category as any).id), subcategory: initialFormValues.subcategory === '' ? initialFormValues.subcategory : Number((initialFormValues.subcategory as any).id) }) !== JSON.stringify({ ...values, category: selectedCategory === '' ? selectedCategory : Number(selectedCategory), subcategory: selectedSubcategory === '' ? selectedSubcategory : Number(selectedSubcategory) });
 
     if (isPosterChanged || isBannerChanged || isProductImagesChanged || isHoverImageChanged || isFormChanged) {
       Modal.confirm({
