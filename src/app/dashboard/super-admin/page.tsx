@@ -1,6 +1,5 @@
 import { get_allAdmins } from "config/fetch";
 import Admins from "./Admins";
-import { cookies } from "next/headers";
 import { authOptions } from "components/auth/authOptions";
 import { getServerSession } from "next-auth";
 
