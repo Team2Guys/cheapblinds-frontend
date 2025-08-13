@@ -14,6 +14,8 @@ import { DateFormatHandler } from 'utils/helperFunctions';
 import { BsEyeFill } from 'react-icons/bs';
 import { GET_ALL_PRODUCTS, REMOVE_PRODUCT } from 'graphql/prod';
 import Table from 'components/ui/table';
+import { getPermission } from 'utils/permissionHandlers';
+import { useSession } from 'next-auth/react';
 
 const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   products,
@@ -22,7 +24,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   setEditProduct,
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  // const { data: session } = useSession()
+  const { data: session } = useSession()
   // const finalToken = session?.accessToken;
   const [removeProduct] = useMutation(REMOVE_PRODUCT, {
     fetchPolicy: "no-cache",
@@ -41,12 +43,10 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  // const canAddProduct = getPermission(session, "canAddProduct")
-  // const canDeleteProduct = getPermission(session, "canDeleteProduct")
-  // const canEditproduct = getPermission(session, "canEditProduct")
-  const canAddProduct = true;
-  const canDeleteProduct = true;
-  const canEditproduct = true;
+  const canAddProduct = getPermission(session, "canAddProduct")
+  const canDeleteProduct = getPermission(session, "canDeleteProduct")
+  const canEditproduct = getPermission(session, "canEditProduct")
+
 
 
   const filteredProducts: IProduct[] = products?.filter((product) => {
@@ -121,7 +121,6 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
-      width: 100,
       render: (record: (IProduct)) => (
         <Image
           src={record.posterImageUrl?.imageUrl || ""}
@@ -142,13 +141,11 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 100,
     },
     {
       title: "Stock Quantity",
       dataIndex: "stock",
       key: "stock",
-      width: 130,
       render: (record: (IProduct)) => {
         return (
           <p>{record.stock}</p>
@@ -159,7 +156,6 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      width: 170,
       render: (record: (IProduct)) => {
         const createdAt = new Date(record?.createdAt ?? "");
         return <span>{DateFormatHandler(createdAt)}</span>;
@@ -169,7 +165,6 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Updated At',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
-      width: 170,
       render: (record: (IProduct)) => {
         const updatedAt = new Date(record?.updatedAt ?? "");
         return <span>{DateFormatHandler(updatedAt)}</span>;
@@ -180,13 +175,11 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Edited By',
       dataIndex: 'last_editedBy',
       key: 'last_editedBy',
-      width: 120,
 
     },
     {
       title: 'Preview',
       key: 'Preview',
-      width: 90,
       render: (record: (IProduct)) => {
         let urls;
         if (record.subcategory?.custom_url) {
@@ -210,11 +203,9 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     {
       title: 'Edit',
       key: 'Edit',
-      width: 60,
-
       render: (record: (IProduct)) => (
         <LiaEdit
-          className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
+          className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white transition duration-300 ease-in-out hover:scale-200' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
           size={20}
           onClick={() => {
@@ -231,10 +222,9 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     {
       title: 'Action',
       key: 'action',
-      width: 100,
       render: (record: (IProduct)) => (
         <RiDeleteBin6Line
-          className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
+          className={`${canDeleteProduct ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
           size={20}
           onClick={() => {

@@ -15,6 +15,7 @@ import { DateFormatHandler } from 'utils/helperFunctions';
 import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from 'graphql/categories';
 import Table from 'components/ui/table';
 import { useSession } from 'next-auth/react';
+import { getPermission } from 'utils/permissionHandlers';
 const ViewSubcategries = ({
   setMenuType,
   seteditCategory,
@@ -50,13 +51,13 @@ const ViewSubcategries = ({
 
   // const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
   const [removeCategory] = useMutation(REMOVE_SUBCATEGORY);
-  // const canDeleteCategory = getPermission(session, 'canDeleteCategory');
-  // const canAddCategory = getPermission(session, 'canAddCategory');
+  const canDeleteCategory = getPermission(session.data, 'canDeleteCategory');
+  const canAddCategory = getPermission(session.data, 'canAddCategory');
 
-  // const canEditCategory = getPermission(session, "canEditCategory" );
-  const canDeleteCategory = true;
-  const canAddCategory = true;
-  const canEditCategory = true;
+  const canEditCategory = getPermission(session.data, "canEditCategory" );
+  // const canDeleteCategory = true;
+  // const canAddCategory = true;
+  // const canEditCategory = true;
   // const canEditCategory =
   //   loggedInUser &&
   //   (loggedInUser.role == 'Admin' ? loggedInUser.canEditCategory : true);
@@ -174,7 +175,7 @@ const ViewSubcategries = ({
       key: 'Edit',
       render: (record: ISUBCATEGORY) => (
         <LiaEdit
-          className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+          className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white transition duration-300 ease-in-out hover:scale-200'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -185,7 +186,7 @@ const ViewSubcategries = ({
       key: 'action',
       render: (record: ISUBCATEGORY) => (
         <RiDeleteBin6Line
-          className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
+          className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
             }`}
           // className="cursor-pointer text-red-500"
           size={20}

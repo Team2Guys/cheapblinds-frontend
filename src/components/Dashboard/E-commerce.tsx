@@ -11,44 +11,41 @@ import { GrDocumentPerformance } from 'react-icons/gr';
 import dynamic from 'next/dynamic';
 import { RECORDS } from 'types/type';
 import { MONTHLYGRAPH, WEEKLYGRAPH } from 'types/general';
+import { useSession } from 'next-auth/react';
 const ChartTwo = dynamic(()=>import('./Charts/ChartTwo'),{ssr:false})
 const ChartOne = dynamic(()=>import('./Charts/ChartOne'),{ssr:false})
 
 
 const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartData: MONTHLYGRAPH, weeklyChart: WEEKLYGRAPH }) => {
-  // const { data: loggedInUser } = useSession()
-console.log(chartData,"chartData")
-  // const canCheckProfit =
-  //   loggedInUser &&
-  //   (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canCheckProfit : true);
-  // const canViewUsers =
-  //   loggedInUser &&
-  //   (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canViewUsers : true);
-  // const canViewSales =
-  //   loggedInUser &&
-  //   (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canViewSales : true);
-  // const canVeiwAdmins =
-  //   loggedInUser &&
-  //   (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwAdmins : true);
-  // const canVeiwTotalproducts =
-  //   loggedInUser &&
-  //   (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwTotalproducts : true);
-  // const canVeiwTotalCategories =
-  //   loggedInUser &&
-  //   (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwTotalCategories : true);
+  const { data: loggedInUser } = useSession()
+  const canViewUsers =
+    loggedInUser &&
+    (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canViewUsers : true);
+  const canViewSales =
+    loggedInUser &&
+    (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canViewSales : true);
+  const canVeiwAdmins =
+    loggedInUser &&
+    (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwAdmins : true);
+  const canVeiwTotalproducts =
+    loggedInUser &&
+    (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwTotalproducts : true);
+  const canVeiwTotalCategories =
+    loggedInUser &&
+    (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwTotalCategories : true);
 
   const cardStats = [
     {
       title: 'Admins',
       total: records?.totalAdmins ?? '0',
       icon: <IoMdEye className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
+      condition: canVeiwAdmins,
     },
     {
       title: 'Sub Categories',
       total: records?.totalSubCategories ?? '',
       icon: <BiCategory className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
+      condition: canVeiwTotalCategories,
     },
 
     {
@@ -57,7 +54,7 @@ console.log(chartData,"chartData")
       icon: (
         <FiShoppingCart className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />
       ),
-      condition: true,
+      condition: canViewSales,
     },
     {
       title: 'Abandoned Orders',
@@ -65,25 +62,25 @@ console.log(chartData,"chartData")
       icon: (
         <GrDocumentPerformance className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />
       ),
-      condition: true,
+      condition: canViewSales,
     },
     {
       title: 'Categories',
       total: records?.totalCategories ?? '',
       icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
+      condition: canVeiwTotalCategories,
     },
     {
       title: 'Product',
       total: records?.totalProducts ?? '',
       icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
+      condition: canVeiwTotalproducts,
     },
     {
       title: 'Users',
       total: records?.totalUsers ?? '',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
+      condition: canViewUsers,
     },
     {
       title: 'Blogs',

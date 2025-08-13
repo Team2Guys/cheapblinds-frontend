@@ -1143,7 +1143,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             <Field name="status">
               {({ field, form }: import('formik').FieldProps) => (
                 <div className="flex gap-4 items-center my-4">
-                  <label className="font-semibold dark:text-white">Product Status:</label>
+                  <label className="font-semibold text-black dark:text-white">Product Status:</label>
 
                   {['DRAFT', 'PUBLISHED'].map((status) => {
                     const isActive = field.value === status;

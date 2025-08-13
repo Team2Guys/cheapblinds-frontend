@@ -13,6 +13,7 @@ import { REMOVE_CATEGORY } from 'graphql/categories';
 import Table from 'components/ui/table';
 import { useSession } from 'next-auth/react';
 import { DateFormatHandler } from 'utils/helperFunctions';
+import { getPermission } from 'utils/permissionHandlers';
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
   seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -58,12 +59,9 @@ const DashboardCat = ({
     [];
 
 
-  // const canDeleteCategory = getPermission(session, 'canDeleteCategory');
-  // const canAddCategory = getPermission(session, 'canAddCategory');
-  // const canEditCategory = getPermission(session, 'canEditCategory');
-  const canDeleteCategory = true;
-  const canAddCategory = true;
-  const canEditCategory = true;
+  const canDeleteCategory = getPermission(session, 'canDeleteCategory');
+  const canAddCategory = getPermission(session, 'canAddCategory');
+  const canEditCategory = getPermission(session, 'canEditCategory');
 
 
 
@@ -185,7 +183,7 @@ const columns = [
     render: (record: Category) => (
       <LiaEdit
         aria-label="Edit Category"
-        className={`${canEditCategory && 'text-black dark:text-white cursor-pointer'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+        className={`${canEditCategory && 'text-black dark:text-white cursor-pointer transition duration-300 ease-in-out hover:scale-200'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
         size={20}
         onClick={() => {
           if (canEditCategory) handleEdit(record);
@@ -200,7 +198,7 @@ const columns = [
     render: (record: Category) => (
       <RiDeleteBin6Line
         aria-label="Delete Category"
-        className={`${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'}`}
+        className={`${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'}`}
         size={20}
         onClick={() => {
           if (canDeleteCategory) {

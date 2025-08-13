@@ -113,7 +113,7 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
             key: 'Edit',
             render: (record: RedirectUrls) => (
                 <LiaEdit
-                    className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
+                    className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white transition duration-300 ease-in-out hover:scale-200' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
                         }`}
                     size={20}
                     onClick={() => {
@@ -131,7 +131,7 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
             render: (record: RedirectUrls) => (
                 loading ? "Deleting" :
                     <RiDeleteBin6Line
-                        className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
+                        className={`${canDeleteProduct ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
                             }`}
                         size={20}
                         onClick={() => {

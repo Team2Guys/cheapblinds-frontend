@@ -550,7 +550,7 @@ const AddSubcategory = ({
                   <Field name="status">
                     {({ field, form }: import('formik').FieldProps) => (
                       <div className="flex gap-4 items-center my-4">
-                        <label className="font-semibold dark:text-white">Sub Category Status:</label>
+                        <label className="font-semibold text-black dark:text-white">Sub Category Status:</label>
 
                         {['DRAFT', 'PUBLISHED'].map((status) => {
                           const isActive = field.value === status;
