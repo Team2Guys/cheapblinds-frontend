@@ -294,7 +294,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
               <Field name="status">
                 {({ field, form }: import('formik').FieldProps) => (
                   <div className="flex gap-4 items-center pt-4">
-                    <label className="font-semibold dark:text-white">Blog Status:</label>
+                    <label className="font-semibold text-black dark:text-white">Blog Status:</label>
 
                     {['DRAFT', 'PUBLISHED'].map((status) => {
                       const isActive = field.value === status;

@@ -145,7 +145,7 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       key: 'edit',
       render: (record: IBlog) => (
         <LiaEdit
-          className={`text-primary ${canEditProduct ? 'cursor-pointer' : 'cursor-not-allowed text-slate-300'}`}
+          className={`text-black dark:text-white ${canEditProduct ? 'cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
           size={20}
           onClick={() => {
             if (canEditProduct) {
@@ -164,7 +164,7 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
           'Deleting...'
         ) : (
           <RiDeleteBin6Line
-            className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : 'cursor-not-allowed text-slate-300'}`}
+            className={`${canDeleteProduct ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
             size={20}
             onClick={() => {
               if (canDeleteProduct) {

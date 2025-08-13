@@ -148,7 +148,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
+                        className={`translate transform transition-all duration-500 overflow-hidden ${!open ? 'h-0 opacity-0' : 'h-16 opacity-100'
                           }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
@@ -206,7 +206,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
+                        className={`translate transform transition-all duration-500 overflow-hidden ${!open ? 'h-0 opacity-0' : 'h-24 opacity-100'
                           }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col pl-6">
@@ -270,7 +270,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
+                        className={`translate transform transition-all duration-500 overflow-hidden ${!open ? 'h-0 opacity-0' : 'h-16 opacity-100'
                           }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
@@ -322,7 +322,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         />
                       </Link>
                       <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
+                        className={`translate transform transition-all duration-500 overflow-hidden ${!open ? 'h-0 opacity-0' : 'h-24 opacity-100'
                           }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col pl-6">
@@ -387,7 +387,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
+                        className={`translate transform transition-all duration-500 overflow-hidden ${!open ? 'h-0 opacity-0' : 'h-16 opacity-100'
                           }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col pl-6">
@@ -445,7 +445,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
+                        className={`translate transform transition-all duration-500 overflow-hidden ${!open ? 'h-0 opacity-0' : 'h-[135px] opacity-100'
                           }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col pl-6">

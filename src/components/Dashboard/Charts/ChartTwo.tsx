@@ -97,7 +97,7 @@ const ChartTwo = ({ chartData }: { chartData: WEEKLYGRAPH }) => {
 
   return (
     <div className="col-span-12 rounded-xl border shadow-md shadow-black/10 dark:shadow-primary/30 dark:border-primary/30 p-5 xl:col-span-4 space-y-4 bg-white dark:bg-white/20 hover:shadow-lg hover:dark:shadow-primary/50 transition-all duration-400 hover:-translate-y-1">
-      <p className="font-semibold dark:text-primary">Weekly Statistics</p>
+      <p className="font-semibold text-black dark:text-primary">Weekly Statistics</p>
 
       <div id="chartTwo">
         {chartData && (
