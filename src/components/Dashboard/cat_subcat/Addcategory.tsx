@@ -78,12 +78,12 @@ const AddCategory = ({
       if (updateFlag) {
         await ApoloClient.mutate({
           mutation: UPDATE_CATEGORY,
-            context: {
-              headers: {
-                authorization: `Bearer ${finalToken}`,
-              },
-              credentials: 'include',
+          context: {
+            headers: {
+              authorization: `Bearer ${finalToken}`,
             },
+            credentials: 'include',
+          },
           variables: { input: { id: Number(editCategory?.id), ...newValue } },
           refetchQueries: [{ query: GET_ALL_CATEGORIES }],
         });
@@ -281,20 +281,57 @@ const AddCategory = ({
     >
       {(formik) => {
         return (
-          <>
-            <p
-              className="dashboard_primary_button"
-              onClick={() => handleBack(formik.values)}
-            >
-              <IoMdArrowRoundBack /> Back
-            </p>
+          
             <Form onSubmit={formik.handleSubmit}>
+              <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
+              <p
+                className="dashboard_primary_button"
+                onClick={() => handleBack(formik.values)}
+              >
+                <IoMdArrowRoundBack /> Back
+              </p>
+              <div className="flex justify-center gap-4">
+                <Field name="status">
+                  {({ field, form }: import('formik').FieldProps) => (
+                    <div className="flex gap-4 items-center border-r-2 border-black dark:border-white px-2">
+
+                      {['DRAFT', 'PUBLISHED'].map((status) => {
+                        const isActive = field.value === status;
+
+                        return (
+                          <button
+                            key={status}
+                            type="button"
+                            onClick={() => form.setFieldValue('status', status)}
+                            disabled={isActive}
+                            className={`px-4 py-2 rounded-md text-sm
+                                              ${isActive
+                                ? 'dashboard_primary_button cursor-not-allowed'
+                                : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                              }`}
+                          >
+                            {status}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </Field>
+                <button
+                  type="submit"
+                  className="dashboard_primary_button cursor-pointer"
+                  disabled={loading}
+                >
+                  {loading ? "loading.." : 'Submit'}
+                </button>
+              </div>
+            </div>
               <div className="flex justify-center ">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-9 w-full mt-10 xs:my-10 rounded-sm border border-stroke p-4 bg-white dark:bg-black/50 backdrop-blur-3xl">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-9 w-full mb-5 xs:mb-10 rounded-sm border border-stroke p-4 bg-white dark:bg-black/50 backdrop-blur-3xl">
                   <div className="">
                     <div className="rounded-sm border border-stroke">
-                      <div className="border-b  border-stroke py-4 px-2">
-                        <h3 className="font-medium text-black dark:text-white">
+                      <div className="border-b  border-stroke px-2">
+                        <h3 className="primary-label">
                           Add Poster Image
                         </h3>
                       </div>
@@ -383,8 +420,8 @@ const AddCategory = ({
                       )}
                     </Modal>
                     <div className="rounded-sm border mt-4 border-stroke dark:border-strokedark ">
-                      <div className="border-b border-stroke py-4 px-2  ">
-                        <h3 className="font-medium text-black dark:text-white">
+                      <div className="border-b border-stroke px-2">
+                        <h3 className="primary-label">
                           Add Banner Image / Video
                         </h3>
                       </div>
@@ -472,7 +509,7 @@ const AddCategory = ({
 
                     <div className="flex flex-col">
                       <div>
-                        <label className="mb-3 block pb-1 pt-4 px-2 text-sm font-medium text-black dark:text-white">
+                        <label className="primary-label">
                           Category Title
                         </label>
                         <Field
@@ -488,7 +525,7 @@ const AddCategory = ({
 
                       <div className='flex gap-0 sm:gap-10 flex-wrap sm:flex-nowrap'>
                         <div className='w-full'>
-                          <label className=" block pb-3 pt-4 px-2 text-sm font-medium text-black dark:text-white">
+                          <label className="primary-label">
                             Custom URL
                           </label>
                           <Field
@@ -502,7 +539,7 @@ const AddCategory = ({
                         </div>
 
                         <div className='w-full '>
-                          <label className="block pb-3 pt-4 px-2 text-sm font-medium text-black dark:text-white">
+                          <label className="primary-label">
 
                             Bread Crum
                           </label>
@@ -518,8 +555,8 @@ const AddCategory = ({
 
                       </div>
                       <div className="input_container">
-                        <div className='w-full my-3'>
-                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                        <div className='w-full'>
+                          <label className="primary-label">
                             Short Description
                           </label>
                           <input
@@ -547,7 +584,7 @@ const AddCategory = ({
 
                     <Field name="status">
                       {({ field, form }: import('formik').FieldProps) => (
-                        <div className="flex gap-4 items-center my-4 md:pt-10">
+                        <div className="flex gap-4 items-center my-4 md:pt-24">
                           <label className="font-semibold text-black dark:text-white">Category Status:</label>
 
                           {['DRAFT', 'PUBLISHED'].map((status) => {
@@ -559,7 +596,7 @@ const AddCategory = ({
                                 type="button"
                                 onClick={() => form.setFieldValue('status', status)}
                                 disabled={isActive}
-                                className={`px-4 py-2 rounded-md text-sm
+                                className={`px-4 py-2 rounded-md text-sm drop-shadow-md
                                   ${isActive
                                     ? 'dashboard_primary_button cursor-not-allowed'
                                     : 'bg-white text-black cursor-pointer'
@@ -575,7 +612,7 @@ const AddCategory = ({
                   </div>
                   <div>
                     <div>
-                      <label className=" block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                      <label className="primary-label">
                         Category Description
                       </label>
                       <TinyMCEEditor name="description" />
@@ -583,7 +620,7 @@ const AddCategory = ({
                     </div>
                     <div className="input_container">
                       <div className="input_iner_container">
-                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                        <label className="primary-label">
                           Meta Title
                         </label>
                         <input
@@ -609,7 +646,7 @@ const AddCategory = ({
 
 
                       <div className="input_iner_container">
-                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                        <label className="primary-label">
                           Canonical Tag
                         </label>
                         <Field
@@ -631,7 +668,7 @@ const AddCategory = ({
                     </div>
 
                     <div className="mt-4">
-                      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                      <label className="primary-label">
                         Meta Description
                       </label>
                       <Field
@@ -646,7 +683,7 @@ const AddCategory = ({
                       <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
                     </div>
                     <div className="mt-4">
-                      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                      <label className="primary-label">
                         Seo Schema
                       </label>
                       <Field
@@ -673,7 +710,6 @@ const AddCategory = ({
                 </button>
               </div>
             </Form>
-          </>
         );
       }}
     </Formik>

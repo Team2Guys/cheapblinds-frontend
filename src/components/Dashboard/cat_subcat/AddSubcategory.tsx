@@ -337,8 +337,8 @@ const AddSubcategory = ({
 
 
                 <div className="rounded-sm border border-stroke">
-                  <div className="border-b border-stroke py-4 px-2 ">
-                    <h3 className="font-medium  text-black dark:text-white">
+                  <div className="border-b border-stroke px-2 ">
+                    <h3 className="primary-label">
                       Add Poster Image
 
                     </h3>
@@ -402,8 +402,8 @@ const AddSubcategory = ({
                 </div>
 
                 <div className="rounded-sm border mt-4 border-stroke dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke py-4 px-2 ">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-2 ">
+                    <h3 className="primary-label">
                       Add Banner Image
                     </h3>
                   </div>
@@ -491,7 +491,7 @@ const AddSubcategory = ({
 
                 <div className="flex flex-col gap-4 md:py-6">
                   <div>
-                    <label className="mb-3 block py-1 px-2 text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Sub Category Name
                     </label>
 
@@ -506,7 +506,7 @@ const AddSubcategory = ({
                   </div>
 
                   <div>
-                    <label className="mb-3 block py-1 px-2 text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Custom Url
                     </label>
 
@@ -522,7 +522,7 @@ const AddSubcategory = ({
 
                   <div>
 
-                    <label className="mb-3 block py-1 px-2 text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Select Parent Category (atleat one)
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -550,7 +550,7 @@ const AddSubcategory = ({
                   <Field name="status">
                     {({ field, form }: import('formik').FieldProps) => (
                       <div className="flex gap-4 items-center my-4">
-                        <label className="font-semibold text-black dark:text-white">Sub Category Status:</label>
+                        <label className="primary-label">Sub Category Status:</label>
 
                         {['DRAFT', 'PUBLISHED'].map((status) => {
                           const isActive = field.value === status;
@@ -561,7 +561,7 @@ const AddSubcategory = ({
                               type="button"
                               onClick={() => form.setFieldValue('status', status)}
                               disabled={isActive}
-                              className={`px-4 py-2 rounded-md text-sm
+                              className={`px-4 py-2 rounded-md text-sm drop-shadow-md
                                   ${isActive
                                   ? 'dashboard_primary_button cursor-not-allowed'
                                   : 'bg-white text-black cursor-pointer'
@@ -580,7 +580,7 @@ const AddSubcategory = ({
               </div>
               <div>
                 <div>
-                  <label className="mb-3 block pb-2 pt-3 px-2 text-sm font-medium text-black dark:text-white">
+                  <label className="primary-label">
                     Category Description
                   </label>
                   <TinyMCEEditor name="description" />
@@ -593,7 +593,7 @@ const AddSubcategory = ({
 
                 <div className="flex gap-4 mt-4">
                   <div className="w-2/4">
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Meta Title
                     </label>
                     <Field
@@ -608,7 +608,7 @@ const AddSubcategory = ({
                     )}
                   </div>
                   <div className="w-2/4">
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Canonical Tag
                     </label>
                     <Field
@@ -625,7 +625,7 @@ const AddSubcategory = ({
                 </div>
 
                 <div className="mt-4">
-                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                  <label className="primary-label">
                     Meta Description
                   </label>
                   <Field
@@ -641,7 +641,7 @@ const AddSubcategory = ({
                 </div>
                 <div className="flex gap-4 mt-2">
                   <div className="w-full">
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Short Description
                     </label>
                     <Field

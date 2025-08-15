@@ -1,80 +1,20 @@
 'use client';
-import React, { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useMutation } from '@apollo/client';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { Admin, AdminValues } from 'types/type';
+import { Admin } from 'types/type';
 import showToast from 'components/Toaster/Toaster';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import { CREATE_ADMIN, UPDATE_ADMIN } from 'graphql/Admins';
 import { useSession } from 'next-auth/react';
 import { Modal } from 'antd';
-
-interface CheckBox {
-  canAddProduct: boolean;
-  canEditProduct: boolean;
-  canDeleteProduct: boolean;
-  canAddCategory: boolean;
-  canDeleteCategory: boolean;
-  canEditCategory: boolean;
-  canCheckProfit: boolean;
-  canCheckRevenue: boolean;
-  canCheckVisitors: boolean;
-  canViewUsers: boolean;
-  canViewSales: boolean;
-  canVeiwAdmins: boolean;
-  canVeiwTotalproducts: boolean;
-  canVeiwTotalCategories: boolean
-}
-
-const validationSchema = Yup.object().shape({
-  fullname: Yup.string().required('Full Name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  password: Yup.string().required('Password is required'),
-  canAddProduct: Yup.boolean(),
-  canEditProduct: Yup.boolean(),
-  canDeleteProduct: Yup.boolean(),
-  canAddCategory: Yup.boolean(),
-  canDeleteCategory: Yup.boolean(),
-  canEditCategory: Yup.boolean(),
-  canCheckProfit: Yup.boolean(),
-  canCheckRevenue: Yup.boolean(),
-  canCheckVisitors: Yup.boolean(),
-  canViewUsers: Yup.boolean(),
-  canViewSales: Yup.boolean(),
-  canVeiwAdmins: Yup.boolean(),
-  canVeiwTotalproducts: Yup.boolean(),
-  canVeiwTotalCategories: Yup.boolean(),
-});
+import { initialAdminValues } from 'data/InitialValues';
+import { checkboxAdminData } from 'data/data';
+import { validationAdminSchema } from 'data/Validations';
+import { adminCheckBox, CreateAdminProps } from 'types/admin';
 
 
-const initialValues: Admin = {
-  fullname: '',
-  email: '',
-  password: '',
-  canAddProduct: false,
-  canEditProduct: false,
-  canDeleteProduct: false,
-  canAddCategory: false,
-  canDeleteCategory: false,
-  canEditCategory: false,
-  canCheckProfit: false,
-  canCheckRevenue: false,
-  canCheckVisitors: false,
-  canViewUsers: false,
-  canViewSales: false,
-  canVeiwAdmins: false,
-  canVeiwTotalproducts: false,
-  canVeiwTotalCategories: false,
-};
-
-interface CreateAdminProps {
-  setselecteMenu: React.Dispatch<SetStateAction<string | null | undefined>>
-  EditAdminValue?: Admin | undefined;
-  EditInitialValues?: AdminValues | undefined;
-  setEditProduct: React.Dispatch<SetStateAction<Admin | undefined>>
-}
 
 const CreateAdmin: React.FC<CreateAdminProps> = ({
   setselecteMenu,
@@ -83,7 +23,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
   setEditProduct,
 }) => {
   const updateFlag = EditAdminValue && EditInitialValues ? true : false;
-  const initialFormValues: Admin = updateFlag && EditAdminValue ? EditAdminValue : initialValues;
+  const initialFormValues: Admin = updateFlag && EditAdminValue ? EditAdminValue : initialAdminValues;
   const session = useSession()
   const finalToken = session.data?.accessToken
 
@@ -92,22 +32,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
 
   const [createAdmin] = useMutation(CREATE_ADMIN);
   const [updateAdmin] = useMutation(UPDATE_ADMIN);
-  const checkboxData = [
-    { name: 'canAddProduct', label: 'Can Add Product' },
-    { name: 'canEditProduct', label: 'Can Edit Product' },
-    { name: 'canDeleteProduct', label: 'Can Delete Product' },
-    { name: 'canAddCategory', label: 'Can Add Category' },
-    { name: 'canDeleteCategory', label: 'Can Delete Category' },
-    { name: 'canEditCategory', label: 'Can Edit Category' },
-    { name: 'canCheckProfit', label: 'Can Check Profit' },
-    { name: 'canCheckRevenue', label: 'Can Check Revenue' },
-    { name: 'canCheckVisitors', label: 'Can Check Visitors' },
-    { name: 'canViewUsers', label: 'Can View Users' },
-    { name: 'canViewSales', label: 'Can View Sales' },
-    { name: 'canVeiwAdmins', label: 'Can View Admins' },
-    { name: 'canVeiwTotalCategories', label: 'Can View Categories' },
-    { name: 'canVeiwTotalproducts', label: 'Can View Products' },
-  ];
+
 
   const handleBack = (values: Admin) => {
     const isFormChanged = JSON.stringify(initialFormValues) !== JSON.stringify(values);
@@ -133,7 +58,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
     <div className="max-w-4xl mx-auto">
       <Formik
         initialValues={initialFormValues}
-        validationSchema={validationSchema}
+        validationSchema={validationAdminSchema}
         onSubmit={async (values: Admin, { setSubmitting }) => {
           try {
             setLoading(true);
@@ -229,7 +154,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
-                {checkboxData.map((checkbox) => (
+                {checkboxAdminData.map((checkbox) => (
                   <label key={checkbox.name} className="flex items-center gap-2">
                     <Field
                       type="checkbox"
@@ -246,9 +171,9 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    const clearedPermissions: Partial<Record<keyof CheckBox, boolean>> = {};
-                    checkboxData.forEach((checkbox) => {
-                      clearedPermissions[checkbox.name as keyof CheckBox] = false;
+                    const clearedPermissions: Partial<Record<keyof adminCheckBox, boolean>> = {};
+                    checkboxAdminData.forEach((checkbox) => {
+                      clearedPermissions[checkbox.name as keyof adminCheckBox] = false;
                     });
                     setValues({ ...values, ...(clearedPermissions) });
                   }}
@@ -259,9 +184,9 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    const allPermissions: Partial<Record<keyof CheckBox, boolean>> = {};
-                    checkboxData.forEach((checkbox) => {
-                      allPermissions[checkbox.name as keyof CheckBox] = true;
+                    const allPermissions: Partial<Record<keyof adminCheckBox, boolean>> = {};
+                    checkboxAdminData.forEach((checkbox) => {
+                      allPermissions[checkbox.name as keyof adminCheckBox] = true;
                     });
                     setValues({ ...values, ...allPermissions });
                   }}

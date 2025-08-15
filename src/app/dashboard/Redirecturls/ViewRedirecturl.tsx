@@ -11,6 +11,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import { RedirectUrls } from 'types/general';
 import { DateFormatHandler } from 'utils/helperFunctions';
+import { getPermission } from 'utils/permissionHandlers';
 
 interface IView_RedirectUrls {
     Redirecturls: RedirectUrls[],
@@ -24,20 +25,20 @@ export default function ViewRedirecturl({
     setRedirectUrls
 }: IView_RedirectUrls) {
     const [RemoveReview, { loading }] = useMutation(REMOVE_REVIEW)
-const session = useSession()
-  const finalToken = session.data?.accessToken
+    const session = useSession()
+    const finalToken = session.data?.accessToken
     const [searchTerm, setSearchTerm] = useState<string>('');
 
-    const canDeleteProduct = true;
-    const canEditproduct = true;
-    const canAddProduct = true;
+    const canAddRedirecturls = getPermission(session.data, "canAddRedirecturls")
+    const canDeleteRedirecturls = getPermission(session.data, "canDeleteRedirecturls")
+    const canEditRedirecturls = getPermission(session.data, "canEditRedirecturls")
 
-const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
-    item.url?.toLowerCase().includes(searchTerm.toLowerCase())
-).sort((a, b) => {
-      const dateA = new Date(a.updatedAt || a.createdAt || '').getTime();
-      const dateB = new Date(b.updatedAt || b.createdAt || '').getTime();
-      return dateB - dateA;
+    const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
+        item.url?.toLowerCase().includes(searchTerm.toLowerCase())
+    ).sort((a, b) => {
+        const dateA = new Date(a.updatedAt || a.createdAt || '').getTime();
+        const dateB = new Date(b.updatedAt || b.createdAt || '').getTime();
+        return dateB - dateA;
     });
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,11 +69,11 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
             await RemoveReview({
                 variables: { id: Number(key) },
                 context: {
-            headers: {
-              authorization: `Bearer ${finalToken}`,
-            },
-            credentials: 'include',
-          },
+                    headers: {
+                        authorization: `Bearer ${finalToken}`,
+                    },
+                    credentials: 'include',
+                },
             });
             revalidateTag('reviews');
 
@@ -113,11 +114,11 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
             key: 'Edit',
             render: (record: RedirectUrls) => (
                 <LiaEdit
-                    className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white transition duration-300 ease-in-out hover:scale-200' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
+                    className={`${canEditRedirecturls ? 'cursor-pointer text-black dark:text-white transition duration-300 ease-in-out hover:scale-200' : ''} ${!canEditRedirecturls ? 'cursor-not-allowed text-slate-300' : ''
                         }`}
                     size={20}
                     onClick={() => {
-                        if (canEditproduct) {
+                        if (canEditRedirecturls) {
                             setRedirectUrls(record);
                             setselecteMenu('Add RedirectUrls');
                         }
@@ -131,14 +132,13 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
             render: (record: RedirectUrls) => (
                 loading ? "Deleting" :
                     <RiDeleteBin6Line
-                        className={`${canDeleteProduct ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
+                        className={`${canDeleteRedirecturls ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : ''} ${!canDeleteRedirecturls ? 'cursor-not-allowed text-slate-300' : ''
                             }`}
                         size={20}
                         onClick={() => {
-                            console.log(record, "id")
-                            // if (canDeleteProduct) {
-                            confirmDelete(record.id);
-                            // }
+                            if (canDeleteRedirecturls) {
+                                confirmDelete(record.id);
+                            }
                         }}
                     />
             ),
@@ -157,12 +157,12 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
                 />
                 <div>
                     <p
-                        className={`py-2 px-4 rounded-md text-nowrap text-12 xs:text-base dashboard_primary_button ${canAddProduct
-                                ? 'cursor-pointer text-white '
-                                : 'cursor-not-allowed bg-gray-500 text-white'
+                        className={`py-2 px-4 rounded-md text-nowrap text-12 xs:text-base dashboard_primary_button ${canAddRedirecturls
+                            ? 'cursor-pointer text-white '
+                            : 'cursor-not-allowed bg-gray-500 text-white'
                             }`}
                         onClick={() => {
-                            if (canAddProduct) {
+                            if (canAddRedirecturls) {
                                 setselecteMenu('Add RedirectUrls');
                                 setRedirectUrls(undefined);
                             }
@@ -172,7 +172,7 @@ const filteredRedirectUrls = Redirecturls && Redirecturls.filter((item) =>
                     </p>
                 </div>
             </div>
-            <Table<RedirectUrls>  data={filteredRedirectUrls} columns={columns} rowKey="id" />
+            <Table<RedirectUrls> data={filteredRedirectUrls} columns={columns} rowKey="id" />
 
         </>
     )

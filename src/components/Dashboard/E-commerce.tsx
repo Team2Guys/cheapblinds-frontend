@@ -7,7 +7,6 @@ import { PiUsersThreeFill } from 'react-icons/pi';
 import { IoBagOutline } from 'react-icons/io5';
 import { BiCategory } from 'react-icons/bi';
 import { GrDocumentPerformance } from 'react-icons/gr';
-// import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import { RECORDS } from 'types/type';
 import { MONTHLYGRAPH, WEEKLYGRAPH } from 'types/general';
@@ -33,6 +32,18 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
   const canVeiwTotalCategories =
     loggedInUser &&
     (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwTotalCategories : true);
+    const canVeiwTotalSubCategories =
+    loggedInUser &&
+    (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwTotalSubCategories : true);
+    const canVeiwTotalBlog =
+    loggedInUser &&
+    (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwTotalBlog : true);
+    const canVeiwTotalRedirecturls =
+    loggedInUser &&
+    (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canVeiwTotalRedirecturls : true);
+    const canViewAppointments =
+    loggedInUser &&
+    (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canViewAppointments : true);
 
   const cardStats = [
     {
@@ -45,7 +56,7 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
       title: 'Sub Categories',
       total: records?.totalSubCategories ?? '',
       icon: <BiCategory className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: canVeiwTotalCategories,
+      condition: canVeiwTotalSubCategories,
     },
 
     {
@@ -86,47 +97,26 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
       title: 'Blogs',
       total: records?.blogs ?? '',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
+      condition: canVeiwTotalBlog,
     },
     {
       title: 'Blog Comments',
       total: records?.blogs_comments ?? '',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
-    },
-    {
-      title: 'Jobs',
-      total: records?.jobs ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
-    },
-
-    {
-      title: 'Jobs Application',
-      total: records?.jobApplication ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
+      condition: canVeiwTotalBlog,
     },
     {
       title: 'Redirect Urls',
       total: records?.redirecturls ?? '',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
-    },
-    {
-      title: 'Admins',
-      total: records?.totalAdmins ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
+      condition: canVeiwTotalRedirecturls,
     },
     {
       title: 'Appointments',
       total: records?.appointments ?? '',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
-      condition: true,
+      condition: canViewAppointments,
     },
-
-
   ];
 
 
