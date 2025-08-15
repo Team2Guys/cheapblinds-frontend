@@ -29,14 +29,14 @@ export default function UserComponent({
   };
 
   return (
-    <div className="flex justify-center px-4 py-6">
-      <div className="w-full max-w-md bg-primary dark:bg-white p-6 sm:p-10 rounded-lg shadow-md relative">
-        <Link className='bg-black text-white p-2 rounded-md absolute top-2 left-2' href="/">Back To Home</Link>
-        <div className="flex justify-center mb-5 pt-5">
+    <div className="flex justify-center px-4 py-6 w-full items-center">
+      <div className="w-full max-w-md border border-stroke p-4 bg-white dark:bg-black/50 backdrop-blur-3xl rounded-lg shadow-md relative h-fit">
+        <Link className='dashboard_primary_button absolute top-2 left-2' href="/">Back To Home</Link>
+        <div className="flex justify-center my-5 pt-5">
           <div className="flex w-full border-b border-gray-300">
             <button
               className={`flex-1 py-2 px-4 text-center text-lg font-bold flex cursor-pointer items-center justify-center gap-2 ${activeTab === 'Admin'
-                ? 'text-white dark:text-black border-b-2 border-black'
+                ? 'text-black dark:text-white border-b-2 border-black dark:border-white'
                 : 'text-gray-500'
                 }`}
               onClick={() => handleTabChange('Admin')}
@@ -45,7 +45,7 @@ export default function UserComponent({
             </button>
             <button
               className={`flex-1 py-2 px-4 text-center text-lg font-bold flex items-center cursor-pointer justify-center gap-2 ${activeTab === 'Super-Admin'
-                ? 'text-white border-b-2 dark:text-black border-black'
+                ? 'text-black border-b-2 dark:text-white border-black'
                 : 'text-gray-500'
                 }`}
               onClick={() => handleTabChange('Super-Admin')}
