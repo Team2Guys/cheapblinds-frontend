@@ -44,6 +44,7 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
     const canViewAppointments =
     loggedInUser &&
     (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canViewAppointments : true);
+    console.log(records,'loggedInUser', loggedInUser)
 
   const cardStats = [
     {
@@ -54,14 +55,14 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
     },
     {
       title: 'Sub Categories',
-      total: records?.totalSubCategories ?? '',
+      total: records?.totalSubCategories ?? '0',
       icon: <BiCategory className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: canVeiwTotalSubCategories,
     },
 
     {
       title: 'Orders',
-      total: records?.totalorders ?? '',
+      total: records?.totalorders ?? '0',
       icon: (
         <FiShoppingCart className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />
       ),
@@ -69,7 +70,7 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
     },
     {
       title: 'Abandoned Orders',
-      total: records?.Total_abandant_order ?? '',
+      total: records?.Total_abandant_order ?? '0',
       icon: (
         <GrDocumentPerformance className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />
       ),
@@ -77,43 +78,43 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
     },
     {
       title: 'Categories',
-      total: records?.totalCategories ?? '',
+      total: records?.totalCategories ?? '0',
       icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: canVeiwTotalCategories,
     },
     {
       title: 'Product',
-      total: records?.totalProducts ?? '',
+      total: records?.totalProducts ?? '0',
       icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: canVeiwTotalproducts,
     },
     {
       title: 'Users',
-      total: records?.totalUsers ?? '',
+      total: records?.totalUsers ?? '0',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: canViewUsers,
     },
     {
       title: 'Blogs',
-      total: records?.blogs ?? '',
+      total: records?.blogs ?? '0',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: canVeiwTotalBlog,
     },
     {
       title: 'Blog Comments',
-      total: records?.blogs_comments ?? '',
+      total: records?.blogs_comments ?? '0',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: canVeiwTotalBlog,
     },
     {
       title: 'Redirect Urls',
-      total: records?.redirecturls ?? '',
+      total: records?.redirecturls ?? '0',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: canVeiwTotalRedirecturls,
     },
     {
       title: 'Appointments',
-      total: records?.appointments ?? '',
+      total: records?.appointments ?? '0',
       icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
       condition: canViewAppointments,
     },

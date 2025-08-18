@@ -297,6 +297,7 @@ export interface Admin extends Permissions {
   email?: string;
   password?: string;
   posterImageUrl?:ProductImage
+  __typename?: string
 }
 
 export interface AdminValues extends Admin {

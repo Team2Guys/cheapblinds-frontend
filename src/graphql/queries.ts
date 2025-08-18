@@ -552,15 +552,11 @@ query GET_ALL_RECORDS {
         totalAdmins
         totalUsers
         Total_abandant_order
-        totalAccessories
         totalorders
         appointments
-        ecomereceProducts
         redirecturls
         blogs
         blogs_comments
-        jobs
-        jobApplication
     }
 }
 
@@ -725,6 +721,19 @@ export const GET_ALL_ADMINS = gql`
       canVeiwAdmins
       canVeiwTotalproducts
       canVeiwTotalCategories
+      canAddSubCategory
+      canDeleteSubCategory
+      canEditSubCategory
+      canVeiwTotalSubCategories
+      canAddBlog
+      canDeleteBlog
+      canEditBlog
+      canVeiwTotalBlog
+      canAddRedirecturls
+      canDeleteRedirecturls
+      canEditRedirecturls
+      canVeiwTotalRedirecturls
+      canViewAppointments
       posterImageUrl
       role
     }

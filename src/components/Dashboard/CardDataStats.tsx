@@ -67,8 +67,8 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
         <span
           className="
             block mt-3 uppercase tracking-widest
-            text-black/30 dark:text-primary font-semibold
-            select-none text-xs xs:text-sm
+            text-black/30 dark:text-primary font-semibold sm:font-bold
+            select-none text-xs sm:text-sm
           "
         >
           {title}

@@ -9,6 +9,7 @@ import { BiCategoryAlt } from 'react-icons/bi';
 import { GrCodeSandbox, GrUserAdmin } from 'react-icons/gr';
 import { TfiShoppingCartFull } from 'react-icons/tfi';
 import { TbGardenCartOff } from 'react-icons/tb';
+import { useSession } from 'next-auth/react';
 // import { useSession } from 'next-auth/react';
 
 interface SidebarProps {
@@ -18,9 +19,9 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  // const { data: loggedInUser } = useSession()
+  const { data: loggedInUser } = useSession()
 
-  // const superAdmin = loggedInUser && loggedInUser.user.role !== 'Admin';
+  const superAdmin = loggedInUser && loggedInUser.user.role !== 'Admin';
 
   const pathname = usePathname();
 
@@ -451,8 +452,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         <ul className="mb-3 mt-3 flex flex-col pl-6">
                           {sidebarLinks.map((link) => (
                             <li key={link.href} className="relative pl-4">
-                            <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
-                            <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
+                              <div className="absolute left-0 top-0 h-full w-px bg-white"></div>
+                              <div className="absolute left-0 top-5 w-3 h-px bg-white"></div>
                               <Link
                                 href={link.href}
                                 className={`dashboard_side_bar group p-2 ${pathname === link.href ? 'active' : ''
@@ -471,8 +472,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
 
 
-              {/* {superAdmin ? ( */}
-              {true ? (
+              {superAdmin ? (
                 <li>
                   <Link
                     href="/dashboard/super-admin"
@@ -490,8 +490,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           </div>
 
         </nav>
-      </div>
-    </aside>
+      </div >
+    </aside >
   );
 };
 

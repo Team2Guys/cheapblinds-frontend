@@ -224,7 +224,7 @@ export const base64ToFile = (base64: string, filename: string): File => {
   return new File([u8arr], filename, { type: mime });
 };
 
-export const handleCropModalOk = async (croppedImage: string | null, imageSrc: string | null, setIsCropModalVisible: Dispatch<SetStateAction<boolean>>, setCroppedImage: Dispatch<SetStateAction<string | null>>, setposterimageUrl: Dispatch<SetStateAction<ProductImage[] | undefined>>, setBannerImageUrl: Dispatch<SetStateAction<ProductImage[] | undefined>>, setImagesUrl?: Dispatch<React.SetStateAction<ProductImage[] | undefined>>) => {
+export const handleCropModalOk = async (croppedImage: string | null, imageSrc: string | null, setIsCropModalVisible: Dispatch<SetStateAction<boolean>>, setCroppedImage: Dispatch<SetStateAction<string | null>>, setposterimageUrl: Dispatch<SetStateAction<ProductImage[] | undefined>>, setBannerImageUrl?: Dispatch<SetStateAction<ProductImage[] | undefined>>, setImagesUrl?: Dispatch<React.SetStateAction<ProductImage[] | undefined>>) => {
   console.log(croppedImage, 'imageSrc')
 
   if (croppedImage && imageSrc) {
@@ -257,11 +257,13 @@ export const handleCropModalOk = async (croppedImage: string | null, imageSrc: s
             img.imageUrl === imageSrc ? { ...img, ...newImage } : img
           )
         );
-        setBannerImageUrl((prevImages) =>
-          prevImages?.map((img) =>
-            img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-          )
-        );
+        if (setBannerImageUrl) {
+          setBannerImageUrl((prevImages) =>
+            prevImages?.map((img) =>
+              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
+            )
+          );
+        }
         if (setImagesUrl) {
           setImagesUrl((prevImages) =>
             prevImages?.map((img) =>
