@@ -11,6 +11,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import { IBlog } from 'types/general';
 import { DateFormatHandler } from 'utils/helperFunctions';
+import { getPermission } from 'utils/permissionHandlers';
 
 interface ViewBlogProps {
   setselecteMenu: React.Dispatch<SetStateAction<string>>;
@@ -28,9 +29,9 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
   useEffect(() => {
     setAllBlogs(blogs);
   }, [blogs]);
-  const canAddProduct = true;
-  const canEditProduct = true;
-  const canDeleteProduct = true;
+  const canAddProduct = getPermission(session.data, "canAddProduct")
+   const canDeleteProduct = getPermission(session.data, "canDeleteProduct")
+   const canEditProduct = getPermission(session.data, "canEditProduct")
 
   const confirmDelete = (id: number | string) => {
     Swal.fire({
@@ -145,7 +146,7 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       key: 'edit',
       render: (record: IBlog) => (
         <LiaEdit
-          className={`text-black dark:text-white ${canEditProduct ? 'cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
+          className={`text-black dark:text-white ${canEditProduct ? 'cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-400'}`}
           size={20}
           onClick={() => {
             if (canEditProduct) {

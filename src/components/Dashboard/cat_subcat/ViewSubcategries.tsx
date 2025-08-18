@@ -51,10 +51,10 @@ const ViewSubcategries = ({
 
   // const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
   const [removeCategory] = useMutation(REMOVE_SUBCATEGORY);
-  const canDeleteCategory = getPermission(session.data, 'canDeleteCategory');
-  const canAddCategory = getPermission(session.data, 'canAddCategory');
+  const canDeleteCategory = getPermission(session.data, 'canDeleteSubCategory');
+  const canAddCategory = getPermission(session.data, 'canAddSubCategory');
 
-  const canEditCategory = getPermission(session.data, "canEditCategory" );
+  const canEditCategory = getPermission(session.data, "canEditSubCategory" );
   // const canDeleteCategory = true;
   // const canAddCategory = true;
   // const canEditCategory = true;
@@ -168,14 +168,13 @@ const ViewSubcategries = ({
       title: 'Edited By',
       dataIndex: 'last_editedBy',
       key: 'last_editedBy',
-      width: 150
     },
     {
       title: 'Edit',
       key: 'Edit',
       render: (record: ISUBCATEGORY) => (
         <LiaEdit
-          className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white transition duration-300 ease-in-out hover:scale-200'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+          className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white transition duration-300 ease-in-out hover:scale-200'} ${!canEditCategory && 'cursor-not-allowed text-slate-400'}`}
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -186,7 +185,7 @@ const ViewSubcategries = ({
       key: 'action',
       render: (record: ISUBCATEGORY) => (
         <RiDeleteBin6Line
-          className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
+          className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-400'
             }`}
           // className="cursor-pointer text-red-500"
           size={20}
@@ -212,10 +211,7 @@ const ViewSubcategries = ({
         />
         <div>
           <div
-            className={`${canAddCategory && 'cursor-pointer'}  p-2 ${canAddCategory &&
-              'dashboard_primary_button text-white rounded-md  '
-              } flex justify-center ${!canAddCategory && 'cursor-not-allowed '
-              } hover:bg-black`}
+            className={`${!canAddCategory ? 'cursor-not-allowed border-0 bg-black/60 dark:bg-primary/60' : 'cursor-pointer'} dashboard_primary_button`}
             onClick={() => {
               seteditCategory?.(undefined);
               if (canAddCategory) {

@@ -17,6 +17,7 @@ import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
 import { ISUBCATEGORY } from 'types/cat';
 import { useSession } from 'next-auth/react';
 import { Modal } from 'antd';
+import { AddBlogInitialValues } from 'data/InitialValues';
 
 const TextInputField = ({ name, label }: { name: string; label: string }) => (
   <div>
@@ -48,20 +49,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
   const [updateBlogMutation, { loading: updating }] = useMutation(UPDATE_BLOG);
   const session = useSession()
   const finalToken = session.data?.accessToken
-  const [blog] = useState<IBlog>({
-    title: editblog?.title || '',
-    content: editblog?.content || '',
-    custom_url: editblog?.custom_url || '',
-    category: editblog?.category || '',
-    status: editblog?.status || 'DRAFT',
-    isPublished: editblog?.isPublished || false,
-    posterImage: editblog?.posterImage || undefined,
-    last_editedBy: editblog?.last_editedBy || '',
-    Canonical_Tag: editblog?.Canonical_Tag || '',
-    Meta_Description: editblog?.Meta_Description || '',
-    Meta_Title: editblog?.Meta_Title || '',
-    redirectionUrl: editblog?.redirectionUrl || '',
-  })
+  const [blog] = useState<IBlog>(editblog || AddBlogInitialValues)
 
 
   useEffect(() => {

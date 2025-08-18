@@ -18,6 +18,10 @@ interface CheckBox {
   canAddCategory: boolean;
   canDeleteCategory: boolean;
   canEditCategory: boolean;
+  canAddSubCategory: boolean,
+  canDeleteSubCategory: boolean,
+  canEditSubCategory: boolean,
+  canVeiwTotalSubCategories: boolean,
   canCheckProfit: boolean;
   canCheckRevenue: boolean;
   canCheckVisitors: boolean;
@@ -25,7 +29,15 @@ interface CheckBox {
   canViewSales: boolean;
   canVeiwAdmins: boolean;
   canVeiwTotalproducts: boolean;
-  canVeiwTotalCategories: boolean
+  canVeiwTotalCategories: boolean;
+  canAddBlog: boolean,
+  canDeleteBlog: boolean,
+  canEditBlog: boolean,
+  canVeiwTotalBlog: boolean,
+  canAddRedirecturls: boolean,
+  canDeleteRedirecturls: boolean,
+  canEditRedirecturls: boolean,
+  canVeiwTotalRedirecturls: boolean,
 }
 
 const validationSchema = Yup.object().shape({
@@ -46,6 +58,18 @@ const validationSchema = Yup.object().shape({
   canVeiwAdmins: Yup.boolean(),
   canVeiwTotalproducts: Yup.boolean(),
   canVeiwTotalCategories: Yup.boolean(),
+  // canAddSubCategory: Yup.boolean(),
+  // canDeleteSubCategory: Yup.boolean(),
+  // canEditSubCategory: Yup.boolean(),
+  // canVeiwTotalSubCategories: Yup.boolean(),
+  // canAddBlog: Yup.boolean(),
+  // canDeleteBlog: Yup.boolean(),
+  // canEditBlog: Yup.boolean(),
+  // canVeiwTotalBlog: Yup.boolean(),
+  // canAddRedirecturls: Yup.boolean(),
+  // canDeleteRedirecturls: Yup.boolean(),
+  // canEditRedirecturls: Yup.boolean(),
+  // canVeiwTotalRedirecturls: Yup.boolean(),
 });
 
 
@@ -67,6 +91,18 @@ const initialValues: Admin = {
   canVeiwAdmins: false,
   canVeiwTotalproducts: false,
   canVeiwTotalCategories: false,
+  // canAddSubCategory: false,
+  // canDeleteSubCategory: false,
+  // canEditSubCategory: false,
+  // canVeiwTotalSubCategories: false,
+  // canAddBlog: false,
+  // canDeleteBlog: false,
+  // canEditBlog: false,
+  // canVeiwTotalBlog: false,
+  // canAddRedirecturls: false,
+  // canDeleteRedirecturls: false,
+  // canEditRedirecturls: false,
+  // canVeiwTotalRedirecturls: false,
 };
 
 interface CreateAdminProps {
@@ -107,6 +143,18 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
     { name: 'canVeiwAdmins', label: 'Can View Admins' },
     { name: 'canVeiwTotalCategories', label: 'Can View Categories' },
     { name: 'canVeiwTotalproducts', label: 'Can View Products' },
+    // { name: 'canVeiwTotalRedirecturls', label: 'Can View Redirecturls' },
+    // { name: 'canEditRedirecturls', label: 'Can Edit Redirecturls' },
+    // { name: 'canDeleteRedirecturls', label: 'Can Delete Redirecturls' },
+    // { name: 'canAddRedirecturls', label: 'Can Add Redirecturls' },
+    // { name: 'canVeiwTotalBlog', label: 'Can view Blogs' },
+    // { name: 'canDeleteBlog', label: 'Can Delete Blogs' },
+    // { name: 'canEditBlog', label: 'Can Edit Blogs' },
+    // { name: 'canAddBlog', label: 'Can Add Blogs' },
+    // { name: 'canAddSubCategory', label: 'Can Add Sub Category' },
+    // { name: 'canDeleteSubCategory', label: 'Can Delete Sub Category' },
+    // { name: 'canEditSubCategory', label: 'Can Edit Sub Category' },
+    // { name: 'canVeiwTotalSubCategories', label: 'Can View Sub Categories' },
   ];
 
   const handleBack = (values: Admin) => {

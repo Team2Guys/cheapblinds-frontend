@@ -38,13 +38,13 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
     {
       title: 'Admins',
       total: records?.totalAdmins ?? '0',
-      icon: <IoMdEye className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <IoMdEye className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: canVeiwAdmins,
     },
     {
       title: 'Sub Categories',
       total: records?.totalSubCategories ?? '',
-      icon: <BiCategory className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <BiCategory className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: canVeiwTotalCategories,
     },
 
@@ -52,7 +52,7 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
       title: 'Orders',
       total: records?.totalorders ?? '',
       icon: (
-        <FiShoppingCart className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />
+        <FiShoppingCart className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />
       ),
       condition: canViewSales,
     },
@@ -60,69 +60,69 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
       title: 'Abandoned Orders',
       total: records?.Total_abandant_order ?? '',
       icon: (
-        <GrDocumentPerformance className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />
+        <GrDocumentPerformance className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />
       ),
       condition: canViewSales,
     },
     {
       title: 'Categories',
       total: records?.totalCategories ?? '',
-      icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: canVeiwTotalCategories,
     },
     {
       title: 'Product',
       total: records?.totalProducts ?? '',
-      icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: canVeiwTotalproducts,
     },
     {
       title: 'Users',
       total: records?.totalUsers ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: canViewUsers,
     },
     {
       title: 'Blogs',
       total: records?.blogs ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: true,
     },
     {
       title: 'Blog Comments',
       total: records?.blogs_comments ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: true,
     },
     {
       title: 'Jobs',
       total: records?.jobs ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: true,
     },
 
     {
       title: 'Jobs Application',
       total: records?.jobApplication ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: true,
     },
     {
       title: 'Redirect Urls',
       total: records?.redirecturls ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: true,
     },
     {
       title: 'Admins',
       total: records?.totalAdmins ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: true,
     },
     {
       title: 'Appointments',
       total: records?.appointments ?? '',
-      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
       condition: true,
     },
 
@@ -134,7 +134,7 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
 
   return (
     <>
-      <div className="grid gap-3 xsm:gap-5 grid-cols-2 md:grid-cols-3 md:gap-6 xl:grid-cols-5 2xl:gap-7.5 pb-4">
+      <div className="grid gap-3 xsm:gap-5 grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 2xl:gap-6 pb-4">
         {cardStats
           .filter((card) => card.condition)
           .map((card, idx) => (
@@ -145,7 +145,7 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
       </div>
 
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="grid grid-cols-12 gap-4 mt-2 md:gap-6 2xl:gap-7.5">
         <ChartOne chartData={chartData} />
         <ChartTwo chartData={weeklyChart} />
       </div>

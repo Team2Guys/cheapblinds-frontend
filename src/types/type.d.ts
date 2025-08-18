@@ -276,6 +276,18 @@ export type Permissions = {
   canVeiwAdmins?: boolean;
   canVeiwTotalproducts?: boolean;
   canVeiwTotalCategories?: boolean;
+  canAddSubCategory?: boolean,
+  canDeleteSubCategory?: boolean,
+  canEditSubCategory?: boolean,
+  canVeiwTotalSubCategories?: boolean,
+  canAddBlog?: boolean,
+  canDeleteBlog?: boolean,
+  canEditBlog?: boolean,
+  canVeiwTotalBlog?: boolean,
+  canAddRedirecturls?: boolean,
+  canDeleteRedirecturls?: boolean,
+  canEditRedirecturls?: boolean,
+  canVeiwTotalRedirecturls?: boolean,
 };
 
 export interface Admin extends Permissions {

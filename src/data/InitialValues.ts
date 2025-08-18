@@ -1,4 +1,5 @@
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from "types/cat";
+import { BlogStatus } from "types/general";
 import { IProductValues } from "types/prod";
 
 export const categoryInitialValues: EDIT_CATEGORY = {
@@ -47,3 +48,18 @@ export const AddproductsinitialValues: IProductValues = {
   category: '',
   subcategory: ''
 };
+
+export const AddBlogInitialValues = {
+    title: '',
+    content: '',
+    custom_url: '',
+    category: '',
+    status: 'DRAFT' as BlogStatus,
+    isPublished: false,
+    posterImage: undefined,
+    last_editedBy: '',
+    Canonical_Tag: '',
+    Meta_Description: '',
+    Meta_Title: '',
+    redirectionUrl: '',
+  }
