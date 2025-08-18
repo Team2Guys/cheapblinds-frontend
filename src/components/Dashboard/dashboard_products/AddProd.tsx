@@ -355,8 +355,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
               <div className="flex flex-col gap-9 ">
                 <div className="rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6">
                   <div className="rounded-sm border border-stroke ">
-                    <div className="border-b border-stroke py-4 px-4 ">
-                      <h3 className="font-medium text-black dark:text-white">
+                    <div className="border-b border-stroke px-4 ">
+                      <h3 className="primary-label">
                         Add Poster Image
                       </h3>
                     </div>
@@ -446,7 +446,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     {/* Custom url and BreadkCrum */}
                     <div className="flex gap-3">
                       <div>
-                        <label className="primary-label  ">
+                        <label className="primary-label">
                           Custom Url
                         </label>
                         <Field
@@ -462,7 +462,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className=" ">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           breadCrum
                         </label>
 
@@ -486,7 +486,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
 
-                    <label className="primary-label ">
+                    <label className="primary-label">
                       Description
                     </label>
                     <textarea
@@ -512,7 +512,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     ) : null}
 
 
-                    <label className="primary-label ">
+                    <label className="primary-label">
                       Short Description{" "}
                     </label>
                     <textarea
@@ -540,7 +540,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                     <div className="flex full items-center gap-4">
                       <div className="w-1/3 xs:w-1/3">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Price
                         </label>
                         <input
@@ -569,7 +569,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="w-1/3 xs:w-1/3">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Discount Price
                         </label>
                         <Field
@@ -592,7 +592,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="w-1/3 xs:w-1/3 ">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Stock
                         </label>
 
@@ -615,7 +615,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     <div className="mt-4 space-y-4">
                       <div className="flex gap-4">
                         <div className="w-2/4">
-                          <label className="primary-label ">
+                          <label className="primary-label">
                             Meta Title
                           </label>
                           <input
@@ -638,7 +638,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           ) : null}
                         </div>
                         <div className="w-2/4">
-                          <label className="primary-label ">
+                          <label className="primary-label">
                             Canonical Tag
                           </label>
                           <input
@@ -664,7 +664,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div>
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Meta Description
                         </label>
                         <textarea
@@ -688,7 +688,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     </div>
 
                     <div>
-                      <label className="primary-label ">
+                      <label className="primary-label">
                         seoSchema
                       </label>
                       <textarea
@@ -707,7 +707,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                     <div className="flex gap-4 flex-col">
                       <div className="w-full">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Select Categories & Sub Categories
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -784,8 +784,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
               <div className="flex flex-col gap-5 rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6 h-fit">
                 <div className="rounded-sm border border-stroke ">
-                  <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-4 dark:border-strokedark">
+                    <h3 className="primary-label">
                       Add Hover Image
                     </h3>
                   </div>
@@ -845,8 +845,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="rounded-sm border border-stroke dark:border-strokedark ">
-                  <div className="border-b border-stroke py-4 px-2  ">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-2  ">
+                    <h3 className="primary-label">
                       Add Banner Image / Video
                     </h3>
                   </div>
@@ -936,8 +936,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
                 <div className="rounded-sm border border-stroke ">
-                  <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-4 dark:border-strokedark">
+                    <h3 className="primary-label">
                       Add Product Images
                     </h3>
                   </div>

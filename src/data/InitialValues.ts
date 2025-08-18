@@ -1,6 +1,7 @@
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from "types/cat";
 import { BlogStatus } from "types/general";
 import { IProductValues } from "types/prod";
+import { Admin } from "types/type";
 
 export const categoryInitialValues: EDIT_CATEGORY = {
   name: '', //done
@@ -63,3 +64,37 @@ export const AddBlogInitialValues = {
     Meta_Title: '',
     redirectionUrl: '',
   }
+
+
+export const initialAdminValues: Admin = {
+  fullname: '',
+  email: '',
+  password: '',
+  canAddProduct: false,
+  canEditProduct: false,
+  canDeleteProduct: false,
+  canAddCategory: false,
+  canDeleteCategory: false,
+  canEditCategory: false,
+  canCheckProfit: false,
+  canCheckRevenue: false,
+  canCheckVisitors: false,
+  canViewUsers: false,
+  canViewSales: false,
+  canVeiwAdmins: false,
+  canVeiwTotalproducts: false,
+  canVeiwTotalCategories: false,
+  canAddSubCategory: false,
+  canDeleteSubCategory: false,
+  canEditSubCategory: false,
+  canVeiwTotalSubCategories: false,
+  canAddBlog: false,
+  canDeleteBlog: false,
+  canEditBlog: false,
+  canVeiwTotalBlog: false,
+  canAddRedirecturls: false,
+  canDeleteRedirecturls: false,
+  canEditRedirecturls: false,
+  canVeiwTotalRedirecturls: false,
+  canViewAppointments: false,
+};

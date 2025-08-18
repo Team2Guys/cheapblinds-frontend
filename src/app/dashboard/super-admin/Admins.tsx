@@ -12,63 +12,29 @@ const Admins = ({ admins }: { admins: Admin[] }) => {
   const [editAdmin, setEditAdmin] = useState<AdminValues | undefined>();
   const [selecteMenu, setselecteMenu] = useState<string | null | undefined>('AllAdmin');
 
-
-  const EditInitialValues: AdminValues = {
-    id: editAdmin?.id,
-    fullname: editAdmin?.fullname,
-    email: editAdmin?.email,
-    password: editAdmin?.password,
-    canCheckVisitors: editAdmin?.canCheckVisitors,
-    canCheckProfit: editAdmin?.canCheckProfit,
-    canCheckRevenue: editAdmin?.canCheckRevenue,
-    canAddCategory: editAdmin?.canAddCategory,
-    canDeleteCategory: editAdmin?.canDeleteCategory,
-    canEditCategory: editAdmin?.canEditCategory,
-    canVeiwTotalCategories: editAdmin?.canVeiwTotalSubCategories,
-    // canAddSubCategory: editAdmin?.canAddSubCategory,
-    // canDeleteSubCategory: editAdmin?.canDeleteSubCategory,
-    // canEditSubCategory: editAdmin?.canEditSubCategory,
-    // canVeiwTotalSubCategories: editAdmin?.canVeiwTotalSubCategories,
-    canAddProduct: editAdmin?.canAddProduct,
-    canDeleteProduct: editAdmin?.canDeleteProduct,
-    canEditProduct: editAdmin?.canEditProduct,
-    canVeiwTotalproducts: editAdmin?.canVeiwTotalproducts,
-    canVeiwAdmins: editAdmin?.canVeiwAdmins,
-    canViewSales: editAdmin?.canViewSales,
-    canViewUsers: editAdmin?.canViewUsers,
-    // canAddBlog:  editAdmin?.canAddBlog,
-    // canDeleteBlog:  editAdmin?.canDeleteBlog,
-    // canEditBlog:  editAdmin?.canEditBlog,
-    // canVeiwTotalBlog:  editAdmin?.canVeiwTotalBlog,
-    // canAddRedirecturls:  editAdmin?.canAddRedirecturls,
-    // canDeleteRedirecturls:  editAdmin?.canDeleteRedirecturls,
-    // canEditRedirecturls:  editAdmin?.canEditRedirecturls,
-    // canVeiwTotalRedirecturls:  editAdmin?.canVeiwTotalRedirecturls,
-  };
-
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Super Admin" />
-      <div className="mt-10">
-        {selecteMenu == 'AllAdmin' ? (
-          <Alladmins
-            setselecteMenu={setselecteMenu}
-            setEditAdmin={setEditAdmin}
-            AllAdmins={admins}
-          />
-        ) : (
-          <CreateAdmin
-            setselecteMenu={setselecteMenu}
-            EditInitialValues={editAdmin}
-            setEditProduct={setEditAdmin}
-            EditAdminValue={EditInitialValues && (EditInitialValues.fullname !== undefined ||
-              EditInitialValues.email !== undefined)
-              ? EditInitialValues
-              : undefined
-            }
-          />
-        )}
-      </div>
+        <Breadcrumb pageName="Super Admin" />
+        <div className="mt-10">
+          {selecteMenu == 'AllAdmin' ? (
+            <Alladmins
+              setselecteMenu={setselecteMenu}
+              setEditAdmin={setEditAdmin}
+              AllAdmins={admins}
+            />
+          ) : (
+            <CreateAdmin
+              setselecteMenu={setselecteMenu}
+              EditInitialValues={editAdmin}
+              setEditProduct={setEditAdmin}
+              EditAdminValue={editAdmin &&(editAdmin.fullname !== undefined ||
+                  editAdmin.email !== undefined)
+                  ? editAdmin
+                  : undefined
+              }
+            />
+          )}
+        </div>
     </DefaultLayout>
   );
 };

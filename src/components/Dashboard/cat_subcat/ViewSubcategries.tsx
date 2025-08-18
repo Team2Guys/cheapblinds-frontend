@@ -49,8 +49,8 @@ const ViewSubcategries = ({
 
 
 
-  // const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
   const [removeCategory] = useMutation(REMOVE_SUBCATEGORY);
+<<<<<<< HEAD
   const canDeleteCategory = getPermission(session.data, 'canDeleteSubCategory');
   const canAddCategory = getPermission(session.data, 'canAddSubCategory');
 
@@ -61,7 +61,12 @@ const ViewSubcategries = ({
   // const canEditCategory =
   //   loggedInUser &&
   //   (loggedInUser.role == 'Admin' ? loggedInUser.canEditCategory : true);
+=======
+  const canDeleteSubCategory = getPermission(session.data, 'canDeleteSubCategory');
+  const canAddSubCategory = getPermission(session.data, 'canAddSubCategory');
+>>>>>>> 6072caf79db2c6fdbab07f470f90bb30271f9cff
 
+  const canEditSubCategory = getPermission(session.data, "canEditSubCategory" );
 
 
   const confirmDelete = (key: number) => {
@@ -174,7 +179,11 @@ const ViewSubcategries = ({
       key: 'Edit',
       render: (record: ISUBCATEGORY) => (
         <LiaEdit
+<<<<<<< HEAD
           className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white transition duration-300 ease-in-out hover:scale-200'} ${!canEditCategory && 'cursor-not-allowed text-slate-400'}`}
+=======
+          className={`cursor-pointer ${canEditSubCategory && 'text-black dark:text-white transition duration-300 ease-in-out hover:scale-200'} ${!canEditSubCategory && 'cursor-not-allowed text-slate-300'}`}
+>>>>>>> 6072caf79db2c6fdbab07f470f90bb30271f9cff
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -185,12 +194,16 @@ const ViewSubcategries = ({
       key: 'action',
       render: (record: ISUBCATEGORY) => (
         <RiDeleteBin6Line
+<<<<<<< HEAD
           className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-400'
+=======
+          className={`cursor-pointer ${canDeleteSubCategory && 'text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteSubCategory && 'cursor-not-allowed text-slate-300'
+>>>>>>> 6072caf79db2c6fdbab07f470f90bb30271f9cff
             }`}
           // className="cursor-pointer text-red-500"
           size={20}
           onClick={() => {
-            if (canDeleteCategory) {
+            if (canDeleteSubCategory) {
               confirmDelete(Number(record?.id));
             }
           }}
@@ -211,10 +224,17 @@ const ViewSubcategries = ({
         />
         <div>
           <div
+<<<<<<< HEAD
             className={`${!canAddCategory ? 'cursor-not-allowed border-0 bg-black/60 dark:bg-primary/60' : 'cursor-pointer'} dashboard_primary_button`}
+=======
+            className={`${canAddSubCategory && 'cursor-pointer'}  p-2 ${canAddSubCategory &&
+              'dashboard_primary_button text-white rounded-md  '
+              } flex justify-center ${!canAddSubCategory && 'cursor-not-allowed '
+              } hover:bg-black`}
+>>>>>>> 6072caf79db2c6fdbab07f470f90bb30271f9cff
             onClick={() => {
               seteditCategory?.(undefined);
-              if (canAddCategory) {
+              if (canAddSubCategory) {
                 setMenuType('Add Sub Categories');
               }
             }}
