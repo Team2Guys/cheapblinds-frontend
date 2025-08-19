@@ -1,8 +1,10 @@
 // vitest.config.ts
 import path from 'path'
 import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
   test: {
     globals: true,
     environment: 'jsdom', // for React testing; use 'node' for backend
@@ -19,6 +21,7 @@ export default defineConfig({
       types: path.resolve(__dirname, './src/types'),
       utils: path.resolve(__dirname, './src/utils'),
       graphql: path.resolve(__dirname, './src/graphql'),
+      data: path.resolve(__dirname, './src/data'),
       // add more if needed
     },
   },

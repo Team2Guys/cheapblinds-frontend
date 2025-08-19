@@ -276,6 +276,19 @@ export type Permissions = {
   canVeiwAdmins?: boolean;
   canVeiwTotalproducts?: boolean;
   canVeiwTotalCategories?: boolean;
+  canAddSubCategory?: boolean;
+  canDeleteSubCategory?: boolean;
+  canEditSubCategory?: boolean;
+  canVeiwTotalSubCategories?: boolean;
+  canAddBlog?: boolean;
+  canDeleteBlog?: boolean;
+  canEditBlog?: boolean;
+  canVeiwTotalBlog?: boolean;
+  canAddRedirecturls?: boolean;
+  canDeleteRedirecturls?: boolean;
+  canEditRedirecturls?: boolean;
+  canVeiwTotalRedirecturls?: boolean;
+  canViewAppointments?: boolean
 };
 
 export interface Admin extends Permissions {
@@ -284,6 +297,7 @@ export interface Admin extends Permissions {
   email?: string;
   password?: string;
   posterImageUrl?:ProductImage
+  __typename?: string
 }
 
 export interface AdminValues extends Admin {

@@ -52,8 +52,6 @@ export interface ISUBCATEGORY extends GlobalCommontypes {
   displayName?: string
   price?: number
   discountPrice?: number
-  colorName?: string
-  sizeName?: string
   seoSchema?: string;
 }
 

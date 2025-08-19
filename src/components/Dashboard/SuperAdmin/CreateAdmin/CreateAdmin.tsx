@@ -1,80 +1,26 @@
 'use client';
-import React, { SetStateAction, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useMutation } from '@apollo/client';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { Admin, AdminValues } from 'types/type';
+import { Admin } from 'types/type';
 import showToast from 'components/Toaster/Toaster';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import { CREATE_ADMIN, UPDATE_ADMIN } from 'graphql/Admins';
 import { useSession } from 'next-auth/react';
 import { Modal } from 'antd';
-
-interface CheckBox {
-  canAddProduct: boolean;
-  canEditProduct: boolean;
-  canDeleteProduct: boolean;
-  canAddCategory: boolean;
-  canDeleteCategory: boolean;
-  canEditCategory: boolean;
-  canCheckProfit: boolean;
-  canCheckRevenue: boolean;
-  canCheckVisitors: boolean;
-  canViewUsers: boolean;
-  canViewSales: boolean;
-  canVeiwAdmins: boolean;
-  canVeiwTotalproducts: boolean;
-  canVeiwTotalCategories: boolean
-}
-
-const validationSchema = Yup.object().shape({
-  fullname: Yup.string().required('Full Name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  password: Yup.string().required('Password is required'),
-  canAddProduct: Yup.boolean(),
-  canEditProduct: Yup.boolean(),
-  canDeleteProduct: Yup.boolean(),
-  canAddCategory: Yup.boolean(),
-  canDeleteCategory: Yup.boolean(),
-  canEditCategory: Yup.boolean(),
-  canCheckProfit: Yup.boolean(),
-  canCheckRevenue: Yup.boolean(),
-  canCheckVisitors: Yup.boolean(),
-  canViewUsers: Yup.boolean(),
-  canViewSales: Yup.boolean(),
-  canVeiwAdmins: Yup.boolean(),
-  canVeiwTotalproducts: Yup.boolean(),
-  canVeiwTotalCategories: Yup.boolean(),
-});
+import { initialAdminValues } from 'data/InitialValues';
+import { checkboxAdminData } from 'data/data';
+import { validationAdminSchema } from 'data/Validations';
+import { adminCheckBox, CreateAdminProps } from 'types/admin';
+import { ProductImage } from 'types/prod';
+import ImageUploader from 'components/ImageUploader/ImageUploader';
+import { handleCropClick, handleCropModalCancel, handleCropModalOk, handleImageAltText, ImageRemoveHandler, onCropComplete, onImageLoad } from 'utils/helperFunctions';
+import Image from 'next/image';
+import { RxCross2 } from 'react-icons/rx';
+import ReactCrop, { Crop } from 'react-image-crop';
 
 
-const initialValues: Admin = {
-  fullname: '',
-  email: '',
-  password: '',
-  canAddProduct: false,
-  canEditProduct: false,
-  canDeleteProduct: false,
-  canAddCategory: false,
-  canDeleteCategory: false,
-  canEditCategory: false,
-  canCheckProfit: false,
-  canCheckRevenue: false,
-  canCheckVisitors: false,
-  canViewUsers: false,
-  canViewSales: false,
-  canVeiwAdmins: false,
-  canVeiwTotalproducts: false,
-  canVeiwTotalCategories: false,
-};
-
-interface CreateAdminProps {
-  setselecteMenu: React.Dispatch<SetStateAction<string | null | undefined>>
-  EditAdminValue?: Admin | undefined;
-  EditInitialValues?: AdminValues | undefined;
-  setEditProduct: React.Dispatch<SetStateAction<Admin | undefined>>
-}
 
 const CreateAdmin: React.FC<CreateAdminProps> = ({
   setselecteMenu,
@@ -83,7 +29,13 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
   setEditProduct,
 }) => {
   const updateFlag = EditAdminValue && EditInitialValues ? true : false;
-  const initialFormValues: Admin = updateFlag && EditAdminValue ? EditAdminValue : initialValues;
+  const initialFormValues: Admin = updateFlag && EditAdminValue ? EditAdminValue : initialAdminValues;
+  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(initialFormValues && initialFormValues.posterImageUrl ? [initialFormValues.posterImageUrl] : []);
+  const [isCropModalVisible, setIsCropModalVisible] = useState<boolean>(false);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [crop, setCrop] = useState<Crop>();
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   const session = useSession()
   const finalToken = session.data?.accessToken
 
@@ -92,22 +44,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
 
   const [createAdmin] = useMutation(CREATE_ADMIN);
   const [updateAdmin] = useMutation(UPDATE_ADMIN);
-  const checkboxData = [
-    { name: 'canAddProduct', label: 'Can Add Product' },
-    { name: 'canEditProduct', label: 'Can Edit Product' },
-    { name: 'canDeleteProduct', label: 'Can Delete Product' },
-    { name: 'canAddCategory', label: 'Can Add Category' },
-    { name: 'canDeleteCategory', label: 'Can Delete Category' },
-    { name: 'canEditCategory', label: 'Can Edit Category' },
-    { name: 'canCheckProfit', label: 'Can Check Profit' },
-    { name: 'canCheckRevenue', label: 'Can Check Revenue' },
-    { name: 'canCheckVisitors', label: 'Can Check Visitors' },
-    { name: 'canViewUsers', label: 'Can View Users' },
-    { name: 'canViewSales', label: 'Can View Sales' },
-    { name: 'canVeiwAdmins', label: 'Can View Admins' },
-    { name: 'canVeiwTotalCategories', label: 'Can View Categories' },
-    { name: 'canVeiwTotalproducts', label: 'Can View Products' },
-  ];
+
 
   const handleBack = (values: Admin) => {
     const isFormChanged = JSON.stringify(initialFormValues) !== JSON.stringify(values);
@@ -133,46 +70,47 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
     <div className="max-w-4xl mx-auto">
       <Formik
         initialValues={initialFormValues}
-        validationSchema={validationSchema}
+        validationSchema={validationAdminSchema}
         onSubmit={async (values: Admin, { setSubmitting }) => {
-          try {
-            setLoading(true);
-            const input = updateFlag ? { id: EditInitialValues?.id, ...values } : values;
-            if (updateFlag) {
-              await updateAdmin({
-                variables: { input }, context: {
-                  headers: {
-                    authorization: `Bearer ${finalToken}`,
-                  },
-                },
-              });
-            } else {
-              await createAdmin({
-                variables: { input }, context: {
-                  headers: {
-                    authorization: `Bearer ${finalToken}`,
-                  },
-                },
-              });
-            }
+          setLoading(true);
 
+          try {
+            const posterImage = posterimageUrl?.[0];
+
+            const inputData = {
+              ...(updateFlag ? { id: EditInitialValues?.id } : {}),
+              ...values,
+              posterImageUrl: posterImage,
+            };
+            // eslint-disable-next-line
+            const { __typename, ...input } = inputData;
+            const mutationFn = updateFlag ? updateAdmin : createAdmin;
+
+            await mutationFn({
+              variables: { input },
+              context: {
+                headers: {
+                  authorization: `Bearer ${finalToken}`,
+                },
+              },
+            });
 
             setSubmitting(false);
             setselecteMenu('AllAdmin');
             setEditProduct(undefined);
+            setposterimageUrl(undefined);
+
             showToast('success', `Admin ${updateFlag ? 'updated' : 'created'} successfully`);
-            revalidateTag('Admins')
-
-          }
-
-          //eslint-disable-next-line
-          catch (err: any) {
+            revalidateTag('Admins');
+            // eslint-disable-next-line
+          } catch (err: any) {
             setError(err?.message || 'An unexpected error occurred.');
             alert(err?.message || 'An error occurred');
           } finally {
             setLoading(false);
           }
         }}
+
       >
         {({ handleSubmit, values, setValues }) => (
           <>
@@ -227,9 +165,70 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                 />
                 <ErrorMessage name="password" component="p" className="text-red-500 text-sm" />
               </div>
+              <div className="rounded-sm border border-stroke mb-4">
+                <div className="border-b border-stroke px-4 ">
+                  <h3 className="primary-label">
+                    Add Profile Photo
+                  </h3>
+                </div>
+
+                {posterimageUrl && posterimageUrl?.length > 0 ? (
+                  <div className="p-3">
+                    {posterimageUrl.map((item: ProductImage, index) => {
+                      return (
+                        <div key={index}>
+                          <div className="relative group rounded-lg overflow-hidden shadow-md w-52 h-52 transform transition-transform duration-300 hover:scale-105">
+                            <div className="absolute top-1 right-1 invisible group-hover:visible text-red z-10 rounded-full">
+                              <RxCross2
+                                className="cursor-pointer border border-black text-red-500 dark:text-red-700"
+                                size={17}
+                                onClick={() => {
+                                  ImageRemoveHandler(
+                                    item.public_id,
+                                    setposterimageUrl,
+                                    // finalToken
+                                  );
+                                }}
+                              />
+                            </div>
+                            <Image
+                              onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
+                              key={index}
+                              className="cursor-crosshair inset-0"
+                              fill
+                              loading="lazy"
+                              src={item?.imageUrl || ""}
+                              alt={`productImage-${index}`}
+                            />
+                          </div>
+                          <div className="my-2">
+                            <input
+                              className="dashboard_input"
+                              placeholder="altText"
+                              type="text"
+                              name="altText"
+                              value={item?.altText || ""}
+                              onChange={(e) =>
+                                handleImageAltText(
+                                  index,
+                                  String(e.target.value),
+                                  setposterimageUrl,
+                                  "altText"
+                                )
+                              }
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <ImageUploader setImagesUrl={setposterimageUrl} />
+                )}
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
-                {checkboxData.map((checkbox) => (
+                {checkboxAdminData.map((checkbox) => (
                   <label key={checkbox.name} className="flex items-center gap-2">
                     <Field
                       type="checkbox"
@@ -246,9 +245,9 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    const clearedPermissions: Partial<Record<keyof CheckBox, boolean>> = {};
-                    checkboxData.forEach((checkbox) => {
-                      clearedPermissions[checkbox.name as keyof CheckBox] = false;
+                    const clearedPermissions: Partial<Record<keyof adminCheckBox, boolean>> = {};
+                    checkboxAdminData.forEach((checkbox) => {
+                      clearedPermissions[checkbox.name as keyof adminCheckBox] = false;
                     });
                     setValues({ ...values, ...(clearedPermissions) });
                   }}
@@ -259,9 +258,9 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    const allPermissions: Partial<Record<keyof CheckBox, boolean>> = {};
-                    checkboxData.forEach((checkbox) => {
-                      allPermissions[checkbox.name as keyof CheckBox] = true;
+                    const allPermissions: Partial<Record<keyof adminCheckBox, boolean>> = {};
+                    checkboxAdminData.forEach((checkbox) => {
+                      allPermissions[checkbox.name as keyof adminCheckBox] = true;
                     });
                     setValues({ ...values, ...allPermissions });
                   }}
@@ -281,6 +280,34 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
               </button>
 
               {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
+
+              <Modal
+                title="Crop Image"
+                open={isCropModalVisible}
+                onOk={() => handleCropModalOk(croppedImage, imageSrc, setIsCropModalVisible, setCroppedImage, setposterimageUrl)}
+                onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
+                width={500}
+                height={400}
+              >
+                {imageSrc && (
+                  <ReactCrop
+                    crop={crop}
+                    onChange={(newCrop) => setCrop(newCrop)}
+                    onComplete={() => onCropComplete(crop, imgRef, setCroppedImage)}
+                  >
+                    <Image
+                      width={500}
+                      height={300}
+                      ref={imgRef}
+                      src={imageSrc}
+                      alt="Crop me"
+                      style={{ maxWidth: '100%' }}
+                      onLoad={(e) => onImageLoad(e, setCrop)}
+                      crossOrigin="anonymous"
+                    />
+                  </ReactCrop>
+                )}
+              </Modal>
             </Form>
           </>
         )}

@@ -63,7 +63,7 @@ const DashboardCat = ({
   const canAddCategory = getPermission(session, 'canAddCategory');
   const canEditCategory = getPermission(session, 'canEditCategory');
 
-
+        console.log(session,'session')
 
   const confirmDelete = (key: string | number) => {
     Swal.fire({
@@ -183,7 +183,7 @@ const columns = [
     render: (record: Category) => (
       <LiaEdit
         aria-label="Edit Category"
-        className={`${canEditCategory && 'text-black dark:text-white cursor-pointer transition duration-300 ease-in-out hover:scale-200'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+        className={`${canEditCategory && 'text-black dark:text-white cursor-pointer transition duration-300 ease-in-out hover:scale-200'} ${!canEditCategory && 'cursor-not-allowed text-slate-400'}`}
         size={20}
         onClick={() => {
           if (canEditCategory) handleEdit(record);
@@ -198,7 +198,7 @@ const columns = [
     render: (record: Category) => (
       <RiDeleteBin6Line
         aria-label="Delete Category"
-        className={`${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'}`}
+        className={`${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-400'}`}
         size={20}
         onClick={() => {
           if (canDeleteCategory) {
@@ -222,7 +222,7 @@ const columns = [
         />
         <div>
           <p
-            className={`dashboard_primary_button ${canAddCategory && 'cursor-pointer'} lg:p-2 md:p-2 ${canAddCategory && ' text-white rounded-md '} flex justify-center  ${!canAddCategory && 'cursor-not-allowed '}`}
+            className={`${!canAddCategory ? 'cursor-not-allowed border-0 bg-black/60 dark:bg-primary/60' : 'cursor-pointer'} dashboard_primary_button`}
             onClick={() => {
               seteditCategory?.(undefined);
               if (canAddCategory) {

@@ -12,7 +12,7 @@
   }
 
   .dashboard_primary_button {
-    @apply px-4 py-2 rounded-md text-sm border text-white dark:!bg-primary bg-black dark:border-primary border-black flex justify-center items-center gap-2 cursor-pointer w-fit;
+    @apply px-4 py-2 rounded-md text-sm border text-white dark:bg-primary bg-black dark:border-primary border-black flex justify-center items-center gap-2 cursor-pointer w-fit;
   }
 
   .dashboard_input,
@@ -28,13 +28,6 @@
     @apply w-full md:w-2/4;
   }
 
-
-
-  .dashboard_primary_button {
-    @apply px-5 py-2 bg-black text-white rounded-md shadow-md flex items-center gap-2 cursor-pointer;
-  }
-
-
   .dashboard_side_bar {
     @apply relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 hover:bg-black dark:hover:bg-primary border-b-2 border-b-primary border-transparent;
   }
@@ -42,8 +35,6 @@
   .flex_between {
     @apply flex items-center justify-between;
   }
-
-
 
   .text-medium {
     @apply text-xl font-rubik font-medium;

@@ -11,6 +11,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import { IBlog } from 'types/general';
 import { DateFormatHandler } from 'utils/helperFunctions';
+import { getPermission } from 'utils/permissionHandlers';
 
 interface ViewBlogProps {
   setselecteMenu: React.Dispatch<SetStateAction<string>>;
@@ -28,9 +29,9 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
   useEffect(() => {
     setAllBlogs(blogs);
   }, [blogs]);
-  const canAddProduct = true;
-  const canEditProduct = true;
-  const canDeleteProduct = true;
+  const canAddBlog = getPermission(session.data, "canAddBlog")
+  const canDeleteBlog = getPermission(session.data, "canDeleteBlog")
+  const canEditBlog = getPermission(session.data, "canEditBlog")
 
   const confirmDelete = (id: number | string) => {
     Swal.fire({
@@ -145,10 +146,10 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       key: 'edit',
       render: (record: IBlog) => (
         <LiaEdit
-          className={`text-black dark:text-white ${canEditProduct ? 'cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
+          className={`text-black dark:text-white ${canEditBlog ? 'cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
           size={20}
           onClick={() => {
-            if (canEditProduct) {
+            if (canEditBlog) {
               setEditblog(record);
               setselecteMenu('Add Products');
             }
@@ -164,10 +165,10 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
           'Deleting...'
         ) : (
           <RiDeleteBin6Line
-            className={`${canDeleteProduct ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
+            className={`${canDeleteBlog ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
             size={20}
             onClick={() => {
-              if (canDeleteProduct) {
+              if (canDeleteBlog) {
                 if (record.id !== undefined) {
                   confirmDelete(record.id);
                 }
@@ -189,9 +190,9 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button
-          className={`py-2 px-4 rounded-md text-nowrap text-sm xs:text-base ${canAddProduct ? 'dashboard_primary_button text-white cursor-pointer' : 'bg-gray-400 text-white cursor-not-allowed'}`}
+          className={`py-2 px-4 rounded-md text-nowrap text-sm xs:text-base ${canAddBlog ? 'dashboard_primary_button text-white cursor-pointer' : 'bg-gray-400 text-white cursor-not-allowed'}`}
           onClick={() => {
-            if (canAddProduct) {
+            if (canAddBlog) {
               setselecteMenu('Add Products');
               setEditblog(undefined);
             }

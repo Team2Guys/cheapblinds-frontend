@@ -205,7 +205,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       key: 'Edit',
       render: (record: (IProduct)) => (
         <LiaEdit
-          className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white transition duration-300 ease-in-out hover:scale-200' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
+          className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white transition duration-300 ease-in-out hover:scale-200' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-400' : ''
             }`}
           size={20}
           onClick={() => {
@@ -224,7 +224,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       key: 'action',
       render: (record: (IProduct)) => (
         <RiDeleteBin6Line
-          className={`${canDeleteProduct ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
+          className={`${canDeleteProduct ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-400' : ''
             }`}
           size={20}
           onClick={() => {
@@ -249,12 +249,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
         />
         <div>
           <p
-            className={`${canAddProduct &&
-              'cursor-pointer rounded-md text-nowrap text-12 xs:text-base'
-              } py-2 px-4 ${canAddProduct && 'dashboard_primary_button text-white'
-              } flex justify-center ${!canAddProduct &&
-              'cursor-not-allowed bg-gray-500 text-white rounded-md'
-              }`}
+            className={`${!canAddProduct ? 'cursor-not-allowed border-0 bg-black/60 dark:bg-primary/60' : 'cursor-pointer'} dashboard_primary_button`}
             onClick={() => {
               if (canAddProduct) {
                 setselecteMenu('Add Products');

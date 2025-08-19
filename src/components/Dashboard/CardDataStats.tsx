@@ -31,7 +31,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
       {/* Icon circle with white background */}
       <div
         className="
-          relative mx-auto mt-8 flex h-12 w-12 xsm:h-14 xsm:w-14 xs:h-20 xs:w-20 items-center justify-center
+          relative mx-auto mt-8 flex h-12 w-12 xsm:h-14 xsm:w-14 items-center justify-center
           rounded-full border-black/10 border-4 dark:border-primary
           bg-white
           text-black/10 dark:text-primary
@@ -56,7 +56,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
       <div className="mt-4 xsm:mt-8 mb-8 px-2 xsm:px-4 xs:px-6 text-center">
         <h4
           className="
-            text-xl xsm:text-2xl xs:text-4xl font-extrabold text-black/20 dark:text-primary
+            text-xl xsm:text-2xl xs:text-3xl font-extrabold text-black/20 dark:text-primary
             border-b-4 border-black/10 dark:border-primary/70
             py-1
             select-none
@@ -67,8 +67,8 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
         <span
           className="
             block mt-3 uppercase tracking-widest
-            text-black/30 dark:text-primary font-semibold
-            select-none text-xs xs:text-sm
+            text-black/30 dark:text-primary font-semibold sm:font-bold
+            select-none text-xs sm:text-sm
           "
         >
           {title}

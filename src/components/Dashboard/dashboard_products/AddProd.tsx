@@ -11,7 +11,7 @@ import {
 } from "formik";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { handleImageAltText, handleSort, ImageRemoveHandler } from "utils/helperFunctions";
+import { handleCropClick, handleCropModalCancel, handleCropModalOk, handleImageAltText, handleSort, ImageRemoveHandler, onCropComplete, onImageLoad } from "utils/helperFunctions";
 import Toaster from "components/Toaster/Toaster";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { FormValues } from "types/type";
@@ -20,14 +20,11 @@ import { IProductValues, ProductImage } from "types/prod";
 import ImageUploader from "components/ImageUploader/ImageUploader";
 import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from "types/PagesProps";
 import { useMutation } from "@apollo/client";
-import showToast from "components/Toaster/Toaster";
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import { centerAspectCrop } from "types/product-crop";
 import { useRouter } from "next/navigation";
 import { AddproductsinitialValues } from "data/InitialValues";
 import { AddProductvalidationSchema } from "data/Validations";
-import { uploadPhotosToBackend } from "utils/fileUploadhandlers";
 import { ISUBCATEGORY } from "types/cat";
 import { Modal } from 'antd';
 import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "graphql/prod";
@@ -239,117 +236,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     setSelectedSubcategory(categoryId)
   };
 
-  const handleCropClick = (imageUrl: string) => {
-    setImageSrc(imageUrl);
-    setIsCropModalVisible(true);
-  };
-
-  const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { width, height } = e.currentTarget;
-    const newCrop = centerAspectCrop(width, height, 16 / 9);
-    setCrop(newCrop);
-  };
-
-  const onCropComplete = (crop: Crop) => {
-    const image = imgRef.current;
-    if (!image || !crop.width || !crop.height) return;
-
-    const canvas = document.createElement('canvas');
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-
-    if (ctx) {
-      ctx.drawImage(
-        image,
-        crop.x * scaleX,
-        crop.y * scaleY,
-        crop.width * scaleX,
-        crop.height * scaleY,
-        0,
-        0,
-        crop.width,
-        crop.height
-      );
-    }
-
-    const base64Image = canvas.toDataURL('image/jpeg');
-    setCroppedImage(base64Image);
-  };
-
-  const handleCropModalOk = async () => {
-    if (croppedImage && imageSrc) {
-      try {
-        // Convert the cropped image (base64) to a File
-        const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
-
-        // Upload the cropped image to your backend or Cloudinary
-        const response = await uploadPhotosToBackend(file);
-        if (!response) return
-
-        // Use the base URL from your environment variables
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-        const uploadedImageUrl = response[0].imageUrl;
-        // Append the base URL if needed
-        const newImageUrl = uploadedImageUrl.startsWith('http')
-          ? uploadedImageUrl
-          : `${baseUrl}${uploadedImageUrl}`;
-
-        const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
-
-        // First close the modal and reset croppedImage
-        setIsCropModalVisible(false);
-        setCroppedImage(null);
-
-        // Use a timeout to update states after the modal has closed
-        setTimeout(() => {
-          setposterimageUrl((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
-          );
-          sethoverImage((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
-          );
-          setImagesUrl((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
-          );
-        }, 0);
-      } catch {
-        showToast('error', 'Failed to upload cropped image');
-      }
-    }
-  };
-
-  // Helper function to convert a base64 string to a File object
-  const base64ToFile = (base64: string, filename: string): File => {
-    const arr = base64.split(',');
-    const mimeMatch = arr[0].match(/:(.*?);/);
-    const mime = mimeMatch ? mimeMatch[1] : '';
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
-  };
-
-
-  const handleCropModalCancel = () => {
-    setIsCropModalVisible(false);
-    setCroppedImage(null);
-  };
-
 
   const handleBack = (values: IProductValues) => {
     const initialFormValues = productInitialValue || AddproductsinitialValues;
@@ -469,8 +355,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
               <div className="flex flex-col gap-9 ">
                 <div className="rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6">
                   <div className="rounded-sm border border-stroke ">
-                    <div className="border-b border-stroke py-4 px-4 ">
-                      <h3 className="font-medium text-black dark:text-white">
+                    <div className="border-b border-stroke px-4 ">
+                      <h3 className="primary-label">
                         Add Poster Image
                       </h3>
                     </div>
@@ -495,7 +381,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   />
                                 </div>
                                 <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                   key={index}
                                   className="object-cover cursor-crosshair"
                                   width={300}
@@ -560,7 +446,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     {/* Custom url and BreadkCrum */}
                     <div className="flex gap-3">
                       <div>
-                        <label className="primary-label  ">
+                        <label className="primary-label">
                           Custom Url
                         </label>
                         <Field
@@ -576,7 +462,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className=" ">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           breadCrum
                         </label>
 
@@ -600,7 +486,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
 
-                    <label className="primary-label ">
+                    <label className="primary-label">
                       Description
                     </label>
                     <textarea
@@ -626,7 +512,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     ) : null}
 
 
-                    <label className="primary-label ">
+                    <label className="primary-label">
                       Short Description{" "}
                     </label>
                     <textarea
@@ -654,7 +540,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                     <div className="flex full items-center gap-4">
                       <div className="w-1/3 xs:w-1/3">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Price
                         </label>
                         <input
@@ -683,7 +569,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="w-1/3 xs:w-1/3">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Discount Price
                         </label>
                         <Field
@@ -706,7 +592,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="w-1/3 xs:w-1/3 ">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Stock
                         </label>
 
@@ -729,7 +615,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     <div className="mt-4 space-y-4">
                       <div className="flex gap-4">
                         <div className="w-2/4">
-                          <label className="primary-label ">
+                          <label className="primary-label">
                             Meta Title
                           </label>
                           <input
@@ -752,7 +638,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           ) : null}
                         </div>
                         <div className="w-2/4">
-                          <label className="primary-label ">
+                          <label className="primary-label">
                             Canonical Tag
                           </label>
                           <input
@@ -778,7 +664,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div>
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Meta Description
                         </label>
                         <textarea
@@ -802,7 +688,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     </div>
 
                     <div>
-                      <label className="primary-label ">
+                      <label className="primary-label">
                         seoSchema
                       </label>
                       <textarea
@@ -821,7 +707,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                     <div className="flex gap-4 flex-col">
                       <div className="w-full">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Select Categories & Sub Categories
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -898,8 +784,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
               <div className="flex flex-col gap-5 rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6 h-fit">
                 <div className="rounded-sm border border-stroke ">
-                  <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-4 dark:border-strokedark">
+                    <h3 className="primary-label">
                       Add Hover Image
                     </h3>
                   </div>
@@ -924,7 +810,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 />
                               </div>
                               <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                 key={index}
                                 className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
                                 width={100}
@@ -959,8 +845,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="rounded-sm border border-stroke dark:border-strokedark ">
-                  <div className="border-b border-stroke py-4 px-2  ">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-2  ">
+                    <h3 className="primary-label">
                       Add Banner Image / Video
                     </h3>
                   </div>
@@ -1009,7 +895,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               <>
 
                                 <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                   key={index}
                                   className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
 
@@ -1050,8 +936,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
                 <div className="rounded-sm border border-stroke ">
-                  <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-4 dark:border-strokedark">
+                    <h3 className="primary-label">
                       Add Product Images
                     </h3>
                   </div>
@@ -1090,7 +976,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 />
                               </div>
                               <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                 key={index}
                                 className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
                                 width={300}
@@ -1178,8 +1064,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             <Modal
               title="Crop Image"
               open={isCropModalVisible}
-              onOk={handleCropModalOk}
-              onCancel={handleCropModalCancel}
+              onOk={() => handleCropModalOk(croppedImage, imageSrc, setIsCropModalVisible, setCroppedImage, setposterimageUrl, setBannerImageUrl, setImagesUrl)}
+              onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
               width={500}
               height={400}
             >
@@ -1187,7 +1073,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 <ReactCrop
                   crop={crop}
                   onChange={(newCrop) => setCrop(newCrop)}
-                  onComplete={onCropComplete}
+                  onComplete={() => onCropComplete(crop, imgRef, setCroppedImage)}
                 >
                   <Image
                     width={500}
@@ -1196,7 +1082,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     src={imageSrc}
                     alt="Crop me"
                     style={{ maxWidth: '100%' }}
-                    onLoad={onImageLoad}
+                    onLoad={(e) => onImageLoad(e, setCrop)}
                     crossOrigin="anonymous"
                   />
                 </ReactCrop>

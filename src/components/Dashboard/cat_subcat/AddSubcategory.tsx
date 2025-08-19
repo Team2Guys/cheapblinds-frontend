@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
-import { handleImageAltText, ImageRemoveHandler } from 'utils/helperFunctions';
+import { handleCropClick, handleCropModalCancel, handleCropModalOk, handleImageAltText, ImageRemoveHandler, onCropComplete, onImageLoad } from 'utils/helperFunctions';
 import { Formik, Form, FormikHelpers, Field, ErrorMessage } from 'formik';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import showToast from 'components/Toaster/Toaster';
@@ -15,11 +15,9 @@ import revalidateTag from 'components/ServerActons/ServerAction';
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Modal } from 'antd';
-import { centerAspectCrop } from 'types/product-crop';
 import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
 import { subcategoryInitialValues } from 'data/InitialValues';
 import { subcategoryValidationSchema } from 'data/Validations';
-import { uploadPhotosToBackend } from 'utils/fileUploadhandlers';
 import { useSession } from 'next-auth/react';
 import { CREATE_SUBCATEGORY, GET_ALL_SUBCATEGORIES, UPDATE_SUBCATEGORY } from 'graphql/categories';
 
@@ -139,105 +137,6 @@ const AddSubcategory = ({
     setEditCategoryName(CategoryName)
   }, [editCategory])
 
-  const handleCropClick = (imageUrl: string) => {
-    setImageSrc(imageUrl);
-    setIsCropModalVisible(true);
-  };
-
-  const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { width, height } = e.currentTarget;
-    const newCrop = centerAspectCrop(width, height, 16 / 9);
-    setCrop(newCrop);
-  };
-  const onCropComplete = (crop: Crop) => {
-    const image = imgRef.current;
-    if (!image || !crop.width || !crop.height) return;
-
-    const canvas = document.createElement('canvas');
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-
-    if (ctx) {
-      ctx.drawImage(
-        image,
-        crop.x * scaleX,
-        crop.y * scaleY,
-        crop.width * scaleX,
-        crop.height * scaleY,
-        0,
-        0,
-        crop.width,
-        crop.height
-      );
-    }
-
-    const base64Image = canvas.toDataURL('image/jpeg');
-    setCroppedImage(base64Image);
-  };
-  const handleCropModalOk = async () => {
-    if (croppedImage && imageSrc) {
-      try {
-        // Convert the cropped image (base64) to a File
-        const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
-
-        // Upload the cropped image to your backend or Cloudinary
-        const response = await uploadPhotosToBackend(file);
-        if (!response) return;
-
-        // Use the base URL from your environment variables
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-        const uploadedImageUrl = response[0].imageUrl;
-        // Append the base URL if needed
-        const newImageUrl = uploadedImageUrl.startsWith('http')
-          ? uploadedImageUrl
-          : `${baseUrl}${uploadedImageUrl}`;
-
-        const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
-
-        // First close the modal and reset croppedImage
-        setIsCropModalVisible(false);
-        setCroppedImage(null);
-
-        // Use a timeout to update states after the modal has closed
-        setTimeout(() => {
-          setposterimageUrl((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
-          );
-        }, 0);
-      } catch (error) {
-        showToast('error', 'Failed to upload cropped image');
-        return error
-      }
-    }
-  };
-
-  const base64ToFile = (base64: string, filename: string): File => {
-    const arr = base64.split(',');
-    const mimeMatch = arr[0].match(/:(.*?);/);
-    const mime = mimeMatch ? mimeMatch[1] : '';
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
-  };
-
-
-  const handleCropModalCancel = () => {
-    setIsCropModalVisible(false);
-    setCroppedImage(null);
-  };
-
   const handleBack = (values: ISUBCATEGORY_EDIT) => {
     const initialFormValues = editCategoryName || subcategoryInitialValues;
 
@@ -337,8 +236,8 @@ const AddSubcategory = ({
 
 
                 <div className="rounded-sm border border-stroke">
-                  <div className="border-b border-stroke py-4 px-2 ">
-                    <h3 className="font-medium  text-black dark:text-white">
+                  <div className="border-b border-stroke px-2 ">
+                    <h3 className="primary-label">
                       Add Poster Image
 
                     </h3>
@@ -366,7 +265,7 @@ const AddSubcategory = ({
 
                             </div>
                             <Image
-                              onClick={() => handleCropClick(item.imageUrl)}
+                              onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                               key={index}
                               className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
 
@@ -402,8 +301,8 @@ const AddSubcategory = ({
                 </div>
 
                 <div className="rounded-sm border mt-4 border-stroke dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke py-4 px-2 ">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-2 ">
+                    <h3 className="primary-label">
                       Add Banner Image
                     </h3>
                   </div>
@@ -452,7 +351,7 @@ const AddSubcategory = ({
                               <>
 
                                 <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                   key={index}
                                   className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
 
@@ -491,7 +390,7 @@ const AddSubcategory = ({
 
                 <div className="flex flex-col gap-4 md:py-6">
                   <div>
-                    <label className="mb-3 block py-1 px-2 text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Sub Category Name
                     </label>
 
@@ -506,7 +405,7 @@ const AddSubcategory = ({
                   </div>
 
                   <div>
-                    <label className="mb-3 block py-1 px-2 text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Custom Url
                     </label>
 
@@ -522,7 +421,7 @@ const AddSubcategory = ({
 
                   <div>
 
-                    <label className="mb-3 block py-1 px-2 text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Select Parent Category (atleat one)
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -550,7 +449,7 @@ const AddSubcategory = ({
                   <Field name="status">
                     {({ field, form }: import('formik').FieldProps) => (
                       <div className="flex gap-4 items-center my-4">
-                        <label className="font-semibold text-black dark:text-white">Sub Category Status:</label>
+                        <label className="primary-label">Sub Category Status:</label>
 
                         {['DRAFT', 'PUBLISHED'].map((status) => {
                           const isActive = field.value === status;
@@ -561,7 +460,7 @@ const AddSubcategory = ({
                               type="button"
                               onClick={() => form.setFieldValue('status', status)}
                               disabled={isActive}
-                              className={`px-4 py-2 rounded-md text-sm
+                              className={`px-4 py-2 rounded-md text-sm drop-shadow-md
                                   ${isActive
                                   ? 'dashboard_primary_button cursor-not-allowed'
                                   : 'bg-white text-black cursor-pointer'
@@ -580,7 +479,7 @@ const AddSubcategory = ({
               </div>
               <div>
                 <div>
-                  <label className="mb-3 block pb-2 pt-3 px-2 text-sm font-medium text-black dark:text-white">
+                  <label className="primary-label">
                     Category Description
                   </label>
                   <TinyMCEEditor name="description" />
@@ -593,7 +492,7 @@ const AddSubcategory = ({
 
                 <div className="flex gap-4 mt-4">
                   <div className="w-2/4">
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Meta Title
                     </label>
                     <Field
@@ -608,7 +507,7 @@ const AddSubcategory = ({
                     )}
                   </div>
                   <div className="w-2/4">
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Canonical Tag
                     </label>
                     <Field
@@ -625,7 +524,7 @@ const AddSubcategory = ({
                 </div>
 
                 <div className="mt-4">
-                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                  <label className="primary-label">
                     Meta Description
                   </label>
                   <Field
@@ -641,7 +540,7 @@ const AddSubcategory = ({
                 </div>
                 <div className="flex gap-4 mt-2">
                   <div className="w-full">
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Short Description
                     </label>
                     <Field
@@ -671,8 +570,8 @@ const AddSubcategory = ({
             <Modal
               title="Crop Image"
               open={isCropModalVisible}
-              onOk={handleCropModalOk}
-              onCancel={handleCropModalCancel}
+              onOk={() => handleCropModalOk(croppedImage, imageSrc, setIsCropModalVisible, setCroppedImage, setposterimageUrl, setBannerImageUrl)}
+              onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
               width={500}
               height={400}
             >
@@ -680,7 +579,7 @@ const AddSubcategory = ({
                 <ReactCrop
                   crop={crop}
                   onChange={(newCrop) => setCrop(newCrop)}
-                  onComplete={onCropComplete}
+                  onComplete={() => onCropComplete(crop, imgRef, setCroppedImage)}
                 >
                   <Image
                     width={500}
@@ -689,7 +588,7 @@ const AddSubcategory = ({
                     src={imageSrc}
                     alt="Crop me"
                     style={{ maxWidth: '100%' }}
-                    onLoad={onImageLoad}
+                    onLoad={(e) => onImageLoad(e, setCrop)}
                     crossOrigin="anonymous"
                   />
                 </ReactCrop>
