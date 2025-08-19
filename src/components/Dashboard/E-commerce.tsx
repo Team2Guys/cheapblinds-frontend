@@ -44,7 +44,7 @@ const ECommerce = ({ records,chartData,weeklyChart }: { records: RECORDS, chartD
     const canViewAppointments =
     loggedInUser &&
     (loggedInUser.user.role == 'Admin' ? loggedInUser.user.canViewAppointments : true);
-    console.log(records,'loggedInUser', loggedInUser)
+
 
   const cardStats = [
     {

@@ -90,3 +90,18 @@ export const validationAdminSchema = Yup.object().shape({
   canVeiwTotalRedirecturls: Yup.boolean(),
   canViewAppointments: Yup.boolean(),
 });
+
+export const validationBlogSchema = Yup.object({
+  title: Yup.string().required('Title is required'),
+  content: Yup.string().required('Content is required'),
+  category: Yup.string().required('Category is required'),
+  Canonical_Tag: Yup.string().nullable(),
+  Meta_Description: Yup.string().nullable(),
+  Meta_Title: Yup.string().nullable(),
+  redirectionUrl: Yup.string().nullable(),
+});
+
+export const validationRedirctUlrsSchema = Yup.object({
+  url: Yup.string().required('Url is required'),
+  redirectedUrl: Yup.string().required('redirectedUrl is required'),
+});

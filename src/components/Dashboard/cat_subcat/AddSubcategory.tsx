@@ -28,21 +28,7 @@ const AddSubcategory = ({
   categoriesList,
 }: DASHBOARD_ADD_SUBCATEGORIES_PROPS) => {
 
-  const CategoryName: ISUBCATEGORY_EDIT | undefined = editCategory && editCategory.name
-    ? {
-      name: editCategory.name || "",
-      description: editCategory.description || '',
-      Meta_Title: editCategory.Meta_Title || '',
-      short_description: editCategory.short_description || '',
-      Meta_Description: editCategory.Meta_Description || '',
-      seoSchema: editCategory.seoSchema || '',
-      Canonical_Tag: editCategory.Canonical_Tag || '',
-      custom_url: editCategory.custom_url || "",
-      breadCrum: editCategory.breadCrum || "",
-      status: editCategory?.status || 'DRAFT',
-      category: editCategory?.category?.id || ''
-    }
-    : undefined;
+  const CategoryName: ISUBCATEGORY_EDIT = editCategory && editCategory.name ? { ...editCategory, category: editCategory.category?.id } : subcategoryInitialValues;
 
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
   const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.Banners ? [editCategory?.Banners] : undefined);
@@ -56,14 +42,12 @@ const AddSubcategory = ({
 
   const [loading, setloading] = useState<boolean>(false);
 
-  const [editCategoryName, setEditCategoryName] = useState<ISUBCATEGORY_EDIT | undefined>(CategoryName);
+  const [editCategoryName, setEditCategoryName] = useState<ISUBCATEGORY_EDIT>(CategoryName);
   const session = useSession()
   const finalToken = session.data?.accessToken
-
+  const formikValuesRef = useRef<ISUBCATEGORY_EDIT>(editCategoryName);
   const [createSubCategory] = useMutation(CREATE_SUBCATEGORY);
   const [updateSubCategory] = useMutation(UPDATE_SUBCATEGORY);
-  // const dragImage = useRef<number | null>(null);
-  // const draggedOverImage = useRef<number | null>(null);
 
   const onSubmit = async (values: ISUBCATEGORY_EDIT, { resetForm }: FormikHelpers<ISUBCATEGORY_EDIT>) => {
     if (!values.category) {
@@ -74,10 +58,11 @@ const AddSubcategory = ({
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
-      const newValue = { ...values, posterImageUrl: posterImageUrl || {}, Banners: Banner, last_editedBy: session.data?.user.fullname, category: Number(values.category) };
+      const formValues = { ...values, posterImageUrl: posterImageUrl || {}, Banners: Banner, category: Number(values.category) };
 
       const updateFlag = editCategoryName ? true : false;
-      console.log(newValue, 'newValue')
+      // eslint-disable-next-line
+      const { updatedAt, createdAt, __typename, ...newValue } = formValues;
       if (updateFlag) {
         // Update Existing SubCategory
         await updateSubCategory({
@@ -137,61 +122,108 @@ const AddSubcategory = ({
     setEditCategoryName(CategoryName)
   }, [editCategory])
 
-  const handleBack = (values: ISUBCATEGORY_EDIT) => {
-    const initialFormValues = editCategoryName || subcategoryInitialValues;
-
+  const hasUnsavedChanges = (): boolean => {
     let isPosterChanged: boolean;
     let isBannerChanged: boolean;
 
     if (editCategory) {
-      // Editing mode
+      const oldPoster = editCategory?.posterImageUrl;
+      const newPoster = posterimageUrl?.[0];
+
       isPosterChanged =
-        JSON.stringify(editCategory.posterImageUrl ? [editCategory.posterImageUrl] : undefined) !==
-        JSON.stringify(posterimageUrl);
+        !oldPoster || !newPoster
+          ? oldPoster !== newPoster
+          : oldPoster.public_id !== newPoster.public_id ||
+          (oldPoster.altText ?? '') !== (newPoster.altText ?? '');
+
+      const oldBanner = editCategory?.Banners;
+      const newBanner = BannerImageUrl?.[0];
 
       isBannerChanged =
-        JSON.stringify(editCategory.Banners ? [editCategory.Banners] : undefined) !==
-        JSON.stringify(BannerImageUrl);
+        !oldBanner || !newBanner
+          ? oldBanner !== newBanner
+          : oldBanner.public_id !== newBanner.public_id ||
+          (oldBanner.altText ?? '') !== (newBanner.altText ?? '');
     } else {
       // Adding mode (initially no images)
       isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
       isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
     }
 
-    const isFormChanged = JSON.stringify(initialFormValues) !== JSON.stringify({ ...values, category: values.category === '' ? values.category : Number(values.category) });
-    if (isPosterChanged || isBannerChanged || isFormChanged) {
+    const isFormChanged = JSON.stringify(editCategoryName) !== JSON.stringify({ ...formikValuesRef.current, category: formikValuesRef.current.category === '' ? formikValuesRef.current.category : Number(formikValuesRef.current.category) });
+    return (isPosterChanged || isBannerChanged || isFormChanged)
+  };
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges()) {
+        e.preventDefault();
+        e.returnValue = '';
+        return '';
+      }
+    };
+
+    const handlePopState = () => {
+      if (hasUnsavedChanges()) {
+        window.history.pushState(null, '', window.location.href);
+        Modal.confirm({
+          title: 'Unsaved Changes',
+          content: 'You have unsaved changes. Do you want to discard them?',
+          okText: 'Discard Changes',
+          cancelText: 'Cancel',
+          onOk: () => {
+            setMenuType("Sub Categories");
+          },
+        });
+      } else { setMenuType("Sub Categories"); }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+    window.history.pushState(null, '', window.location.href);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [editCategoryName, BannerImageUrl, posterimageUrl]);
+
+  const handleBack = () => {
+    if (hasUnsavedChanges()) {
       Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
+        title: 'Unsaved Changes',
+        content: 'You have unsaved changes. Do you want to discard them?',
+        okText: 'Discard Changes',
+        cancelText: 'Cancel',
         onOk: () => {
           setMenuType("Sub Categories");
         },
       });
       return;
     }
+
     setMenuType("Sub Categories");
-    return;
   };
 
 
   return (
 
     <Formik
-      initialValues={editCategoryName ? editCategoryName : subcategoryInitialValues}
+      initialValues={editCategoryName}
       enableReinitialize
       validationSchema={subcategoryValidationSchema}
       onSubmit={onSubmit}
 
     >
       {(formik) => {
+        formikValuesRef.current = formik.values
+
         return (
           <Form onSubmit={formik.handleSubmit}>
             <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
               <p
                 className="dashboard_primary_button"
-                onClick={() => handleBack(formik.values)}
+                onClick={handleBack}
               >
                 <IoMdArrowRoundBack /> Back
               </p>
@@ -200,12 +232,12 @@ const AddSubcategory = ({
                   {({ field, form }: import('formik').FieldProps) => (
                     <div className="flex gap-4 items-center border-r-2 px-2">
 
-                      {['DRAFT', 'PUBLISHED'].map((status) => {
+                      {['DRAFT', 'PUBLISHED'].map((status, index) => {
                         const isActive = field.value === status;
 
                         return (
                           <button
-                            key={status}
+                            key={index}
                             type="button"
                             onClick={() => form.setFieldValue('status', status)}
                             disabled={isActive}
@@ -436,8 +468,8 @@ const AddSubcategory = ({
                           Select Category
                         </option>
 
-                        {categoriesList.map((category) => (
-                          <option key={category.id} value={category.id}>
+                        {categoriesList.map((category, index) => (
+                          <option key={index} value={category.id}>
                             {category.name}
                           </option>
                         ))}
@@ -451,12 +483,12 @@ const AddSubcategory = ({
                       <div className="flex gap-4 items-center my-4">
                         <label className="primary-label">Sub Category Status:</label>
 
-                        {['DRAFT', 'PUBLISHED'].map((status) => {
+                        {['DRAFT', 'PUBLISHED'].map((status, index) => {
                           const isActive = field.value === status;
 
                           return (
                             <button
-                              key={status}
+                              key={index}
                               type="button"
                               onClick={() => form.setFieldValue('status', status)}
                               disabled={isActive}

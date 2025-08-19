@@ -28,7 +28,6 @@ export const GET_ALL_CATEGORIES = gql`
       custom_url
       Banners
       breadCrum
-      hoverImageUrl
       Meta_Title
       Meta_Description
       Canonical_Tag
@@ -141,7 +140,6 @@ export const GET_ALL_SUBCATEGORIES = gql`
             custom_url
             Banners
             breadCrum
-            hoverImageUrl
             Meta_Title
             Meta_Description
             Canonical_Tag

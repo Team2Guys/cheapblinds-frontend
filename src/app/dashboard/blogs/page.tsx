@@ -6,7 +6,7 @@ import { fetchSubCategories } from 'config/fetch'
 const Blogs = async() => {
   const [blogs, subCategories] = await Promise.all([fetchAllBlogs(),fetchSubCategories()]);
 
-console.log(blogs,'blogs')
+
   return (
     <Mainpage blogs={blogs} subCategories={subCategories}/>
   )
