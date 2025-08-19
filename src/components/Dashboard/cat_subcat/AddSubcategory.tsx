@@ -258,6 +258,7 @@ const AddSubcategory = ({
                   type="submit"
                   className="dashboard_primary_button cursor-pointer"
                   disabled={loading}
+                  aria-label={undefined}
                 >
                   {loading ? "loading.." : 'Submit'}
                 </button>
@@ -422,7 +423,7 @@ const AddSubcategory = ({
 
                 <div className="flex flex-col gap-4 md:py-6">
                   <div>
-                    <label className="primary-label">
+                    <label className="primary-label" aria-label='Sub Category Title'>
                       Sub Category Name
                     </label>
 
@@ -437,7 +438,7 @@ const AddSubcategory = ({
                   </div>
 
                   <div>
-                    <label className="primary-label">
+                    <label className="primary-label"  aria-label='Custom Url'>
                       Custom Url
                     </label>
 
@@ -453,7 +454,7 @@ const AddSubcategory = ({
 
                   <div>
 
-                    <label className="primary-label">
+                    <label className="primary-label"  aria-label='Select Parent Category'>
                       Select Parent Category (atleat one)
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -595,6 +596,7 @@ const AddSubcategory = ({
                 type="submit"
                 className="mt-4 dashboard_primary_button not-[]:cursor-pointer"
                 disabled={loading}
+                aria-label="Submit Subcategory"
               >
                 {loading ? "loading.." : 'Submit'}
               </button>
