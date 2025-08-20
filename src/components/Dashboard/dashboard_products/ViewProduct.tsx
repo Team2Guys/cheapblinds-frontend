@@ -204,37 +204,41 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Edit',
       key: 'Edit',
       render: (record: (IProduct)) => (
-        <LiaEdit
-          aria-label='Edit Product'
-          className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white transition duration-300 ease-in-out hover:scale-200' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-400' : ''
-            }`}
-          size={20}
+        <button
+          aria-label="Edit Product"
           onClick={() => {
             if (canEditproduct) {
+              // eslint-disable-next-line
               const { updatedAt, createdAt, __typename, ...rest } = record;
-              console.log(updatedAt, createdAt, __typename)
               setEditProduct(rest);
-              setselecteMenu('Add Products');
+              setselecteMenu("Add Products");
             }
           }}
-        />
+          disabled={!canEditproduct}
+          className={`transition duration-300 ease-in-out ${canEditproduct
+            ? "cursor-pointer text-black dark:text-white hover:scale-200"
+            : "cursor-not-allowed text-slate-400"
+            }`}
+        >
+          <LiaEdit size={20} />
+        </button>
       ),
     },
     {
       title: 'Action',
       key: 'action',
       render: (record: (IProduct)) => (
-        <RiDeleteBin6Line
-          aria-label='Delete Product'
-          className={`${canDeleteProduct ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-400' : ''
+        <button
+          aria-label="Delete Product"
+          onClick={() => canDeleteProduct && confirmDelete(record.id)}
+          disabled={!canDeleteProduct}
+          className={`transition duration-300 ease-in-out ${canDeleteProduct
+              ? "text-red-600 cursor-pointer hover:scale-200"
+              : "cursor-not-allowed text-slate-400"
             }`}
-          size={20}
-          onClick={() => {
-            if (canDeleteProduct) {
-            confirmDelete(record.id);
-            }
-          }}
-        />
+        >
+          <RiDeleteBin6Line size={20} />
+        </button>
       ),
     },
   ];

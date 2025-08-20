@@ -396,7 +396,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         return (
 
 
-          <Form onSubmit={formik.handleSubmit}>
+          <Form onSubmit={formik.handleSubmit} role="form">
 
 
             <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
@@ -449,7 +449,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 <div className="rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6">
                   <div className="rounded-sm border border-stroke ">
                     <div className="border-b border-stroke px-4 ">
-                      <h3 className="primary-label">
+                      <h3 className="primary-label" aria-label="Add Poster Image">
                         Add Poster Image
                       </h3>
                     </div>
@@ -517,14 +517,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                   <div className="flex flex-col ">
 
-                    <label className="primary-label">
+                    <label className="primary-label" aria-label="Product Title">
                       Product Title
                     </label>
 
                     <Field
                       type="text"
                       name="name"
-                      placeholder="Title"
+                      placeholder="Product Title"
                       className={`dashboard_input ${formik.touched.name && formik.errors.name
                         ? "border-red-500"
                         : ""
@@ -539,7 +539,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     {/* Custom url and BreadkCrum */}
                     <div className="flex gap-3">
                       <div>
-                        <label className="primary-label">
+                        <label className="primary-label" aria-label="Custom Url">
                           Custom Url
                         </label>
                         <Field
@@ -579,7 +579,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
 
-                    <label className="primary-label">
+                    <label className="primary-label" aria-label="Description">
                       Description
                     </label>
                     <textarea
@@ -633,7 +633,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                     <div className="flex full items-center gap-4">
                       <div className="w-1/3 xs:w-1/3">
-                        <label className="primary-label">
+                        <label className="primary-label" aria-label="Price">
                           Price
                         </label>
                         <input
@@ -662,7 +662,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="w-1/3 xs:w-1/3">
-                        <label className="primary-label">
+                        <label className="primary-label" aria-label="DiscountPrice">
                           Discount Price
                         </label>
                         <Field
@@ -685,7 +685,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="w-1/3 xs:w-1/3 ">
-                        <label className="primary-label">
+                        <label className="primary-label" aria-label="Stock">
                           Stock
                         </label>
 
@@ -800,12 +800,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                     <div className="flex gap-4 flex-col">
                       <div className="w-full">
-                        <label className="primary-label">
+                        <label className="primary-label" aria-label="Select Categories & Sub Categories">
                           Select Categories & Sub Categories
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <select
                             name="category"
+                            aria-label="Category"
                             value={selectedCategory ? selectedCategory : ''}
                             onChange={handleCategoryChange}
                             className="dashboard_input"
@@ -837,6 +838,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                               <select
                                 name="subcategory"
+                                aria-label="Subcategory"
                                 value={selectedSubcategory}
                                 onChange={
                                   handleInnerSubCategoryChange
@@ -1151,6 +1153,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
               type="submit"
               className="dashboard_primary_button"
               disabled={loading}
+              aria-label="InnerSubmit"
             >
               {loading ? "loading..." : "Submit"}
             </button>

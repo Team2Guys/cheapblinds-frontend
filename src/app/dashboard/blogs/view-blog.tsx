@@ -22,9 +22,9 @@ interface ViewBlogProps {
 const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog }) => {
   const [allBlogs, setAllBlogs] = useState<IBlog[]>(blogs);
   const [searchTerm, setSearchTerm] = useState('');
-   const session = useSession()
+  const session = useSession()
   const finalToken = session.data?.accessToken
-  const [removeBlog, { loading }] = useMutation(REMOVE_BLOG);
+  const [removeBlog] = useMutation(REMOVE_BLOG);
 
   useEffect(() => {
     setAllBlogs(blogs);
@@ -50,12 +50,14 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
 
   const handleDelete = async (id: number | string) => {
     try {
-      await removeBlog({ variables: { id: Number(id) },context: {
-            headers: {
-              authorization: `Bearer ${finalToken}`,
-            },
-            credentials: 'include',
-          }, });
+      await removeBlog({
+        variables: { id: Number(id) }, context: {
+          headers: {
+            authorization: `Bearer ${finalToken}`,
+          },
+          credentials: 'include',
+        },
+      });
       setAllBlogs((prev) => prev.filter((blog) => blog.id !== id));
       notification.success({
         message: 'Blog Deleted',
@@ -146,6 +148,7 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       key: 'edit',
       render: (record: IBlog) => (
         <LiaEdit
+          data-testid={`edit-btn-${record.id}`}
           className={`text-black dark:text-white ${canEditBlog ? 'cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
           size={20}
           onClick={() => {
@@ -161,21 +164,17 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       title: 'Delete',
       key: 'delete',
       render: (record: IBlog) =>
-        loading ? (
-          'Deleting...'
-        ) : (
-          <RiDeleteBin6Line
-            className={`${canDeleteBlog ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
-            size={20}
-            onClick={() => {
-              if (canDeleteBlog) {
-                if (record.id !== undefined) {
-                  confirmDelete(record.id);
-                }
-              }
-            }}
-          />
-        ),
+        <button
+          data-testid={`delete-btn-${record.id}`}
+          onClick={() => canDeleteBlog && confirmDelete(record.id || '')}
+          disabled={!canDeleteBlog}
+          className={`transition duration-300 ease-in-out ${canDeleteBlog
+            ? "text-red-600 cursor-pointer hover:scale-200"
+            : "cursor-not-allowed text-slate-400"
+            }`}
+        >
+          <RiDeleteBin6Line size={20} />
+        </button>
     },
   ];
 

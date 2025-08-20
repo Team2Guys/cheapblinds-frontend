@@ -24,7 +24,7 @@ export default function ViewRedirecturl({
     setselecteMenu,
     setRedirectUrls
 }: IView_RedirectUrls) {
-    const [RemoveReview, { loading }] = useMutation(REMOVE_REVIEW)
+    const [RemoveReview] = useMutation(REMOVE_REVIEW)
     const session = useSession()
     const finalToken = session.data?.accessToken
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -114,6 +114,7 @@ export default function ViewRedirecturl({
             key: 'Edit',
             render: (record: RedirectUrls) => (
                 <LiaEdit
+                    data-testid={`edit-btn-${record.id}`}
                     className={`${canEditRedirecturls ? 'cursor-pointer text-black dark:text-white transition duration-300 ease-in-out hover:scale-200' : ''} ${!canEditRedirecturls ? 'cursor-not-allowed text-slate-300' : ''
                         }`}
                     size={20}
@@ -130,17 +131,17 @@ export default function ViewRedirecturl({
             title: 'Action',
             key: 'action',
             render: (record: RedirectUrls) => (
-                loading ? "Deleting" :
-                    <RiDeleteBin6Line
-                        className={`${canDeleteRedirecturls ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : ''} ${!canDeleteRedirecturls ? 'cursor-not-allowed text-slate-300' : ''
-                            }`}
-                        size={20}
-                        onClick={() => {
-                            if (canDeleteRedirecturls) {
-                                confirmDelete(record.id);
-                            }
-                        }}
-                    />
+                <button
+                    data-testid={`delete-btn-${record.id}`}
+                    onClick={() => canDeleteRedirecturls && confirmDelete(record.id)}
+                    disabled={!canDeleteRedirecturls}
+                    className={`transition duration-300 ease-in-out ${canDeleteRedirecturls
+                        ? "text-red-600 cursor-pointer hover:scale-200"
+                        : "cursor-not-allowed text-slate-400"
+                        }`}
+                >
+                    <RiDeleteBin6Line size={20} />
+                </button>
             ),
         },
     ];

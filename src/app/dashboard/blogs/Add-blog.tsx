@@ -20,13 +20,6 @@ import { Modal } from 'antd';
 import { AddBlogInitialValues } from 'data/InitialValues';
 import { validationBlogSchema } from 'data/Validations';
 
-const TextInputField = ({ name, label }: { name: string; label: string }) => (
-  <div>
-    <label className="primary-label">{label}</label>
-    <Field name={name} className="dashboard_input" />
-    <ErrorMessage name={name} component="div" className="text-red-500 text-sm" />
-  </div>
-);
 
 interface AddBlogProps {
   setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
@@ -128,7 +121,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
             setselecteMenu('All Blogs');
           },
         });
-      } else {  setselecteMenu("All Blogs");}
+      } else { setselecteMenu("All Blogs"); }
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -139,7 +132,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
       window.removeEventListener('beforeunload', handleBeforeUnload);
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [initialBlogValues , posterImage]);
+  }, [initialBlogValues, posterImage]);
 
   const handleBack = () => {
     console.log('first')
@@ -166,7 +159,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
       validationSchema={validationBlogSchema}
       onSubmit={handleSubmit}
     >
-      {({values}) => {
+      {({ values }) => {
         formikValuesRef.current = values;
         return (
           <Form>
@@ -270,7 +263,11 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                     <ImageUploader setImagesUrl={setposterImage} />
                   )}
                 </div>
-                <TextInputField name="title" label="Title" />
+                <div>
+                  <label className="primary-label">Title</label>
+                  <Field name="title" className="dashboard_input" aria-label='Title' />
+                  <ErrorMessage name="title" component="div" className="text-red-500 text-sm" />
+                </div>
                 <div>
                   <label className="primary-label">
                     Select Category
@@ -280,7 +277,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                     <Field
                       as="select"
                       name="category"
-
+                      aria-label='Select Category'
                       className="dashboard_input"
                     >
                       <option value="" disabled>
@@ -297,7 +294,11 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                   </div>
                   <ErrorMessage name="category" component="div" className="text-red-500 " />
                 </div>
-                <TextInputField name="custom_url" label="custom_url" />
+                <div>
+                  <label className="primary-label">Custom Url</label>
+                  <Field name="title" className="dashboard_input" aria-label='Custom Url' />
+                  <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
+                </div>
                 <Field name="status">
                   {({ field, form }: import('formik').FieldProps) => (
                     <div className="flex gap-4 items-center pt-4">
@@ -333,10 +334,26 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                   <ErrorMessage name="content" component="div" className="text-red-500 text-sm" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <TextInputField name="Canonical_Tag" label="Canonical Tag" />
-                  <TextInputField name="redirectionUrl" label="Redirection URL" />
-                  <TextInputField name="Meta_Title" label="Meta Title" />
-                  <TextInputField name="Meta_Description" label="Meta Description" />
+                  <div>
+                    <label className="primary-label">Canonical Tag</label>
+                    <Field name="Canonical_Tag" className="dashboard_input" />
+                    <ErrorMessage name="Canonical_Tag" component="div" className="text-red-500 text-sm" />
+                  </div>
+                  <div>
+                    <label className="primary-label">Redirection URL</label>
+                    <Field name="redirectionUrl" className="dashboard_input" />
+                    <ErrorMessage name="redirectionUrl" component="div" className="text-red-500 text-sm" />
+                  </div>
+                  <div>
+                    <label className="primary-label">Meta Title</label>
+                    <Field name="Meta_Title" className="dashboard_input" />
+                    <ErrorMessage name="Meta_Title" component="div" className="text-red-500 text-sm" />
+                  </div>
+                  <div>
+                    <label className="primary-label">Meta Description</label>
+                    <Field name="Meta_Description" className="dashboard_input" />
+                    <ErrorMessage name="Meta_Description" component="div" className="text-red-500 text-sm" />
+                  </div>
                 </div>
               </div>
 
@@ -346,6 +363,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                 type="submit"
                 className="mt-4 dashboard_primary_button not-[]:cursor-pointer"
                 disabled={loading || updating}
+                aria-label='InnerButton'
               >
                 {loading || updating
                   ? 'Submitting...'
