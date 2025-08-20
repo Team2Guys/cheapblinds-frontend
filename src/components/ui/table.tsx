@@ -33,9 +33,9 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
         <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700 bg-white dark:bg-white/20 " id='custom-table-head'>
           <thead className="bg-gray-50 dark:bg-black">
             <tr>
-              {columns.map(col => (
+              {columns.map((col, index) => (
                 <th
-                  key={col.key}
+                  key={index}
                   className="p-2 md:p-4 text-left text-sm font-semibold text-gray-600 dark:text-neutral-300 capitalize whitespace-nowrap"
                 >
                   {col.title}
@@ -50,9 +50,9 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
                 const isHidden = index < (currentPage - 1) * pageSize || index >= currentPage * pageSize;
                 return (
                   <tr key={String(item[rowKey] ?? index)} className={`hover:bg-gray-100 dark:hover:bg-black ${isHidden && 'sr-only'}`}>
-                    {columns.map(col => (
+                    {columns.map((col, idx) => (
                       <td
-                        key={col.key}
+                        key={idx}
                         className="px-4 py-3 text-sm  dark:text-neutral-200 whitespace-nowrap text-black"
                       >
                         {col.render ? col.render(item) : String(item[col.key as keyof T])}

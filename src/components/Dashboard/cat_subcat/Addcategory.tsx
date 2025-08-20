@@ -33,20 +33,7 @@ const AddCategory = ({
   editCategory,
   setMenuType,
 }: editCategoryProps) => {
-  const CategoryName: EDIT_CATEGORY | null = editCategory && editCategory.name
-    ? {
-      name: editCategory.name || "",
-      description: editCategory.description || '',
-      Meta_Title: editCategory.Meta_Title || '',
-      short_description: editCategory.short_description || '',
-      Meta_Description: editCategory.Meta_Description || '',
-      seoSchema: editCategory.seoSchema || '',
-      Canonical_Tag: editCategory.Canonical_Tag || '',
-      custom_url: editCategory.custom_url || "",
-      breadCrum: editCategory.breadCrum || "",
-      status: editCategory?.status || 'DRAFT',
-    }
-    : null;
+  const CategoryName: EDIT_CATEGORY = (editCategory && editCategory.name) ? editCategory : categoryInitialValues;
 
 
   const session = useSession()
@@ -54,23 +41,23 @@ const AddCategory = ({
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory.posterImageUrl) ? [editCategory.posterImageUrl] : undefined);
   const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.Banners ? [editCategory?.Banners] : undefined);
   const [loading, setloading] = useState<boolean>(false);
-  const [editCategoryName, setEditCategoryName] = useState<EDIT_CATEGORY | null | undefined>(CategoryName);
+  const [editCategoryName, setEditCategoryName] = useState<EDIT_CATEGORY>(CategoryName);
   const [isCropModalVisible, setIsCropModalVisible] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState<Crop>();
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
-  // const dragImage = useRef<number | null>(null);
-  // const draggedOverImage = useRef<number | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const formikValuesRef = useRef<EDIT_CATEGORY>(editCategoryName);
 
-  console.log(finalToken, "finalToken")
   const onSubmit = async (values: EDIT_CATEGORY, { resetForm }: FormikHelpers<EDIT_CATEGORY>) => {
     try {
 
       const posterImageUrl = posterimageUrl && posterimageUrl[0] || {};
       const Banner = BannerImageUrl && BannerImageUrl[0];
       if (!posterImageUrl) return Toaster('error', 'Please select relevant Images');
-      const newValue = { ...values, posterImageUrl, Banners: Banner, last_editedBy: session.data?.user.fullname };
+      const formValues = { ...values, posterImageUrl, Banners: Banner };
+      // eslint-disable-next-line
+      const { updatedAt, createdAt, __typename, subCategories, Products, ...newValue } = formValues;
       const updateFlag = editCategoryName ? true : false;
       setloading(true);
       if (updateFlag) {
@@ -118,67 +105,113 @@ const AddCategory = ({
       setloading(false);
     }
   };
-
+  console.log(CategoryName)
   useEffect(() => {
     setEditCategoryName(CategoryName)
 
   }, [editCategory])
 
-  const handleBack = (values: EDIT_CATEGORY) => {
-    const initialFormValues = editCategoryName || categoryInitialValues;
+  const hasUnsavedChanges = (): boolean => {
 
     let isPosterChanged: boolean;
     let isBannerChanged: boolean;
 
     if (editCategory) {
-      // Editing mode
+      const oldPoster = editCategory?.posterImageUrl;
+      const newPoster = posterimageUrl?.[0];
+
       isPosterChanged =
-        JSON.stringify(editCategory.posterImageUrl ? [editCategory.posterImageUrl] : undefined) !==
-        JSON.stringify(posterimageUrl);
+        !oldPoster || !newPoster
+          ? oldPoster !== newPoster
+          : oldPoster.public_id !== newPoster.public_id ||
+          (oldPoster.altText ?? '') !== (newPoster.altText ?? '');
+
+      const oldBanner = editCategory?.Banners;
+      const newBanner = BannerImageUrl?.[0];
 
       isBannerChanged =
-        JSON.stringify(editCategory.Banners ? [editCategory.Banners] : undefined) !==
-        JSON.stringify(BannerImageUrl);
+        !oldBanner || !newBanner
+          ? oldBanner !== newBanner
+          : oldBanner.public_id !== newBanner.public_id ||
+          (oldBanner.altText ?? '') !== (newBanner.altText ?? '');
     } else {
       // Adding mode (initially no images)
       isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
       isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
     }
 
-    const isFormChanged = JSON.stringify(initialFormValues) !== JSON.stringify(values);
+    const isFormChanged = JSON.stringify(editCategoryName) !== JSON.stringify(formikValuesRef.current);
 
-    if (isPosterChanged || isBannerChanged || isFormChanged) {
+    return (isPosterChanged || isBannerChanged || isFormChanged)
+  };
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges()) {
+        e.preventDefault();
+        e.returnValue = '';
+        return '';
+      }
+    };
+
+    const handlePopState = () => {
+      if (hasUnsavedChanges()) {
+        window.history.pushState(null, '', window.location.href);
+        Modal.confirm({
+          title: 'Unsaved Changes',
+          content: 'You have unsaved changes. Do you want to discard them?',
+          okText: 'Discard Changes',
+          cancelText: 'Cancel',
+          onOk: () => {
+            setMenuType("Categories");
+          },
+        });
+      } else { setMenuType("All Reviews"); }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+    window.history.pushState(null, '', window.location.href);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [editCategoryName, BannerImageUrl, posterimageUrl]);
+
+  const handleBack = () => {
+    if (hasUnsavedChanges()) {
       Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
+        title: 'Unsaved Changes',
+        content: 'You have unsaved changes. Do you want to discard them?',
+        okText: 'Discard Changes',
+        cancelText: 'Cancel',
         onOk: () => {
           setMenuType("Categories");
         },
       });
       return;
     }
+
     setMenuType("Categories");
-    return;
   };
 
   return (
     <Formik
-      initialValues={
-        editCategoryName ? editCategoryName : categoryInitialValues
-      }
+      initialValues={editCategoryName}
       validationSchema={categoryValidationSchema}
       onSubmit={onSubmit}
     >
       {(formik) => {
+        formikValuesRef.current = formik.values;
+
         return (
 
           <Form onSubmit={formik.handleSubmit}>
             <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
               <p
                 className="dashboard_primary_button"
-                onClick={() => handleBack(formik.values)}
+                onClick={handleBack}
               >
                 <IoMdArrowRoundBack /> Back
               </p>

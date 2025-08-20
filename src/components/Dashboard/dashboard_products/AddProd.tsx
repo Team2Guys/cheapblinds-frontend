@@ -72,7 +72,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const [crop, setCrop] = useState<Crop>();
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
-  const finalToken = session.data?.accessToken
+  const finalToken = session.data?.accessToken;
+  const formikValuesRef = useRef<IProductValues>(productInitialValue || AddproductsinitialValues);
+
   const [updateProduct] = useMutation(UPDATE_PRODUCT,
     {
       context: {
@@ -161,7 +163,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
 
-      const newValues = {
+      const formValues = {
         ...values,
         posterImageUrl,
         hoverImageUrl,
@@ -169,8 +171,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         Banners: Banner,
         category: +selectedCategory,
         subcategory: +selectedSubcategory,
-        last_editedBy: session.data?.user.fullname
       };
+      // eslint-disable-next-line
+      const { updatedAt, createdAt, __typename, ...newValues } = formValues;
       const updateFlag = EditProductValue && editProduct ? true : false;
       const { data } = updateFlag
         ? await updateProduct({
@@ -237,43 +240,132 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   };
 
 
-  const handleBack = (values: IProductValues) => {
+  const hasUnsavedChanges = (): boolean => {
     const initialFormValues = productInitialValue || AddproductsinitialValues;
 
-    let isPosterChanged: boolean;
-    let isBannerChanged: boolean;
-    let isProductImagesChanged: boolean;
-    let isHoverImageChanged: boolean;
+    const oldPoster = editProduct?.posterImageUrl;
+    const newPoster = posterimageUrl?.[0];
+    const isPosterChanged =
+      !!editProduct
+        ? !oldPoster || !newPoster
+          ? oldPoster !== newPoster
+          : oldPoster.public_id !== newPoster.public_id ||
+          (oldPoster.altText ?? '') !== (newPoster.altText ?? '')
+        : !!newPoster;
 
-    if (editProduct) {
-      // Editing mode
-      isPosterChanged =
-        JSON.stringify(editProduct.posterImageUrl ? [editProduct.posterImageUrl] : undefined) !== JSON.stringify(posterimageUrl);
+    const oldBanner = editProduct?.Banners;
+    const newBanner = BannerImageUrl?.[0];
+    const isBannerChanged =
+      !!editProduct
+        ? !oldBanner || !newBanner
+          ? oldBanner !== newBanner
+          : oldBanner.public_id !== newBanner.public_id ||
+          (oldBanner.altText ?? '') !== (newBanner.altText ?? '')
+        : !!newBanner;
 
-      isBannerChanged =
-        JSON.stringify(editProduct.Banners ? [editProduct.Banners] : undefined) !== JSON.stringify(BannerImageUrl);
+    const oldImages = editProduct?.productImages ?? [];
+    const newImages = imagesUrl ?? [];
+    const isProductImagesChanged = !!editProduct
+      ? oldImages.length !== newImages.length ||
+      oldImages.some((img: ProductImage, i: number) =>
+        img.public_id !== newImages[i]?.public_id ||
+        (img.altText ?? '') !== (newImages[i]?.altText ?? '')
+      )
+      : newImages.length > 0;
 
-      isProductImagesChanged =
-        JSON.stringify((editProduct?.productImages.length > 0) ? editProduct?.productImages : []) !== JSON.stringify(imagesUrl);
 
-      isHoverImageChanged =
-        JSON.stringify((editProduct?.hoverImageUrl) ? editProduct?.hoverImageUrl : null) !== JSON.stringify((hoverImage && hoverImage.length > 0) ? hoverImage : null);
-    } else {
-      // Adding mode (initially no images)
-      isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
-      isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
-      isProductImagesChanged = !!imagesUrl && imagesUrl.length > 0;
-      isHoverImageChanged = !!hoverImage && hoverImage.length > 0;
-    }
-    // eslint-disable-next-line
-    const isFormChanged = JSON.stringify({ ...initialFormValues, category: initialFormValues.category === '' ? initialFormValues.category : Number((initialFormValues.category as any).id), subcategory: initialFormValues.subcategory === '' ? initialFormValues.subcategory : Number((initialFormValues.subcategory as any).id) }) !== JSON.stringify({ ...values, category: selectedCategory === '' ? selectedCategory : Number(selectedCategory), subcategory: selectedSubcategory === '' ? selectedSubcategory : Number(selectedSubcategory) });
+    const oldHover = editProduct?.hoverImageUrl;
+    const newHover = hoverImage?.[0];
+    const isHoverImageChanged =
+      !!editProduct
+        ? !oldHover || !newHover
+          ? oldHover !== newHover
+          : oldHover.public_id !== newHover.public_id ||
+          (oldHover.altText ?? '') !== (newHover.altText ?? '')
+        : !!newHover;
 
-    if (isPosterChanged || isBannerChanged || isProductImagesChanged || isHoverImageChanged || isFormChanged) {
+    const currentValues = {
+      ...formikValuesRef.current,
+      category:
+        selectedCategory === ''
+          ? ''
+          : Number(selectedCategory),
+      subcategory:
+        selectedSubcategory === ''
+          ? ''
+          : Number(selectedSubcategory),
+    };
+    const initialValues = {
+      ...initialFormValues,
+      category:
+        initialFormValues.category === ''
+          ? ''
+          // eslint-disable-next-line
+          : Number((initialFormValues.category as any).id),
+      subcategory:
+        initialFormValues.subcategory === ''
+          ? ''
+          // eslint-disable-next-line
+          : Number((initialFormValues.subcategory as any).id),
+    };
+
+    const isFormChanged = JSON.stringify(initialValues) !== JSON.stringify(currentValues);
+
+    return (
+      isPosterChanged ||
+      isBannerChanged ||
+      isProductImagesChanged ||
+      isHoverImageChanged ||
+      isFormChanged
+    );
+  };
+
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges()) {
+        e.preventDefault();
+        e.returnValue = '';
+        return '';
+      }
+    };
+
+    const handlePopState = () => {
+      if (hasUnsavedChanges()) {
+        window.history.pushState(null, '', window.location.href);
+        Modal.confirm({
+          title: 'Unsaved Changes',
+          content: 'You have unsaved changes. Do you want to discard them?',
+          okText: 'Discard Changes',
+          cancelText: 'Cancel',
+          onOk: () => {
+            setselecteMenu("Add All Products");
+            setEditProduct?.(() => undefined);
+          },
+        });
+      } else {
+        setselecteMenu("Add All Products");
+        setEditProduct?.(() => undefined);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+    window.history.pushState(null, '', window.location.href);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [productInitialValue, BannerImageUrl, posterimageUrl, imagesUrl, hoverImage]);
+
+  const handleBack = () => {
+    if (hasUnsavedChanges()) {
       Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
+        title: 'Unsaved Changes',
+        content: 'You have unsaved changes. Do you want to discard them?',
+        okText: 'Discard Changes',
+        cancelText: 'Cancel',
         onOk: () => {
           setselecteMenu("Add All Products");
           setEditProduct?.(() => undefined);
@@ -281,12 +373,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       });
       return;
     }
+
     setselecteMenu("Add All Products");
     setEditProduct?.(() => undefined);
-    return;
   };
-
-
 
   return (
 
@@ -300,6 +390,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       onSubmit={onSubmit}
     >
       {(formik) => {
+        const { values } = formik;
+        formikValuesRef.current = values;
+
         return (
 
 
@@ -309,7 +402,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
               <p
                 className="dashboard_primary_button"
-                onClick={() => handleBack(formik.values)}
+                onClick={handleBack}
               >
                 <IoMdArrowRoundBack /> Back
               </p>

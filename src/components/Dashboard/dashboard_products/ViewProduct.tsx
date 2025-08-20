@@ -205,6 +205,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       key: 'Edit',
       render: (record: (IProduct)) => (
         <LiaEdit
+          aria-label='Edit Product'
           className={`${canEditproduct ? 'cursor-pointer text-black dark:text-white transition duration-300 ease-in-out hover:scale-200' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-400' : ''
             }`}
           size={20}
@@ -224,13 +225,14 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       key: 'action',
       render: (record: (IProduct)) => (
         <RiDeleteBin6Line
+          aria-label='Delete Product'
           className={`${canDeleteProduct ? 'text-red-600 cursor-pointer transition duration-300 ease-in-out hover:scale-200' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-400' : ''
             }`}
           size={20}
           onClick={() => {
-            // if (canDeleteProduct) {
+            if (canDeleteProduct) {
             confirmDelete(record.id);
-            // }
+            }
           }}
         />
       ),

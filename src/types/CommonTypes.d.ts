@@ -17,6 +17,7 @@ export interface GlobalCommontypes {
       Canonical_Tag?: string;
       Meta_Description?: string;
       Meta_Title?: string;
+      __typename?: string
 }
 
 

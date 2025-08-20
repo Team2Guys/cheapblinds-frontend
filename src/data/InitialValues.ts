@@ -51,19 +51,19 @@ export const AddproductsinitialValues: IProductValues = {
 };
 
 export const AddBlogInitialValues = {
-    title: '',
-    content: '',
-    custom_url: '',
-    category: '',
-    status: 'DRAFT' as BlogStatus,
-    isPublished: false,
-    posterImage: undefined,
-    last_editedBy: '',
-    Canonical_Tag: '',
-    Meta_Description: '',
-    Meta_Title: '',
-    redirectionUrl: '',
-  }
+  title: '',
+  content: '',
+  custom_url: '',
+  category: '',
+  status: 'DRAFT' as BlogStatus,
+  isPublished: false,
+  posterImage: undefined,
+  last_editedBy: '',
+  Canonical_Tag: '',
+  Meta_Description: '',
+  Meta_Title: '',
+  redirectionUrl: '',
+}
 
 
 export const initialAdminValues: Admin = {
@@ -98,3 +98,8 @@ export const initialAdminValues: Admin = {
   canVeiwTotalRedirecturls: false,
   canViewAppointments: false,
 };
+
+export const initialRedirctUlrsValues = {
+  url: '',
+  redirectedUrl: '',
+}
