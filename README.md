@@ -41,6 +41,7 @@ Example: [feature/login-page]
 ## Color
 
 1-: Main Color  [yellow-----------(#FFB803)]     [text-primary]    [bg-primary]     <!--  ## Mostly used in Background -->
+1-: Main Color light  [yellow-----------(#FEB9071F)]     [text-primary-light]    [bg-primary-light]     <!--  ## Mostly used in Background -->
 2-: Secondary Color  [light-gray--(#EFEFEF)]     [text-secondary]  [bg-secondary]   <!--  ## Mostly used in Background -->
 3-: gray Color [gray-------------(##606060)]     [text-gray]       [bg-gray]
 4-: Black Color
