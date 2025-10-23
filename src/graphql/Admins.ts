@@ -20,6 +20,19 @@ export const ADMIN_LOGIN = gql`
       canVeiwAdmins
       canVeiwTotalproducts
       canVeiwTotalCategories
+      canAddSubCategory
+      canDeleteSubCategory
+      canEditSubCategory
+      canVeiwTotalSubCategories
+      canAddBlog
+      canDeleteBlog
+      canEditBlog
+      canVeiwTotalBlog
+      canAddRedirecturls
+      canDeleteRedirecturls
+      canEditRedirecturls
+      canVeiwTotalRedirecturls
+      canViewAppointments
       posterImageUrl
       role
       token
@@ -76,6 +89,19 @@ export const CREATE_ADMIN = gql`
       canVeiwTotalproducts
       canVeiwTotalCategories
       posterImageUrl
+      canAddSubCategory
+      canDeleteSubCategory
+      canEditSubCategory
+      canVeiwTotalSubCategories
+      canAddBlog
+      canDeleteBlog
+      canEditBlog
+      canVeiwTotalBlog
+      canAddRedirecturls
+      canDeleteRedirecturls
+      canEditRedirecturls
+      canVeiwTotalRedirecturls
+      canViewAppointments
     }
       
   }
@@ -105,6 +131,19 @@ export const UPDATE_ADMIN = gql`
       canVeiwTotalproducts
       canVeiwTotalCategories
       posterImageUrl
+      canAddSubCategory
+      canDeleteSubCategory
+      canEditSubCategory
+      canVeiwTotalSubCategories
+      canAddBlog
+      canDeleteBlog
+      canEditBlog
+      canVeiwTotalBlog
+      canAddRedirecturls
+      canDeleteRedirecturls
+      canEditRedirecturls
+      canVeiwTotalRedirecturls
+      canViewAppointments
     }
   }
 `;

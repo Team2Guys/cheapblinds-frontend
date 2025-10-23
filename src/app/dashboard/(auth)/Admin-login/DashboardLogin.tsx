@@ -48,9 +48,10 @@ const DashboardLogin = () => {
         redirect: false,
 
       });
-      console.log(result, "result")
+
+
       if (result?.error) {
-        setError(result.error,); 
+        setError(result.error,);
         return;
       }
 
@@ -94,7 +95,12 @@ const DashboardLogin = () => {
   ];
 
   return (
-    <div className=' mt-50'>
+    <div className="flex h-screen overflow-hidden relative bg-white dark:bg-black">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute w-[600px] h-[600px] bg-primary opacity-30 rounded-full blur-3xl top-1/3 left-[10%] mix-blend-overlay" />
+        <div className="absolute w-[500px] h-[500px] bg-primary opacity-20 rounded-full blur-2xl -top-20 right-[5%] mix-blend-overlay" />
+        <div className="absolute w-[400px] h-[400px] bg-blue-500 opacity-20 rounded-full blur-2xl bottom-0 right-0 mix-blend-overlay" />
+      </div>
       <USRcomponent
         handleSubmit={handleSubmit}
         error={loginError}

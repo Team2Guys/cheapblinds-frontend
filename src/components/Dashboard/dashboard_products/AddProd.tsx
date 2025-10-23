@@ -11,7 +11,7 @@ import {
 } from "formik";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { handleImageAltText, handleSort, ImageRemoveHandler } from "utils/helperFunctions";
+import { handleCropClick, handleCropModalCancel, handleCropModalOk, handleImageAltText, handleSort, ImageRemoveHandler, onCropComplete, onImageLoad } from "utils/helperFunctions";
 import Toaster from "components/Toaster/Toaster";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { FormValues } from "types/type";
@@ -20,14 +20,11 @@ import { IProductValues, ProductImage } from "types/prod";
 import ImageUploader from "components/ImageUploader/ImageUploader";
 import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from "types/PagesProps";
 import { useMutation } from "@apollo/client";
-import showToast from "components/Toaster/Toaster";
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import { centerAspectCrop } from "types/product-crop";
 import { useRouter } from "next/navigation";
 import { AddproductsinitialValues } from "data/InitialValues";
 import { AddProductvalidationSchema } from "data/Validations";
-import { uploadPhotosToBackend } from "utils/fileUploadhandlers";
 import { ISUBCATEGORY } from "types/cat";
 import { Modal } from 'antd';
 import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "graphql/prod";
@@ -75,30 +72,33 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const [crop, setCrop] = useState<Crop>();
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const finalToken = session.data?.accessToken;
+  const formikValuesRef = useRef<IProductValues>(productInitialValue || AddproductsinitialValues);
+
   const [updateProduct] = useMutation(UPDATE_PRODUCT,
-    // {
-    //   context: {
-    //     fetchOptions: {
-    //       credentials: "include",
-    //     },
-    //     headers: {
-    //       authorization: `Bearer ${finalToken}`,
-    //     }
-    //   },
-    // }
+    {
+      context: {
+        fetchOptions: {
+          credentials: "include",
+        },
+        headers: {
+          authorization: `Bearer ${finalToken}`,
+        }
+      },
+    }
   );
 
   const [createProduct] = useMutation(CREATE_PRODUCT,
-    //   {
-    //   context: {
-    //     fetchOptions: {
-    //       credentials: "include",
-    //     },
-    //     headers: {
-    //       authorization: `Bearer ${finalToken}`,
-    //     }
-    //   },
-    // }
+    {
+      context: {
+        fetchOptions: {
+          credentials: "include",
+        },
+        headers: {
+          authorization: `Bearer ${finalToken}`,
+        }
+      },
+    }
   );
 
 
@@ -163,7 +163,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
 
-      const newValues = {
+      const formValues = {
         ...values,
         posterImageUrl,
         hoverImageUrl,
@@ -171,15 +171,16 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         Banners: Banner,
         category: +selectedCategory,
         subcategory: +selectedSubcategory,
-        last_editedBy: session.data?.user.fullname
       };
+      // eslint-disable-next-line
+      const { updatedAt, createdAt, __typename, ...newValues } = formValues;
       const updateFlag = EditProductValue && editProduct ? true : false;
       const { data } = updateFlag
         ? await updateProduct({
-          variables: { input: { ...newValues, id: Number(editProduct?.id) }},
+          variables: { input: { ...newValues, id: Number(editProduct?.id) } },
           refetchQueries: [{ query: GET_ALL_PRODUCTS }]
         })
-        : await createProduct({ 
+        : await createProduct({
           variables: { input: newValues },
           refetchQueries: [{ query: GET_ALL_PRODUCTS }]
         });
@@ -232,161 +233,139 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     setSubcategories(selectedCat?.subCategories || []);
     setSelectedSubcategory("");
   };
-  
+
   const handleInnerSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = Number(e.target.value);
     setSelectedSubcategory(categoryId)
   };
 
-  const handleCropClick = (imageUrl: string) => {
-    setImageSrc(imageUrl);
-    setIsCropModalVisible(true);
-  };
 
-  const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { width, height } = e.currentTarget;
-    const newCrop = centerAspectCrop(width, height, 16 / 9);
-    setCrop(newCrop);
-  };
-
-  const onCropComplete = (crop: Crop) => {
-    const image = imgRef.current;
-    if (!image || !crop.width || !crop.height) return;
-
-    const canvas = document.createElement('canvas');
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-
-    if (ctx) {
-      ctx.drawImage(
-        image,
-        crop.x * scaleX,
-        crop.y * scaleY,
-        crop.width * scaleX,
-        crop.height * scaleY,
-        0,
-        0,
-        crop.width,
-        crop.height
-      );
-    }
-
-    const base64Image = canvas.toDataURL('image/jpeg');
-    setCroppedImage(base64Image);
-  };
-
-  const handleCropModalOk = async () => {
-    if (croppedImage && imageSrc) {
-      try {
-        // Convert the cropped image (base64) to a File
-        const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
-
-        // Upload the cropped image to your backend or Cloudinary
-        const response = await uploadPhotosToBackend(file);
-        if (!response) return
-
-        // Use the base URL from your environment variables
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-        const uploadedImageUrl = response[0].imageUrl;
-        // Append the base URL if needed
-        const newImageUrl = uploadedImageUrl.startsWith('http')
-          ? uploadedImageUrl
-          : `${baseUrl}${uploadedImageUrl}`;
-
-        const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
-
-        // First close the modal and reset croppedImage
-        setIsCropModalVisible(false);
-        setCroppedImage(null);
-
-        // Use a timeout to update states after the modal has closed
-        setTimeout(() => {
-          setposterimageUrl((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
-          );
-          sethoverImage((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
-          );
-          setImagesUrl((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
-          );
-        }, 0);
-      } catch {
-        showToast('error', 'Failed to upload cropped image');
-      }
-    }
-  };
-
-  // Helper function to convert a base64 string to a File object
-  const base64ToFile = (base64: string, filename: string): File => {
-    const arr = base64.split(',');
-    const mimeMatch = arr[0].match(/:(.*?);/);
-    const mime = mimeMatch ? mimeMatch[1] : '';
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
-  };
-
-
-  const handleCropModalCancel = () => {
-    setIsCropModalVisible(false);
-    setCroppedImage(null);
-  };
-
-
-  const handleBack = (values: IProductValues) => {
+  const hasUnsavedChanges = (): boolean => {
     const initialFormValues = productInitialValue || AddproductsinitialValues;
 
-    let isPosterChanged: boolean;
-    let isBannerChanged: boolean;
-    let isProductImagesChanged: boolean;
-    let isHoverImageChanged: boolean;
+    const oldPoster = editProduct?.posterImageUrl;
+    const newPoster = posterimageUrl?.[0];
+    const isPosterChanged =
+      !!editProduct
+        ? !oldPoster || !newPoster
+          ? oldPoster !== newPoster
+          : oldPoster.public_id !== newPoster.public_id ||
+          (oldPoster.altText ?? '') !== (newPoster.altText ?? '')
+        : !!newPoster;
 
-    if (editProduct) {
-      // Editing mode
-      isPosterChanged =
-        JSON.stringify(editProduct.posterImageUrl ? [editProduct.posterImageUrl] : undefined) !== JSON.stringify(posterimageUrl);
+    const oldBanner = editProduct?.Banners;
+    const newBanner = BannerImageUrl?.[0];
+    const isBannerChanged =
+      !!editProduct
+        ? !oldBanner || !newBanner
+          ? oldBanner !== newBanner
+          : oldBanner.public_id !== newBanner.public_id ||
+          (oldBanner.altText ?? '') !== (newBanner.altText ?? '')
+        : !!newBanner;
 
-      isBannerChanged =
-        JSON.stringify(editProduct.Banners ? [editProduct.Banners] : undefined) !== JSON.stringify(BannerImageUrl);
+    const oldImages = editProduct?.productImages ?? [];
+    const newImages = imagesUrl ?? [];
+    const isProductImagesChanged = !!editProduct
+      ? oldImages.length !== newImages.length ||
+      oldImages.some((img: ProductImage, i: number) =>
+        img.public_id !== newImages[i]?.public_id ||
+        (img.altText ?? '') !== (newImages[i]?.altText ?? '')
+      )
+      : newImages.length > 0;
 
-        isProductImagesChanged =
-        JSON.stringify((editProduct?.productImages.length > 0) ? editProduct?.productImages : []) !== JSON.stringify(imagesUrl);
 
-         isHoverImageChanged =
-        JSON.stringify((editProduct?.hoverImageUrl) ? editProduct?.hoverImageUrl : null) !== JSON.stringify((hoverImage && hoverImage.length > 0) ? hoverImage : null);
-    } else {
-      // Adding mode (initially no images)
-      isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
-      isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
-      isProductImagesChanged = !!imagesUrl && imagesUrl.length > 0;
-      isHoverImageChanged = !!hoverImage && hoverImage.length > 0;
-    }
-     // eslint-disable-next-line
-    const isFormChanged = JSON.stringify({...initialFormValues, category: initialFormValues.category === '' ? initialFormValues.category : Number((initialFormValues.category as any).id) , subcategory: initialFormValues.subcategory === '' ? initialFormValues.subcategory : Number((initialFormValues.subcategory as any).id) }) !== JSON.stringify({...values , category: selectedCategory === '' ? selectedCategory : Number(selectedCategory), subcategory: selectedSubcategory === '' ? selectedSubcategory : Number(selectedSubcategory)});
+    const oldHover = editProduct?.hoverImageUrl;
+    const newHover = hoverImage?.[0];
+    const isHoverImageChanged =
+      !!editProduct
+        ? !oldHover || !newHover
+          ? oldHover !== newHover
+          : oldHover.public_id !== newHover.public_id ||
+          (oldHover.altText ?? '') !== (newHover.altText ?? '')
+        : !!newHover;
 
-    if (isPosterChanged || isBannerChanged || isProductImagesChanged || isHoverImageChanged || isFormChanged) {
+    const currentValues = {
+      ...formikValuesRef.current,
+      category:
+        selectedCategory === ''
+          ? ''
+          : Number(selectedCategory),
+      subcategory:
+        selectedSubcategory === ''
+          ? ''
+          : Number(selectedSubcategory),
+    };
+    const initialValues = {
+      ...initialFormValues,
+      category:
+        initialFormValues.category === ''
+          ? ''
+          // eslint-disable-next-line
+          : Number((initialFormValues.category as any).id),
+      subcategory:
+        initialFormValues.subcategory === ''
+          ? ''
+          // eslint-disable-next-line
+          : Number((initialFormValues.subcategory as any).id),
+    };
+
+    const isFormChanged = JSON.stringify(initialValues) !== JSON.stringify(currentValues);
+
+    return (
+      isPosterChanged ||
+      isBannerChanged ||
+      isProductImagesChanged ||
+      isHoverImageChanged ||
+      isFormChanged
+    );
+  };
+
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges()) {
+        e.preventDefault();
+        e.returnValue = '';
+        return '';
+      }
+    };
+
+    const handlePopState = () => {
+      if (hasUnsavedChanges()) {
+        window.history.pushState(null, '', window.location.href);
+        Modal.confirm({
+          title: 'Unsaved Changes',
+          content: 'You have unsaved changes. Do you want to discard them?',
+          okText: 'Discard Changes',
+          cancelText: 'Cancel',
+          onOk: () => {
+            setselecteMenu("Add All Products");
+            setEditProduct?.(() => undefined);
+          },
+        });
+      } else {
+        setselecteMenu("Add All Products");
+        setEditProduct?.(() => undefined);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+    window.history.pushState(null, '', window.location.href);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [productInitialValue, BannerImageUrl, posterimageUrl, imagesUrl, hoverImage]);
+
+  const handleBack = () => {
+    if (hasUnsavedChanges()) {
       Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
+        title: 'Unsaved Changes',
+        content: 'You have unsaved changes. Do you want to discard them?',
+        okText: 'Discard Changes',
+        cancelText: 'Cancel',
         onOk: () => {
           setselecteMenu("Add All Products");
           setEditProduct?.(() => undefined);
@@ -394,12 +373,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       });
       return;
     }
+
     setselecteMenu("Add All Products");
     setEditProduct?.(() => undefined);
-    return;
   };
-
-
 
   return (
 
@@ -413,23 +390,26 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       onSubmit={onSubmit}
     >
       {(formik) => {
+        const { values } = formik;
+        formikValuesRef.current = values;
+
         return (
 
 
-          <Form onSubmit={formik.handleSubmit}>
+          <Form onSubmit={formik.handleSubmit} role="form">
 
 
             <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
               <p
                 className="dashboard_primary_button"
-                onClick={() => handleBack(formik.values)}
+                onClick={handleBack}
               >
                 <IoMdArrowRoundBack /> Back
               </p>
               <div className="flex justify-center gap-4">
                 <Field name="status">
                   {({ field, form }: import('formik').FieldProps) => (
-                    <div className="flex gap-4 items-center border-r-2 px-2">
+                    <div className="flex gap-4 items-center border-r-2 dark:border-white px-2">
 
                       {['DRAFT', 'PUBLISHED'].map((status) => {
                         const isActive = field.value === status;
@@ -443,7 +423,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             className={`px-4 py-2 rounded-md text-sm
                                 ${isActive
                                 ? 'dashboard_primary_button cursor-not-allowed'
-                                : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                : 'bg-white text-black cursor-pointer'
                               }`}
                           >
                             {status}
@@ -466,10 +446,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
             <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
               <div className="flex flex-col gap-9 ">
-                <div className="rounded-sm border border-stroke bg-white dark:bg-black p-4 xs:p-6">
+                <div className="rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6">
                   <div className="rounded-sm border border-stroke ">
-                    <div className="border-b border-stroke py-4 px-4 ">
-                      <h3 className="font-medium text-black dark:text-white">
+                    <div className="border-b border-stroke px-4 ">
+                      <h3 className="primary-label" aria-label="Add Poster Image">
                         Add Poster Image
                       </h3>
                     </div>
@@ -494,7 +474,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   />
                                 </div>
                                 <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                   key={index}
                                   className="object-cover cursor-crosshair"
                                   width={300}
@@ -537,14 +517,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                   <div className="flex flex-col ">
 
-                    <label className="primary-label">
+                    <label className="primary-label" aria-label="Product Title">
                       Product Title
                     </label>
 
                     <Field
                       type="text"
                       name="name"
-                      placeholder="Title"
+                      placeholder="Product Title"
                       className={`dashboard_input ${formik.touched.name && formik.errors.name
                         ? "border-red-500"
                         : ""
@@ -559,7 +539,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     {/* Custom url and BreadkCrum */}
                     <div className="flex gap-3">
                       <div>
-                        <label className="primary-label  ">
+                        <label className="primary-label" aria-label="Custom Url">
                           Custom Url
                         </label>
                         <Field
@@ -575,7 +555,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className=" ">
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           breadCrum
                         </label>
 
@@ -599,7 +579,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
 
-                    <label className="primary-label ">
+                    <label className="primary-label" aria-label="Description">
                       Description
                     </label>
                     <textarea
@@ -625,7 +605,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     ) : null}
 
 
-                    <label className="primary-label ">
+                    <label className="primary-label">
                       Short Description{" "}
                     </label>
                     <textarea
@@ -653,7 +633,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                     <div className="flex full items-center gap-4">
                       <div className="w-1/3 xs:w-1/3">
-                        <label className="primary-label ">
+                        <label className="primary-label" aria-label="Price">
                           Price
                         </label>
                         <input
@@ -682,7 +662,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="w-1/3 xs:w-1/3">
-                        <label className="primary-label ">
+                        <label className="primary-label" aria-label="DiscountPrice">
                           Discount Price
                         </label>
                         <Field
@@ -705,7 +685,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="w-1/3 xs:w-1/3 ">
-                        <label className="primary-label ">
+                        <label className="primary-label" aria-label="Stock">
                           Stock
                         </label>
 
@@ -728,7 +708,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     <div className="mt-4 space-y-4">
                       <div className="flex gap-4">
                         <div className="w-2/4">
-                          <label className="primary-label ">
+                          <label className="primary-label">
                             Meta Title
                           </label>
                           <input
@@ -751,7 +731,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           ) : null}
                         </div>
                         <div className="w-2/4">
-                          <label className="primary-label ">
+                          <label className="primary-label">
                             Canonical Tag
                           </label>
                           <input
@@ -777,7 +757,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div>
-                        <label className="primary-label ">
+                        <label className="primary-label">
                           Meta Description
                         </label>
                         <textarea
@@ -801,7 +781,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     </div>
 
                     <div>
-                      <label className="primary-label ">
+                      <label className="primary-label">
                         seoSchema
                       </label>
                       <textarea
@@ -820,12 +800,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                     <div className="flex gap-4 flex-col">
                       <div className="w-full">
-                        <label className="primary-label ">
+                        <label className="primary-label" aria-label="Select Categories & Sub Categories">
                           Select Categories & Sub Categories
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <select
                             name="category"
+                            aria-label="Category"
                             value={selectedCategory ? selectedCategory : ''}
                             onChange={handleCategoryChange}
                             className="dashboard_input"
@@ -857,6 +838,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                               <select
                                 name="subcategory"
+                                aria-label="Subcategory"
                                 value={selectedSubcategory}
                                 onChange={
                                   handleInnerSubCategoryChange
@@ -895,10 +877,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-5 rounded-sm border border-stroke bg-white dark:bg-black p-4 xs:p-6 h-fit">
+              <div className="flex flex-col gap-5 rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6 h-fit">
                 <div className="rounded-sm border border-stroke ">
-                  <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-4 dark:border-strokedark">
+                    <h3 className="primary-label">
                       Add Hover Image
                     </h3>
                   </div>
@@ -923,7 +905,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 />
                               </div>
                               <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                 key={index}
                                 className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
                                 width={100}
@@ -958,8 +940,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="rounded-sm border border-stroke dark:border-strokedark ">
-                  <div className="border-b border-stroke py-4 px-2  ">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-2  ">
+                    <h3 className="primary-label">
                       Add Banner Image / Video
                     </h3>
                   </div>
@@ -1008,7 +990,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               <>
 
                                 <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                   key={index}
                                   className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
 
@@ -1049,8 +1031,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
                 <div className="rounded-sm border border-stroke ">
-                  <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-4 dark:border-strokedark">
+                    <h3 className="primary-label">
                       Add Product Images
                     </h3>
                   </div>
@@ -1089,7 +1071,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 />
                               </div>
                               <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                 key={index}
                                 className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
                                 width={300}
@@ -1142,7 +1124,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             <Field name="status">
               {({ field, form }: import('formik').FieldProps) => (
                 <div className="flex gap-4 items-center my-4">
-                  <label className="font-semibold">Product Status:</label>
+                  <label className="font-semibold text-black dark:text-white">Product Status:</label>
 
                   {['DRAFT', 'PUBLISHED'].map((status) => {
                     const isActive = field.value === status;
@@ -1153,10 +1135,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         type="button"
                         onClick={() => form.setFieldValue('status', status)}
                         disabled={isActive}
-                        className={`px-4 py-2 rounded-md text-sm border
+                        className={`px-4 py-2 rounded-md text-sm
                           ${isActive
-                            ? 'bg-black text-white border-black cursor-not-allowed'
-                            : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                            ? 'dashboard_primary_button cursor-not-allowed'
+                            : 'bg-white text-black cursor-pointer'
                           }`}
                       >
                         {status}
@@ -1171,14 +1153,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
               type="submit"
               className="dashboard_primary_button"
               disabled={loading}
+              aria-label="InnerSubmit"
             >
               {loading ? "loading..." : "Submit"}
             </button>
             <Modal
               title="Crop Image"
               open={isCropModalVisible}
-              onOk={handleCropModalOk}
-              onCancel={handleCropModalCancel}
+              onOk={() => handleCropModalOk(croppedImage, imageSrc, setIsCropModalVisible, setCroppedImage, setposterimageUrl, setBannerImageUrl, setImagesUrl)}
+              onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
               width={500}
               height={400}
             >
@@ -1186,7 +1169,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 <ReactCrop
                   crop={crop}
                   onChange={(newCrop) => setCrop(newCrop)}
-                  onComplete={onCropComplete}
+                  onComplete={() => onCropComplete(crop, imgRef, setCroppedImage)}
                 >
                   <Image
                     width={500}
@@ -1195,7 +1178,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     src={imageSrc}
                     alt="Crop me"
                     style={{ maxWidth: '100%' }}
-                    onLoad={onImageLoad}
+                    onLoad={(e) => onImageLoad(e, setCrop)}
                     crossOrigin="anonymous"
                   />
                 </ReactCrop>

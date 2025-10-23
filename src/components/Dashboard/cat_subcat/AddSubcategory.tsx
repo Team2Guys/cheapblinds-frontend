@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
-import { handleImageAltText, ImageRemoveHandler } from 'utils/helperFunctions';
+import { handleCropClick, handleCropModalCancel, handleCropModalOk, handleImageAltText, ImageRemoveHandler, onCropComplete, onImageLoad } from 'utils/helperFunctions';
 import { Formik, Form, FormikHelpers, Field, ErrorMessage } from 'formik';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import showToast from 'components/Toaster/Toaster';
@@ -15,11 +15,9 @@ import revalidateTag from 'components/ServerActons/ServerAction';
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Modal } from 'antd';
-import { centerAspectCrop } from 'types/product-crop';
 import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
 import { subcategoryInitialValues } from 'data/InitialValues';
 import { subcategoryValidationSchema } from 'data/Validations';
-import { uploadPhotosToBackend } from 'utils/fileUploadhandlers';
 import { useSession } from 'next-auth/react';
 import { CREATE_SUBCATEGORY, GET_ALL_SUBCATEGORIES, UPDATE_SUBCATEGORY } from 'graphql/categories';
 
@@ -30,21 +28,7 @@ const AddSubcategory = ({
   categoriesList,
 }: DASHBOARD_ADD_SUBCATEGORIES_PROPS) => {
 
-  const CategoryName: ISUBCATEGORY_EDIT | undefined = editCategory && editCategory.name
-    ? {
-      name: editCategory.name || "",
-      description: editCategory.description || '',
-      Meta_Title: editCategory.Meta_Title || '',
-      short_description: editCategory.short_description || '',
-      Meta_Description: editCategory.Meta_Description || '',
-      seoSchema: editCategory.seoSchema || '',
-      Canonical_Tag: editCategory.Canonical_Tag || '',
-      custom_url: editCategory.custom_url || "",
-      breadCrum: editCategory.breadCrum || "",
-      status: editCategory?.status || 'DRAFT',
-      category: editCategory?.category?.id || ''
-    }
-    : undefined;
+  const CategoryName: ISUBCATEGORY_EDIT = editCategory && editCategory.name ? { ...editCategory, category: editCategory.category?.id } : subcategoryInitialValues;
 
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
   const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.Banners ? [editCategory?.Banners] : undefined);
@@ -58,14 +42,12 @@ const AddSubcategory = ({
 
   const [loading, setloading] = useState<boolean>(false);
 
-  const [editCategoryName, setEditCategoryName] = useState<ISUBCATEGORY_EDIT | undefined>(CategoryName);
+  const [editCategoryName, setEditCategoryName] = useState<ISUBCATEGORY_EDIT>(CategoryName);
   const session = useSession()
   const finalToken = session.data?.accessToken
-
+  const formikValuesRef = useRef<ISUBCATEGORY_EDIT>(editCategoryName);
   const [createSubCategory] = useMutation(CREATE_SUBCATEGORY);
   const [updateSubCategory] = useMutation(UPDATE_SUBCATEGORY);
-  // const dragImage = useRef<number | null>(null);
-  // const draggedOverImage = useRef<number | null>(null);
 
   const onSubmit = async (values: ISUBCATEGORY_EDIT, { resetForm }: FormikHelpers<ISUBCATEGORY_EDIT>) => {
     if (!values.category) {
@@ -76,10 +58,11 @@ const AddSubcategory = ({
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
-      const newValue = { ...values, posterImageUrl: posterImageUrl || {}, Banners: Banner, last_editedBy: session.data?.user.fullname, category: Number(values.category) };
+      const formValues = { ...values, posterImageUrl: posterImageUrl || {}, Banners: Banner, category: Number(values.category) };
 
       const updateFlag = editCategoryName ? true : false;
-      console.log(newValue, 'newValue')
+      // eslint-disable-next-line
+      const { updatedAt, createdAt, __typename, ...newValue } = formValues;
       if (updateFlag) {
         // Update Existing SubCategory
         await updateSubCategory({
@@ -90,12 +73,12 @@ const AddSubcategory = ({
             },
           },
           refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
-          //   context: {
-          //     headers: {
-          //       authorization: `Bearer ${finalToken}`,
+          context: {
+            headers: {
+              authorization: `Bearer ${finalToken}`,
 
-          //     },
-          //   },
+            },
+          },
         })
         showToast('success', 'Sub Category has been successfully updated!');
       } else {
@@ -105,12 +88,12 @@ const AddSubcategory = ({
             input: newValue,
           },
           refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
-          //   context: {
-          //     headers: {
-          //       authorization: `Bearer ${finalToken}`,
+          context: {
+            headers: {
+              authorization: `Bearer ${finalToken}`,
 
-          //     },
-          //   },
+            },
+          },
         });
         showToast('success', 'Sub Category has been successfully created!');
       }
@@ -139,160 +122,108 @@ const AddSubcategory = ({
     setEditCategoryName(CategoryName)
   }, [editCategory])
 
-  const handleCropClick = (imageUrl: string) => {
-    setImageSrc(imageUrl);
-    setIsCropModalVisible(true);
-  };
-
-  const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { width, height } = e.currentTarget;
-    const newCrop = centerAspectCrop(width, height, 16 / 9);
-    setCrop(newCrop);
-  };
-  const onCropComplete = (crop: Crop) => {
-    const image = imgRef.current;
-    if (!image || !crop.width || !crop.height) return;
-
-    const canvas = document.createElement('canvas');
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-
-    if (ctx) {
-      ctx.drawImage(
-        image,
-        crop.x * scaleX,
-        crop.y * scaleY,
-        crop.width * scaleX,
-        crop.height * scaleY,
-        0,
-        0,
-        crop.width,
-        crop.height
-      );
-    }
-
-    const base64Image = canvas.toDataURL('image/jpeg');
-    setCroppedImage(base64Image);
-  };
-  const handleCropModalOk = async () => {
-    if (croppedImage && imageSrc) {
-      try {
-        // Convert the cropped image (base64) to a File
-        const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
-
-        // Upload the cropped image to your backend or Cloudinary
-        const response = await uploadPhotosToBackend(file);
-        if (!response) return;
-
-        // Use the base URL from your environment variables
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-        const uploadedImageUrl = response[0].imageUrl;
-        // Append the base URL if needed
-        const newImageUrl = uploadedImageUrl.startsWith('http')
-          ? uploadedImageUrl
-          : `${baseUrl}${uploadedImageUrl}`;
-
-        const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
-
-        // First close the modal and reset croppedImage
-        setIsCropModalVisible(false);
-        setCroppedImage(null);
-
-        // Use a timeout to update states after the modal has closed
-        setTimeout(() => {
-          setposterimageUrl((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
-          );
-        }, 0);
-      } catch (error) {
-        showToast('error', 'Failed to upload cropped image');
-        return error
-      }
-    }
-  };
-
-  const base64ToFile = (base64: string, filename: string): File => {
-    const arr = base64.split(',');
-    const mimeMatch = arr[0].match(/:(.*?);/);
-    const mime = mimeMatch ? mimeMatch[1] : '';
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
-  };
-
-
-  const handleCropModalCancel = () => {
-    setIsCropModalVisible(false);
-    setCroppedImage(null);
-  };
-
-  const handleBack = (values: ISUBCATEGORY_EDIT) => {
-    const initialFormValues = editCategoryName || subcategoryInitialValues;
-
+  const hasUnsavedChanges = (): boolean => {
     let isPosterChanged: boolean;
     let isBannerChanged: boolean;
 
     if (editCategory) {
-      // Editing mode
+      const oldPoster = editCategory?.posterImageUrl;
+      const newPoster = posterimageUrl?.[0];
+
       isPosterChanged =
-        JSON.stringify(editCategory.posterImageUrl ? [editCategory.posterImageUrl] : undefined) !==
-        JSON.stringify(posterimageUrl);
+        !oldPoster || !newPoster
+          ? oldPoster !== newPoster
+          : oldPoster.public_id !== newPoster.public_id ||
+          (oldPoster.altText ?? '') !== (newPoster.altText ?? '');
+
+      const oldBanner = editCategory?.Banners;
+      const newBanner = BannerImageUrl?.[0];
 
       isBannerChanged =
-        JSON.stringify(editCategory.Banners ? [editCategory.Banners] : undefined) !==
-        JSON.stringify(BannerImageUrl);
+        !oldBanner || !newBanner
+          ? oldBanner !== newBanner
+          : oldBanner.public_id !== newBanner.public_id ||
+          (oldBanner.altText ?? '') !== (newBanner.altText ?? '');
     } else {
       // Adding mode (initially no images)
       isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
       isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
     }
 
-    const isFormChanged = JSON.stringify(initialFormValues) !== JSON.stringify({ ...values, category: values.category === '' ? values.category : Number(values.category) });
-    if (isPosterChanged || isBannerChanged || isFormChanged) {
+    const isFormChanged = JSON.stringify(editCategoryName) !== JSON.stringify({ ...formikValuesRef.current, category: formikValuesRef.current.category === '' ? formikValuesRef.current.category : Number(formikValuesRef.current.category) });
+    return (isPosterChanged || isBannerChanged || isFormChanged)
+  };
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges()) {
+        e.preventDefault();
+        e.returnValue = '';
+        return '';
+      }
+    };
+
+    const handlePopState = () => {
+      if (hasUnsavedChanges()) {
+        window.history.pushState(null, '', window.location.href);
+        Modal.confirm({
+          title: 'Unsaved Changes',
+          content: 'You have unsaved changes. Do you want to discard them?',
+          okText: 'Discard Changes',
+          cancelText: 'Cancel',
+          onOk: () => {
+            setMenuType("Sub Categories");
+          },
+        });
+      } else { setMenuType("Sub Categories"); }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+    window.history.pushState(null, '', window.location.href);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [editCategoryName, BannerImageUrl, posterimageUrl]);
+
+  const handleBack = () => {
+    if (hasUnsavedChanges()) {
       Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
+        title: 'Unsaved Changes',
+        content: 'You have unsaved changes. Do you want to discard them?',
+        okText: 'Discard Changes',
+        cancelText: 'Cancel',
         onOk: () => {
           setMenuType("Sub Categories");
         },
       });
       return;
     }
+
     setMenuType("Sub Categories");
-    return;
   };
 
 
   return (
 
     <Formik
-      initialValues={editCategoryName ? editCategoryName : subcategoryInitialValues}
+      initialValues={editCategoryName}
       enableReinitialize
       validationSchema={subcategoryValidationSchema}
       onSubmit={onSubmit}
 
     >
       {(formik) => {
+        formikValuesRef.current = formik.values
+
         return (
           <Form onSubmit={formik.handleSubmit}>
             <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
               <p
                 className="dashboard_primary_button"
-                onClick={() => handleBack(formik.values)}
+                onClick={handleBack}
               >
                 <IoMdArrowRoundBack /> Back
               </p>
@@ -301,12 +232,12 @@ const AddSubcategory = ({
                   {({ field, form }: import('formik').FieldProps) => (
                     <div className="flex gap-4 items-center border-r-2 px-2">
 
-                      {['DRAFT', 'PUBLISHED'].map((status) => {
+                      {['DRAFT', 'PUBLISHED'].map((status, index) => {
                         const isActive = field.value === status;
 
                         return (
                           <button
-                            key={status}
+                            key={index}
                             type="button"
                             onClick={() => form.setFieldValue('status', status)}
                             disabled={isActive}
@@ -327,18 +258,19 @@ const AddSubcategory = ({
                   type="submit"
                   className="dashboard_primary_button cursor-pointer"
                   disabled={loading}
+                  aria-label={undefined}
                 >
                   {loading ? "loading.." : 'Submit'}
                 </button>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-9 w-full rounded-sm border border-stroke p-4 bg-white dark:bg-black">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-9 w-full rounded-sm border border-stroke p-4 bg-white dark:bg-black/50 backdrop-blur-3xl">
               <div>
 
 
                 <div className="rounded-sm border border-stroke">
-                  <div className="border-b border-stroke py-4 px-2 ">
-                    <h3 className="font-medium  text-black dark:text-white">
+                  <div className="border-b border-stroke px-2 ">
+                    <h3 className="primary-label">
                       Add Poster Image
 
                     </h3>
@@ -366,7 +298,7 @@ const AddSubcategory = ({
 
                             </div>
                             <Image
-                              onClick={() => handleCropClick(item.imageUrl)}
+                              onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                               key={index}
                               className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
 
@@ -402,8 +334,8 @@ const AddSubcategory = ({
                 </div>
 
                 <div className="rounded-sm border mt-4 border-stroke dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke py-4 px-2 ">
-                    <h3 className="font-medium text-black dark:text-white">
+                  <div className="border-b border-stroke px-2 ">
+                    <h3 className="primary-label">
                       Add Banner Image
                     </h3>
                   </div>
@@ -452,7 +384,7 @@ const AddSubcategory = ({
                               <>
 
                                 <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
                                   key={index}
                                   className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
 
@@ -491,7 +423,7 @@ const AddSubcategory = ({
 
                 <div className="flex flex-col gap-4 md:py-6">
                   <div>
-                    <label className="mb-3 block py-1 px-2 text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label" aria-label='Sub Category Title'>
                       Sub Category Name
                     </label>
 
@@ -506,7 +438,7 @@ const AddSubcategory = ({
                   </div>
 
                   <div>
-                    <label className="mb-3 block py-1 px-2 text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label"  aria-label='Custom Url'>
                       Custom Url
                     </label>
 
@@ -522,7 +454,7 @@ const AddSubcategory = ({
 
                   <div>
 
-                    <label className="mb-3 block py-1 px-2 text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label"  aria-label='Select Parent Category'>
                       Select Parent Category (atleat one)
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -537,8 +469,8 @@ const AddSubcategory = ({
                           Select Category
                         </option>
 
-                        {categoriesList.map((category) => (
-                          <option key={category.id} value={category.id}>
+                        {categoriesList.map((category, index) => (
+                          <option key={index} value={category.id}>
                             {category.name}
                           </option>
                         ))}
@@ -550,21 +482,21 @@ const AddSubcategory = ({
                   <Field name="status">
                     {({ field, form }: import('formik').FieldProps) => (
                       <div className="flex gap-4 items-center my-4">
-                        <label className="font-semibold">Sub Category Status:</label>
+                        <label className="primary-label">Sub Category Status:</label>
 
-                        {['DRAFT', 'PUBLISHED'].map((status) => {
+                        {['DRAFT', 'PUBLISHED'].map((status, index) => {
                           const isActive = field.value === status;
 
                           return (
                             <button
-                              key={status}
+                              key={index}
                               type="button"
                               onClick={() => form.setFieldValue('status', status)}
                               disabled={isActive}
-                              className={`px-4 py-2 rounded-md text-sm border
+                              className={`px-4 py-2 rounded-md text-sm drop-shadow-md
                                   ${isActive
                                   ? 'dashboard_primary_button cursor-not-allowed'
-                                  : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                  : 'bg-white text-black cursor-pointer'
                                 }`}
                             >
                               {status}
@@ -580,7 +512,7 @@ const AddSubcategory = ({
               </div>
               <div>
                 <div>
-                  <label className="mb-3 block pb-2 pt-3 px-2 text-sm font-medium text-black dark:text-white">
+                  <label className="primary-label">
                     Category Description
                   </label>
                   <TinyMCEEditor name="description" />
@@ -593,7 +525,7 @@ const AddSubcategory = ({
 
                 <div className="flex gap-4 mt-4">
                   <div className="w-2/4">
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Meta Title
                     </label>
                     <Field
@@ -608,7 +540,7 @@ const AddSubcategory = ({
                     )}
                   </div>
                   <div className="w-2/4">
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Canonical Tag
                     </label>
                     <Field
@@ -625,7 +557,7 @@ const AddSubcategory = ({
                 </div>
 
                 <div className="mt-4">
-                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                  <label className="primary-label">
                     Meta Description
                   </label>
                   <Field
@@ -641,7 +573,7 @@ const AddSubcategory = ({
                 </div>
                 <div className="flex gap-4 mt-2">
                   <div className="w-full">
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <label className="primary-label">
                       Short Description
                     </label>
                     <Field
@@ -664,6 +596,7 @@ const AddSubcategory = ({
                 type="submit"
                 className="mt-4 dashboard_primary_button not-[]:cursor-pointer"
                 disabled={loading}
+                aria-label="Submit Subcategory"
               >
                 {loading ? "loading.." : 'Submit'}
               </button>
@@ -671,8 +604,8 @@ const AddSubcategory = ({
             <Modal
               title="Crop Image"
               open={isCropModalVisible}
-              onOk={handleCropModalOk}
-              onCancel={handleCropModalCancel}
+              onOk={() => handleCropModalOk(croppedImage, imageSrc, setIsCropModalVisible, setCroppedImage, setposterimageUrl, setBannerImageUrl)}
+              onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
               width={500}
               height={400}
             >
@@ -680,7 +613,7 @@ const AddSubcategory = ({
                 <ReactCrop
                   crop={crop}
                   onChange={(newCrop) => setCrop(newCrop)}
-                  onComplete={onCropComplete}
+                  onComplete={() => onCropComplete(crop, imgRef, setCroppedImage)}
                 >
                   <Image
                     width={500}
@@ -689,7 +622,7 @@ const AddSubcategory = ({
                     src={imageSrc}
                     alt="Crop me"
                     style={{ maxWidth: '100%' }}
-                    onLoad={onImageLoad}
+                    onLoad={(e) => onImageLoad(e, setCrop)}
                     crossOrigin="anonymous"
                   />
                 </ReactCrop>

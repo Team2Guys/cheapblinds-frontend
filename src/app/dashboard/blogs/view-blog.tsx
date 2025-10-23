@@ -11,6 +11,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import { IBlog } from 'types/general';
 import { DateFormatHandler } from 'utils/helperFunctions';
+import { getPermission } from 'utils/permissionHandlers';
 
 interface ViewBlogProps {
   setselecteMenu: React.Dispatch<SetStateAction<string>>;
@@ -21,16 +22,16 @@ interface ViewBlogProps {
 const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog }) => {
   const [allBlogs, setAllBlogs] = useState<IBlog[]>(blogs);
   const [searchTerm, setSearchTerm] = useState('');
-   const session = useSession()
+  const session = useSession()
   const finalToken = session.data?.accessToken
-  const [removeBlog, { loading }] = useMutation(REMOVE_BLOG);
+  const [removeBlog] = useMutation(REMOVE_BLOG);
 
   useEffect(() => {
     setAllBlogs(blogs);
   }, [blogs]);
-  const canAddProduct = true;
-  const canEditProduct = true;
-  const canDeleteProduct = true;
+  const canAddBlog = getPermission(session.data, "canAddBlog")
+  const canDeleteBlog = getPermission(session.data, "canDeleteBlog")
+  const canEditBlog = getPermission(session.data, "canEditBlog")
 
   const confirmDelete = (id: number | string) => {
     Swal.fire({
@@ -49,12 +50,14 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
 
   const handleDelete = async (id: number | string) => {
     try {
-      await removeBlog({ variables: { id: Number(id) },context: {
-            headers: {
-              authorization: `Bearer ${finalToken}`,
-            },
-            credentials: 'include',
-          }, });
+      await removeBlog({
+        variables: { id: Number(id) }, context: {
+          headers: {
+            authorization: `Bearer ${finalToken}`,
+          },
+          credentials: 'include',
+        },
+      });
       setAllBlogs((prev) => prev.filter((blog) => blog.id !== id));
       notification.success({
         message: 'Blog Deleted',
@@ -145,10 +148,11 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       key: 'edit',
       render: (record: IBlog) => (
         <LiaEdit
-          className={`text-primary ${canEditProduct ? 'cursor-pointer' : 'cursor-not-allowed text-slate-300'}`}
+          data-testid={`edit-btn-${record.id}`}
+          className={`text-black dark:text-white ${canEditBlog ? 'cursor-pointer transition duration-300 ease-in-out hover:scale-200' : 'cursor-not-allowed text-slate-300'}`}
           size={20}
           onClick={() => {
-            if (canEditProduct) {
+            if (canEditBlog) {
               setEditblog(record);
               setselecteMenu('Add Products');
             }
@@ -160,21 +164,17 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       title: 'Delete',
       key: 'delete',
       render: (record: IBlog) =>
-        loading ? (
-          'Deleting...'
-        ) : (
-          <RiDeleteBin6Line
-            className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : 'cursor-not-allowed text-slate-300'}`}
-            size={20}
-            onClick={() => {
-              if (canDeleteProduct) {
-                if (record.id !== undefined) {
-                  confirmDelete(record.id);
-                }
-              }
-            }}
-          />
-        ),
+        <button
+          data-testid={`delete-btn-${record.id}`}
+          onClick={() => canDeleteBlog && confirmDelete(record.id || '')}
+          disabled={!canDeleteBlog}
+          className={`transition duration-300 ease-in-out ${canDeleteBlog
+            ? "text-red-600 cursor-pointer hover:scale-200"
+            : "cursor-not-allowed text-slate-400"
+            }`}
+        >
+          <RiDeleteBin6Line size={20} />
+        </button>
     },
   ];
 
@@ -189,9 +189,9 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button
-          className={`py-2 px-4 rounded-md text-nowrap text-sm xs:text-base ${canAddProduct ? 'dashboard_primary_button text-white cursor-pointer' : 'bg-gray-400 text-white cursor-not-allowed'}`}
+          className={`py-2 px-4 rounded-md text-nowrap text-sm xs:text-base ${canAddBlog ? 'dashboard_primary_button text-white cursor-pointer' : 'bg-gray-400 text-white cursor-not-allowed'}`}
           onClick={() => {
-            if (canAddProduct) {
+            if (canAddBlog) {
               setselecteMenu('Add Products');
               setEditblog(undefined);
             }

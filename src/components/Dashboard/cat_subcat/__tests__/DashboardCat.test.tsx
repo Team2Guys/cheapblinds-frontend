@@ -10,21 +10,31 @@ import { REMOVE_CATEGORY } from '../../../../graphql/categories';
 import { vi } from 'vitest';
 import revalidateTag from 'components/ServerActons/ServerAction';
 
+// Partial mock for next-auth/react (SessionProvider + useSession)
+vi.mock('next-auth/react', async () => {
+  const actual = await vi.importActual<typeof import('next-auth/react')>('next-auth/react');
+  return {
+    __esModule: true,
+    ...actual,
+    useSession: vi.fn(() => ({
+      data: {
+        accessToken: 'mocked_token',
+        user: {
+          permissions: {
+            canDeleteCategory: true,
+            canAddCategory: true,
+            canEditCategory: true,
+          },
+        },
+      },
+    })),
+  };
+});
 
 vi.mock('components/ServerActons/ServerAction', () => ({
   __esModule: true,
   default: vi.fn(() => Promise.resolve()),
 }));
-
-describe('something', () => {
-  it('should call revalidateTag', async () => {
-    await revalidateTag('categories');
-    expect(revalidateTag).toHaveBeenCalledWith('categories');
-  });
-});
-
-
-
 
 // Fix for SweetAlert2 mocking
 vi.mock('sweetalert2', async () => {
@@ -38,8 +48,6 @@ vi.mock('sweetalert2', async () => {
     fire: vi.fn(() => Promise.resolve({ isConfirmed: true })),
   };
 });
-
-
 
 const mockCategories: Category[] = [
   {
@@ -104,7 +112,6 @@ describe('DashboardCat Component', () => {
 
     const input = screen.getByPlaceholderText('Search Category');
     fireEvent.change(input, { target: { value: 'Electronics' } });
-
     expect(await screen.findByText('Electronics')).toBeInTheDocument();
 
     fireEvent.change(input, { target: { value: 'Clothing' } });
@@ -145,36 +152,34 @@ describe('DashboardCat Component', () => {
     );
 
     const editIcon = await screen.findByLabelText('Edit Category');
-fireEvent.click(editIcon);
+    fireEvent.click(editIcon);
 
     expect(seteditCategory).toHaveBeenCalled();
     expect(setMenuType).toHaveBeenCalledWith('CategoryForm');
   });
 
-it('deletes a category on confirm', async () => {
-  render(
-    <MockedProvider mocks={mocks} addTypename={false}>
-      <DashboardCat
-        cetagories={mockCategories}
-        setMenuType={vi.fn()}
-        seteditCategory={vi.fn()}
-      />
-    </MockedProvider>
-  );
+  it('deletes a category on confirm', async () => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <DashboardCat
+          cetagories={mockCategories}
+          setMenuType={vi.fn()}
+          seteditCategory={vi.fn()}
+        />
+      </MockedProvider>
+    );
 
-  const deleteIcon = await screen.findByLabelText('Delete Category');
-  fireEvent.click(deleteIcon); // Assuming the second icon is delete
+    const deleteIcon = await screen.findByLabelText('Delete Category');
+    fireEvent.click(deleteIcon);
 
-  await waitFor(() => {
-    expect(Swal.fire).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(Swal.fire).toHaveBeenCalled();
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText('Electronics')).not.toBeInTheDocument();
+    });
+
+    expect(revalidateTag).toHaveBeenCalledWith('categories');
   });
-
-  // OPTIONAL: Wait for mutation effect — check DOM or console/log
-  await waitFor(() => {
-    // Replace this with checking success message or change in DOM
-    // e.g., category disappearing or notification triggering
-    expect(screen.queryByText('Electronics')).not.toBeInTheDocument();
-  });
-});
-
 });

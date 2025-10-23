@@ -54,7 +54,7 @@ export const authOptions: AuthOptions = {
             : null;
             //eslint-disable-next-line
         } catch (error:any)  {
-          console.log(error.networkError.result, 'error')
+          console.log(error?.networkError?.result, 'Login failed')
     throw new Error(error.message || "Login failed");
         }
       },

@@ -4,19 +4,16 @@ import React, { SetStateAction, useEffect, useState } from 'react';
 import { notification } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
-// import axios from 'axios';
 import { LiaEdit } from 'react-icons/lia';
 import revalidateTag from 'components/ServerActons/ServerAction';
-// import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 import { Category } from 'types/cat';
 import { useMutation } from '@apollo/client';
-// import { useSession } from 'next-auth/react';
 import { REMOVE_CATEGORY } from 'graphql/categories';
-import { DateFormatHandler } from 'utils/helperFunctions';
 import Table from 'components/ui/table';
-// import { getPermission } from 'utils/permissionHandlers';
-
+import { useSession } from 'next-auth/react';
+import { DateFormatHandler } from 'utils/helperFunctions';
+import { getPermission } from 'utils/permissionHandlers';
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
   seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -32,8 +29,8 @@ const DashboardCat = ({
   const [category, setCategory] = useState<Category[] | undefined>(cetagories);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [removeCategory] = useMutation(REMOVE_CATEGORY);
-  // const { data: session } = useSession()
-  // const finalToken = session?.accessToken
+  const { data: session } = useSession()
+  const finalToken = session?.accessToken
   useEffect(() => {
 
     setCategory(cetagories)
@@ -62,14 +59,11 @@ const DashboardCat = ({
     [];
 
 
-  // const canDeleteCategory = getPermission(session, 'canDeleteCategory');
-  // const canAddCategory = getPermission(session, 'canAddCategory');
-  // const canEditCategory = getPermission(session, 'canEditCategory');
-  const canDeleteCategory = true;
-  const canAddCategory = true;
-  const canEditCategory = true;
+  const canDeleteCategory = getPermission(session, 'canDeleteCategory');
+  const canAddCategory = getPermission(session, 'canAddCategory');
+  const canEditCategory = getPermission(session, 'canEditCategory');
 
-
+        console.log(session,'session')
 
   const confirmDelete = (key: string | number) => {
     Swal.fire({
@@ -92,12 +86,12 @@ const DashboardCat = ({
 
       await removeCategory({
         variables: { id: Number(key) },
-        // context: {
-        //   headers: {
-        //     authorization: `Bearer ${finalToken}`,
-        //   },
-        //   credentials: 'include',
-        // },
+        context: {
+          headers: {
+            authorization: `Bearer ${finalToken}`,
+          },
+          credentials: 'include',
+        },
       });
 
       setCategory((prev: Category[] | undefined) => (prev ? prev.filter((item) => item.id !== key) : []));
@@ -189,7 +183,7 @@ const columns = [
     render: (record: Category) => (
       <LiaEdit
         aria-label="Edit Category"
-        className={`${canEditCategory && 'text-black dark:text-white cursor-pointer'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+        className={`${canEditCategory && 'text-black dark:text-white cursor-pointer transition duration-300 ease-in-out hover:scale-200'} ${!canEditCategory && 'cursor-not-allowed text-slate-400'}`}
         size={20}
         onClick={() => {
           if (canEditCategory) handleEdit(record);
@@ -204,7 +198,7 @@ const columns = [
     render: (record: Category) => (
       <RiDeleteBin6Line
         aria-label="Delete Category"
-        className={`${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'}`}
+        className={`${canDeleteCategory && 'text-red-500 cursor-pointer dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-400'}`}
         size={20}
         onClick={() => {
           if (canDeleteCategory) {
@@ -228,7 +222,7 @@ const columns = [
         />
         <div>
           <p
-            className={`dashboard_primary_button ${canAddCategory && 'cursor-pointer'} lg:p-2 md:p-2 ${canAddCategory && ' text-white rounded-md '} flex justify-center  ${!canAddCategory && 'cursor-not-allowed '}`}
+            className={`${!canAddCategory ? 'cursor-not-allowed border-0 bg-black/60 dark:bg-primary/60' : 'cursor-pointer'} dashboard_primary_button`}
             onClick={() => {
               seteditCategory?.(undefined);
               if (canAddCategory) {

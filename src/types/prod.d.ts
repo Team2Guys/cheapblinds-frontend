@@ -103,10 +103,7 @@ interface CommonProductsTypes {
 
 
 export interface IProduct extends CommonProductsTypes {
-  type: 'product';
-  // Banners
-  stock?: string;
-  // Schema
+  type?: 'product';
   subcategory?: ISUBCATEGORY_EDIT
   status?:BlogStatus
 }

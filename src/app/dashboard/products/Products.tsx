@@ -36,7 +36,7 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
           setselecteMenu={setselecteMenu}
           editProduct={editProduct}
           setEditProduct={setEditProduct}
-          EditProductValue={editProduct &&(editProduct.name !== undefined ||editProduct.category !== undefined)? editProduct : undefined}
+          EditProductValue={editProduct &&(editProduct.name !== undefined || editProduct.category !== undefined) ? editProduct : undefined}
           categoriesList={categories}
           products={productsData}
         />

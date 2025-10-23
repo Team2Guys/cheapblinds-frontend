@@ -39,7 +39,7 @@ export interface EDIT_CATEGORY extends Category {
   posterImageUrl?: ProductImage
   subcategory?: ISUBCATEGORY_EDIT;
   status?:BlogStatus;
-
+  Products?: IProduct[]
 }
 
 export interface ISUBCATEGORY extends GlobalCommontypes {
@@ -52,8 +52,6 @@ export interface ISUBCATEGORY extends GlobalCommontypes {
   displayName?: string
   price?: number
   discountPrice?: number
-  colorName?: string
-  sizeName?: string
   seoSchema?: string;
 }
 

@@ -10,12 +10,12 @@
   }
 
   .dashboard_primary_button {
-    @apply px-4 py-2 rounded-md text-sm border bg-black text-white dark:bg-primary dark:border-0 border-black flex justify-center items-center gap-2 cursor-pointer w-fit;
+    @apply px-4 py-2 rounded-md text-sm border text-white dark:bg-primary bg-black dark:border-primary border-black flex justify-center items-center gap-2 cursor-pointer w-fit;
   }
 
   .dashboard_input,
   .primary-input {
-    @apply w-full rounded-lg border border-[#e5e7eb] bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-white dark:bg-black dark:text-white dark:focus:border-primary;
+    @apply w-full rounded-lg border border-[#e5e7eb] bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-white dark:bg-black/20 dark:text-white dark:focus:border-primary;
   }
 
   .input_container {
@@ -33,11 +33,11 @@
   .flex_between {
     @apply flex items-center justify-between;
   }
-  @layer components {
+
   .text-medium {
     @apply text-xl font-rubik font-medium;
   }
-  }
+
   .active {
     @apply text-white bg-black dark:bg-primary;
   }
@@ -46,7 +46,8 @@
     @apply text-2xl md:text-3xl lg:text-4xl font-rubik font-semibold;
   }
 
-  .border , .border-stroke {
+  .border,
+  .border-stroke {
     @apply border-[#e5e7eb] dark:border-white
   }
 }
@@ -79,7 +80,7 @@
 }
 
 body {
-  background: var(-- );
+  background: var(--);
   color: var(--foreground);
   font-family: var(--font-open-sans);
   font-size: 14px;
@@ -101,7 +102,19 @@ body {
   border-color: var(--primary);
 }
 
-#apexchartshtb0gf44i .apexcharts-svg, 
+#apexchartshtb0gf44i .apexcharts-svg,
 #apexchartsu1td0pj1 .apexcharts-svg {
   background-color: transparent !important;
+}
+
+.apexcharts-theme-dark .apexcharts-menu-icon svg,
+.apexcharts-theme-dark .apexcharts-pan-icon svg,
+.apexcharts-theme-dark .apexcharts-reset-icon svg,
+.apexcharts-theme-dark .apexcharts-selection-icon svg,
+.apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg,
+.apexcharts-theme-dark .apexcharts-zoom-icon svg,
+.apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+.apexcharts-theme-dark .apexcharts-zoomout-icon svg {
+  fill: var(--primary) !important;
+  stroke: none !important
 }

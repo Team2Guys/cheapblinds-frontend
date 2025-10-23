@@ -13,7 +13,7 @@ const Mainpage = ({blogs,subCategories}:{blogs:IBlog[],subCategories:ISUBCATEGOR
     <DefaultLayout>
       {selecteMenu == "All Blogs" ?
        <ViewBlog setselecteMenu={setselecteMenu} blogs={blogs} setEditblog={setEditblog}/> :
-       <AddBlogs setselecteMenu={setselecteMenu}  editblog={editblog} subCategories={subCategories}/>}
+       <AddBlogs setselecteMenu={setselecteMenu}  editblog={editblog && editblog} subCategories={subCategories}/>}
     </DefaultLayout>
   );
 };

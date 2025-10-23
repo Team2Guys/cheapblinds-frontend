@@ -35,7 +35,7 @@ const ChartTwo = ({ chartData }: { chartData: WEEKLYGRAPH }) => {
       type: 'bar',
       height: 335,
       stacked: true,
-      background: isDark ? '#000000' : '#ffffff',
+      background: isDark ? '#ffffff00' : '#ffffff',
       toolbar: { show: false },
       zoom: { enabled: false },
     },
@@ -67,14 +67,14 @@ const ChartTwo = ({ chartData }: { chartData: WEEKLYGRAPH }) => {
     xaxis: {
       categories: chartData?.categories || [],
       labels: {
-        style: { colors: isDark ? '#ffffff' : '#000000' },
+        style: { colors: isDark ? '#FFB803' : '#000000' },
       },
       axisBorder: { show: false },
       axisTicks: { show: false },
     },
     yaxis: {
       labels: {
-        style: { colors: isDark ? '#ffffff' : '#000000' },
+        style: { colors: isDark ? '#FFB803' : '#000000' },
       },
     },
     legend: {
@@ -84,11 +84,11 @@ const ChartTwo = ({ chartData }: { chartData: WEEKLYGRAPH }) => {
       fontWeight: 500,
       fontSize: '14px',
       labels: {
-        colors: isDark ? '#ffffff' : '#000000',
+        colors: isDark ? '#FFB803' : '#000000',
       },
     },
     grid: {
-      borderColor: isDark ? '#333' : '#e0e0e0',
+      borderColor: isDark ? '#FFB803' : '#e0e0e0',
     },
     fill: {
       opacity: 1,
@@ -96,8 +96,8 @@ const ChartTwo = ({ chartData }: { chartData: WEEKLYGRAPH }) => {
   };
 
   return (
-    <div className="col-span-12 rounded-xl border p-5 shadow xl:col-span-4 space-y-4 bg-white dark:bg-black">
-      <p className="font-semibold dark:text-white">Weekly Statistics</p>
+    <div className="col-span-12 rounded-xl border shadow-md shadow-black/10 dark:shadow-primary/30 dark:border-primary/30 p-5 xl:col-span-4 space-y-4 bg-white dark:bg-white/20 hover:shadow-lg hover:dark:shadow-primary/50 transition-all duration-400 hover:-translate-y-1">
+      <p className="font-semibold text-black dark:text-primary">Weekly Statistics</p>
 
       <div id="chartTwo">
         {chartData && (

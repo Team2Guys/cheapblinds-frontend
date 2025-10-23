@@ -12,17 +12,18 @@ import { DASHBOARD_VIEW_SUBCATEGORIES_PROPS } from 'types/PagesProps';
 import { ISUBCATEGORY } from 'types/cat';
 import { useMutation } from '@apollo/client';
 import { DateFormatHandler } from 'utils/helperFunctions';
-// import { getPermission } from 'utils/permissionHandlers';
-// import { useSession } from 'next-auth/react';
 import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from 'graphql/categories';
 import Table from 'components/ui/table';
+import { useSession } from 'next-auth/react';
+import { getPermission } from 'utils/permissionHandlers';
 const ViewSubcategries = ({
   setMenuType,
   seteditCategory,
   subCategories,
 }: DASHBOARD_VIEW_SUBCATEGORIES_PROPS) => {
   const [category, setCategory] = useState<ISUBCATEGORY[] | undefined>(subCategories);
-  // const { data: session } = useSession()
+  const session = useSession()
+  const finalToken = session.data?.accessToken
 
   useEffect(() => {
     setCategory(subCategories)
@@ -48,19 +49,10 @@ const ViewSubcategries = ({
 
 
 
-  // const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
   const [removeCategory] = useMutation(REMOVE_SUBCATEGORY);
-  // const canDeleteCategory = getPermission(session, 'canDeleteCategory');
-  // const canAddCategory = getPermission(session, 'canAddCategory');
-
-  // const canEditCategory = getPermission(session, "canEditCategory" );
-  const canDeleteCategory = true;
-  const canAddCategory = true;
-  const canEditCategory = true;
-  // const canEditCategory =
-  //   loggedInUser &&
-  //   (loggedInUser.role == 'Admin' ? loggedInUser.canEditCategory : true);
-
+  const canDeleteSubCategory = getPermission(session.data, 'canDeleteSubCategory');
+  const canAddSubCategory = getPermission(session.data, 'canAddSubCategory');
+  const canEditSubCategory = getPermission(session.data, "canEditSubCategory" );
 
 
   const confirmDelete = (key: number) => {
@@ -84,11 +76,11 @@ const ViewSubcategries = ({
     try {
       await removeCategory({
         variables: { id: Number(key) }, refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
-        // context: {
-        //   headers: {
-        //     authorization: `Bearer ${finalToken}`,
-        //   },
-        // },
+        context: {
+          headers: {
+            authorization: `Bearer ${finalToken}`,
+          },
+        },
       });
       setCategory((prev: ISUBCATEGORY[] | undefined) => prev ? prev.filter((item: ISUBCATEGORY) => item.id != key) : []);
       revalidateTag('subcategories');
@@ -167,14 +159,15 @@ const ViewSubcategries = ({
       title: 'Edited By',
       dataIndex: 'last_editedBy',
       key: 'last_editedBy',
-      width: 150
     },
     {
       title: 'Edit',
       key: 'Edit',
       render: (record: ISUBCATEGORY) => (
         <LiaEdit
-          className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+        aria-label='Edit Sub Category'
+          className={`cursor-pointer ${canEditSubCategory && 'text-black dark:text-white transition duration-300 ease-in-out hover:scale-200'} ${!canEditSubCategory && 'cursor-not-allowed text-slate-300'}`}
+
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -185,12 +178,13 @@ const ViewSubcategries = ({
       key: 'action',
       render: (record: ISUBCATEGORY) => (
         <RiDeleteBin6Line
-          className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
+        aria-label='Delete Sub Category'
+          className={`cursor-pointer ${canDeleteSubCategory && 'text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200'} ${!canDeleteSubCategory && 'cursor-not-allowed text-slate-300'
             }`}
           // className="cursor-pointer text-red-500"
           size={20}
           onClick={() => {
-            if (canDeleteCategory) {
+            if (canDeleteSubCategory) {
               confirmDelete(Number(record?.id));
             }
           }}
@@ -211,13 +205,13 @@ const ViewSubcategries = ({
         />
         <div>
           <div
-            className={`${canAddCategory && 'cursor-pointer'}  p-2 ${canAddCategory &&
+            className={`${canAddSubCategory && 'cursor-pointer'}  p-2 ${canAddSubCategory &&
               'dashboard_primary_button text-white rounded-md  '
-              } flex justify-center ${!canAddCategory && 'cursor-not-allowed '
+              } flex justify-center ${!canAddSubCategory && 'cursor-not-allowed '
               } hover:bg-black`}
             onClick={() => {
               seteditCategory?.(undefined);
-              if (canAddCategory) {
+              if (canAddSubCategory) {
                 setMenuType('Add Sub Categories');
               }
             }}

@@ -4,35 +4,13 @@ import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import { Admin, AdminValues } from 'types/type';
-const Alladmins =dynamic(()=>import("components/Dashboard/SuperAdmin/AllAdmin/Alladmins"))
-const CreateAdmin =dynamic(()=>import("components/Dashboard/SuperAdmin/CreateAdmin/CreateAdmin"))
+const Alladmins = dynamic(() => import("components/Dashboard/SuperAdmin/AllAdmin/Alladmins"))
+const CreateAdmin = dynamic(() => import("components/Dashboard/SuperAdmin/CreateAdmin/CreateAdmin"))
 
-const Admins = ({admins}:{admins:Admin[]}) => {
+const Admins = ({ admins }: { admins: Admin[] }) => {
 
   const [editAdmin, setEditAdmin] = useState<AdminValues | undefined>();
   const [selecteMenu, setselecteMenu] = useState<string | null | undefined>('AllAdmin');
-
-
-  const EditInitialValues: AdminValues = {
-    id:editAdmin?.id ,
-    fullname: editAdmin?.fullname,
-    email: editAdmin?.email,
-    password: editAdmin?.password,
-    canAddCategory: editAdmin?.canAddCategory,
-    canAddProduct: editAdmin?.canAddProduct,
-    canCheckProfit: editAdmin?.canCheckProfit,
-    canCheckRevenue: editAdmin?.canCheckRevenue,
-    canCheckVisitors: editAdmin?.canCheckVisitors,
-    canDeleteCategory: editAdmin?.canDeleteCategory,
-    canDeleteProduct: editAdmin?.canDeleteProduct,
-    canEditCategory: editAdmin?.canEditCategory,
-    canEditProduct: editAdmin?.canEditProduct,
-    canVeiwAdmins: editAdmin?.canVeiwAdmins,
-    canViewSales: editAdmin?.canViewSales,
-    canVeiwTotalCategories: editAdmin?.canVeiwTotalproducts,
-    canVeiwTotalproducts: editAdmin?.canVeiwTotalproducts,
-    canViewUsers: editAdmin?.canViewUsers,
-  };
 
   return (
     <DefaultLayout>
@@ -49,9 +27,9 @@ const Admins = ({admins}:{admins:Admin[]}) => {
               setselecteMenu={setselecteMenu}
               EditInitialValues={editAdmin}
               setEditProduct={setEditAdmin}
-              EditAdminValue={EditInitialValues &&(EditInitialValues.fullname !== undefined ||
-                  EditInitialValues.email !== undefined)
-                  ? EditInitialValues
+              EditAdminValue={editAdmin &&(editAdmin.fullname !== undefined ||
+                  editAdmin.email !== undefined)
+                  ? editAdmin
                   : undefined
               }
             />

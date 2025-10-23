@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaEdit } from 'react-icons/fa';
-import Table, { ColumnType } from 'antd/es/table';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import { Admin } from 'types/type';
 import { useMutation } from '@apollo/client';
 import { REMOVE_ADMIN } from 'graphql/mutations';
+import Table from 'components/ui/table';
 
 function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-disable-line
   const [delLoading, setDelLoading] = useState<string | number | undefined>(undefined);
@@ -27,7 +27,7 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
 
 
 
-  const columns: Array<ColumnType<Admin>> = [
+  const columns = [
     {
       title: 'Name',
       dataIndex: 'fullname',
@@ -42,7 +42,7 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
       title: 'Can Add Product',
       dataIndex: 'canAddProduct',
       key: 'canAddProduct',
-      render: (text: string, record: Admin) => (
+      render: (record: Admin) => (
         <span>{record.canAddProduct ? 'Yes' : 'No'}</span>
       ),
     },
@@ -50,7 +50,7 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
       title: 'Can Delete Product',
       dataIndex: 'canDeleteProduct',
       key: 'canDeleteProduct',
-      render: (text: string, record: Admin) => (
+      render: (record: Admin) => (
         <span>{record.canDeleteProduct ? 'Yes' : 'No'}</span>
       ),
     },
@@ -58,7 +58,7 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
       title: 'Can Add Category',
       dataIndex: 'canAddCategory',
       key: 'canAddCategory',
-      render: (text: string, record: Admin) => (
+      render: (record: Admin) => (
         <span>{record.canAddCategory ? 'Yes' : 'No'}</span>
       ),
     },
@@ -66,7 +66,7 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
       title: 'Can View Product',
       dataIndex: 'canDeleteCategory',
       key: 'canDeleteCategory',
-      render: (text: string, record: Admin) => (
+      render: (record: Admin) => (
         <span>{record.canDeleteCategory ? 'Yes' : 'No'}</span>
       ),
     },
@@ -74,7 +74,7 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
       title: 'Can view Profit',
       dataIndex: 'canCheckProfit',
       key: 'canCheckProfit',
-      render: (text: string, record: Admin) => (
+      render: (record: Admin) => (
         <span>{record.canCheckProfit ? 'Yes' : 'No'}</span>
       ),
     },
@@ -82,7 +82,7 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
       title: 'Can View Total user',
       dataIndex: 'canViewUsers',
       key: 'canViewUsers',
-      render: (text: string, record: Admin) => (
+      render: (record: Admin) => (
         <span>{record.canViewUsers ? 'Yes' : 'No'}</span>
       ),
     },
@@ -90,9 +90,9 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
     {
       title: 'Edit',
       key: 'edit',
-      render: (text: string, record: Admin) => (
+      render: (record: Admin) => (
         <FaEdit
-          className="cursor-pointer text-slate-500"
+          className="cursor-pointer transition duration-300 ease-in-out hover:scale-200 text-black dark:text-white"
           size={20}
           onClick={() => {
             setEditAdmin(record);
@@ -104,12 +104,12 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
     {
       title: 'Actions',
       key: 'actions',
-      render: (text: string, record: Admin) =>
+      render: (record: Admin) =>
         delLoading === record.id ? ( // Check if loading state matches current admin ID
           <p>loading...</p>
         ) : (
           <RiDeleteBin6Line
-            className="cursor-pointer text-red-500 dark:text-red-700"
+            className="cursor-pointer text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200"
             size={20}
             onClick={() => handleDelete(record?.id)}
           />
@@ -125,20 +125,14 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {//eslint-d
         <div>
           <button
             onClick={() => setselecteMenu('Add Admin')}
-            className="bg-primary text-white"
+            className="dashboard_primary_button"
           >
             Add new Admin
           </button>
         </div>
       </div>
       {AllAdmins && AllAdmins.length > 0 ? (
-        <Table
-          className="overflow-auto dark:border-strokedark dark:bg-boxdark"
-          dataSource={AllAdmins}
-          columns={columns}
-          pagination={false}
-          rowKey="id"
-        />
+         <Table<Admin>  data={AllAdmins} columns={columns} rowKey="id" />
       ) : (
         <div className="flex justify-center"> No Admin found</div>
       )}
