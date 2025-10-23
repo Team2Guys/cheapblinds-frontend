@@ -55,10 +55,9 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --primary: #FFB803;
+  --primary: #FEB907;
   --primary-light:#FEB9071F;
   --secondary: #EFEFEF;
-  --gray: #606060;
 }
 
 @theme inline {
@@ -67,7 +66,6 @@
   --color-primary: var(--primary);
   --color-primary-light: var(--primary-light);
   --color-secondary: var(--secondary);
-  --color-gray: var(--gray);
   --font-open_Sans: var(--font-open-sans);
   --font-rubik: var(--font-rubik);
 }
