@@ -1,11 +1,12 @@
+import ContactBanner from "components/Home/contactbanner";
+import OrderSample from "components/Home/ordersample";
 
 export default function Home() {
   return (
-
-    <div className="testing flex gap-2 border border-gray-500">
-      
-      testing
-    </div>
+    <>
+    <OrderSample/>
+    <ContactBanner/>
+    </>
 
   );
 }
