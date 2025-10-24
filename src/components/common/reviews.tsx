@@ -9,12 +9,14 @@ const Reviews = () => {
         <span className="font-bold text-base">Excellent</span>
         <div className="flex gap-1 items-center">
           {[...Array(5)].map((_, index) => (
-            <div className="bg-white p-0.5" key={index}>
-            <IoStarSharp className="text-lg text-primary" />
+            <div className="bg-white p-0.5" key={index} data-testid="review-star">
+              <IoStarSharp className="text-lg text-primary" />
             </div>
           ))}
         </div>
-        <span className="hidden md:block">4.7 out of 5 based on 84,290 reviews</span>
+        <span className="hidden md:block">
+          4.7 out of 5 based on 84,290 reviews
+        </span>
       </div>
     </div>
   );

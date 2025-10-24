@@ -1,19 +1,20 @@
 import { render, screen } from "@testing-library/react";
 import Herobanner from "../hero-banner";
 import React from "react";
+import { vi } from "vitest";
 
-// ✅ Fix 1: avoid `any` by typing mock props properly
+// ✅ Strongly type mock props
 interface MockImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   alt: string;
   src: string;
 }
 
-// ✅ Mock Next.js Image safely
-jest.mock("next/image", () => ({
+// ✅ Use vi.mock instead of jest.mock (Vitest)
+vi.mock("next/image", () => ({
   __esModule: true,
-  default: ({ alt, ...props }: MockImageProps) => (
+  default: ({ alt, src, ...props }: MockImageProps) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img alt={alt} {...props} />
+    <img alt={alt} src={src} {...props} />
   ),
 }));
 
@@ -31,9 +32,10 @@ describe("Herobanner Component", () => {
       />
     );
 
-    const desktopImg = screen.getByAltText("hero-banner") as HTMLImageElement;
-    expect(desktopImg).toBeInTheDocument();
-    expect(desktopImg.getAttribute("src")).toContain(desktopImage);
+    const images = screen.getAllByAltText("hero-banner");
+    expect(images).toHaveLength(2);
+    expect(images[0].getAttribute("src")).toContain(desktopImage);
+    expect(images[1].getAttribute("src")).toContain(mobileImage);
   });
 
   it("applies responsive height classes when isHome is true", () => {

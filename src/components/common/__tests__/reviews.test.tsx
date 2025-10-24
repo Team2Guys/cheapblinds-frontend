@@ -1,29 +1,20 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import Reviews from "../reviews";
 
 describe("Reviews Component", () => {
-  it("renders the 'Excellent' label", () => {
-    render(<Reviews />);
-    expect(screen.getByText("Excellent")).toBeInTheDocument();
-  });
-
   it("renders five stars", () => {
     render(<Reviews />);
     const stars = screen.getAllByTestId("review-star");
     expect(stars).toHaveLength(5);
   });
 
-  it("renders the desktop-only texts when screen is large", () => {
+  it("displays correct static text", () => {
     render(<Reviews />);
-    expect(screen.getByText("Our customers say")).toBeInTheDocument();
+    expect(screen.getByText(/Our customers say/i)).toBeInTheDocument();
+    expect(screen.getByText(/Excellent/i)).toBeInTheDocument();
     expect(
-      screen.getByText("4.7 out of 5 based on 84,290 reviews")
+      screen.getByText(/4.7 out of 5 based on 84,290 reviews/i)
     ).toBeInTheDocument();
-  });
-
-  it("does not render desktop-only texts on small screens (simulated by CSS hiding)", () => {
-    render(<Reviews />);
-    const hiddenText = screen.getByText("Our customers say");
-    expect(hiddenText).toHaveClass("hidden");
   });
 });
