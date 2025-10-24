@@ -1,20 +1,15 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { ModalProps } from "types/Header";
 
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-  className?: string;
-}
 
-const Modal: React.FC<ModalProps> = ({
+const Modal= ({
   isOpen,
   onClose,
   children,
   className,
-}) => {
+}:ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -11,7 +11,7 @@ import Link from 'next/link'
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-   const onClose = () => setOpen(false);
+  //  const onClose = () => setOpen(false);
   return (
     <>
     <div className='flex md:hidden justify-between items-center py-2 border-b border-[#0000001F] px-2 container mx-auto'>
@@ -43,11 +43,11 @@ const Header = () => {
       </div>
       <div>
         <UserIcons className='hidden md:flex'/>
-        <SearchBar className=' md:hidden'/>
+        <SearchBar className='md:hidden'/>
       </div>
     </div>
     <div className='py-2 bg-black text-white hidden md:block'>
-      <div className='container mx-auto flex items-center justify-between'>
+      <div className='container mx-auto flex items-center justify-between px-2'>
         <div className='mx-auto'>
         <Navbar />
         </div>

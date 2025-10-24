@@ -1,5 +1,5 @@
 
-import { FaFacebookF, FaPinterest } from 'react-icons/fa';
+import { FaFacebookF, FaPinterest, FaTiktok } from 'react-icons/fa';
 import { IoLogoInstagram } from 'react-icons/io';
 import { MenuItem, SocialLink } from 'types/Header';
 
@@ -15,9 +15,10 @@ import { MenuItem, SocialLink } from 'types/Header';
   ];
 
 export const socialLinks: SocialLink[] = [
-  {id:1, href: 'https://facebook.com', Icon: FaFacebookF },
-  {id:2, href: 'https://pinterest.com', Icon: FaPinterest },
-  {id:3, href: 'https://instagram.com', Icon: IoLogoInstagram },
+  {id:1, href: 'https://www.facebook.com/cheapblindsuae/', Icon: FaFacebookF },
+  {id:2, href: 'https://www.pinterest.com/cheapblindsuae/', Icon: FaPinterest },
+  {id:3, href: 'https://www.instagram.com/cheapblindsuae/', Icon: IoLogoInstagram },
+  // {id:4, href: 'https://www.tiktok.com/@cheapblindsuae', Icon: FaTiktok  },
 ];
 
 export const menuItems: MenuItem[] = [
