@@ -14,7 +14,6 @@ const Navbar = ({className}:{className?:string}) => {
       <ul className="flex gap-2 lg:gap-6 items-center px-2 lg:px-8 py-3 text-sm font-medium">
         {menuItems.map((item, index) => {
           const hasSubmenu = !!item.submenu && item.submenu.length > 0;
-
           return (
             <li
               key={index}

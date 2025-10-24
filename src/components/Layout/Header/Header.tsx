@@ -1,23 +1,41 @@
 "use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import SearchBar from './Search'
 import UserIcons from './user-icons'
 import Navbar from './Navbar'
 import SocialLink from './social'
 import { FaBars } from 'react-icons/fa6'
+import Drawer from 'components/ui/Drawer'
+import Link from 'next/link'
 
 const Header = () => {
+  const [open, setOpen] = useState(false);
+   const onClose = () => setOpen(false);
   return (
     <>
-    <div className='flex md:hidden justify-between items-center py-2 border-b px-2 container mx-auto'>
+    <div className='flex md:hidden justify-between items-center py-2 border-b border-[#0000001F] px-2 container mx-auto'>
       <SocialLink/>
       <UserIcons/>
     </div>
     <div className='container mx-auto flex items-center justify-between w-full py-2 px-2'>
       <div>
         <Image className='h-auto hidden md:block' src="/assets/images/navbar/logo.png" priority height={100} width={150} alt='logo'/>
-        <FaBars className='block md:hidden' size={20} />
+        <div className="block md:hidden">
+          <Drawer
+            open={open}
+            onOpen={() => setOpen(true)}
+            onClose={() => setOpen(false)}
+            width={300}
+            title={ <FaBars className='block md:hidden' size={20} />}
+            content={
+              <>
+              asd
+              </>
+        
+            }
+          />
+        </div>
       </div>
       <div className='md:w-4/12 lg:w-6/12 '>
         <SearchBar className='hidden md:flex'/>
