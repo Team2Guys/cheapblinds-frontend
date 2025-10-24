@@ -25,3 +25,62 @@ export const infoItems = [
       text: "Free Next Day Delivery",
     },
   ];
+export const chooseblinds = [
+  {
+    title: 'Roller Blinds',
+    description: 'Blackout Roller Blinds',
+    price: '₫299.25',
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    title: 'Roman Blinds',
+    description: 'Blackout Roman Blinds',
+    price: '₫299.25',
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    title: 'Roller Blinds',
+    description: 'Blackout Roller Blinds',
+    price: '₫299.25',
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    title: 'Roman Blinds',
+    description: 'Blackout Roman Blinds',
+    price: '₫299.25',
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    title: 'Roller Blinds',
+    description: 'Blackout Roller Blinds',
+    price: '₫299.25',
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    title: 'Roman Blinds',
+    description: 'Blackout Roman Blinds',
+    price: '₫299.25',
+    image: '/assets/images/bin/product.png',
+  },
+];
+
+export const chooseimage = [
+  {
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    image: '/assets/images/bin/product.png',
+  },
+  {
+    image: '/assets/images/bin/product.png',
+  },
+];

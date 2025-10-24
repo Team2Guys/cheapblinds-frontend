@@ -5,17 +5,17 @@ const Herobanner = ({
   desktopImage,
   mobileImage,
   isHome = false,
+  className,
   alt = "hero-banner",
 }:HerobannerProps) => {
   return (
-    <div
-      className={`relative w-full overflow-hidden ${ isHome ? "h-[260px] sm:h-[300px] md:h-[400px] xl:h-[512px] 2xl:h-[600px]": "h-[300px]" }`}>
+    <div className={`relative w-full overflow-hidden  ${isHome? "h-[260px] sm:h-[300px] md:h-[400px] xl:h-[512px] 2xl:h-[600px]": className? className: "h-[300px]"}`}>
       <Image
         src={desktopImage}
         alt={alt}
         fill
         priority
-        className={`hidden sm:block`}
+         className={`${mobileImage ? "hidden sm:block" : "block"}`}
       />
       {mobileImage && (
         <Image
