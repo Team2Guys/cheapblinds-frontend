@@ -1,4 +1,4 @@
-import ContactForm from 'components/contactform'
+import ContactForm from 'components/Home/contactform'
 import Phone from 'components/svg/phone'
 import Image from 'next/image'
 import Link from 'next/link'
