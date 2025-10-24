@@ -1,4 +1,3 @@
-import Modal from "components/ui/modal";
 import React from "react";
 import { IoSearch } from "react-icons/io5";
 
@@ -13,10 +12,10 @@ const SearchBar = ({ className }: { className?: string }) => {
           placeholder="Search"
         />
       </div>
-        <button className="md:hidden p-2">
+      <button className="md:hidden p-2">
         <IoSearch size={25} />
       </button>
-  
+
     </div>
   );
 };

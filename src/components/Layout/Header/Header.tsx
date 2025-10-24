@@ -7,11 +7,9 @@ import Navbar from './Navbar'
 import SocialLink from './social'
 import { FaBars } from 'react-icons/fa6'
 import Drawer from 'components/ui/Drawer'
-import Link from 'next/link'
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-   const onClose = () => setOpen(false);
   return (
     <>
     <div className='flex md:hidden justify-between items-center py-2 border-b border-[#0000001F] px-2 container mx-auto'>
