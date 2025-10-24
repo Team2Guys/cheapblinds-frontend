@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import '@ant-design/v5-patch-for-react-19';
 import { usePathname } from 'next/navigation';
 import Header from './Layout/Header/Header';
+import Footer from './footer/Footer';
 
 
 const PathnameWrapper = ({ children }: { children: ReactNode }) => {
@@ -24,12 +25,11 @@ const PathnameWrapper = ({ children }: { children: ReactNode }) => {
    {
       withoutHeaderPages.includes(pathname)  || pathname.split('/').includes('dashboard') ? null : 
       <Header/>
-      // <Header />
       }
-        {children}
-      {/* {pathname !=="/" && (withoutHeaderPages.includes(pathname) || pathname.split('/').includes('dashboard')) ? null  : 
+      {children}
+      {pathname !=="/" && (withoutHeaderPages.includes(pathname) || pathname.split('/').includes('dashboard')) ? null  : 
       <Footer /> 
-      } */}
+      }
       </ApolloProvider>
     </SessionProvider>
 

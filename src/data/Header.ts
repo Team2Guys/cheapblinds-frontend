@@ -1,5 +1,5 @@
 
-import { FaFacebookF, FaPinterest, FaTiktok } from 'react-icons/fa';
+import { FaFacebookF, FaPinterest } from 'react-icons/fa';
 import { IoLogoInstagram } from 'react-icons/io';
 import { MenuItem, SocialLink } from 'types/Header';
 

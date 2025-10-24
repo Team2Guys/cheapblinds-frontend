@@ -20,26 +20,25 @@ export default function Home() {
       <Information />
       <ChildSafety />
       <OrderSection
-        reverse={false} 
+        reverse={false}
         image1="/assets/images/home/blindimg.webp"
         image2="/assets/images/home/zebraimg.webp"
         btnText="Explore More"
         btnLink="/category"
-        samplesection={false}
       />
       <div className="px-2">
         <Herobanner
-        desktopImage="/assets/images/home/free-order/freeorder.webp"
-        mobileImage="/assets/images/home/free-order/freeorder-mobile.webp"
-        className="container mx-auto h-[395px] md:h-[468px]"
-      />
+          desktopImage="/assets/images/home/free-order/freeorder.webp"
+          mobileImage="/assets/images/home/free-order/freeorder-mobile.webp"
+          className="container mx-auto h-[395px] md:h-[468px]"
+        />
         <Herobanner
-        desktopImage="/assets/images/home/payment.webp"
-        className="container mx-auto h-[202px] md:h-[455px] mt-10 md:mt-16"
-      />
+          desktopImage="/assets/images/home/payment.webp"
+          className="container mx-auto h-[202px] md:h-[455px] mt-10 md:mt-16"
+        />
       </div>
-      <RelatedProduct title="Browse Products" data={chooseblinds}/>
-       <OrderSection
+      <RelatedProduct title="Browse Products" data={chooseblinds} />
+      <OrderSection
         reverse
         image1="/assets/images/home/cheap.webp"
         image2="/assets/images/home/sample.webp"
@@ -48,7 +47,12 @@ export default function Home() {
         samplesection
       />
       <ContactBanner />
-      <RelatedProduct title="Jobs Done" description="You can prevent the use of cookies by changing the settings in your web browser so that (i) it does not accept new cookies, (ii) it informs you about new cookies, or (iii) it deletes all already received cookies. By deleting or disabling future cookies, your user experience may " data={chooseimage} isHide/>
+      <RelatedProduct
+        title="Jobs Done"
+        description="You can prevent the use of cookies by changing the settings in your web browser so that (i) it does not accept new cookies, (ii) it informs you about new cookies, or (iii) it deletes all already received cookies. By deleting or disabling future cookies, your user experience may "
+        data={chooseimage}
+        isHide
+      />
     </>
   );
 }

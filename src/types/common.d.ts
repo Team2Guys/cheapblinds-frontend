@@ -37,7 +37,7 @@ export interface SlickSliderProps {
     breakpoint: number;
     settings: {
       slidesToShow: number;
-      [key: string]: any;
+      [key: string]: string | number | boolean | undefined;
     };
   }[];
 }

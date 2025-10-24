@@ -1,12 +1,20 @@
 import { render, screen } from "@testing-library/react";
 import Herobanner from "../hero-banner";
+import React from "react";
 
+// ✅ Fix 1: avoid `any` by typing mock props properly
+interface MockImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  alt: string;
+  src: string;
+}
+
+// ✅ Mock Next.js Image safely
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: (props: any) => {
-    // Mock Next.js Image component
-    return <img {...props} alt={props.alt} />;
-  },
+  default: ({ alt, ...props }: MockImageProps) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img alt={alt} {...props} />
+  ),
 }));
 
 describe("Herobanner Component", () => {
@@ -18,7 +26,7 @@ describe("Herobanner Component", () => {
       <Herobanner
         desktopImage={desktopImage}
         mobileImage={mobileImage}
-        isHome={true}
+        isHome
         alt="hero-banner"
       />
     );
@@ -33,7 +41,7 @@ describe("Herobanner Component", () => {
       <Herobanner
         desktopImage={desktopImage}
         mobileImage={mobileImage}
-        isHome={true}
+        isHome
       />
     );
 

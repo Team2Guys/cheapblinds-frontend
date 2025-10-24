@@ -17,15 +17,15 @@ const Herobanner = ({
         priority
          className={`${mobileImage ? "hidden sm:block" : "block"}`}
       />
-      {mobileImage && (
+      {mobileImage && 
         <Image
           src={mobileImage}
           alt={alt}
           fill
           priority
-          className={`block sm:hidden`}
+          className="block sm:hidden"
         />
-      )}
+      }
     </div>
   );
 };

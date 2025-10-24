@@ -17,7 +17,7 @@ const SearchBar = ({ className }: { className?: string }) => {
           placeholder="Search"
         />
       </div>
-        <button className="md:hidden p-2" onClick={handleOpen} aria-label="Open search modal">
+      <button className="md:hidden p-2" onClick={handleOpen} aria-label="Open search modal">
         <IoSearch size={25} />
       </button>
         <Modal isOpen={isModalOpen} onClose={handleClose} >

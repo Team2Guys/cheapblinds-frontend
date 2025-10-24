@@ -1,33 +1,49 @@
 import { render, screen } from "@testing-library/react";
-import ContactBanner from "./contactbanner";
 import "@testing-library/jest-dom";
 import React from "react";
-import { vi } from "vitest"; 
+import { vi } from "vitest";
+import ContactBanner from "../contactbanner";
 
-// ✅ Mock Next.js modules
+// ✅ Proper type-safe mocks for Next.js modules
 vi.mock("next/image", () => ({
-  default: (props: any) => {
+  default: (props: Record<string, unknown>) => {
+    const { alt, ...rest } = props;
     // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} alt={props.alt || "mocked image"} />;
+    return (
+      <img
+        {...(rest as React.ImgHTMLAttributes<HTMLImageElement>)}
+        alt={(alt as string) || "mocked image"}
+      />
+    );
   },
 }));
 
 vi.mock("next/link", () => ({
-  default: ({ href, children }: any) => <a href={href}>{children}</a>,
+  default: ({
+    href,
+    children,
+  }: {
+    href: string;
+    children: React.ReactNode;
+  }) => <a href={href}>{children}</a>,
 }));
 
 // ✅ Mock custom components
 vi.mock("components/contactform", () => ({
-  default: () => <div data-testid="mocked-contact-form">Mocked Contact Form</div>,
+  default: () => (
+    <div data-testid="mocked-contact-form">Mocked Contact Form</div>
+  ),
 }));
 
 vi.mock("components/svg/phone", () => ({
-  default: (props: any) => <svg data-testid="mocked-phone-icon" {...props} />,
+  default: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg data-testid="mocked-phone-icon" {...props} />
+  ),
 }));
 
 describe("ContactBanner Component", () => {
   beforeAll(() => {
-    // ✅ Prevent scroll errors
+    // ✅ Prevent scroll errors in tests
     window.scrollTo = vi.fn();
   });
 
