@@ -1,13 +1,14 @@
 import ContactBanner from "components/Home/contactbanner";
-import OrderSample from "components/Home/ordersample";
+import Order from "components/Home/order";
+import OrderSection from "components/Home/ordersample";
+
 
 export default function Home() {
   return (
     <>
-    <OrderSample/>
+    <Order/>
     <ContactBanner/>
     </>
-
   );
 }
 
