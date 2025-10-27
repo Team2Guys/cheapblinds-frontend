@@ -10,10 +10,11 @@ const OrderSection = ({
   btnText,
   btnLink,
   samplesection,
+  className,
 }: OrderSectionProps) => {
   return (
     <div
-      className={`container mx-auto flex flex-col justify-center items-center mb-7 px-2 ${
+      className={`container mx-auto flex flex-col justify-center items-center mb-7 px-2 ${className} ${
         reverse ? "sm:flex-row-reverse" : "sm:flex-row"
       }`}
     >

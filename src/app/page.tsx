@@ -1,3 +1,4 @@
+import BlindFitting from "components/common/blind-fitting";
 import Herobanner from "components/common/hero-banner";
 import RelatedProduct from "components/common/related-product";
 import Reviews from "components/common/reviews";
@@ -5,7 +6,8 @@ import ChildSafety from "components/Home/child-safety";
 import ContactBanner from "components/Home/contactbanner";
 import Information from "components/Home/information";
 import OrderSection from "components/Home/ordersample";
-import { chooseblinds, chooseimage } from "data/home";
+import ShopSlider from "components/Home/shop-slider";
+import { chooseblinds, chooseimage, productData } from "data/home";
 import React from "react";
 
 export default function Home() {
@@ -19,6 +21,7 @@ export default function Home() {
       />
       <Information />
       <ChildSafety />
+      <ShopSlider productData={productData}/>
       <OrderSection
         reverse={false}
         image1="/assets/images/home/blindimg.webp"
@@ -39,6 +42,7 @@ export default function Home() {
       </div>
       <RelatedProduct title="Browse Products" data={chooseblinds} />
       <OrderSection
+        className="mt-10 md:mt-16"
         reverse
         image1="/assets/images/home/cheap.webp"
         image2="/assets/images/home/sample.webp"
@@ -46,12 +50,12 @@ export default function Home() {
         btnLink="/sample"
         samplesection
       />
+      <BlindFitting/>
       <ContactBanner />
       <RelatedProduct
         title="Jobs Done"
         description="You can prevent the use of cookies by changing the settings in your web browser so that (i) it does not accept new cookies, (ii) it informs you about new cookies, or (iii) it deletes all already received cookies. By deleting or disabling future cookies, your user experience may "
         data={chooseimage}
-        isHide
       />
     </>
   );

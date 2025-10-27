@@ -12,7 +12,7 @@ export interface OrderSectionProps {
   image2: string; 
   btnText: string; 
   btnLink: string; 
-  padding?: string;
+  className?: string;
   samplesection?: boolean;
 }
 
@@ -26,7 +26,6 @@ export interface RelatedProductItem {
 export interface RelatedProductProps {
   title: string;
   description?: string;
-  isHide?: boolean;
   data: RelatedProductItem[];
 }
 
