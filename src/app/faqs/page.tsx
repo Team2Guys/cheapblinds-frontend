@@ -1,6 +1,5 @@
 
 import Contact from 'components/contact/contact'
-import ContactForm from 'components/Home/contactform'
 
 import FaqSection from 'components/userComponent/faqs'
 import React from 'react'

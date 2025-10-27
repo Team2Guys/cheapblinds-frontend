@@ -8,7 +8,6 @@
   .primary-label {
     @apply mb-3 block text-sm font-medium mt-3 text-black dark:text-white;
   }
-
   .dashboard_primary_button {
     @apply px-4 py-2 rounded-md text-sm border text-white dark:bg-primary bg-black dark:border-primary border-black flex justify-center items-center gap-2 cursor-pointer w-fit;
   }
@@ -79,9 +78,7 @@
 
 body {
   background: var(--);
-  color: var(--foreground);
   font-family: var(--font-open-sans);
-  font-size: 14px;
 }
 
 

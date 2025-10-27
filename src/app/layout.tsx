@@ -31,15 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${openSans.variable} ${rubik.variable} antialiased`}
-      >
+      <body className={`${openSans.variable} ${rubik.variable} antialiased`}>
         <PathnameWrapper>
-
           <ToastContainer autoClose={1500} />
           {children}
-
-
         </PathnameWrapper>
       </body>
     </html>
