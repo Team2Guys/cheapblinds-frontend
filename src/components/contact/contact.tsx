@@ -16,7 +16,7 @@ const Contact = () => {
       <div className="container mx-auto text-black flex flex-col md:flex-row w-full  mb-10">
       {/* Contact */}
 
-      <div className="bg-secondary p-2 mx-4 md:w-[50%]">
+      <div className="bg-secondary p-2 mx-2 md:w-[50%]">
         <h2 className="font-rubik font-semibold text-[36px] leading-[1.2]">
           Let us know how to contact you
         </h2>
@@ -58,7 +58,7 @@ const Contact = () => {
       <div className="hidden md:block w-[3px] md:h-[800px] lg:h-[780px] xl:h-[730px] bg-gray-400"></div>
 
       {/* Contactform */}
-      <div className="p-2 mx-2 w-full md:w-[50%]">
+      <div className="p-2 w-full md:w-[50%]">
       <ContactForm/>
       </div>
       </div>

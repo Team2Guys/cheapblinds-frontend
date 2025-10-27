@@ -1,14 +1,7 @@
 "use client";
-
 import React, { useState } from "react";
+import { FormData } from "types/type";
 
-interface FormData {
-  contactType: string;
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
 
 const ContactForm = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -55,7 +48,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="mx-auto text-black pt-10 pb-5 font-open_Sans">
+    <div className="container mx-auto text-black pt-5 lg:pt-10 pb-5 font-open_Sans">
       <h2 className="text-lg font-semibold mb-2">Still Need Help?</h2>
       <p className="font-bold mb-6">Get in touch with us.</p>
 
@@ -129,7 +122,7 @@ const ContactForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="bg-black text-white w-full py-2 rounded-md hover:bg-gray-800 cursor-pointer text-[16px] font-semibold"
+          className="bg-black text-white w-full lg:w-[20%] py-2 rounded-md hover:bg-gray-800 cursor-pointer text-[16px] font-semibold"
         >
           Submit
         </button>

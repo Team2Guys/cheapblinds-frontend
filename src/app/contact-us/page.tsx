@@ -9,11 +9,13 @@ const page = () => {
   return (
     <>
     <Reviews/>
+    <div className='bg-primary-light'>
     <Herobanner
         desktopImage="/assets/images/callbanner.webp"
         mobileImage="/assets/images/callbannermobile.webp"
-        className='h-[300px] md:h-[350px]'
+        className='container mx-auto h-[300px] lg:h-[350px]'
     />
+    </div>
     <Contact/>
       <div className="px-2">
         <Herobanner

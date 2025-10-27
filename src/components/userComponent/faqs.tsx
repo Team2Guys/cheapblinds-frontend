@@ -22,7 +22,7 @@ const FaqSection: React.FC = () => {
 
   return (
     <section className="w-full pt-10 lg:pt-14 bg-white">
-      <div className="container mx-auto px-4 text-center text-black">
+      <div className="container mx-auto px-2 text-center text-black">
         <h2 className="text-2xl md:text-4xl font-semibold mb-5 font-rubik">Frequently Asked Questions</h2>
 
         {/* 🔹 Top Icons */}

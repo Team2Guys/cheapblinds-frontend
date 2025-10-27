@@ -7,7 +7,7 @@ import ContactForm from "./contactform";
 
 const ContactBanner = () => {
   return (
-    <div className="container mx-auto px-2 mt-10 md:mt-16">
+    <div className="container mx-auto mt-10 md:mt-16">
       <div className="flex flex-col sm:flex-row text-black bg-primary-light bg-no-repeat sm:gap-4 sm:bg-center bg-fill sm:bg-[url('/assets/images/phnperson.webp')] w-full px-5 pt-10 sm:pb-3">
         {/* left section */}
         <div className="flex flex-col w-full lg:w-[50%] xl:w-[60%] lg:p-10 mb-5">
