@@ -298,7 +298,6 @@ export interface FaqCategory {
   icon: React.ElementType;
   items: FaqItem[];
 }
-
 export interface AccordionItemProps {
   question: string;
   answer: string;

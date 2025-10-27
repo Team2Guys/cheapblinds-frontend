@@ -1,7 +1,7 @@
 "use client";
 import { AccordionItem } from "components/accordian";
 import { faqData } from "data/faqs";
-import React, { useState } from "react";
+import React, { useState} from "react";
 
 const FaqSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<{ [key: string]: number | null }>({});

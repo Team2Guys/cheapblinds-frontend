@@ -16,7 +16,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, 
     <div className="border border-yellow-100 bg-primary-light rounded-lg overflow-hidden transition-all">
       <button
         onClick={onToggle}
-        className="font-semibold font-open_Sans w-full flex justify-between items-center px-4 py-3 text-left  hover:bg-primary-light  transition-all text-[16px]"
+        className="font-semibold font-open_Sans w-full flex justify-between items-center px-4 py-3 text-left  hover:bg-primary-light  transition-all text-[16px] gap-2"
       >
         {question}
         <Chevron

@@ -55,7 +55,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="mx-auto text-black py-10 font-open_Sans">
+    <div className="mx-auto text-black pt-10 pb-5 font-open_Sans">
       <h2 className="text-lg font-semibold mb-2">Still Need Help?</h2>
       <p className="font-bold mb-6">Get in touch with us.</p>
 

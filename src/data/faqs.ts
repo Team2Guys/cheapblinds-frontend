@@ -64,3 +64,11 @@ export const faqData: FaqCategory[] = [
     ],
   },
 ];
+
+
+export const InstructionData = [ 
+      { question: "Our measuring and fitting guides help?", answer: "Typically 3–5 working days after confirmation." },
+      { question: "Our measuring and fitting guides help?", answer: "Yes, our measuring and fitting guides provide step-by-step instructions for all products." },
+      { question: "Our measuring and fitting guides help?", answer: "Yes, our measuring and fitting guides provide step-by-step instructions for all products." },
+      { question: "Our measuring and fitting guides help?", answer: "Yes, our measuring and fitting guides provide step-by-step instructions for all products." },
+];
