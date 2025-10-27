@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { RelatedProductProps } from "types/common";
 
-const RelatedProduct = ({ title,description,isHide, data }: RelatedProductProps) => {
+const RelatedProduct = ({ title,description, data }: RelatedProductProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const handleMouseDown = () => setIsDragging(false);
   const handleMouseMove = () => setIsDragging(true);
@@ -26,7 +26,7 @@ const RelatedProduct = ({ title,description,isHide, data }: RelatedProductProps)
                 <div className="relative w-full h-auto max-h-[350px] aspect-square">
                   <Image  src={array.image} alt={array.title ?? ""} fill className="h-auto"/>
                 </div>
-              {isHide && array.title &&
+              {array.title &&
                 <div className="py-3 space-y-1">
                   <h3>{array.title}</h3>
                   <p className="text-medium underline">{array.description}</p>
