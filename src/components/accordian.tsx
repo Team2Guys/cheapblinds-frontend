@@ -20,7 +20,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, 
       >
         {question}
         <Chevron
-          className={`w-5 h-5 transform transition-transform duration-300 ${
+          className={`w-5 h-5 transform transition-transform duration-300 cursor-pointer ${
             isOpen ? "rotate-180" : ""
           }`}
         />

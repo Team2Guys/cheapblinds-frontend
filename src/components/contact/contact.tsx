@@ -62,8 +62,8 @@ const Contact = () => {
       <div className="p-2 mx-4 w-[50%]">
       <ContactForm/>
       </div>
-    </div>
-    </>
+      </div>
+   </>
   );
 };
 

@@ -11,7 +11,7 @@ const Order = () => {
         btnText="Explore More"
         btnLink="/category"
         samplesection={false}
-      />
+       />
      <OrderSection
         reverse
         image1="/assets/Home/cheap.webp"
@@ -19,8 +19,8 @@ const Order = () => {
         btnText="Order Free Samples"
         btnLink="/sample"
         samplesection
-      />
-      </>
+     />
+    </>
   )
 }
 
