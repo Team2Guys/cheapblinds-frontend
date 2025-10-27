@@ -1,10 +1,18 @@
-'use client'
-import Image from 'next/image'
-import React, { useState } from 'react'
-import { FaCheck } from 'react-icons/fa'
-import { MdKeyboardArrowDown } from 'react-icons/md'
-import { RxCross2 } from 'react-icons/rx'
-import PriceSlider from './PriceSlider'
+'use client';
+import Image from 'next/image';
+import { useState, useRef } from 'react';
+import { FaCheck } from 'react-icons/fa';
+import PriceSlider from './PriceSlider';
+import Accordion from 'components/ui/Accordion';
+
+type SectionKeys =
+    | "type"
+    | "colour"
+    | "width"
+    | "pattern"
+    | "composition"
+    | "price";
+
 
 const Filters = () => {
     const [selectedPattern, setSelectedPattern] = useState<string[]>([]);
@@ -12,17 +20,39 @@ const Filters = () => {
     const [selectedWidth, setSelectedWidth] = useState<string[]>([]);
     const [selectedType, setSelectedType] = useState<string[]>([]);
 
+    const [openSections, setOpenSections] = useState<Record<SectionKeys, boolean>>({
+        type: true,
+        colour: true,
+        width: true,
+        pattern: true,
+        composition: true,
+        price: true,
+    });
+
+    const contentRefs: any = {
+        type: useRef(null),
+        colour: useRef(null),
+        width: useRef(null),
+        pattern: useRef(null),
+        composition: useRef(null),
+        price: useRef(null),
+    };
+
+    const toggleSection = (section: SectionKeys) => {
+        setOpenSections((prev) => ({
+            ...prev,
+            [section]: !prev[section],
+        }));
+    };
+
     const toggleSelection = <T,>(
         value: T,
         setter: React.Dispatch<React.SetStateAction<T[]>>,
         state: T[]
     ) => {
-        if (state.includes(value)) {
-            setter(state.filter((item) => item !== value));
-        } else {
-            setter([...state, value]);
-        }
+        setter(state.includes(value) ? state.filter((i) => i !== value) : [...state, value]);
     };
+
     const patternOptions = ["Flowers", "Geometric", "Plains & Textures"];
     const compositionOptions = ["Polyester", "Polyester Mix"];
     const widthOptions = [
@@ -30,34 +60,26 @@ const Filters = () => {
         "Up To 250cm Wide (736)",
         "Up To 280cm Wide (624)",
     ];
-
     const typeOptions = ["Blackout", "Visible", "Dim-Out"];
-    return (
-        <div className='flex flex-col gap-6 pb-8'>
-            <div>
-                <div className='flex items-center w-full border-b border-[#0000003D] gap-4 px-2'>
-                    <Image src='/assets/images/category/filter-lighting.png' alt='image' width={39} height={48} />
-                    <p>Express delivery</p>
-                </div>
-                <h2 className='font-rubik font-medium text-xl py-3'>Active filters</h2>
-                <div className='flex flex-wrap items-center gap-3'>
-                    <div className='relative'>
-                        <span className='w-4 h-4 flex justify-center items-center bg-primary rounded-full text-white absolute -top-2 -right-2 text-xs'><RxCross2 /></span>
-                        <button className='border border-primary w-36 h-10 flex justify-center items-center rounded-xs font-semibold text-base'>Light Filtering</button>
-                    </div>
-                    <div className='relative'>
-                        <span className='w-4 h-4 flex justify-center items-center bg-primary rounded-full text-white absolute -top-2 -right-2 text-xs'><RxCross2 /></span>
-                        <button className='border border-primary w-36 h-10 flex justify-center items-center rounded-xs font-semibold text-base'>Light Filtering</button>
-                    </div>
-                </div>
-            </div>
-            {/* ✅ Type */}
-            <div>
-                <div className="flex items-center w-full border-b border-[#0000003D] gap-4 justify-between px-2 pb-1">
-                    <p className="font-semibold">Type</p>
-                    <MdKeyboardArrowDown />
-                </div>
 
+    const colourOptions = [
+        { name: "Cream", count: 1554, color: "#FFFDD0" },
+        { name: "Grey", count: 1554, color: "#808080" },
+        { name: "Natural", count: 624, color: "#E0D5C6" },
+        { name: "Yellow", count: 195, color: "#FFFF00" },
+    ];
+
+    return (
+        <div className="flex flex-col gap-6 pb-8">
+
+            {/* ---------- Type ---------- */}
+            <Accordion
+                title="Type"
+                sectionKey="type"
+                openSections={openSections}
+                toggleSection={toggleSection}
+                refObj={contentRefs.type}
+            >
                 <div className="flex flex-col gap-4 pt-4">
                     {typeOptions.map((item) => (
                         <button
@@ -66,15 +88,12 @@ const Filters = () => {
                             className="flex items-center gap-2"
                         >
                             <span
-                                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedType.includes(item)
-                                        ? "border-primary bg-primary text-white"
-                                        : "border-black"
+                                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedType.includes(item) ? 'border-primary bg-primary text-white' : 'border-black'
                                     }`}
                             >
                                 {selectedType.includes(item) && <FaCheck />}
                             </span>
 
-                            {/* images only for this block */}
                             <Image
                                 src={`/assets/images/category/${item.replace(" ", "")}.png`}
                                 alt={item}
@@ -86,38 +105,37 @@ const Filters = () => {
                         </button>
                     ))}
                 </div>
-            </div>
-            <div>
-                <div className='flex items-center w-full border-b border-[#0000003D] gap-4 justify-between px-2 pb-1'>
-                    <p className='font-semibold'>Colour</p>
-                    <MdKeyboardArrowDown />
-                </div>
-                <div className='flex flex-col gap-4 pt-4'>
-                    <button className='flex items-center gap-2'>
-                        <span className='jagged-shape w-8 h-8' style={{ background: '#FFFDD0' }}></span>
-                        <p>Cream  (1554)</p>
-                    </button>
-                    <button className='flex items-center gap-2'>
-                        <span className='jagged-shape w-8 h-8' style={{ background: '#808080' }}></span>
-                        <p>Grey  (1554)</p>
-                    </button>
-                    <button className='flex items-center gap-2'>
-                        <span className='jagged-shape w-8 h-8' style={{ background: '#E0D5C6' }}></span>
-                        <p>Natural (624)</p>
-                    </button>
-                    <button className='flex items-center gap-2'>
-                        <span className='jagged-shape w-8 h-8' style={{ background: '#FFFF00' }}></span>
-                        <p>Yellow (195)</p>
-                    </button>
-                </div>
-            </div>
-            {/* ✅ Width Available */}
-            <div>
-                <div className="flex items-center w-full border-b border-[#0000003D] gap-4 justify-between px-2 pb-1">
-                    <p className="font-semibold">Width Available</p>
-                    <MdKeyboardArrowDown />
-                </div>
+            </Accordion>
 
+            {/* ---------- Colour ---------- */}
+            <Accordion
+                title="Colour"
+                sectionKey="colour"
+                openSections={openSections}
+                toggleSection={toggleSection}
+                refObj={contentRefs.colour}
+            >
+                <div className="flex flex-col gap-4 pt-4">
+                    {colourOptions.map((item) => (
+                        <button key={item.name} className="flex items-center gap-3">
+                            <span
+                                className="jagged-shape w-8 h-8"
+                                style={{ background: item.color }}
+                            ></span>
+                            <p>{item.name} ({item.count})</p>
+                        </button>
+                    ))}
+                </div>
+            </Accordion>
+
+            {/* ---------- Width ---------- */}
+            <Accordion
+                title="Width Available"
+                sectionKey="width"
+                openSections={openSections}
+                toggleSection={toggleSection}
+                refObj={contentRefs.width}
+            >
                 <div className="flex flex-col gap-4 pt-4">
                     {widthOptions.map((item) => (
                         <button
@@ -126,9 +144,7 @@ const Filters = () => {
                             className="flex items-center gap-2"
                         >
                             <span
-                                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedWidth.includes(item)
-                                    ? "border-primary bg-primary text-white"
-                                    : "border-black"
+                                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedWidth.includes(item) ? 'border-primary bg-primary text-white' : 'border-black'
                                     }`}
                             >
                                 {selectedWidth.includes(item) && <FaCheck />}
@@ -137,14 +153,16 @@ const Filters = () => {
                         </button>
                     ))}
                 </div>
-            </div>
-            {/* Pattern */}
-            <div>
-                <div className="flex items-center w-full border-b border-[#0000003D] gap-4 justify-between px-2 pb-1">
-                    <p className="font-semibold">Pattern</p>
-                    <MdKeyboardArrowDown />
-                </div>
+            </Accordion>
 
+            {/* ---------- Pattern ---------- */}
+            <Accordion
+                title="Pattern"
+                sectionKey="pattern"
+                openSections={openSections}
+                toggleSection={toggleSection}
+                refObj={contentRefs.pattern}
+            >
                 <div className="flex flex-col gap-4 pt-4">
                     {patternOptions.map((item) => (
                         <button
@@ -153,9 +171,7 @@ const Filters = () => {
                             className="flex items-center gap-2"
                         >
                             <span
-                                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedPattern.includes(item)
-                                    ? "border-primary bg-primary text-white"
-                                    : "border-black"
+                                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedPattern.includes(item) ? 'border-primary bg-primary text-white' : 'border-black'
                                     }`}
                             >
                                 {selectedPattern.includes(item) && <FaCheck />}
@@ -164,15 +180,16 @@ const Filters = () => {
                         </button>
                     ))}
                 </div>
-            </div>
+            </Accordion>
 
-            {/* Composition */}
-            <div>
-                <div className="flex items-center w-full border-b border-[#0000003D] gap-4 justify-between px-2 pb-1">
-                    <p className="font-semibold">Composition</p>
-                    <MdKeyboardArrowDown />
-                </div>
-
+            {/* ---------- Composition ---------- */}
+            <Accordion
+                title="Composition"
+                sectionKey="composition"
+                openSections={openSections}
+                toggleSection={toggleSection}
+                refObj={contentRefs.composition}
+            >
                 <div className="flex flex-col gap-4 pt-4">
                     {compositionOptions.map((item) => (
                         <button
@@ -181,9 +198,7 @@ const Filters = () => {
                             className="flex items-center gap-2"
                         >
                             <span
-                                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedComposition.includes(item)
-                                    ? "border-primary bg-primary text-white"
-                                    : "border-black"
+                                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedComposition.includes(item) ? 'border-primary bg-primary text-white' : 'border-black'
                                     }`}
                             >
                                 {selectedComposition.includes(item) && <FaCheck />}
@@ -192,18 +207,23 @@ const Filters = () => {
                         </button>
                     ))}
                 </div>
-            </div>
-            <div>
-                <div className='flex items-center w-full border-b border-[#0000003D] gap-4 justify-between px-2 pb-1'>
-                    <p className='font-semibold'>Price Range</p>
-                    <MdKeyboardArrowDown />
-                </div>
-                <div>
+            </Accordion>
+
+            {/* ---------- Price ---------- */}
+            <Accordion
+                title="Price Range"
+                sectionKey="price"
+                openSections={openSections}
+                toggleSection={toggleSection}
+                refObj={contentRefs.price}
+            >
+                <div className="pt-4">
                     <PriceSlider />
                 </div>
-            </div>
-        </div>
-    )
-}
+            </Accordion>
 
-export default Filters
+        </div>
+    );
+};
+
+export default Filters;
