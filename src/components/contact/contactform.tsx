@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { FormData } from "types/type";
 
-
 const ContactForm = () => {
   const [formData, setFormData] = useState<FormData>({
     contactType: "Email",
