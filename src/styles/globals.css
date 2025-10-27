@@ -1,6 +1,4 @@
 @import "tailwindcss";
-
-
 @import 'react-image-crop/dist/ReactCrop.css';
 @import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,7 +8,6 @@
   .primary-label {
     @apply mb-3 block text-sm font-medium mt-3 text-black dark:text-white;
   }
-
   .dashboard_primary_button {
     @apply px-4 py-2 rounded-md text-sm border text-white dark:bg-primary bg-black dark:border-primary border-black flex justify-center items-center gap-2 cursor-pointer w-fit;
   }
@@ -57,17 +54,17 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --primary: #FFB803;
+  --primary: #FEB907;
+  --primary-light:#FEB9071F;
   --secondary: #EFEFEF;
-  --gray: #606060;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
   --color-secondary: var(--secondary);
-  --color-gray: var(--gray);
   --font-open_Sans: var(--font-open-sans);
   --font-rubik: var(--font-rubik);
 }
@@ -81,9 +78,7 @@
 
 body {
   background: var(--);
-  color: var(--foreground);
   font-family: var(--font-open-sans);
-  font-size: 14px;
 }
 
 
@@ -118,3 +113,4 @@ body {
   fill: var(--primary) !important;
   stroke: none !important
 }
+
