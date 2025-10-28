@@ -417,3 +417,11 @@ export type BlindsGridProps = {
   products: IProduct[]
   subcategory_url: string
 };
+
+export interface FormData {
+  contactType: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}

@@ -22,20 +22,16 @@ export default function ShopByTypeSlider({productData}: {productData: {image: st
   const minSwipeDistance = 50;
 
   useEffect(() => {
-  // Prevent running in non-browser environments (SSR or Jest)
   if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
-    setIsVisible(true); // fallback: always visible
+    setIsVisible(true); 
     return;
   }
-
   const observer = new IntersectionObserver(
     ([entry]) => setIsVisible(entry.isIntersecting),
     { threshold: 0.3 }
   );
-
   const currentRef = sliderRef.current;
   if (currentRef) observer.observe(currentRef);
-
   return () => {
     if (currentRef) observer.unobserve(currentRef);
   };
