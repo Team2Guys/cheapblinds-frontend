@@ -67,7 +67,7 @@ const Card = ({ card }: { card: Product }) => {
           <span
             className="jagged-shape w-6 md:w-10 h-6 md:h-10"
             style={{ background: `#${card.colorCode}` }}
-          ></span>
+          />
         </div>
         <div className="flex justify-between items-center gap-1 md:gap-2">
           <p className="flex items-center gap-1 text-xs md:text-base">
