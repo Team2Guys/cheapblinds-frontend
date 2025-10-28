@@ -1,35 +1,31 @@
-import DeliveryPolicy from "components/product/deliverypolicy";
-import FittingTypeSelector from "components/product/fittingtypeselector";
-import PriceCalculator from "components/product/pricecalculator";
-import ProductGallery from "components/product/productgallery";
-import ProductInfo from "components/product/productinfo";
-import SampleRequest from "components/product/sample-request";
+import BlindFitting from "components/common/blind-fitting";
+import RelatedProduct from "components/common/related-product";
+import OrderSection from "components/Home/ordersample";
+import Breadcrumb from "components/Layout/breadcrumb";
+import ProductDetail from "components/product/Product-detail";
+import { chooseblinds, chooseimage } from "data/home";
 import React from "react";
 
-
-const mockImages = [
-  "/products/blind1.jpg",
-  "/products/blind2.jpg",
-  "/products/blind3.jpg",
-  "/products/blind4.jpg",
-];
-
-const ProductDetailPage = () => {
+const ProductPage = () => {
   return (
-    <div className="container mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
-      {/* Left Side */}
-      <ProductGallery images={mockImages} />
-
-      {/* Right Side */}
-      <div>
-        <ProductInfo />
-        <FittingTypeSelector />
-        <PriceCalculator />
-        <SampleRequest />
-        <DeliveryPolicy />
+    <>
+      <Breadcrumb title="Product" />
+      <div className="container mx-auto px-2">
+        <ProductDetail />
+        <RelatedProduct titleStart title="RELATED PRODUCTS" data={chooseblinds}/>
+      <BlindFitting />
+       <OrderSection
+        className="mt-10 md:mt-16"
+        reverse
+        image1="/assets/images/home/cheap.webp"
+        image2="/assets/images/home/sample.webp"
+        btnText="Order Free Samples"
+        btnLink="/sample"
+        samplesection
+      />
       </div>
-    </div>
+    </>
   );
 };
 
-export default ProductDetailPage;
+export default ProductPage;

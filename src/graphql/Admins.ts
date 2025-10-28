@@ -66,7 +66,6 @@ export const super_admin_ADMIN_LOGIN = gql`
   }
 `;
 
-
 export const CREATE_ADMIN = gql`
   mutation CreateAdmin($input: CreateAdminInput!) {
     createAdmin(createAdminInput: $input) {
@@ -103,11 +102,8 @@ export const CREATE_ADMIN = gql`
       canVeiwTotalRedirecturls
       canViewAppointments
     }
-      
   }
 `;
-
-
 
 export const UPDATE_ADMIN = gql`
   mutation UpdateAdmin($input: UpdateAdminInput!) {

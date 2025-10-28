@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const CREATE_PROD_REVIEWS = gql`
   mutation CreateProdReviews($productReviewInput: productReviewInput!) {
@@ -7,7 +7,6 @@ export const CREATE_PROD_REVIEWS = gql`
     }
   }
 `;
-
 
 export const GET_ALL_PROD_REVIEWS = gql`
   query GetAllProdReviews {
@@ -20,10 +19,10 @@ export const GET_ALL_PROD_REVIEWS = gql`
       posterImageUrl
       productsImage
       status
-        EcomereceProducts {
-            id
-            name
-        }
+      EcomereceProducts {
+        id
+        name
+      }
     }
   }
 `;
@@ -33,7 +32,6 @@ export const UPDATE_PROD_REVIEWS = gql`
     update_prod_Reviews(UpdateproductReviewInput: $UpdateproductReviewInput) {
       id
       name
- 
     }
   }
 `;
@@ -47,8 +45,6 @@ export const DELETE_PROD_REVIEW = gql`
   }
 `;
 
-
-
 // Questoins
 export const CREATE_PRODUCT_QUESTION = gql`
   mutation CreateProductQuestion($productQuestionInput: productQuestionInput!) {
@@ -57,30 +53,26 @@ export const CREATE_PRODUCT_QUESTION = gql`
       question
       productId
       createdAt
-      
     }
   }
 `;
 
-
-
 export const GET_ALL_PRODUCT_QUESTIONS = gql`
   query GetAllProductQuestions {
     get_All_prod_Questions {
- id
-            name
-            email
-            question
-            productId
-            status
-            replies
-            createdAt
-            updatedAt
-            EcomereceProducts {
-            id
-            name
-        }
-      
+      id
+      name
+      email
+      question
+      productId
+      status
+      replies
+      createdAt
+      updatedAt
+      EcomereceProducts {
+        id
+        name
+      }
     }
   }
 `;
@@ -92,11 +84,9 @@ export const UPDATE_PRODUCT_QUESTION = gql`
       question
       productId
       createdAt
-      
     }
   }
 `;
-
 
 export const DELETE_PRODUCT_QUESTION = gql`
   mutation DeleteProductQuestion($id: Int!) {
@@ -105,7 +95,6 @@ export const DELETE_PRODUCT_QUESTION = gql`
     }
   }
 `;
-
 
 // contact us
 
@@ -117,27 +106,24 @@ export const CONTACT_US_EMAIL_MUTATION = gql`
   }
 `;
 
-
 // ChartsData
 
-
 export const APPOINTMENTS_ORDERS = gql`
-query MONTHLY_COUNT {
+  query MONTHLY_COUNT {
     MONTHLY_COUNT {
-        appointments
-        orders
+      appointments
+      orders
     }
-}`
+  }
+`;
 
 export const WEEKLY_STATS = gql`
-query WEEKLY_STATS {
+  query WEEKLY_STATS {
     WEEKLY_STATS {
       date
-        Appointments
-        Orders
-        day
+      Appointments
+      Orders
+      day
     }
-}
-
-    
-`
+  }
+`;

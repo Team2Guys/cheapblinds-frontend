@@ -1,14 +1,12 @@
-'use client';
-import Link from 'next/link';
+"use client";
+import Link from "next/link";
 interface BreadcrumbProps {
   pageName: string;
 }
 const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between ">
-      <h2 className="text-title-md2 font-semibold text-black dark:text-white ">
-        {pageName}
-      </h2>
+      <h2 className="text-title-md2 font-semibold text-black dark:text-white ">{pageName}</h2>
 
       <nav>
         <ol className="flex items-center gap-2 text-black dark:text-white text-14 sm:text-base ">
@@ -17,9 +15,7 @@ const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
               Dashboard /
             </Link>
           </li>
-          <li className="font-medium text-primary">
-            {pageName}
-          </li>
+          <li className="font-medium text-primary">{pageName}</li>
         </ol>
       </nav>
     </div>

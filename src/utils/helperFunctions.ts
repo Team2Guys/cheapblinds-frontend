@@ -1,20 +1,22 @@
+import axios from "axios";
+import React, { Dispatch, RefObject, SetStateAction } from "react";
+import { ProductImage } from "types/prod";
+import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from "graphql/Fileupload";
+import { uploadPhotosToBackend } from "./fileUploadhandlers";
+import Toaster from "components/Toaster/Toaster";
+import { Crop } from "react-image-crop";
+import { centerAspectCrop } from "types/product-crop";
 
-import axios from 'axios';
-import React, { Dispatch, RefObject, SetStateAction } from 'react';
-import { ProductImage } from 'types/prod';
-import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from 'graphql/Fileupload';
-import { uploadPhotosToBackend } from './fileUploadhandlers';
-import Toaster from 'components/Toaster/Toaster';
-import { Crop } from 'react-image-crop';
-import { centerAspectCrop } from 'types/product-crop';
-
-export const ImageRemoveHandler = async (imagePublicId: string, setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
-  finalToken?: string
+export const ImageRemoveHandler = async (
+  imagePublicId: string,
+  setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
+  finalToken?: string,
 ) => {
   try {
-    const awsS3Flag = imagePublicId.includes("s3")
+    const awsS3Flag = imagePublicId.includes("s3");
 
-    await axios.post(process.env.NEXT_PUBLIC_BASE_URL || "",
+    await axios.post(
+      process.env.NEXT_PUBLIC_BASE_URL || "",
       {
         query: awsS3Flag ? FILE_DELETION_MUTATION_S3 : FILE_DELETION_MUTATION,
         variables: {
@@ -27,40 +29,34 @@ export const ImageRemoveHandler = async (imagePublicId: string, setterFunction: 
           authorization: `Bearer ${finalToken}`,
         },
         withCredentials: true,
-      }
+      },
     );
 
-
     setterFunction((prev) => prev?.filter((item) => item.public_id !== imagePublicId));
-
   } catch (error) {
     throw error;
   }
 };
 
-
 export const handleImageAltText = (
   index: number,
   newImageIndex: string,
-  setImagesUrlhandler: React.Dispatch<
-    React.SetStateAction<ProductImage[] | undefined>
-  >,
-  variantType: string
+  setImagesUrlhandler: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
+  variantType: string,
 ) => {
   setImagesUrlhandler((prev: ProductImage[] | undefined) => {
     if (!prev) return [];
 
     const updatedImagesUrl = prev?.map((item: ProductImage, i: number) =>
-      i === index ? { ...item, [variantType]: newImageIndex } : item
+      i === index ? { ...item, [variantType]: newImageIndex } : item,
     );
     return updatedImagesUrl;
   });
 };
 
-
 export function getExpectedDeliveryDate(
   shippingMethod: "Standard Shipping" | "Next-day Shipping" | "Lightning Shipping",
-  orderTime: Date
+  orderTime: Date,
 ): string {
   const orderHour = orderTime.getHours();
   const baseDate = new Date(orderTime);
@@ -85,16 +81,13 @@ export function getExpectedDeliveryDate(
   return "";
 }
 
-
-
-
-
 function addWorkingDays(date: Date, days: number): Date {
   const result = new Date(date);
   while (days > 0) {
     result.setDate(result.getDate() + 1);
     const day = result.getDay();
-    if (day !== 0 && day !== 6) { // Skip Sunday (0) and Saturday (6)
+    if (day !== 0 && day !== 6) {
+      // Skip Sunday (0) and Saturday (6)
       days--;
     }
   }
@@ -103,7 +96,7 @@ function addWorkingDays(date: Date, days: number): Date {
 
 export function trackingOrder(
   shippingMethod: "Standard Shipping" | "Next-day Shipping" | "Lightning Shipping",
-  orderTime: Date
+  orderTime: Date,
 ): string {
   const orderHour = orderTime.getHours();
   const base = new Date(orderTime);
@@ -141,8 +134,6 @@ export function trackingOrder(
   }
 }
 
-
-
 export function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
     weekday: "long",
@@ -152,13 +143,11 @@ export function formatDate(date: Date): string {
   });
 }
 
-
 export function handleSort(
   imagesUrl: ProductImage[] | undefined,
   dragImage: RefObject<number | null>,
   draggedOverImage: RefObject<number | null>,
-  setImagesUrl: React.Dispatch<SetStateAction<ProductImage[] | undefined>>
-
+  setImagesUrl: React.Dispatch<SetStateAction<ProductImage[] | undefined>>,
 ) {
   if (dragImage.current === null || draggedOverImage.current === null) return;
 
@@ -180,16 +169,17 @@ export const DateFormatHandler = (input: Date | string) => {
     return "Not available";
   }
 
-  return new Intl.DateTimeFormat('en-GB', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
-  }).format(parsedDate).toUpperCase();
+  return new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  })
+    .format(parsedDate)
+    .toUpperCase();
 };
-
 
 export const formatAED = (price: number | undefined | null): string => {
   if (!price || isNaN(price)) return "0";
@@ -208,11 +198,10 @@ export const formatblogDate = (dateString: string): string => {
   });
 };
 
-
 export const base64ToFile = (base64: string, filename: string): File => {
-  const arr = base64.split(',');
+  const arr = base64.split(",");
   const mimeMatch = arr[0].match(/:(.*?);/);
-  const mime = mimeMatch ? mimeMatch[1] : '';
+  const mime = mimeMatch ? mimeMatch[1] : "";
   const bstr = atob(arr[1]);
   let n = bstr.length;
   const u8arr = new Uint8Array(n);
@@ -224,23 +213,31 @@ export const base64ToFile = (base64: string, filename: string): File => {
   return new File([u8arr], filename, { type: mime });
 };
 
-export const handleCropModalOk = async (croppedImage: string | null, imageSrc: string | null, setIsCropModalVisible: Dispatch<SetStateAction<boolean>>, setCroppedImage: Dispatch<SetStateAction<string | null>>, setposterimageUrl: Dispatch<SetStateAction<ProductImage[] | undefined>>, setBannerImageUrl?: Dispatch<SetStateAction<ProductImage[] | undefined>>, setImagesUrl?: Dispatch<React.SetStateAction<ProductImage[] | undefined>>) => {
-  console.log(croppedImage, 'imageSrc')
+export const handleCropModalOk = async (
+  croppedImage: string | null,
+  imageSrc: string | null,
+  setIsCropModalVisible: Dispatch<SetStateAction<boolean>>,
+  setCroppedImage: Dispatch<SetStateAction<string | null>>,
+  setposterimageUrl: Dispatch<SetStateAction<ProductImage[] | undefined>>,
+  setBannerImageUrl?: Dispatch<SetStateAction<ProductImage[] | undefined>>,
+  setImagesUrl?: Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
+) => {
+  console.log(croppedImage, "imageSrc");
 
   if (croppedImage && imageSrc) {
-    console.log(imageSrc, 'imageSrc')
+    console.log(imageSrc, "imageSrc");
     try {
       // Convert the cropped image (base64) to a File
       const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
 
       // Upload the cropped image to your backend or Cloudinary
       const response = await uploadPhotosToBackend(file);
-      if (!response) return
+      if (!response) return;
       // Use the base URL from your environment variables
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
       const uploadedImageUrl = response.imageUrl;
       // Append the base URL if needed
-      const newImageUrl = uploadedImageUrl.startsWith('http')
+      const newImageUrl = uploadedImageUrl.startsWith("http")
         ? uploadedImageUrl
         : `${baseUrl}${uploadedImageUrl}`;
 
@@ -253,58 +250,66 @@ export const handleCropModalOk = async (croppedImage: string | null, imageSrc: s
       // Use a timeout to update states after the modal has closed
       setTimeout(() => {
         setposterimageUrl((prevImages) =>
-          prevImages?.map((img) =>
-            img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-          )
+          prevImages?.map((img) => (img.imageUrl === imageSrc ? { ...img, ...newImage } : img)),
         );
         if (setBannerImageUrl) {
           setBannerImageUrl((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
+            prevImages?.map((img) => (img.imageUrl === imageSrc ? { ...img, ...newImage } : img)),
           );
         }
         if (setImagesUrl) {
           setImagesUrl((prevImages) =>
-            prevImages?.map((img) =>
-              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
-            )
+            prevImages?.map((img) => (img.imageUrl === imageSrc ? { ...img, ...newImage } : img)),
           );
         }
       }, 0);
     } catch (error) {
-      console.log(error)
-      Toaster('error', 'Failed to upload cropped image');
-      return error
+      console.log(error);
+      Toaster("error", "Failed to upload cropped image");
+      return error;
     }
   }
 };
 
-export const handleCropModalCancel = (setIsCropModalVisible: Dispatch<SetStateAction<boolean>>, setCroppedImage: Dispatch<SetStateAction<string | null>>) => {
+export const handleCropModalCancel = (
+  setIsCropModalVisible: Dispatch<SetStateAction<boolean>>,
+  setCroppedImage: Dispatch<SetStateAction<string | null>>,
+) => {
   setIsCropModalVisible(false);
   setCroppedImage(null);
 };
 
-export const handleCropClick = (imageUrl: string, setImageSrc: Dispatch<SetStateAction<string | null>>, setIsCropModalVisible: Dispatch<SetStateAction<boolean>>) => {
+export const handleCropClick = (
+  imageUrl: string,
+  setImageSrc: Dispatch<SetStateAction<string | null>>,
+  setIsCropModalVisible: Dispatch<SetStateAction<boolean>>,
+) => {
   setImageSrc(imageUrl);
   setIsCropModalVisible(true);
 };
 
-export const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>, setCrop: Dispatch<SetStateAction<Crop | undefined>>) => {
+export const onImageLoad = (
+  e: React.SyntheticEvent<HTMLImageElement>,
+  setCrop: Dispatch<SetStateAction<Crop | undefined>>,
+) => {
   const { width, height } = e.currentTarget;
   const newCrop = centerAspectCrop(width, height, 16 / 9);
   setCrop(newCrop);
 };
 
-export const onCropComplete = (crop: Crop | undefined, imgRef: React.RefObject<HTMLImageElement | null>, setCroppedImage: Dispatch<SetStateAction<string | null>>) => {
+export const onCropComplete = (
+  crop: Crop | undefined,
+  imgRef: React.RefObject<HTMLImageElement | null>,
+  setCroppedImage: Dispatch<SetStateAction<string | null>>,
+) => {
   if (!crop) return;
   const image = imgRef.current;
   if (!image || !crop.width || !crop.height) return;
 
-  const canvas = document.createElement('canvas');
+  const canvas = document.createElement("canvas");
   const scaleX = image.naturalWidth / image.width;
   const scaleY = image.naturalHeight / image.height;
-  const ctx = canvas?.getContext('2d');
+  const ctx = canvas?.getContext("2d");
 
   canvas.width = crop?.width;
   canvas.height = crop?.height;
@@ -319,10 +324,10 @@ export const onCropComplete = (crop: Crop | undefined, imgRef: React.RefObject<H
       0,
       0,
       crop.width,
-      crop.height
+      crop.height,
     );
   }
 
-  const base64Image = canvas?.toDataURL('image/jpeg');
+  const base64Image = canvas?.toDataURL("image/jpeg");
   setCroppedImage(base64Image);
 };

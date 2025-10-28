@@ -1,12 +1,12 @@
-'use client';
-import React from 'react';
-import { LuHeart, LuUser } from 'react-icons/lu';
-import { MdOutlineShoppingCart } from 'react-icons/md';
-import FreeSample from 'components/svg/free-sample';
-import DropdownPanel from './Dropdownpanel';
-import { cartItems, wishlistItems } from 'data/Header';
+"use client";
+import React from "react";
+import { LuHeart, LuUser } from "react-icons/lu";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import FreeSample from "components/svg/free-sample";
+import DropdownPanel from "./Dropdownpanel";
+import { cartItems, wishlistItems } from "data/Header";
 
-const UserIcons = ({className}:{className?:string}) => {
+const UserIcons = ({ className }: { className?: string }) => {
   return (
     <div className={`flex items-center ${className}`}>
       <div className="border-r lg:pr-1.5">
@@ -39,7 +39,7 @@ const UserIcons = ({className}:{className?:string}) => {
           badgeCount={cartItems.length}
           items={cartItems}
           viewLink="/cart"
-          emptyMessage='Your cart is empty.'
+          emptyMessage="Your cart is empty."
         />
       </div>
     </div>

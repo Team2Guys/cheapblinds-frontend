@@ -7,11 +7,11 @@ export interface HerobannerProps {
 }
 
 export interface OrderSectionProps {
-  reverse?: boolean; 
-  image1: string; 
-  image2: string; 
-  btnText: string; 
-  btnLink: string; 
+  reverse?: boolean;
+  image1: string;
+  image2: string;
+  btnText: string;
+  btnLink: string;
   className?: string;
   samplesection?: boolean;
 }
@@ -27,6 +27,7 @@ export interface RelatedProductProps {
   title: string;
   description?: string;
   data: RelatedProductItem[];
+  titleStart?: boolean;
 }
 
 export interface SlickSliderProps {

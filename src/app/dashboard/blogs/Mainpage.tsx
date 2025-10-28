@@ -6,14 +6,20 @@ import AddBlogs from "./Add-blog";
 import { IBlog } from "types/general";
 import { ISUBCATEGORY } from "types/cat";
 
-const Mainpage = ({blogs,subCategories}:{blogs:IBlog[],subCategories:ISUBCATEGORY[]}) => {
+const Mainpage = ({ blogs, subCategories }: { blogs: IBlog[]; subCategories: ISUBCATEGORY[] }) => {
   const [selecteMenu, setselecteMenu] = useState<string>("All Blogs");
   const [editblog, setEditblog] = useState<IBlog | undefined>();
   return (
     <DefaultLayout>
-      {selecteMenu == "All Blogs" ?
-       <ViewBlog setselecteMenu={setselecteMenu} blogs={blogs} setEditblog={setEditblog}/> :
-       <AddBlogs setselecteMenu={setselecteMenu}  editblog={editblog && editblog} subCategories={subCategories}/>}
+      {selecteMenu == "All Blogs" ? (
+        <ViewBlog setselecteMenu={setselecteMenu} blogs={blogs} setEditblog={setEditblog} />
+      ) : (
+        <AddBlogs
+          setselecteMenu={setselecteMenu}
+          editblog={editblog && editblog}
+          subCategories={subCategories}
+        />
+      )}
     </DefaultLayout>
   );
 };

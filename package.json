@@ -12,7 +12,9 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:watch": "vitest --watch",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "check-format": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
@@ -60,10 +62,12 @@
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
     "identity-obj-proxy": "^3.0.0",
+    "install": "^0.13.0",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "jsdom": "^26.1.0",
     "patch-package": "^8.0.0",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "typescript": "^5",

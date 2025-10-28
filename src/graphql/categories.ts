@@ -75,7 +75,6 @@ export const GET_ALL_CATEGORIES = gql`
   }
 `;
 
-
 export const GET_CATEGORY_BY_CUSTOM_URL = `
   query FindOneCategory($custom_url: String!) {
     category(custom_url: $custom_url) {
@@ -86,7 +85,6 @@ export const GET_CATEGORY_BY_CUSTOM_URL = `
     }
   }
 `;
-
 
 export const UPDATE_CATEGORY = gql`
   mutation UpdateCategory($input: UpdateCategoryInput!) {
@@ -112,7 +110,7 @@ export const REMOVE_CATEGORY = gql`
   }
 `;
 
-// SubCategories 
+// SubCategories
 export const CREATE_SUBCATEGORY = gql`
   mutation CreateSubCategory($input: CreateSubCategoryInput!) {
     subCategory(createSubCategoryInput: $input) {
@@ -129,28 +127,28 @@ export const CREATE_SUBCATEGORY = gql`
 `;
 
 export const GET_ALL_SUBCATEGORIES = gql`
-   query SubCategories {
+  query SubCategories {
     subCategories {
-            id
-            name
-            description
-            posterImageUrl
-            last_editedBy
-            short_description
-            custom_url
-            Banners
-            breadCrum
-            Meta_Title
-            Meta_Description
-            Canonical_Tag
-            status
-            seoSchema
-            updatedAt
-            createdAt
-            category {
-              id
-              name
-            }
+      id
+      name
+      description
+      posterImageUrl
+      last_editedBy
+      short_description
+      custom_url
+      Banners
+      breadCrum
+      Meta_Title
+      Meta_Description
+      Canonical_Tag
+      status
+      seoSchema
+      updatedAt
+      createdAt
+      category {
+        id
+        name
+      }
     }
   }
 `;

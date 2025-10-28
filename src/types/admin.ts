@@ -31,11 +31,9 @@ export interface adminCheckBox {
   canViewAppointments: boolean;
 }
 
-
-
 export interface CreateAdminProps {
-  setselecteMenu: React.Dispatch<SetStateAction<string | null | undefined>>
+  setselecteMenu: React.Dispatch<SetStateAction<string | null | undefined>>;
   EditAdminValue?: Admin | undefined;
   EditInitialValues?: AdminValues | undefined;
-  setEditProduct: React.Dispatch<SetStateAction<Admin | undefined>>
+  setEditProduct: React.Dispatch<SetStateAction<Admin | undefined>>;
 }

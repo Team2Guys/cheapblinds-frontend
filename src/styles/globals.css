@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import 'react-image-crop/dist/ReactCrop.css';
-@import 'react-toastify/dist/ReactToastify.css';
+@import "react-image-crop/dist/ReactCrop.css";
+@import "react-toastify/dist/ReactToastify.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -47,16 +47,16 @@
 
   .border,
   .border-stroke {
-    @apply border-[#e5e7eb] dark:border-white
+    @apply border-[#e5e7eb] dark:border-white;
   }
 }
 
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --primary: #FEB907;
-  --primary-light:#FEB9071F;
-  --secondary: #EFEFEF;
+  --primary: #feb907;
+  --primary-light: #feb9071f;
+  --secondary: #efefef;
 }
 
 @theme inline {
@@ -80,7 +80,6 @@ body {
   background: var(--);
   font-family: var(--font-open-sans);
 }
-
 
 .ant-btn-variant-solid {
   background-color: var(--primary);
@@ -111,6 +110,5 @@ body {
 .apexcharts-theme-dark .apexcharts-zoomin-icon svg,
 .apexcharts-theme-dark .apexcharts-zoomout-icon svg {
   fill: var(--primary) !important;
-  stroke: none !important
+  stroke: none !important;
 }
-

@@ -1,41 +1,38 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const CREATE_BLOG = gql`
   mutation CreateBlog($createBlogInput: CreateBlogInput!) {
     createBlog(createBlogInput: $createBlogInput) {
       id
       title
- 
     }
   }
 `;
 
-
-
 export const GET_ALL_BLOGS = gql`
   query GetAllBlogs {
     get_all_blogs {
-       id
-        title
-        content
-        custom_url
-        category
-        createdAt
-        updatedAt
-        posterImage
-        last_editedBy
-        Canonical_Tag
-        Meta_Description
-        Meta_Title
-        redirectionUrl
-        publishedAt
+      id
+      title
+      content
+      custom_url
+      category
+      createdAt
+      updatedAt
+      posterImage
+      last_editedBy
+      Canonical_Tag
+      Meta_Description
+      Meta_Title
+      redirectionUrl
+      publishedAt
+      status
+      isPublished
+      comments {
+        id
+        name
         status
-        isPublished
-        comments {
-            id
-            name
-            status
-            }
+      }
     }
   }
 `;
@@ -45,11 +42,9 @@ export const UPDATE_BLOG = gql`
     updateBlog(updateBlogInput: $updateBlogInput) {
       id
       title
-
     }
   }
 `;
-
 
 export const REMOVE_BLOG = gql`
   mutation RemoveBlog($id: Int!) {
@@ -60,10 +55,7 @@ export const REMOVE_BLOG = gql`
   }
 `;
 
-
-
 // commments
-
 
 export const ADD_COMMENT = gql`
   mutation AddComment($CreateCommentDto: CreateCommentDto!) {
@@ -79,7 +71,6 @@ export const ADD_COMMENT = gql`
   }
 `;
 
-
 export const CREATE_REPLY = gql`
   mutation CreateReply($CreateReply: CreateReply!) {
     CreateReply(CreateReply: $CreateReply) {
@@ -88,7 +79,6 @@ export const CREATE_REPLY = gql`
     }
   }
 `;
-
 
 export const UPDATE_COMMENT_STATUS = gql`
   mutation UpdateStatus($UpdateStatus: UpdateStatus!) {
@@ -99,8 +89,6 @@ export const UPDATE_COMMENT_STATUS = gql`
   }
 `;
 
-
-
 export const UPDATE_REPLY_STATUS = gql`
   mutation UpdateReplyStatus($updateReplystatus: updateReplystatus!) {
     updatereplyStatus(updateReplystatus: $updateReplystatus) {
@@ -110,24 +98,23 @@ export const UPDATE_REPLY_STATUS = gql`
   }
 `;
 
-
-
-export const fetchAllblogs = gql `
-query Allcoments {
+export const fetchAllblogs = gql`
+  query Allcoments {
     Allcoments {
+      id
+      name
+      Email
+      phone
+      description
+      createdAt
+      replies
+      blogId
+      status
+      last_editedBy
+      blog {
         id
-        name
-        Email
-        phone
-        description
-        createdAt
-        replies
-        blogId
-        status
-        last_editedBy
-        blog {
-            id
-            title
-        }
+        title
+      }
     }
-}`
+  }
+`;

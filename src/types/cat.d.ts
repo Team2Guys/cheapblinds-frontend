@@ -25,49 +25,43 @@ export interface Paragraph {
   text: string;
 }
 
-
 export interface Category extends GlobalCommontypes {
-
   seoSchema?: string;
-  status?:BlogStatus;
+  status?: BlogStatus;
   subCategories?: ISUBCATEGORY[];
 }
 
-
 export interface EDIT_CATEGORY extends Category {
-  id?: number | string
-  posterImageUrl?: ProductImage
+  id?: number | string;
+  posterImageUrl?: ProductImage;
   subcategory?: ISUBCATEGORY_EDIT;
-  status?:BlogStatus;
-  Products?: IProduct[]
+  status?: BlogStatus;
+  Products?: IProduct[];
 }
 
 export interface ISUBCATEGORY extends GlobalCommontypes {
-  status?:BlogStatus;
+  status?: BlogStatus;
 
-  Category?: Category
-  products?: IProduct[]
-  category?: Category
-  subcategory?: ISUBCATEGORY_EDIT
-  displayName?: string
-  price?: number
-  discountPrice?: number
+  Category?: Category;
+  products?: IProduct[];
+  category?: Category;
+  subcategory?: ISUBCATEGORY_EDIT;
+  displayName?: string;
+  price?: number;
+  discountPrice?: number;
   seoSchema?: string;
 }
 
-
 export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
-  id?: number | string
-  category?: number | string,
-  products?: IProduct[]
+  id?: number | string;
+  category?: number | string;
+  products?: IProduct[];
   posterImageUrl?: ProductImage;
   createdAt?: Date;
   updatedAt?: Date;
   custom_url?: string;
-  QualityImages?:ProductImage[]
-  
+  QualityImages?: ProductImage[];
 }
-
 
 export interface SUBNCATEGORIES_PAGES_PROPS {
   catgories: Category[];
@@ -85,5 +79,5 @@ export interface ISaleBanner {
   salesBannerHeading?: string;
   paraText?: string;
   Bannercounter?: string;
-  salesBannerImage?: ProductImage[]
+  salesBannerImage?: ProductImage[];
 }

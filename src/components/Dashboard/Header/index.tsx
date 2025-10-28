@@ -1,10 +1,10 @@
-'use client';
-import Link from 'next/link';
-import DarkModeSwitcher from './DarkModeSwitcher';
-import DropdownUser from './DropdownUser';
-import Image from 'next/image';
-import logoimage from '../../../../public/assets/images/dashboard_logo.png';
-import { FaBars } from 'react-icons/fa';
+"use client";
+import Link from "next/link";
+import DarkModeSwitcher from "./DarkModeSwitcher";
+import DropdownUser from "./DropdownUser";
+import Image from "next/image";
+import logoimage from "../../../../public/assets/images/dashboard_logo.png";
+import { FaBars } from "react-icons/fa";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -25,10 +25,7 @@ const Header = (props: {
             }}
           />
 
-          <Link
-            className="block flex-shrink-0 lg:hidden w-20 xs:w-[100px]"
-            href="/"
-          >
+          <Link className="block flex-shrink-0 lg:hidden w-20 xs:w-[100px]" href="/">
             <Image width={100} height={100} src={logoimage} alt="Logo" />
           </Link>
         </div>
@@ -59,7 +56,6 @@ const Header = (props: {
                   />
                 </svg>
               </button>
-
             </div>
           </form>
         </div>

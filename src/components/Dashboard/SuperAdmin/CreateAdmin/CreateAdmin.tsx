@@ -1,20 +1,20 @@
-'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import { useMutation } from '@apollo/client';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Admin } from 'types/type';
-import showToast from 'components/Toaster/Toaster';
-import revalidateTag from 'components/ServerActons/ServerAction';
-import { CREATE_ADMIN, UPDATE_ADMIN } from 'graphql/Admins';
-import { useSession } from 'next-auth/react';
-import { Modal } from 'antd';
-import { initialAdminValues } from 'data/InitialValues';
-import { checkboxAdminData } from 'data/data';
-import { validationAdminSchema } from 'data/Validations';
-import { adminCheckBox, CreateAdminProps } from 'types/admin';
-import { ProductImage } from 'types/prod';
-import ImageUploader from 'components/ImageUploader/ImageUploader';
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useMutation } from "@apollo/client";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Admin } from "types/type";
+import showToast from "components/Toaster/Toaster";
+import revalidateTag from "components/ServerActons/ServerAction";
+import { CREATE_ADMIN, UPDATE_ADMIN } from "graphql/Admins";
+import { useSession } from "next-auth/react";
+import { Modal } from "antd";
+import { initialAdminValues } from "data/InitialValues";
+import { checkboxAdminData } from "data/data";
+import { validationAdminSchema } from "data/Validations";
+import { adminCheckBox, CreateAdminProps } from "types/admin";
+import { ProductImage } from "types/prod";
+import ImageUploader from "components/ImageUploader/ImageUploader";
 import {
   handleCropClick,
   handleCropModalCancel,
@@ -23,10 +23,10 @@ import {
   ImageRemoveHandler,
   onCropComplete,
   onImageLoad,
-} from 'utils/helperFunctions';
-import Image from 'next/image';
-import { RxCross2 } from 'react-icons/rx';
-import ReactCrop, { Crop } from 'react-image-crop';
+} from "utils/helperFunctions";
+import Image from "next/image";
+import { RxCross2 } from "react-icons/rx";
+import ReactCrop, { Crop } from "react-image-crop";
 
 const CreateAdmin: React.FC<CreateAdminProps> = ({
   setselecteMenu,
@@ -37,7 +37,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
   const updateFlag = !!(EditAdminValue && EditInitialValues);
   const initialFormValues: Admin = updateFlag ? EditAdminValue : initialAdminValues;
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(
-    initialFormValues.posterImageUrl ? [initialFormValues.posterImageUrl] : []
+    initialFormValues.posterImageUrl ? [initialFormValues.posterImageUrl] : [],
   );
 
   const [isCropModalVisible, setIsCropModalVisible] = useState(false);
@@ -61,59 +61,58 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
     return JSON.stringify(initialFormValues) !== JSON.stringify(formikValuesRef.current);
   };
 
-
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges()) {
         e.preventDefault();
-        e.returnValue = '';
+        e.returnValue = "";
       }
     };
 
     const handlePopState = () => {
       if (hasUnsavedChanges()) {
-        window.history.pushState(null, '', window.location.href);
+        window.history.pushState(null, "", window.location.href);
         Modal.confirm({
-          title: 'Unsaved Changes',
-          content: 'You have unsaved changes. Do you want to discard them?',
-          okText: 'Discard Changes',
-          cancelText: 'Cancel',
+          title: "Unsaved Changes",
+          content: "You have unsaved changes. Do you want to discard them?",
+          okText: "Discard Changes",
+          cancelText: "Cancel",
           onOk: () => {
-            setselecteMenu('AllAdmin');
+            setselecteMenu("AllAdmin");
             setEditProduct(undefined);
           },
         });
       } else {
-        setselecteMenu('AllAdmin');
+        setselecteMenu("AllAdmin");
         setEditProduct(undefined);
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('popstate', handlePopState);
-    window.history.pushState(null, '', window.location.href);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handlePopState);
+    window.history.pushState(null, "", window.location.href);
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, [formValues]);
 
   const handleBack = () => {
     if (hasUnsavedChanges()) {
       Modal.confirm({
-        title: 'Unsaved Changes',
-        content: 'You have unsaved changes. Do you want to discard them?',
-        okText: 'Discard Changes',
-        cancelText: 'Cancel',
+        title: "Unsaved Changes",
+        content: "You have unsaved changes. Do you want to discard them?",
+        okText: "Discard Changes",
+        cancelText: "Cancel",
         onOk: () => {
-          setselecteMenu('AllAdmin');
+          setselecteMenu("AllAdmin");
           setEditProduct(undefined);
         },
       });
       return;
     }
-    setselecteMenu('AllAdmin');
+    setselecteMenu("AllAdmin");
     setEditProduct(undefined);
   };
 
@@ -145,15 +144,15 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
             });
 
             setSubmitting(false);
-            setselecteMenu('AllAdmin');
+            setselecteMenu("AllAdmin");
             setEditProduct(undefined);
             setposterimageUrl(undefined);
-            showToast('success', `Admin ${updateFlag ? 'updated' : 'created'} successfully`);
-            revalidateTag('Admins');
+            showToast("success", `Admin ${updateFlag ? "updated" : "created"} successfully`);
+            revalidateTag("Admins");
             // eslint-disable-next-line
           } catch (err: any) {
-            setError(err?.message || 'An unexpected error occurred.');
-            alert(err?.message || 'An error occurred');
+            setError(err?.message || "An unexpected error occurred.");
+            alert(err?.message || "An error occurred");
           } finally {
             setLoading(false);
           }
@@ -167,33 +166,63 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                 <IoMdArrowRoundBack /> Back
               </button>
 
-              <Form onSubmit={handleSubmit} className="bg-white dark:bg-black/50 backdrop-blur-3xl p-6 rounded-lg shadow-lg">
+              <Form
+                onSubmit={handleSubmit}
+                className="bg-white dark:bg-black/50 backdrop-blur-3xl p-6 rounded-lg shadow-lg"
+              >
                 <h2 className="text-2xl text-center font-bold mb-6 text-black dark:text-white">
-                  {updateFlag ? 'Edit Admin' : 'Create New Admin'}
+                  {updateFlag ? "Edit Admin" : "Create New Admin"}
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label htmlFor="fullname" className="block text-sm font-medium text-black dark:text-white mb-1">
+                    <label
+                      htmlFor="fullname"
+                      className="block text-sm font-medium text-black dark:text-white mb-1"
+                    >
                       Full Name
                     </label>
-                    <Field type="text" id="fullname" name="fullname" placeholder="Full Name" className="primary-input" />
+                    <Field
+                      type="text"
+                      id="fullname"
+                      name="fullname"
+                      placeholder="Full Name"
+                      className="primary-input"
+                    />
                     <ErrorMessage name="fullname" component="p" className="text-red-500 text-sm" />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-black dark:text-white mb-1">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-black dark:text-white mb-1"
+                    >
                       Email
                     </label>
-                    <Field type="email" id="email" name="email" placeholder="Enter Email" className="primary-input" />
+                    <Field
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Enter Email"
+                      className="primary-input"
+                    />
                     <ErrorMessage name="email" component="p" className="text-red-500 text-sm" />
                   </div>
                 </div>
 
                 <div className="mb-4">
-                  <label htmlFor="password" className="block text-sm font-medium text-black dark:text-white mb-1">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-black dark:text-white mb-1"
+                  >
                     Password
                   </label>
-                  <Field type="password" id="password" name="password" placeholder="Enter Password" className="primary-input" />
+                  <Field
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter Password"
+                    className="primary-input"
+                  />
                   <ErrorMessage name="password" component="p" className="text-red-500 text-sm" />
                 </div>
 
@@ -217,11 +246,13 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                               />
                             </div>
                             <Image
-                              onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
+                              onClick={() =>
+                                handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)
+                              }
                               className="cursor-crosshair inset-0"
                               fill
                               loading="lazy"
-                              src={item.imageUrl || ''}
+                              src={item.imageUrl || ""}
                               alt={`productImage-${index}`}
                             />
                           </div>
@@ -231,9 +262,14 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                               placeholder="altText"
                               type="text"
                               name="altText"
-                              value={item?.altText || ''}
+                              value={item?.altText || ""}
                               onChange={(e) =>
-                                handleImageAltText(index, String(e.target.value), setposterimageUrl, 'altText')
+                                handleImageAltText(
+                                  index,
+                                  String(e.target.value),
+                                  setposterimageUrl,
+                                  "altText",
+                                )
                               }
                             />
                           </div>
@@ -248,7 +284,11 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
                   {checkboxAdminData.map((checkbox) => (
                     <label key={checkbox.name} className="flex items-center gap-2">
-                      <Field type="checkbox" name={checkbox.name} className="h-4 w-4 accent-black dark:accent-primary border-gray-300 rounded" />
+                      <Field
+                        type="checkbox"
+                        name={checkbox.name}
+                        className="h-4 w-4 accent-black dark:accent-primary border-gray-300 rounded"
+                      />
                       <span className="text-sm text-black dark:text-white">{checkbox.label}</span>
                     </label>
                   ))}
@@ -286,9 +326,9 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`w-full flex justify-center dashboard_primary_button ${loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                  className={`w-full flex justify-center dashboard_primary_button ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
                 >
-                  {loading ? 'Loading...' : updateFlag ? 'Update Admin' : 'Add Admin'}
+                  {loading ? "Loading..." : updateFlag ? "Update Admin" : "Add Admin"}
                 </button>
 
                 {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
@@ -297,7 +337,13 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                   title="Crop Image"
                   open={isCropModalVisible}
                   onOk={() =>
-                    handleCropModalOk(croppedImage, imageSrc, setIsCropModalVisible, setCroppedImage, setposterimageUrl)
+                    handleCropModalOk(
+                      croppedImage,
+                      imageSrc,
+                      setIsCropModalVisible,
+                      setCroppedImage,
+                      setposterimageUrl,
+                    )
                   }
                   onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
                   width={500}
@@ -315,7 +361,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                         ref={imgRef}
                         src={imageSrc}
                         alt="Crop me"
-                        style={{ maxWidth: '100%' }}
+                        style={{ maxWidth: "100%" }}
                         onLoad={(e) => onImageLoad(e, setCrop)}
                         crossOrigin="anonymous"
                       />

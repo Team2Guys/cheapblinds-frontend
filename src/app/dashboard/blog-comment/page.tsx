@@ -1,16 +1,16 @@
-import React from 'react'
-import MainPage from './MainPage'
-import { fetchSingleComment } from 'config/generals'
-import { fetchAllblogs } from 'graphql/blogs'
-import DefaultLayout from 'components/Dashboard/DefaultLayout'
+import React from "react";
+import MainPage from "./MainPage";
+import { fetchSingleComment } from "config/generals";
+import { fetchAllblogs } from "graphql/blogs";
+import DefaultLayout from "components/Dashboard/DefaultLayout";
 
 const BlogComment = async () => {
-      const AllComment = await fetchSingleComment(fetchAllblogs)
+  const AllComment = await fetchSingleComment(fetchAllblogs);
   return (
     <DefaultLayout>
-    <MainPage AllComment={AllComment}/>
+      <MainPage AllComment={AllComment} />
     </DefaultLayout>
-  )
-}
+  );
+};
 
-export default BlogComment
+export default BlogComment;

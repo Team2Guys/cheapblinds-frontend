@@ -24,12 +24,7 @@ describe("Herobanner Component", () => {
 
   it("renders both desktop and mobile images", () => {
     render(
-      <Herobanner
-        desktopImage={desktopImage}
-        mobileImage={mobileImage}
-        isHome
-        alt="hero-banner"
-      />
+      <Herobanner desktopImage={desktopImage} mobileImage={mobileImage} isHome alt="hero-banner" />,
     );
 
     const images = screen.getAllByAltText("hero-banner");
@@ -40,11 +35,7 @@ describe("Herobanner Component", () => {
 
   it("applies responsive height classes when isHome is true", () => {
     const { container } = render(
-      <Herobanner
-        desktopImage={desktopImage}
-        mobileImage={mobileImage}
-        isHome
-      />
+      <Herobanner desktopImage={desktopImage} mobileImage={mobileImage} isHome />,
     );
 
     expect(container.firstChild).toHaveClass(
@@ -52,14 +43,12 @@ describe("Herobanner Component", () => {
       "sm:h-[300px]",
       "md:h-[400px]",
       "xl:h-[512px]",
-      "2xl:h-[600px]"
+      "2xl:h-[600px]",
     );
   });
 
   it("applies fixed height when isHome is false", () => {
-    const { container } = render(
-      <Herobanner desktopImage={desktopImage} isHome={false} />
-    );
+    const { container } = render(<Herobanner desktopImage={desktopImage} isHome={false} />);
 
     expect(container.firstChild).toHaveClass("h-[300px]");
   });

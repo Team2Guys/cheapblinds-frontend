@@ -14,7 +14,6 @@ export interface PositionType {
   slug: string;
 }
 
-
 export interface CareerType {
   slug: string;
   title: string;
@@ -28,15 +27,13 @@ export interface CareerType {
   howToApply: string;
 }
 
-
 export interface OptonsFiels {
-  name: string,
-  detail?: string[]
+  name: string;
+  detail?: string[];
 }
 
-
 export interface IJOBS {
-  id: number
+  id: number;
   custom_url: string;
   title: string;
   location: string;
@@ -52,16 +49,14 @@ export interface IJOBS {
   Meta_Description?: string;
   Meta_Title?: string;
   createdAt: string;
-  updatedAt?: string
-  status?:BlogStatus
+  updatedAt?: string;
+  status?: BlogStatus;
 }
 
 export interface initialJobsTypes extends Omit<IJOBS, "id"> {
-  isFilled?: boolean
+  isFilled?: boolean;
   createdAt?: string;
-
 }
-
 
 export interface PositionType {
   title: string;
