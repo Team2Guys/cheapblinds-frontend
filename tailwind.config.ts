@@ -8,6 +8,11 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs':'480px',
+        'xsm':'400px',
+        'xss':'350px',
+      }
     },
   },
   plugins: [],

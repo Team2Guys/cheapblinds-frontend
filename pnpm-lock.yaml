@@ -71,6 +71,9 @@ importers:
       sweetalert2:
         specifier: ^11.22.2
         version: 11.22.2
+      swiper:
+        specifier: ^12.0.3
+        version: 12.0.3
       yup:
         specifier: ^1.7.0
         version: 1.7.0
@@ -4161,6 +4164,10 @@ packages:
 
   sweetalert2@11.22.2:
     resolution: {integrity: sha512-GFQGzw8ZXF23PO79WMAYXLl4zYmLiaKqYJwcp5eBF07wiI5BYPbZtKi2pcvVmfUQK+FqL1risJAMxugcPbGIyg==}
+
+  swiper@12.0.3:
+    resolution: {integrity: sha512-BHd6U1VPEIksrXlyXjMmRWO0onmdNPaTAFduzqR3pgjvi7KfmUCAm/0cj49u2D7B0zNjMw02TSeXfinC1hDCXg==}
+    engines: {node: '>= 4.7.0'}
 
   symbol-observable@4.0.0:
     resolution: {integrity: sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ==}
@@ -9224,6 +9231,8 @@ snapshots:
   supports-preserve-symlinks-flag@1.0.0: {}
 
   sweetalert2@11.22.2: {}
+
+  swiper@12.0.3: {}
 
   symbol-observable@4.0.0: {}
 
