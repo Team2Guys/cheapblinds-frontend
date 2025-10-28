@@ -1,17 +1,13 @@
 "use client";
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  TouchEvent,
-  useMemo,
-} from "react";
+import React, { useState, useRef, useEffect, useCallback, TouchEvent, useMemo } from "react";
 import Image from "next/image";
 import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
 
-
-export default function ShopByTypeSlider({productData}: {productData: {image: string; name: string}[]}) {
+export default function ShopByTypeSlider({
+  productData,
+}: {
+  productData: { image: string; name: string }[];
+}) {
   const [activeIndex, setActiveIndex] = useState(2);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -22,20 +18,19 @@ export default function ShopByTypeSlider({productData}: {productData: {image: st
   const minSwipeDistance = 50;
 
   useEffect(() => {
-  if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
-    setIsVisible(true); 
-    return;
-  }
-  const observer = new IntersectionObserver(
-    ([entry]) => setIsVisible(entry.isIntersecting),
-    { threshold: 0.3 }
-  );
-  const currentRef = sliderRef.current;
-  if (currentRef) observer.observe(currentRef);
-  return () => {
-    if (currentRef) observer.unobserve(currentRef);
-  };
-}, []);
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setIsVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), {
+      threshold: 0.3,
+    });
+    const currentRef = sliderRef.current;
+    if (currentRef) observer.observe(currentRef);
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, []);
 
   useEffect(() => {
     if (!isVisible) return;
@@ -52,10 +47,8 @@ export default function ShopByTypeSlider({productData}: {productData: {image: st
     touchEndX.current = e.changedTouches[0].clientX;
     if (touchStartX.current !== null && touchEndX.current !== null) {
       const distance = touchStartX.current - touchEndX.current;
-      if (distance > minSwipeDistance)
-        handleNext();
-      else if (distance < -minSwipeDistance)
-        handlePrev();
+      if (distance > minSwipeDistance) handleNext();
+      else if (distance < -minSwipeDistance) handlePrev();
     }
     touchStartX.current = null;
     touchEndX.current = null;
@@ -78,23 +71,16 @@ export default function ShopByTypeSlider({productData}: {productData: {image: st
       const right2 = (activeIndex + 2) % totalSlides;
       const right3 = (activeIndex + 3) % totalSlides;
 
-      if (index === activeIndex)
-        return "z-40 scale-100 opacity-100 translate-x-0";
-      if (index === left1)
-        return "z-30 scale-90 opacity-90 -translate-x-[60%]";
-      if (index === left2)
-        return "z-20 scale-80 opacity-80 -translate-x-[120%]";
-      if (index === left3)
-        return "z-10 scale-70 opacity-70 -translate-x-[180%]";
-      if (index === right1)
-        return "z-30 scale-90 opacity-90 translate-x-[60%]";
-      if (index === right2)
-        return "z-20 scale-80 opacity-80 translate-x-[120%]";
-      if (index === right3)
-        return "z-10 scale-70 opacity-70 translate-x-[180%]";
+      if (index === activeIndex) return "z-40 scale-100 opacity-100 translate-x-0";
+      if (index === left1) return "z-30 scale-90 opacity-90 -translate-x-[60%]";
+      if (index === left2) return "z-20 scale-80 opacity-80 -translate-x-[120%]";
+      if (index === left3) return "z-10 scale-70 opacity-70 -translate-x-[180%]";
+      if (index === right1) return "z-30 scale-90 opacity-90 translate-x-[60%]";
+      if (index === right2) return "z-20 scale-80 opacity-80 translate-x-[120%]";
+      if (index === right3) return "z-10 scale-70 opacity-70 translate-x-[180%]";
       return "hidden";
     },
-    [activeIndex, totalSlides]
+    [activeIndex, totalSlides],
   );
 
   const slideElements = useMemo(
@@ -103,7 +89,7 @@ export default function ShopByTypeSlider({productData}: {productData: {image: st
         <div
           key={index}
           className={`absolute transition-all duration-500 ease-in-out cursor-pointer ${getPositionClass(
-            index
+            index,
           )}`}
           onClick={() => setActiveIndex(index)}
         >
@@ -116,12 +102,10 @@ export default function ShopByTypeSlider({productData}: {productData: {image: st
               className="object-cover"
             />
           </div>
-          <p className="text-center mt-3 font-semibold font-rubik text-lg">
-            {item.name}
-          </p>
+          <p className="text-center mt-3 font-semibold font-rubik text-lg">{item.name}</p>
         </div>
       )),
-    [productData, getPositionClass, activeIndex]
+    [productData, getPositionClass, activeIndex],
   );
 
   return (

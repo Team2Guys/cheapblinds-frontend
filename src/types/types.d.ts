@@ -7,46 +7,46 @@ export interface SocialLink {
   className?: string; // Applying class directly to the icon component
   target?: string;
   posterImageUrl?: ProductImage;
-  post_links?: string
+  post_links?: string;
 }
-  export interface MenuItemProps {
-    label: string;
-    href: string;
-    submenu?: ISUBCATEGORY[];
-    scrolling?: boolean;
-    products?: {
-      name: string;
-      custom_url: string;
-      posterImageUrl?: { imageUrl: string,altText?: string };
-    }[];
-  }
-  export interface HeaderAccessoriesProps {
+export interface MenuItemProps {
+  label: string;
+  href: string;
+  submenu?: ISUBCATEGORY[];
+  scrolling?: boolean;
+  products?: {
     name: string;
-    custom_url: string; // Add this property
-    posterImageUrl: {
-      imageUrl: string;
-      altText?: string;
-    };
-  }
-  
-  export interface TextInputProps {
-    label?: string;
-    name: string;
-    required?: boolean;
-    placeholder?: string;
-    type?: string;
-    value?: string | number;
-    onChange?: ChangeEvent<HTMLInputElement>
-    min?: string
-    onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void; // eslint-disable-line
+    custom_url: string;
+    posterImageUrl?: { imageUrl: string; altText?: string };
+  }[];
+}
+export interface HeaderAccessoriesProps {
+  name: string;
+  custom_url: string; // Add this property
+  posterImageUrl: {
+    imageUrl: string;
+    altText?: string;
   };
-  export interface FAQ {
-    question: string;
-    answer: string;
-  }
+}
+
+export interface TextInputProps {
+  label?: string;
+  name: string;
+  required?: boolean;
+  placeholder?: string;
+  type?: string;
+  value?: string | number;
+  onChange?: ChangeEvent<HTMLInputElement>;
+  min?: string;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void; // eslint-disable-line
+}
+export interface FAQ {
+  question: string;
+  answer: string;
+}
 
 export interface FAQsListProps {
-    faqspage: FAQ[];
+  faqspage: FAQ[];
 }
 export interface TAboutUs {
   id: number;
@@ -65,17 +65,16 @@ export interface SampleGridData {
   buttonText: string;
   image: string;
   alt: string;
-  href:string;
+  href: string;
 }
 
 export interface SampleGridProps {
   sections: SampleGridData[];
-
 }
 
 export interface TAutoVideoProps {
   videoUrl: string;
-  fallbackImage?: string; 
+  fallbackImage?: string;
   className?: string;
 }
 
@@ -90,12 +89,12 @@ export interface FIlterprops {
 
   setPriceValue: React.Dispatch<React.SetStateAction<[number, number]>>;
   priceValue: [number, number];
-  catSlug: string
+  catSlug: string;
 }
 
 export type SelectedFilter =
-| { name: "isWaterProof"; value: boolean }
-| { name: keyof FilterState; value: string };
+  | { name: "isWaterProof"; value: boolean }
+  | { name: keyof FilterState; value: string };
 
 export interface SubCategoryProps {
   filteredProducts: Product[];
@@ -103,7 +102,7 @@ export interface SubCategoryProps {
   setSelectedProductFilters: React.Dispatch<React.SetStateAction<FilterState>>;
   setIsWaterProof: React.Dispatch<React.SetStateAction<boolean | null | undefined>>;
   categoryData: Category;
-  subCategoryData?: Category
+  subCategoryData?: Category;
 }
 export interface SubSection {
   subHeading: string;
@@ -130,10 +129,9 @@ export interface MeasurementSection {
   description: string;
   steps: Step[];
   image: string;
-  stepsHeading?:string
+  stepsHeading?: string;
 }
 export interface OrderItem {
-  
   image: string;
   title: string;
   boxes: number;
@@ -157,26 +155,25 @@ export interface SignAuthData {
   subtitle: string;
   emailPlaceholder: string;
   passwordPlaceholder: string;
-  // forgotPasswordText?: string; 
+  // forgotPasswordText?: string;
   buttonText: string;
   footerText: string;
   footerLinkText: string;
-  fullNamePlaceholder?:string;
-  retypePasswordPlaceholder?:string
+  fullNamePlaceholder?: string;
+  retypePasswordPlaceholder?: string;
 }
-
 
 export interface AuthFormState {
   email: string;
   password: string;
 }
 
-
 export interface AccessoriesPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  products:IProduct[];
-}export interface InputProps {
+  products: IProduct[];
+}
+export interface InputProps {
   type: string;
   name: string;
   placeholder?: string;
@@ -196,7 +193,6 @@ export interface ProductFilterParams {
   subcategory?: string;
 }
 
-
 export interface IAppointment {
   id: number;
   phoneNumber: string;
@@ -212,9 +208,9 @@ export interface CheckboxProps {
   isActive?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement> | boolean) => void; // eslint-disable-line
   children?: ReactNode;
-  className?: string; 
+  className?: string;
   required?: boolean;
-    name: string;
+  name: string;
 }
 export interface AccordionProps {
   label: string;
@@ -225,10 +221,9 @@ export interface AccordionProps {
   showPlusMinus?: boolean;
 }
 export interface RelatedSliderProps {
-  products: IProduct[]; 
+  products: IProduct[];
   isAccessories?: boolean;
-};
-
+}
 
 export type OrderHistory = {
   id: string;
@@ -238,32 +233,30 @@ export type OrderHistory = {
   paymentStatus: string;
   createdAt: string;
 };
-export interface INavbar{
+export interface INavbar {
   categories?: Category[];
   products?: IProduct[];
 }
 
- 
-
 export interface TPayment {
-  cardImage: string
-  cardLastFour: string
-  amount: number
-  currency: string
+  cardImage: string;
+  cardLastFour: string;
+  amount: number;
+  currency: string;
 }
 
 export interface TDelivery {
-  name: string
-  email: string
-  address: string
+  name: string;
+  email: string;
+  address: string;
 }
-export interface CategoryFeatures{
-  name:string,
-  features:string[]
+export interface CategoryFeatures {
+  name: string;
+  features: string[];
 }
 export interface Props extends BlogCardProps {
   index: number;
-  card:string;
+  card: string;
 }
 
 //terms
@@ -272,7 +265,7 @@ export interface ContactData {
   paragraph: string;
   points?: string;
   para?: string;
- }
+}
 
 export interface TableProps<T> {
   data: T[];
@@ -285,7 +278,6 @@ interface Column<T> {
   key: string;
   render?: (_record: T) => React.ReactNode;
 }
-
 
 export interface FaqItem {
   question: string;

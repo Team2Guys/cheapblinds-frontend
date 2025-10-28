@@ -37,14 +37,14 @@ export const GET_ALL_PRODUCTS = gql`
       updatedAt
       createdAt
       subcategory {
-      id
-      name
-      custom_url
+        id
+        name
+        custom_url
       }
       category {
-      id
-      name
-      custom_url
+        id
+        name
+        custom_url
       }
     }
   }

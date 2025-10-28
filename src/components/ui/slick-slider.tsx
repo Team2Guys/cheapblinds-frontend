@@ -1,10 +1,10 @@
-'use client';
-import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { HiArrowSmallLeft, HiArrowSmallRight } from 'react-icons/hi2';
-import { SlickSliderProps } from 'types/common';
+"use client";
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
+import { SlickSliderProps } from "types/common";
 
 interface ArrowProps {
   onClick?: () => void;
@@ -28,13 +28,7 @@ const PrevArrow: React.FC<ArrowProps> = ({ onClick }) => (
   </div>
 );
 
-
-
-const SlickSlider = ({
-  children,
-  slidesToShow = 4,
-  responsive = [],
-}:SlickSliderProps) => {
+const SlickSlider = ({ children, slidesToShow = 4, responsive = [] }: SlickSliderProps) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -65,7 +59,9 @@ const SlickSlider = ({
 
   return (
     <div className="relative ">
-      <Slider {...settings} className='pt-16'>{children}</Slider>
+      <Slider {...settings} className="pt-16">
+        {children}
+      </Slider>
     </div>
   );
 };

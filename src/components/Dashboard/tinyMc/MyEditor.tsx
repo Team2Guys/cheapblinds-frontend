@@ -7,24 +7,24 @@ interface TinyMCEEditorProps {
   placeholder?: string;
 }
 
-const TinyMCEEditor = ({ name, placeholder }:TinyMCEEditorProps) => {
+const TinyMCEEditor = ({ name, placeholder }: TinyMCEEditorProps) => {
   const config = useMemo(
     () => ({
-        height: 400,
-        menubar: true,
-        placeholder: placeholder || "Start typing...",
-        file_picker_types: "file image media",
-        automatic_uploads: true,
-        image_advtab: true,
-        image_dimensions: true,
-        image_caption: true,
-        image_title: true,
-        autosave_interval: "10s",
-        a11y_advanced_options: true,
-        quickbars_insert_toolbar: true,
-        nonbreaking_force_tab: true,
-        allow_html_in_named_anchor: true,
-        quickbars_image_toolbar:
+      height: 400,
+      menubar: true,
+      placeholder: placeholder || "Start typing...",
+      file_picker_types: "file image media",
+      automatic_uploads: true,
+      image_advtab: true,
+      image_dimensions: true,
+      image_caption: true,
+      image_title: true,
+      autosave_interval: "10s",
+      a11y_advanced_options: true,
+      quickbars_insert_toolbar: true,
+      nonbreaking_force_tab: true,
+      allow_html_in_named_anchor: true,
+      quickbars_image_toolbar:
         "alignleft aligncenter alignright | rotateleft rotateright | imageoptions",
       plugins: [
         "advlist",
@@ -67,8 +67,7 @@ const TinyMCEEditor = ({ name, placeholder }:TinyMCEEditorProps) => {
         },
         edit: {
           title: "Edit",
-          items:
-            "undo redo | cut copy paste pastetext | selectall | searchreplace",
+          items: "undo redo | cut copy paste pastetext | selectall | searchreplace",
         },
         view: {
           title: "View",
@@ -91,8 +90,7 @@ const TinyMCEEditor = ({ name, placeholder }:TinyMCEEditorProps) => {
         },
         table: {
           title: "Table",
-          items:
-            "inserttable | cell row column | advtablesort | tableprops deletetable",
+          items: "inserttable | cell row column | advtablesort | tableprops deletetable",
         },
         help: { title: "Help", items: "help" },
       },
@@ -102,7 +100,7 @@ const TinyMCEEditor = ({ name, placeholder }:TinyMCEEditorProps) => {
         "insertdatetime emoticons | code",
       ],
     }),
-    [placeholder]
+    [placeholder],
   );
 
   return (

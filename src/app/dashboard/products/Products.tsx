@@ -4,24 +4,21 @@ import DefaultLayout from "components/Dashboard/DefaultLayout";
 import ViewProduct from "components/Dashboard/dashboard_products/ViewProduct";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import {IProduct } from "types/prod";
+import { IProduct } from "types/prod";
 import { DASHBOARD_MAINPAGE_PROPS } from "types/PagesProps";
-const AddProd = dynamic(
-  () => import("components/Dashboard/dashboard_products/AddProd")
-);
+const AddProd = dynamic(() => import("components/Dashboard/dashboard_products/AddProd"));
 
 const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
   const [editProduct, setEditProduct] = useState<IProduct | undefined>(undefined);
-  const [products, setProducts] = useState<(IProduct )[]>([]);
-  const [selecteMenu, setselecteMenu] = useState<string>("Add All Products");  
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [selecteMenu, setselecteMenu] = useState<string>("Add All Products");
 
   useEffect(() => {
     setProducts(productsData ?? []);
   }, [productsData]);
   const productFlag: boolean = selecteMenu === "Add All Products" ? true : false;
-  
+
   return (
-    
     <DefaultLayout>
       <Breadcrumb pageName="Products" />
       {productFlag ? (
@@ -36,7 +33,11 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
           setselecteMenu={setselecteMenu}
           editProduct={editProduct}
           setEditProduct={setEditProduct}
-          EditProductValue={editProduct &&(editProduct.name !== undefined || editProduct.category !== undefined) ? editProduct : undefined}
+          EditProductValue={
+            editProduct && (editProduct.name !== undefined || editProduct.category !== undefined)
+              ? editProduct
+              : undefined
+          }
           categoriesList={categories}
           products={productsData}
         />

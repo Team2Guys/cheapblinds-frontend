@@ -1,4 +1,3 @@
-
 import Phone from "components/svg/phone";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,10 +19,7 @@ const ContactBanner = () => {
             <br />
             <span className="ml-8 block mt-5"> Instantly!</span>
           </p>
-          <Link
-            href="tel:+971 50 597 4531"
-            className="flex items-start gap-3 mt-10"
-          >
+          <Link href="tel:+971 50 597 4531" className="flex items-start gap-3 mt-10">
             <p>
               <Phone className="h-6 w-6 mt-2" />
             </p>

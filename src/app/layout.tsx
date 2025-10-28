@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { Open_Sans, Rubik } from "next/font/google";
 
-import '../styles/globals.css';
+import "../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import PathnameWrapper from "components/PathnameWrapper";
 
@@ -17,7 +17,6 @@ const rubik = Rubik({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-rubik",
 });
-
 
 export const metadata: Metadata = {
   title: "Create Next App",

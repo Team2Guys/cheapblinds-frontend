@@ -2,7 +2,7 @@
 import React, { useState, useMemo } from "react";
 import { useMutation } from "@apollo/client";
 import { UPDATE_COMMENT_STATUS, UPDATE_REPLY_STATUS } from "graphql/blogs";
-import { IBlogComment} from "types/general";
+import { IBlogComment } from "types/general";
 import showToast from "components/Toaster/Toaster";
 import revalidateTag from "components/ServerActons/ServerAction";
 import { useSession } from "next-auth/react";
@@ -15,13 +15,11 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [comments, setComments] = useState<IBlogComment[]>(AllComment);
   const [searchTerm, setSearchTerm] = useState<string>("");
- const session = useSession()
-  const finalToken = session.data?.accessToken
-  const avatarColor = (seed: string) =>
-    `hsl(${seed.charCodeAt(0) % 360},70%,60%)`;
+  const session = useSession();
+  const finalToken = session.data?.accessToken;
+  const avatarColor = (seed: string) => `hsl(${seed.charCodeAt(0) % 360},70%,60%)`;
 
-  const toggleExpand = (id: string) =>
-    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleExpand = (id: string) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
 
   const [updateCommentStatus] = useMutation(UPDATE_COMMENT_STATUS, {
     onError: (err) => showToast("error", err.message),
@@ -38,7 +36,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
   const updateLocalStatus = (
     id: string,
     status: "APPROVED" | "REJECTED" | "PENDING",
-    isReply: boolean
+    isReply: boolean,
   ) => {
     setComments((prev) =>
       prev.map((comment) => {
@@ -48,13 +46,13 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
 
         if (comment.replies) {
           const updatedReplies = comment.replies.map((reply) =>
-            isReply && reply.id === id ? { ...reply, status } : reply
+            isReply && reply.id === id ? { ...reply, status } : reply,
           );
           return { ...comment, replies: updatedReplies };
         }
 
         return comment;
-      })
+      }),
     );
   };
 
@@ -62,7 +60,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
     id: string,
     status: "APPROVED" | "REJECTED" | "PENDING",
     isReply: boolean = false,
-    commentId?: string
+    commentId?: string,
   ) => {
     try {
       updateLocalStatus(id, status, isReply);
@@ -70,9 +68,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
       if (isReply) {
         let parentCommentId = commentId;
         if (!parentCommentId) {
-          const parentComment = comments.find((c) =>
-            c.replies?.some((r) => r.id === id)
-          );
+          const parentComment = comments.find((c) => c.replies?.some((r) => r.id === id));
           parentCommentId = parentComment?.id;
         }
 
@@ -83,7 +79,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
             headers: {
               authorization: `Bearer ${finalToken}`,
             },
-            credentials: 'include',
+            credentials: "include",
           },
           variables: {
             updateReplystatus: {
@@ -103,7 +99,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
             headers: {
               authorization: `Bearer ${finalToken}`,
             },
-            credentials: 'include',
+            credentials: "include",
           },
           variables: {
             UpdateStatus: { id, status },
@@ -114,7 +110,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
         });
         showToast("success", `Comment marked as ${data?.UpdateStatus.status}`);
       }
-      revalidateTag("blogs")
+      revalidateTag("blogs");
     } catch (error) {
       updateLocalStatus(id, "PENDING", isReply);
       showToast("error", error instanceof Error ? error.message : "Failed");
@@ -149,9 +145,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
 
           {comments.map((c) => (
             <div key={c.id} className="border p-4 mb-3 space-y-2 bg-primary rounded">
-              <p className="text-xs text-white">
-                {new Date(c.createdAt).toLocaleDateString()}
-              </p>
+              <p className="text-xs text-white">{new Date(c.createdAt).toLocaleDateString()}</p>
               <div className="flex items-center gap-3">
                 <span
                   className="flex items-center justify-center rounded-full text-white font-semibold"
@@ -219,7 +213,14 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
                         {["APPROVED", "REJECTED", "PENDING"].map((status) => (
                           <button
                             key={status}
-                            onClick={() => setStatus(r.id, status as "APPROVED" | "REJECTED" | "PENDING", true, c.id)}
+                            onClick={() =>
+                              setStatus(
+                                r.id,
+                                status as "APPROVED" | "REJECTED" | "PENDING",
+                                true,
+                                c.id,
+                              )
+                            }
                             className={`px-2 py-1 text-sm rounded-md ${
                               r.status === status
                                 ? "bg-gray-500 cursor-not-allowed"

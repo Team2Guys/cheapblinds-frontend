@@ -1,22 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import Cookies from 'js-cookie';
-import { MdKeyboardArrowDown } from 'react-icons/md';
-import { FaRegUser } from 'react-icons/fa6';
-import { RiLogoutBoxLine } from 'react-icons/ri';
-import { signOut, useSession } from 'next-auth/react';
-
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import Cookies from "js-cookie";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa6";
+import { RiLogoutBoxLine } from "react-icons/ri";
+import { signOut, useSession } from "next-auth/react";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-        const { data: session } = useSession()
-        
+  const { data: session } = useSession();
+
   const trigger = useRef<HTMLDivElement>(null);
   const dropdown = useRef<HTMLDivElement>(null);
-
 
   // close on click outside
   useEffect(() => {
@@ -25,13 +23,13 @@ const DropdownUser = () => {
       if (
         !dropdownOpen ||
         dropdown.current.contains(target as Node) ||
-        trigger.current && trigger.current.contains(target as Node)
+        (trigger.current && trigger.current.contains(target as Node))
       )
         return;
       setDropdownOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -40,19 +38,19 @@ const DropdownUser = () => {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   const logoutHhandler = () => {
-  try {
-    Cookies.remove('admin_access_token');
-    Cookies.remove('super_admin_access_token');
-    signOut({ callbackUrl: '/dashboard/Admin-login' }); 
-  } catch (err)  {
-    throw err
+    try {
+      Cookies.remove("admin_access_token");
+      Cookies.remove("super_admin_access_token");
+      signOut({ callbackUrl: "/dashboard/Admin-login" });
+    } catch (err) {
+      throw err;
     }
-};
+  };
 
   return (
     <div className="relative">
@@ -77,7 +75,7 @@ const DropdownUser = () => {
               src={
                 session && session?.user?.image
                   ? session.user.image
-                  : '/assets/images/dummy-avatar.jpg'
+                  : "/assets/images/dummy-avatar.jpg"
               }
               width={55}
               height={55}
@@ -92,7 +90,7 @@ const DropdownUser = () => {
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
         className={`absolute right-0 mt-1 flex flex-col rounded-sm border border-stroke bg-white w-fit shadow-default dark:border-strokedark dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-blue-50 ${
-          dropdownOpen === true ? 'block' : 'hidden'
+          dropdownOpen === true ? "block" : "hidden"
         }`}
       >
         <ul className="flex flex-col w-44 space-y-6 border-b border-stroke px-6 py-3 dark:border-strokedark">

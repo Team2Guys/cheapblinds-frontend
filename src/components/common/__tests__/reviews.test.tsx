@@ -13,8 +13,6 @@ describe("Reviews Component", () => {
     render(<Reviews />);
     expect(screen.getByText(/Our customers say/i)).toBeInTheDocument();
     expect(screen.getByText(/Excellent/i)).toBeInTheDocument();
-    expect(
-      screen.getByText(/4.7 out of 5 based on 84,290 reviews/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/4.7 out of 5 based on 84,290 reviews/i)).toBeInTheDocument();
   });
 });

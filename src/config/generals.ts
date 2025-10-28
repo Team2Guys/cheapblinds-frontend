@@ -1,15 +1,23 @@
-'use server';
+"use server";
 
-import { APPOINTMENTS_ORDERS, GET_ALL_PROD_REVIEWS, GET_ALL_PRODUCT_QUESTIONS, WEEKLY_STATS } from "graphql/general";
+import {
+  APPOINTMENTS_ORDERS,
+  GET_ALL_PROD_REVIEWS,
+  GET_ALL_PRODUCT_QUESTIONS,
+  WEEKLY_STATS,
+} from "graphql/general";
 import { FIND_ONE_REDIRECT_URL } from "graphql/mutations";
-import { FETCH_ALL_ECOMMERCE_PAGINATED_PRODUCTS, FIND_ONE_USER_ORDER, GET_Redirecturls, GET_REVIEWS, ORDER_QUERY } from "graphql/queries";
+import {
+  FETCH_ALL_ECOMMERCE_PAGINATED_PRODUCTS,
+  FIND_ONE_USER_ORDER,
+  GET_Redirecturls,
+  GET_REVIEWS,
+  ORDER_QUERY,
+} from "graphql/queries";
 import { fetchAllblogs, GET_ALL_BLOGS } from "graphql/blogs";
 import { GET_ALL_JOB_APPLICATIONS, GET_ALL_JOBS, GET_SINGLE_JOB } from "graphql/JobsModule";
 import ApoloClient from "utils/AppoloClient";
 import { DocumentNode } from "@apollo/client";
-
-
-
 
 export const fetchRedirectUrls = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) => {
   try {
@@ -20,7 +28,6 @@ export const fetchRedirectUrls = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) 
       context: {
         fetchOptions: { next: { tags: ["RedirectUrls"] } },
       },
-
     });
     return data?.findAllRedirecturls;
   } catch (error) {
@@ -38,7 +45,6 @@ export const fetchReview = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) => {
       context: {
         fetchOptions: { next: { tags: ["reviews"] } },
       },
-
     });
     return data?.get_All_Reviews;
   } catch (error) {
@@ -47,12 +53,11 @@ export const fetchReview = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) => {
   }
 };
 
-
 export const fetchPaginatedEcommerce = async (
   categoryname: string,
   page: number,
   pageSize: number,
-  subcategory?: string
+  subcategory?: string,
 ) => {
   try {
     const { data } = await ApoloClient.mutate({
@@ -62,20 +67,18 @@ export const fetchPaginatedEcommerce = async (
           categoryname,
           page,
           pageSize,
-          subcategory
+          subcategory,
         },
       },
-      fetchPolicy: 'no-cache',
+      fetchPolicy: "no-cache",
     });
 
     return data?.PaginatedPrducts || [];
   } catch (error) {
     return [];
     throw error;
-
   }
 };
-
 
 export const fetchUserOrders = async (email: string) => {
   try {
@@ -83,20 +86,20 @@ export const fetchUserOrders = async (email: string) => {
       query: FIND_ONE_USER_ORDER,
       fetchPolicy: "no-cache",
       variables: {
-        email: email
+        email: email,
       },
       context: {
         // headers: {
         //   authorization: `Bearer ${token}`
         // },
         fetchOptions: {
-          next: { tags: ["orders"] }
+          next: { tags: ["orders"] },
         },
       },
     });
     return data.usersOrders || [];
   } catch (error) {
-    return []
+    return [];
     throw error;
   }
 };
@@ -109,37 +112,33 @@ export const fetchSingleOrder = async (orderId: string) => {
       variables: { orderId },
       context: {
         fetchOptions: {
-          next: { tags: ["orders"] }
+          next: { tags: ["orders"] },
         },
       },
     });
     return data.Order || [];
   } catch (error) {
-    return []
+    return [];
     throw error;
   }
 };
 
-
-
 export const findOneRedirectUrl = async (
   url: string,
-  token?:string,
+  token?: string,
   CUSTOM_MUTATION?: DocumentNode,
- 
 ) => {
   try {
     const { data } = await ApoloClient.mutate({
       mutation: CUSTOM_MUTATION ? CUSTOM_MUTATION : FIND_ONE_REDIRECT_URL,
       variables: { url },
       context: {
-            headers: {
-          authorization: token ? `Bearer ${token}` : '',
+        headers: {
+          authorization: token ? `Bearer ${token}` : "",
         },
         fetchOptions: {
-          credentials: 'include',
-          next: { tags: ["RedirectUrls"] }
-          
+          credentials: "include",
+          next: { tags: ["RedirectUrls"] },
         },
       },
     });
@@ -151,30 +150,31 @@ export const findOneRedirectUrl = async (
   }
 };
 
-
 // prodquestions
-export const fetchProductQuestions = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode, token?:string) => {
+export const fetchProductQuestions = async (
+  FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode,
+  token?: string,
+) => {
   try {
     const { data } = await ApoloClient.query({
-      query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : GET_ALL_PRODUCT_QUESTIONS,
+      query: FIND_QUICK_VIEW_PRODUCT_REVIEW
+        ? FIND_QUICK_VIEW_PRODUCT_REVIEW
+        : GET_ALL_PRODUCT_QUESTIONS,
 
       fetchPolicy: "no-cache",
       context: {
-            headers: {
-          authorization: token ? `Bearer ${token}` : '',
+        headers: {
+          authorization: token ? `Bearer ${token}` : "",
         },
-        fetchOptions: { next: { tags: ["prodQuestions","Ecomerece"] } },
+        fetchOptions: { next: { tags: ["prodQuestions", "Ecomerece"] } },
       },
-
-    })
+    });
     return data?.get_All_prod_Questions;
   } catch (error) {
     return [];
     throw error;
   }
 };
-
-
 
 export const fetchProductreviews = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) => {
   try {
@@ -185,15 +185,13 @@ export const fetchProductreviews = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: Docum
       context: {
         fetchOptions: { next: { tags: ["prodreviews"] } },
       },
-
     });
     return data?.get_All_prod_Reviews;
   } catch (error) {
-    return[];
+    return [];
     throw error;
   }
 };
-
 
 export const fetchAllBlogs = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) => {
   try {
@@ -204,7 +202,6 @@ export const fetchAllBlogs = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNod
       context: {
         fetchOptions: { next: { tags: ["blogs"] } },
       },
-
     });
     return data?.get_all_blogs;
   } catch (error) {
@@ -212,7 +209,6 @@ export const fetchAllBlogs = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNod
     throw error;
   }
 };
-
 
 export const fetchSingleComment = async (FIND_ONE_CUSTOM_BLOG?: DocumentNode) => {
   try {
@@ -222,7 +218,6 @@ export const fetchSingleComment = async (FIND_ONE_CUSTOM_BLOG?: DocumentNode) =>
       context: {
         fetchOptions: { next: { tags: ["blogs"] } },
       },
-
     });
     return data?.Allcoments;
   } catch (error) {
@@ -242,7 +237,6 @@ export const fetchJobs = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) =
       context: {
         fetchOptions: { next: { tags: ["Jobs"] } },
       },
-
     });
     return data?.get_All_jobs;
   } catch (error) {
@@ -252,7 +246,10 @@ export const fetchJobs = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) =
 };
 
 //single job
-export const fetchSingleJobs = async (customUrl: string, FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) => {
+export const fetchSingleJobs = async (
+  customUrl: string,
+  FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode,
+) => {
   try {
     const { data } = await ApoloClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : GET_SINGLE_JOB,
@@ -261,7 +258,6 @@ export const fetchSingleJobs = async (customUrl: string, FIND_QUICK_VIEW_PRODUCT
       context: {
         fetchOptions: { next: { tags: ["Jobs"] } },
       },
-
     });
     return data?.get_single_job;
   } catch (error) {
@@ -273,7 +269,9 @@ export const fetchSingleJobs = async (customUrl: string, FIND_QUICK_VIEW_PRODUCT
 export const fetchJobsApplication = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) => {
   try {
     const { data } = await ApoloClient.query({
-      query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : GET_ALL_JOB_APPLICATIONS,
+      query: FIND_QUICK_VIEW_PRODUCT_REVIEW
+        ? FIND_QUICK_VIEW_PRODUCT_REVIEW
+        : GET_ALL_JOB_APPLICATIONS,
 
       fetchPolicy: "no-cache",
       context: {
@@ -287,20 +285,21 @@ export const fetchJobsApplication = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: Docu
   }
 };
 
-
-export const MONTHLYSTATS_HANDLER = async (token?:string ,FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode, ) => {
+export const MONTHLYSTATS_HANDLER = async (
+  token?: string,
+  FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode,
+) => {
   try {
-
     const { data } = await ApoloClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : APPOINTMENTS_ORDERS,
 
       fetchPolicy: "no-cache",
       context: {
-            headers: {
-          authorization: `Bearer ${token}`
+        headers: {
+          authorization: `Bearer ${token}`,
         },
-       fetchOptions: {
-      next: { tags: ["orders","Ecomerece","appointments"] }
+        fetchOptions: {
+          next: { tags: ["orders", "Ecomerece", "appointments"] },
         },
       },
     });
@@ -311,30 +310,29 @@ export const MONTHLYSTATS_HANDLER = async (token?:string ,FIND_QUICK_VIEW_PRODUC
   }
 };
 
-
-export const WEEEKLYSTATSHANDLER = async (token?:string ,FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) => {
+export const WEEEKLYSTATSHANDLER = async (
+  token?: string,
+  FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode,
+) => {
   try {
-      // const token  = await getToken()
+    // const token  = await getToken()
     const { data } = await ApoloClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : WEEKLY_STATS,
 
       fetchPolicy: "no-cache",
       context: {
-            headers: {
-          authorization: `Bearer ${token}`
+        headers: {
+          authorization: `Bearer ${token}`,
         },
-       fetchOptions: {
-          next: { tags: ["orders","Ecomerece","appointments"] }
+        fetchOptions: {
+          next: { tags: ["orders", "Ecomerece", "appointments"] },
         },
       },
     });
     return data?.WEEKLY_STATS;
   } catch (error) {
-    console.log(error, "error")
+    console.log(error, "error");
     return [];
     throw error;
   }
 };
-
-
-

@@ -1,17 +1,19 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Formik,
-  FormikErrors,
-  Form,
-  FormikHelpers,
-  Field,
-  ErrorMessage,
-} from "formik";
+import { Formik, FormikErrors, Form, FormikHelpers, Field, ErrorMessage } from "formik";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { handleCropClick, handleCropModalCancel, handleCropModalOk, handleImageAltText, handleSort, ImageRemoveHandler, onCropComplete, onImageLoad } from "utils/helperFunctions";
+import {
+  handleCropClick,
+  handleCropModalCancel,
+  handleCropModalOk,
+  handleImageAltText,
+  handleSort,
+  ImageRemoveHandler,
+  onCropComplete,
+  onImageLoad,
+} from "utils/helperFunctions";
 import Toaster from "components/Toaster/Toaster";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { FormValues } from "types/type";
@@ -20,16 +22,15 @@ import { IProductValues, ProductImage } from "types/prod";
 import ImageUploader from "components/ImageUploader/ImageUploader";
 import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from "types/PagesProps";
 import { useMutation } from "@apollo/client";
-import ReactCrop, { Crop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import ReactCrop, { Crop } from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 import { useRouter } from "next/navigation";
 import { AddproductsinitialValues } from "data/InitialValues";
 import { AddProductvalidationSchema } from "data/Validations";
 import { ISUBCATEGORY } from "types/cat";
-import { Modal } from 'antd';
+import { Modal } from "antd";
 import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "graphql/prod";
 import { useSession } from "next-auth/react";
-
 
 const initialErrors = {
   categoryError: "",
@@ -45,24 +46,37 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   setEditProduct,
   categoriesList,
 }) => {
-
   // const editProductFlag = editProduct?.type == "product"
-  const [imagesUrl, setImagesUrl] = useState<ProductImage[] | undefined>((editProduct && editProduct?.productImages.length > 0) ? editProduct?.productImages : []);
-  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(editProduct && editProduct.posterImageUrl ? [editProduct.posterImageUrl] : []);
-  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(editProduct?.hoverImageUrl ? [{ ...editProduct.hoverImageUrl }] : undefined);
+  const [imagesUrl, setImagesUrl] = useState<ProductImage[] | undefined>(
+    editProduct && editProduct?.productImages.length > 0 ? editProduct?.productImages : [],
+  );
+  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(
+    editProduct && editProduct.posterImageUrl ? [editProduct.posterImageUrl] : [],
+  );
+  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(
+    editProduct?.hoverImageUrl ? [{ ...editProduct.hoverImageUrl }] : undefined,
+  );
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const session = useSession()
+  const session = useSession();
 
-  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editProduct && editProduct?.Banners ? [editProduct?.Banners] : undefined);
+  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(
+    editProduct && editProduct?.Banners ? [editProduct?.Banners] : undefined,
+  );
 
   const [loading, setloading] = useState<boolean>(false);
-  const [productInitialValue, setProductInitialValue] = useState<IProductValues | null | undefined>();
+  const [productInitialValue, setProductInitialValue] = useState<
+    IProductValues | null | undefined
+  >();
   const [imgError, setError] = useState<string | null | undefined>();
-  const [selectedCategory, setSelectedCategory] = useState(editProduct ? editProduct.category.id : '');
+  const [selectedCategory, setSelectedCategory] = useState(
+    editProduct ? editProduct.category.id : "",
+  );
   const [subcategories, setSubcategories] = useState<ISUBCATEGORY[]>([]);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(editProduct?.subcategory?.id ?? '');
+  const [selectedSubcategory, setSelectedSubcategory] = useState(
+    editProduct?.subcategory?.id ?? "",
+  );
   const [categorySubCatError, setcategorySubCatError] = useState(initialErrors);
   const dragImage = useRef<number | null>(null);
   const draggedOverImage = useRef<number | null>(null);
@@ -75,32 +89,27 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const finalToken = session.data?.accessToken;
   const formikValuesRef = useRef<IProductValues>(productInitialValue || AddproductsinitialValues);
 
-  const [updateProduct] = useMutation(UPDATE_PRODUCT,
-    {
-      context: {
-        fetchOptions: {
-          credentials: "include",
-        },
-        headers: {
-          authorization: `Bearer ${finalToken}`,
-        }
+  const [updateProduct] = useMutation(UPDATE_PRODUCT, {
+    context: {
+      fetchOptions: {
+        credentials: "include",
       },
-    }
-  );
-
-  const [createProduct] = useMutation(CREATE_PRODUCT,
-    {
-      context: {
-        fetchOptions: {
-          credentials: "include",
-        },
-        headers: {
-          authorization: `Bearer ${finalToken}`,
-        }
+      headers: {
+        authorization: `Bearer ${finalToken}`,
       },
-    }
-  );
+    },
+  });
 
+  const [createProduct] = useMutation(CREATE_PRODUCT, {
+    context: {
+      fetchOptions: {
+        credentials: "include",
+      },
+      headers: {
+        authorization: `Bearer ${finalToken}`,
+      },
+    },
+  });
 
   useEffect(() => {
     const CategoryHandler = async () => {
@@ -108,7 +117,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         const selectedCat = categoriesList?.find((cat) => cat.id === selectedCategory);
         setSubcategories(selectedCat?.subCategories || []);
         if (!editProduct) return;
-        setImagesUrl((editProduct && EditProductValue?.productImages.length > 0) ? EditProductValue?.productImages : []);
+        setImagesUrl(
+          editProduct && EditProductValue?.productImages.length > 0
+            ? EditProductValue?.productImages
+            : [],
+        );
         sethoverImage(editProduct?.hoverImageUrl ? [{ ...editProduct.hoverImageUrl }] : []);
         setProductInitialValue?.(() => EditProductValue);
       } catch (err) {
@@ -160,9 +173,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         return;
       }
 
-
-
-
       const formValues = {
         ...values,
         posterImageUrl,
@@ -177,13 +187,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       const updateFlag = EditProductValue && editProduct ? true : false;
       const { data } = updateFlag
         ? await updateProduct({
-          variables: { input: { ...newValues, id: Number(editProduct?.id) } },
-          refetchQueries: [{ query: GET_ALL_PRODUCTS }]
-        })
+            variables: { input: { ...newValues, id: Number(editProduct?.id) } },
+            refetchQueries: [{ query: GET_ALL_PRODUCTS }],
+          })
         : await createProduct({
-          variables: { input: newValues },
-          refetchQueries: [{ query: GET_ALL_PRODUCTS }]
-        });
+            variables: { input: newValues },
+            refetchQueries: [{ query: GET_ALL_PRODUCTS }],
+          });
 
       if (!data) {
         throw new Error("Mutation failed. No data returned.");
@@ -195,7 +205,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         "success",
         updateFlag
           ? "Product has been successfully updated!"
-          : "Product has been successfully added!"
+          : "Product has been successfully added!",
       );
 
       resetForm();
@@ -211,7 +221,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     } catch (err: any) {
       if (err?.graphQLErrors?.length > 0) {
         if (err?.graphQLErrors[0].message === "Authentication required") {
-          router.push("/dashboard/Admin-login")
+          router.push("/dashboard/Admin-login");
         }
         setError(err?.graphQLErrors[0].message);
       } else if (err instanceof Error) {
@@ -225,7 +235,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     /* eslint-enable */
   };
 
-
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = Number(e.target.value);
     setSelectedCategory(categoryId);
@@ -236,77 +245,67 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
   const handleInnerSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = Number(e.target.value);
-    setSelectedSubcategory(categoryId)
+    setSelectedSubcategory(categoryId);
   };
-
 
   const hasUnsavedChanges = (): boolean => {
     const initialFormValues = productInitialValue || AddproductsinitialValues;
 
     const oldPoster = editProduct?.posterImageUrl;
     const newPoster = posterimageUrl?.[0];
-    const isPosterChanged =
-      !!editProduct
-        ? !oldPoster || !newPoster
-          ? oldPoster !== newPoster
-          : oldPoster.public_id !== newPoster.public_id ||
-          (oldPoster.altText ?? '') !== (newPoster.altText ?? '')
-        : !!newPoster;
+    const isPosterChanged = !!editProduct
+      ? !oldPoster || !newPoster
+        ? oldPoster !== newPoster
+        : oldPoster.public_id !== newPoster.public_id ||
+          (oldPoster.altText ?? "") !== (newPoster.altText ?? "")
+      : !!newPoster;
 
     const oldBanner = editProduct?.Banners;
     const newBanner = BannerImageUrl?.[0];
-    const isBannerChanged =
-      !!editProduct
-        ? !oldBanner || !newBanner
-          ? oldBanner !== newBanner
-          : oldBanner.public_id !== newBanner.public_id ||
-          (oldBanner.altText ?? '') !== (newBanner.altText ?? '')
-        : !!newBanner;
+    const isBannerChanged = !!editProduct
+      ? !oldBanner || !newBanner
+        ? oldBanner !== newBanner
+        : oldBanner.public_id !== newBanner.public_id ||
+          (oldBanner.altText ?? "") !== (newBanner.altText ?? "")
+      : !!newBanner;
 
     const oldImages = editProduct?.productImages ?? [];
     const newImages = imagesUrl ?? [];
     const isProductImagesChanged = !!editProduct
       ? oldImages.length !== newImages.length ||
-      oldImages.some((img: ProductImage, i: number) =>
-        img.public_id !== newImages[i]?.public_id ||
-        (img.altText ?? '') !== (newImages[i]?.altText ?? '')
-      )
+        oldImages.some(
+          (img: ProductImage, i: number) =>
+            img.public_id !== newImages[i]?.public_id ||
+            (img.altText ?? "") !== (newImages[i]?.altText ?? ""),
+        )
       : newImages.length > 0;
-
 
     const oldHover = editProduct?.hoverImageUrl;
     const newHover = hoverImage?.[0];
-    const isHoverImageChanged =
-      !!editProduct
-        ? !oldHover || !newHover
-          ? oldHover !== newHover
-          : oldHover.public_id !== newHover.public_id ||
-          (oldHover.altText ?? '') !== (newHover.altText ?? '')
-        : !!newHover;
+    const isHoverImageChanged = !!editProduct
+      ? !oldHover || !newHover
+        ? oldHover !== newHover
+        : oldHover.public_id !== newHover.public_id ||
+          (oldHover.altText ?? "") !== (newHover.altText ?? "")
+      : !!newHover;
 
     const currentValues = {
       ...formikValuesRef.current,
-      category:
-        selectedCategory === ''
-          ? ''
-          : Number(selectedCategory),
-      subcategory:
-        selectedSubcategory === ''
-          ? ''
-          : Number(selectedSubcategory),
+      category: selectedCategory === "" ? "" : Number(selectedCategory),
+      subcategory: selectedSubcategory === "" ? "" : Number(selectedSubcategory),
     };
     const initialValues = {
       ...initialFormValues,
       category:
-        initialFormValues.category === ''
-          ? ''
-          // eslint-disable-next-line
-          : Number((initialFormValues.category as any).id),
+        initialFormValues.category === ""
+          ? ""
+          : // eslint-disable-next-line
+            Number((initialFormValues.category as any).id),
       subcategory:
-        initialFormValues.subcategory === ''
-          ? ''
-          // eslint-disable-next-line
-          : Number((initialFormValues.subcategory as any).id),
+        initialFormValues.subcategory === ""
+          ? ""
+          : // eslint-disable-next-line
+            Number((initialFormValues.subcategory as any).id),
     };
 
     const isFormChanged = JSON.stringify(initialValues) !== JSON.stringify(currentValues);
@@ -320,24 +319,23 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     );
   };
 
-
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges()) {
         e.preventDefault();
-        e.returnValue = '';
-        return '';
+        e.returnValue = "";
+        return "";
       }
     };
 
     const handlePopState = () => {
       if (hasUnsavedChanges()) {
-        window.history.pushState(null, '', window.location.href);
+        window.history.pushState(null, "", window.location.href);
         Modal.confirm({
-          title: 'Unsaved Changes',
-          content: 'You have unsaved changes. Do you want to discard them?',
-          okText: 'Discard Changes',
-          cancelText: 'Cancel',
+          title: "Unsaved Changes",
+          content: "You have unsaved changes. Do you want to discard them?",
+          okText: "Discard Changes",
+          cancelText: "Cancel",
           onOk: () => {
             setselecteMenu("Add All Products");
             setEditProduct?.(() => undefined);
@@ -349,23 +347,23 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('popstate', handlePopState);
-    window.history.pushState(null, '', window.location.href);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handlePopState);
+    window.history.pushState(null, "", window.location.href);
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, [productInitialValue, BannerImageUrl, posterimageUrl, imagesUrl, hoverImage]);
 
   const handleBack = () => {
     if (hasUnsavedChanges()) {
       Modal.confirm({
-        title: 'Unsaved Changes',
-        content: 'You have unsaved changes. Do you want to discard them?',
-        okText: 'Discard Changes',
-        cancelText: 'Cancel',
+        title: "Unsaved Changes",
+        content: "You have unsaved changes. Do you want to discard them?",
+        okText: "Discard Changes",
+        cancelText: "Cancel",
         onOk: () => {
           setselecteMenu("Add All Products");
           setEditProduct?.(() => undefined);
@@ -379,12 +377,16 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   };
 
   return (
-
-
     <Formik
       enableReinitialize
       initialValues={
-        productInitialValue ? { ...productInitialValue, category: Number(editProduct?.category?.id), subcategory: Number(editProduct?.subcategory?.id) } : AddproductsinitialValues
+        productInitialValue
+          ? {
+              ...productInitialValue,
+              category: Number(editProduct?.category?.id),
+              subcategory: Number(editProduct?.subcategory?.id),
+            }
+          : AddproductsinitialValues
       }
       validationSchema={AddProductvalidationSchema}
       onSubmit={onSubmit}
@@ -394,37 +396,30 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         formikValuesRef.current = values;
 
         return (
-
-
           <Form onSubmit={formik.handleSubmit} role="form">
-
-
-            <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
-              <p
-                className="dashboard_primary_button"
-                onClick={handleBack}
-              >
+            <div className="flex flex-wrap mb-5 gap-2 justify-between items-center">
+              <p className="dashboard_primary_button" onClick={handleBack}>
                 <IoMdArrowRoundBack /> Back
               </p>
               <div className="flex justify-center gap-4">
                 <Field name="status">
-                  {({ field, form }: import('formik').FieldProps) => (
+                  {({ field, form }: import("formik").FieldProps) => (
                     <div className="flex gap-4 items-center border-r-2 dark:border-white px-2">
-
-                      {['DRAFT', 'PUBLISHED'].map((status) => {
+                      {["DRAFT", "PUBLISHED"].map((status) => {
                         const isActive = field.value === status;
 
                         return (
                           <button
                             key={status}
                             type="button"
-                            onClick={() => form.setFieldValue('status', status)}
+                            onClick={() => form.setFieldValue("status", status)}
                             disabled={isActive}
                             className={`px-4 py-2 rounded-md text-sm
-                                ${isActive
-                                ? 'dashboard_primary_button cursor-not-allowed'
-                                : 'bg-white text-black cursor-pointer'
-                              }`}
+                                ${
+                                  isActive
+                                    ? "dashboard_primary_button cursor-not-allowed"
+                                    : "bg-white text-black cursor-pointer"
+                                }`}
                           >
                             {status}
                           </button>
@@ -438,11 +433,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                   className="dashboard_primary_button cursor-pointer"
                   disabled={loading}
                 >
-                  {loading ? "loading.." : 'Submit'}
+                  {loading ? "loading.." : "Submit"}
                 </button>
               </div>
             </div>
-
 
             <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
               <div className="flex flex-col gap-9 ">
@@ -474,7 +468,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   />
                                 </div>
                                 <Image
-                                  onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
+                                  onClick={() =>
+                                    handleCropClick(
+                                      item.imageUrl,
+                                      setImageSrc,
+                                      setIsCropModalVisible,
+                                    )
+                                  }
                                   key={index}
                                   className="object-cover cursor-crosshair"
                                   width={300}
@@ -496,7 +496,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       index,
                                       String(e.target.value),
                                       setposterimageUrl,
-                                      "altText"
+                                      "altText",
                                     )
                                   }
                                 />
@@ -510,13 +510,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     )}
                   </div>
                   {categorySubCatError.posterImageError ? (
-                    <p className="text-red-500">
-                      {categorySubCatError.posterImageError}
-                    </p>
+                    <p className="text-red-500">{categorySubCatError.posterImageError}</p>
                   ) : null}
 
                   <div className="flex flex-col ">
-
                     <label className="primary-label" aria-label="Product Title">
                       Product Title
                     </label>
@@ -525,10 +522,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       type="text"
                       name="name"
                       placeholder="Product Title"
-                      className={`dashboard_input ${formik.touched.name && formik.errors.name
-                        ? "border-red-500"
-                        : ""
-                        }`}
+                      className={`dashboard_input ${
+                        formik.touched.name && formik.errors.name ? "border-red-500" : ""
+                      }`}
                     />
                     <ErrorMessage
                       name="name"
@@ -546,24 +542,21 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           type="text"
                           name="custom_url"
                           placeholder="Title"
-                          className={`primary-input ${formik.touched.custom_url && formik.errors.custom_url
-                            ? "border-red-500"
-                            : ""
-                            }`}
+                          className={`primary-input ${
+                            formik.touched.custom_url && formik.errors.custom_url
+                              ? "border-red-500"
+                              : ""
+                          }`}
                         />
-
                       </div>
 
                       <div className=" ">
-                        <label className="primary-label">
-                          breadCrum
-                        </label>
+                        <label className="primary-label">breadCrum</label>
 
                         <Field
                           type="text"
                           name="breadCrum"
                           placeholder="breadCrum"
-
                           className="primary-input"
                         />
 
@@ -575,10 +568,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
                     </div>
 
-
-
-
-
                     <label className="primary-label" aria-label="Description">
                       Description
                     </label>
@@ -587,40 +576,31 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       onChange={formik.handleChange}
                       value={formik.values.description}
                       placeholder="description"
-                      className={`primary-input ${formik.touched.description &&
-                        formik.errors.description
-                        ? "border-red-500"
-                        : ""
-                        }`}
+                      className={`primary-input ${
+                        formik.touched.description && formik.errors.description
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {formik.touched.description &&
-                      formik.errors.description ? (
+                    {formik.touched.description && formik.errors.description ? (
                       <div className="text-red-500 dark:text-red-700 text-sm">
-                        {
-                          formik.errors.description as FormikErrors<
-                            FormValues["description"]
-                          >
-                        }
+                        {formik.errors.description as FormikErrors<FormValues["description"]>}
                       </div>
                     ) : null}
 
-
-                    <label className="primary-label">
-                      Short Description{" "}
-                    </label>
+                    <label className="primary-label">Short Description </label>
                     <textarea
                       name="short_description"
                       onChange={formik.handleChange}
                       value={formik.values.short_description}
                       placeholder="short description"
-                      className={`primary-input ${formik.touched.short_description &&
-                        formik.errors.short_description
-                        ? "border-red-500"
-                        : ""
-                        }`}
+                      className={`primary-input ${
+                        formik.touched.short_description && formik.errors.short_description
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     />
-                    {formik.touched.short_description &&
-                      formik.errors.short_description ? (
+                    {formik.touched.short_description && formik.errors.short_description ? (
                       <div className="text-red-500 dark:text-red-700 text-sm">
                         {
                           formik.errors.short_description as FormikErrors<
@@ -629,7 +609,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         }
                       </div>
                     ) : null}
-
 
                     <div className="flex full items-center gap-4">
                       <div className="w-1/3 xs:w-1/3">
@@ -644,19 +623,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           value={formik.values.price}
                           placeholder="Product Price"
                           min="0"
-                          className={`primary-input ${formik.touched.price && formik.errors.price
-                            ? "border-red-500"
-                            : ""
-                            }`}
+                          className={`primary-input ${
+                            formik.touched.price && formik.errors.price ? "border-red-500" : ""
+                          }`}
                         />
                         {formik.touched.price && formik.errors.price ? (
                           <div className="text-red-500 dark:text-red-700 text-sm">
                             {" "}
-                            {
-                              formik.errors.price as FormikErrors<
-                                FormValues["price"]
-                              >
-                            }
+                            {formik.errors.price as FormikErrors<FormValues["price"]>}
                           </div>
                         ) : null}
                       </div>
@@ -670,11 +644,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           name="discountPrice"
                           placeholder="Discounted Price"
                           min="0"
-                          className={`primary-input ${formik.touched.discountPrice &&
-                            formik.errors?.discountPrice
-                            ? "border-red-500"
-                            : ""
-                            }`}
+                          className={`primary-input ${
+                            formik.touched.discountPrice && formik.errors?.discountPrice
+                              ? "border-red-500"
+                              : ""
+                          }`}
                         />
 
                         <ErrorMessage
@@ -708,9 +682,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     <div className="mt-4 space-y-4">
                       <div className="flex gap-4">
                         <div className="w-2/4">
-                          <label className="primary-label">
-                            Meta Title
-                          </label>
+                          <label className="primary-label">Meta Title</label>
                           <input
                             type="text"
                             name="Meta_Title"
@@ -718,22 +690,18 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             onBlur={formik.handleBlur}
                             value={formik.values.Meta_Title}
                             placeholder="Meta Title"
-                            className={`primary-input ${formik.touched.name && formik.errors.name
-                              ? "border-red-500"
-                              : ""
-                              }`}
+                            className={`primary-input ${
+                              formik.touched.name && formik.errors.name ? "border-red-500" : ""
+                            }`}
                           />
-                          {formik.touched.Meta_Title &&
-                            formik.errors.Meta_Title ? (
+                          {formik.touched.Meta_Title && formik.errors.Meta_Title ? (
                             <div className="text-red text-sm">
                               {formik.errors.Meta_Title as string}
                             </div>
                           ) : null}
                         </div>
                         <div className="w-2/4">
-                          <label className="primary-label">
-                            Canonical Tag
-                          </label>
+                          <label className="primary-label">Canonical Tag</label>
                           <input
                             onBlur={formik.handleBlur}
                             type="text"
@@ -741,14 +709,12 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             onChange={formik.handleChange}
                             value={formik.values.Canonical_Tag}
                             placeholder="Canonical Tag"
-                            className={`primary-input ${formik.touched.name && formik.errors.name
-                              ? "border-red-500"
-                              : ""
-                              }`}
+                            className={`primary-input ${
+                              formik.touched.name && formik.errors.name ? "border-red-500" : ""
+                            }`}
                           />
 
-                          {formik.touched.Canonical_Tag &&
-                            formik.errors.Canonical_Tag ? (
+                          {formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? (
                             <div className="text-red text-sm">
                               {formik.errors.Canonical_Tag as string}
                             </div>
@@ -757,22 +723,19 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div>
-                        <label className="primary-label">
-                          Meta Description
-                        </label>
+                        <label className="primary-label">Meta Description</label>
                         <textarea
                           name="Meta_Description"
                           onChange={formik.handleChange}
                           value={formik.values.Meta_Description}
                           placeholder="Meta Description"
-                          className={`primary-input ${formik.touched.description &&
-                            formik.errors.description
-                            ? "border-red-500"
-                            : ""
-                            }`}
+                          className={`primary-input ${
+                            formik.touched.description && formik.errors.description
+                              ? "border-red-500"
+                              : ""
+                          }`}
                         />
-                        {formik.touched.Meta_Description &&
-                          formik.errors.Meta_Description ? (
+                        {formik.touched.Meta_Description && formik.errors.Meta_Description ? (
                           <div className="text-red text-sm">
                             {formik.errors.Meta_Description as string}
                           </div>
@@ -781,33 +744,33 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     </div>
 
                     <div>
-                      <label className="primary-label">
-                        seoSchema
-                      </label>
+                      <label className="primary-label">seoSchema</label>
                       <textarea
                         name="seoSchema"
                         onChange={formik.handleChange}
                         value={formik.values.seoSchema}
                         placeholder="seoSchema"
-                        className={`primary-input ${formik.touched.seoSchema &&
-                          formik.errors.seoSchema
-                          ? "border-red-500"
-                          : ""
-                          }`}
+                        className={`primary-input ${
+                          formik.touched.seoSchema && formik.errors.seoSchema
+                            ? "border-red-500"
+                            : ""
+                        }`}
                       />
-
                     </div>
 
                     <div className="flex gap-4 flex-col">
                       <div className="w-full">
-                        <label className="primary-label" aria-label="Select Categories & Sub Categories">
+                        <label
+                          className="primary-label"
+                          aria-label="Select Categories & Sub Categories"
+                        >
                           Select Categories & Sub Categories
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <select
                             name="category"
                             aria-label="Category"
-                            value={selectedCategory ? selectedCategory : ''}
+                            value={selectedCategory ? selectedCategory : ""}
                             onChange={handleCategoryChange}
                             className="dashboard_input"
                           >
@@ -822,9 +785,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           </select>
 
                           {categorySubCatError.categoryError ? (
-                            <p className="text-red-500">
-                              {categorySubCatError.categoryError}
-                            </p>
+                            <p className="text-red-500">{categorySubCatError.categoryError}</p>
                           ) : null}
                         </div>
 
@@ -832,46 +793,32 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                         {subcategories.length > 0 && (
                           <div className="mt-4">
-                            <h2 className="primary-label">
-                              Subcategories
-                            </h2>
+                            <h2 className="primary-label">Subcategories</h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                               <select
                                 name="subcategory"
                                 aria-label="Subcategory"
                                 value={selectedSubcategory}
-                                onChange={
-                                  handleInnerSubCategoryChange
-                                }
+                                onChange={handleInnerSubCategoryChange}
                                 className="dashboard_input"
                               >
                                 <option value="" disabled>
                                   Select Subcategory
                                 </option>
-                                {subcategories.map(
-                                  (subCat: ISUBCATEGORY) => (
-                                    <option key={subCat.id} value={subCat.id}>
-                                      {subCat.name}
-                                    </option>
-                                  )
-                                )}
+                                {subcategories.map((subCat: ISUBCATEGORY) => (
+                                  <option key={subCat.id} value={subCat.id}>
+                                    {subCat.name}
+                                  </option>
+                                ))}
                               </select>
                             </div>
                           </div>
                         )}
 
                         {categorySubCatError.subCategoryError ? (
-                          <p className="text-red-500">
-                            {categorySubCatError.subCategoryError}
-                          </p>
+                          <p className="text-red-500">{categorySubCatError.subCategoryError}</p>
                         ) : null}
-
-
-
-
                       </div>
-
-
                     </div>
                   </div>
                 </div>
@@ -880,9 +827,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
               <div className="flex flex-col gap-5 rounded-sm border border-stroke bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6 h-fit">
                 <div className="rounded-sm border border-stroke ">
                   <div className="border-b border-stroke px-4 dark:border-strokedark">
-                    <h3 className="primary-label">
-                      Add Hover Image
-                    </h3>
+                    <h3 className="primary-label">Add Hover Image</h3>
                   </div>
 
                   {hoverImage && hoverImage.length > 0 ? (
@@ -905,7 +850,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 />
                               </div>
                               <Image
-                                onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
+                                onClick={() =>
+                                  handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)
+                                }
                                 key={index}
                                 className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
                                 width={100}
@@ -926,7 +873,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   index,
                                   String(e.target.value),
                                   sethoverImage,
-                                  "altText"
+                                  "altText",
                                 )
                               }
                             />
@@ -941,9 +888,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                 <div className="rounded-sm border border-stroke dark:border-strokedark ">
                   <div className="border-b border-stroke px-2  ">
-                    <h3 className="primary-label">
-                      Add Banner Image / Video
-                    </h3>
+                    <h3 className="primary-label">Add Banner Image / Video</h3>
                   </div>
                   {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
                     <div className=" p-4">
@@ -969,34 +914,32 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               />
                             </div>
 
-                            {item.resource_type == "video" ?
-
+                            {item.resource_type == "video" ? (
                               <video
                                 key={index}
                                 src={item?.imageUrl || ""}
-                                height={200} width={200}
+                                height={200}
+                                width={200}
                                 className="w-full h-full max-h-[300] max-w-full dark:bg-black dark:shadow-lg"
                                 autoPlay
                                 muted
                                 controls
-
-                              >
-
-
-                              </video>
-
-
-                              :
+                              />
+                            ) : (
                               <>
-
                                 <Image
-                                  onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
+                                  onClick={() =>
+                                    handleCropClick(
+                                      item.imageUrl,
+                                      setImageSrc,
+                                      setIsCropModalVisible,
+                                    )
+                                  }
                                   key={index}
                                   className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
-
                                   width={200}
                                   height={500}
-                                  loading='lazy'
+                                  loading="lazy"
                                   src={item?.imageUrl || ""}
                                   alt={`productImage-${index}`}
                                 />
@@ -1012,12 +955,12 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       index,
                                       String(e.target.value),
                                       setBannerImageUrl,
-                                      "altText"
+                                      "altText",
                                     )
                                   }
                                 />
                               </>
-                            }
+                            )}
                           </div>
                         );
                       })}
@@ -1027,118 +970,115 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                   )}
                 </div>
 
-
-
-
                 <div className="rounded-sm border border-stroke ">
                   <div className="border-b border-stroke px-4 dark:border-strokedark">
-                    <h3 className="primary-label">
-                      Add Product Images
-                    </h3>
+                    <h3 className="primary-label">Add Product Images</h3>
                   </div>
 
                   <ImageUploader setImagesUrl={setImagesUrl} multiple />
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 p-4">
-                    {imagesUrl && imagesUrl.length > 0 ? (
-                      imagesUrl.map((item: ProductImage, index) => {
-                        return (
-                          <div
-                            key={index}
-                            draggable
-                            onDragStart={() => (dragImage.current = index)}
-                            onDragEnter={() =>
-                              (draggedOverImage.current = index)
-                            }
-                            onDragEnd={() => handleSort(imagesUrl, dragImage, draggedOverImage, setImagesUrl)}
-                            onDragOver={(e) => e.preventDefault()}
-                            className="space-y-3"
-                          >
-                            <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
-                              <div
-                                className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full"
-                                draggable
-                              >
-                                <RxCross2
-                                  className="cursor-pointer text-red-500 dark:text-red-700"
-                                  size={17}
-                                  onClick={() => {
-                                    ImageRemoveHandler(
-                                      item.public_id,
-                                      setImagesUrl,
-                                      // finalToken
-                                    );
-                                  }}
+                    {imagesUrl && imagesUrl.length > 0
+                      ? imagesUrl.map((item: ProductImage, index) => {
+                          return (
+                            <div
+                              key={index}
+                              draggable
+                              onDragStart={() => (dragImage.current = index)}
+                              onDragEnter={() => (draggedOverImage.current = index)}
+                              onDragEnd={() =>
+                                handleSort(imagesUrl, dragImage, draggedOverImage, setImagesUrl)
+                              }
+                              onDragOver={(e) => e.preventDefault()}
+                              className="space-y-3"
+                            >
+                              <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
+                                <div
+                                  className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full"
+                                  draggable
+                                >
+                                  <RxCross2
+                                    className="cursor-pointer text-red-500 dark:text-red-700"
+                                    size={17}
+                                    onClick={() => {
+                                      ImageRemoveHandler(
+                                        item.public_id,
+                                        setImagesUrl,
+                                        // finalToken
+                                      );
+                                    }}
+                                  />
+                                </div>
+                                <Image
+                                  onClick={() =>
+                                    handleCropClick(
+                                      item.imageUrl,
+                                      setImageSrc,
+                                      setIsCropModalVisible,
+                                    )
+                                  }
+                                  key={index}
+                                  className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
+                                  width={300}
+                                  height={200}
+                                  loading="lazy"
+                                  src={item?.imageUrl || ""}
+                                  alt={`productImage-${index}` || ""}
                                 />
                               </div>
-                              <Image
-                                onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
-                                key={index}
-                                className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
-                                width={300}
-                                height={200}
-                                loading="lazy"
-                                src={item?.imageUrl || ""}
-                                alt={`productImage-${index}` || ""}
+
+                              <input
+                                className="dashboard_input"
+                                placeholder="altText"
+                                type="text"
+                                name="altText"
+                                value={item?.altText || ""}
+                                onChange={(e) =>
+                                  handleImageAltText(
+                                    index,
+                                    String(e.target.value),
+                                    setImagesUrl,
+                                    "altText",
+                                  )
+                                }
                               />
                             </div>
-
-                            <input
-                              className="dashboard_input"
-                              placeholder="altText"
-                              type="text"
-                              name="altText"
-                              value={item?.altText || ""}
-                              onChange={(e) =>
-                                handleImageAltText(
-                                  index,
-                                  String(e.target.value),
-                                  setImagesUrl,
-                                  "altText"
-                                )
-                              }
-                            />
-                          </div>
-                        );
-                      })
-                    ) : null}
+                          );
+                        })
+                      : null}
                   </div>
                 </div>
                 {categorySubCatError.prodImages ? (
-                  <p className="text-red-500">
-                    {categorySubCatError.prodImages}
-                  </p>
+                  <p className="text-red-500">{categorySubCatError.prodImages}</p>
                 ) : null}
-
               </div>
-
-
             </div>
 
-            {
-              imgError ? (
-                <div className="flex justify-center">
-                  <div className="text-red-500 pt-2 pb-2">{imgError}</div>
-                </div>
-              ) : null
-            }
+            {imgError ? (
+              <div className="flex justify-center">
+                <div className="text-red-500 pt-2 pb-2">{imgError}</div>
+              </div>
+            ) : null}
             <Field name="status">
-              {({ field, form }: import('formik').FieldProps) => (
+              {({ field, form }: import("formik").FieldProps) => (
                 <div className="flex gap-4 items-center my-4">
-                  <label className="font-semibold text-black dark:text-white">Product Status:</label>
+                  <label className="font-semibold text-black dark:text-white">
+                    Product Status:
+                  </label>
 
-                  {['DRAFT', 'PUBLISHED'].map((status) => {
+                  {["DRAFT", "PUBLISHED"].map((status) => {
                     const isActive = field.value === status;
 
                     return (
                       <button
                         key={status}
                         type="button"
-                        onClick={() => form.setFieldValue('status', status)}
+                        onClick={() => form.setFieldValue("status", status)}
                         disabled={isActive}
                         className={`px-4 py-2 rounded-md text-sm
-                          ${isActive
-                            ? 'dashboard_primary_button cursor-not-allowed'
-                            : 'bg-white text-black cursor-pointer'
+                          ${
+                            isActive
+                              ? "dashboard_primary_button cursor-not-allowed"
+                              : "bg-white text-black cursor-pointer"
                           }`}
                       >
                         {status}
@@ -1160,7 +1100,17 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             <Modal
               title="Crop Image"
               open={isCropModalVisible}
-              onOk={() => handleCropModalOk(croppedImage, imageSrc, setIsCropModalVisible, setCroppedImage, setposterimageUrl, setBannerImageUrl, setImagesUrl)}
+              onOk={() =>
+                handleCropModalOk(
+                  croppedImage,
+                  imageSrc,
+                  setIsCropModalVisible,
+                  setCroppedImage,
+                  setposterimageUrl,
+                  setBannerImageUrl,
+                  setImagesUrl,
+                )
+              }
               onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
               width={500}
               height={400}
@@ -1177,7 +1127,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     ref={imgRef}
                     src={imageSrc}
                     alt="Crop me"
-                    style={{ maxWidth: '100%' }}
+                    style={{ maxWidth: "100%" }}
                     onLoad={(e) => onImageLoad(e, setCrop)}
                     crossOrigin="anonymous"
                   />
@@ -1187,8 +1137,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
           </Form>
         );
       }}
-    </Formik >
-
+    </Formik>
   );
 };
 

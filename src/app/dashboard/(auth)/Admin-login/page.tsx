@@ -1,9 +1,7 @@
-import DashboardLogin from './DashboardLogin'
+import DashboardLogin from "./DashboardLogin";
 
 function AdminLogin() {
-  return (
-    <DashboardLogin />
-  )
+  return <DashboardLogin />;
 }
 
-export default AdminLogin
+export default AdminLogin;

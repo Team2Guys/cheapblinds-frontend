@@ -1,25 +1,24 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
-import ImageUploader from 'components/ImageUploader/ImageUploader';
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import { RxCross2 } from 'react-icons/rx';
-import Image from 'next/image';
-import { ProductImage } from 'types/prod';
-import { handleImageAltText, ImageRemoveHandler } from 'utils/helperFunctions';
-import { IBlog } from 'types/general';
-import { ApolloError, useMutation } from '@apollo/client';
-import showToast from 'components/Toaster/Toaster';
-import { CREATE_BLOG, UPDATE_BLOG } from 'graphql/blogs';
-import revalidateTag from 'components/ServerActons/ServerAction';
-import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
-import { ISUBCATEGORY } from 'types/cat';
-import { useSession } from 'next-auth/react';
-import { Modal } from 'antd';
-import { AddBlogInitialValues } from 'data/InitialValues';
-import { validationBlogSchema } from 'data/Validations';
-
+import React, { useEffect, useRef, useState } from "react";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import ImageUploader from "components/ImageUploader/ImageUploader";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
+import Image from "next/image";
+import { ProductImage } from "types/prod";
+import { handleImageAltText, ImageRemoveHandler } from "utils/helperFunctions";
+import { IBlog } from "types/general";
+import { ApolloError, useMutation } from "@apollo/client";
+import showToast from "components/Toaster/Toaster";
+import { CREATE_BLOG, UPDATE_BLOG } from "graphql/blogs";
+import revalidateTag from "components/ServerActons/ServerAction";
+import TinyMCEEditor from "components/Dashboard/tinyMc/MyEditor";
+import { ISUBCATEGORY } from "types/cat";
+import { useSession } from "next-auth/react";
+import { Modal } from "antd";
+import { AddBlogInitialValues } from "data/InitialValues";
+import { validationBlogSchema } from "data/Validations";
 
 interface AddBlogProps {
   setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
@@ -55,7 +54,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
             headers: {
               authorization: `Bearer ${finalToken}`,
             },
-            credentials: 'include',
+            credentials: "include",
           },
           variables: {
             updateBlogInput: {
@@ -64,37 +63,38 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
             },
           },
         });
-        showToast('success', 'Blog updated successfully!');
+        showToast("success", "Blog updated successfully!");
       } else {
         await createBlogMutation({
           context: {
             headers: {
               authorization: `Bearer ${finalToken}`,
             },
-            credentials: 'include',
+            credentials: "include",
           },
           variables: {
             createBlogInput: payload,
           },
         });
-        showToast('success', 'Blog created successfully!');
+        showToast("success", "Blog created successfully!");
       }
 
-      setselecteMenu('All Blogs');
-      revalidateTag('blogs');
+      setselecteMenu("All Blogs");
+      revalidateTag("blogs");
       resetForm();
     } catch (error) {
       const graphQLError =
-        (error as ApolloError)?.graphQLErrors?.[0]?.message || 'Something went wrong';
-      showToast('error', graphQLError);
+        (error as ApolloError)?.graphQLErrors?.[0]?.message || "Something went wrong";
+      showToast("error", graphQLError);
     }
   };
 
   const hasUnsavedChanges = (): boolean => {
-    const isFormChanged = JSON.stringify(initialBlogValues) !== JSON.stringify(formikValuesRef.current);
+    const isFormChanged =
+      JSON.stringify(initialBlogValues) !== JSON.stringify(formikValuesRef.current);
     const isPosterChanged = editblog
       ? JSON.stringify(editblog.posterImage ? [editblog.posterImage] : undefined) !==
-      JSON.stringify(posterImage)
+        JSON.stringify(posterImage)
       : !!posterImage && posterImage.length > 0;
 
     return isFormChanged || isPosterChanged;
@@ -104,52 +104,54 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges()) {
         e.preventDefault();
-        e.returnValue = '';
-        return '';
+        e.returnValue = "";
+        return "";
       }
     };
 
     const handlePopState = () => {
       if (hasUnsavedChanges()) {
-        window.history.pushState(null, '', window.location.href);
+        window.history.pushState(null, "", window.location.href);
         Modal.confirm({
-          title: 'Unsaved Changes',
-          content: 'You have unsaved changes. Do you want to discard them?',
-          okText: 'Discard Changes',
-          cancelText: 'Cancel',
+          title: "Unsaved Changes",
+          content: "You have unsaved changes. Do you want to discard them?",
+          okText: "Discard Changes",
+          cancelText: "Cancel",
           onOk: () => {
-            setselecteMenu('All Blogs');
+            setselecteMenu("All Blogs");
           },
         });
-      } else { setselecteMenu("All Blogs"); }
+      } else {
+        setselecteMenu("All Blogs");
+      }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('popstate', handlePopState);
-    window.history.pushState(null, '', window.location.href);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handlePopState);
+    window.history.pushState(null, "", window.location.href);
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, [initialBlogValues, posterImage]);
 
   const handleBack = () => {
-    console.log('first')
+    console.log("first");
     if (hasUnsavedChanges()) {
       Modal.confirm({
-        title: 'Unsaved Changes',
-        content: 'You have unsaved changes. Do you want to discard them?',
-        okText: 'Discard Changes',
-        cancelText: 'Cancel',
+        title: "Unsaved Changes",
+        content: "You have unsaved changes. Do you want to discard them?",
+        okText: "Discard Changes",
+        cancelText: "Cancel",
         onOk: () => {
-          setselecteMenu('All Blogs');
+          setselecteMenu("All Blogs");
         },
       });
       return;
     }
 
-    setselecteMenu('All Blogs');
+    setselecteMenu("All Blogs");
   };
 
   return (
@@ -163,32 +165,29 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
         formikValuesRef.current = values;
         return (
           <Form>
-            <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
-              <p
-                className="dashboard_primary_button"
-                onClick={handleBack}
-              >
+            <div className="flex flex-wrap mb-5 gap-2 justify-between items-center">
+              <p className="dashboard_primary_button" onClick={handleBack}>
                 <IoMdArrowRoundBack /> Back
               </p>
               <div className="flex justify-center gap-4 items-center">
                 <Field name="status">
-                  {({ field, form }: import('formik').FieldProps) => (
+                  {({ field, form }: import("formik").FieldProps) => (
                     <div className="flex gap-4 items-center border-r-2 dark:border-white px-2">
-
-                      {['DRAFT', 'PUBLISHED'].map((status) => {
+                      {["DRAFT", "PUBLISHED"].map((status) => {
                         const isActive = field.value === status;
 
                         return (
                           <button
                             key={status}
                             type="button"
-                            onClick={() => form.setFieldValue('status', status)}
+                            onClick={() => form.setFieldValue("status", status)}
                             disabled={isActive}
                             className={`px-4 py-2 rounded-md text-sm
-                                  ${isActive
-                                ? 'dashboard_primary_button cursor-not-allowed'
-                                : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
-                              }`}
+                                  ${
+                                    isActive
+                                      ? "dashboard_primary_button cursor-not-allowed"
+                                      : "bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer"
+                                  }`}
                           >
                             {status}
                           </button>
@@ -203,20 +202,21 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                   disabled={loading || updating}
                 >
                   {loading || updating
-                    ? 'Submitting...'
+                    ? "Submitting..."
                     : editblog?.id
-                      ? 'Update Blog'
-                      : 'Submit Blog'}
+                      ? "Update Blog"
+                      : "Submit Blog"}
                 </button>
               </div>
             </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6 rounded-sm border border-stroke'>
-              <div className='space-y-4'>
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white dark:bg-black/50 backdrop-blur-3xl p-4 xs:p-6 rounded-sm border border-stroke">
+              <div className="space-y-4">
                 <div className="rounded-sm border border-stroke">
                   <div className="border-b border-stroke">
-                    <h3 className="font-medium text-black dark:text-white py-4 px-2">Add Poster Image</h3>
+                    <h3 className="font-medium text-black dark:text-white py-4 px-2">
+                      Add Poster Image
+                    </h3>
                   </div>
                   {posterImage && posterImage.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
@@ -246,14 +246,9 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                             name="altText"
                             className="dashboard_input"
                             placeholder="Alt Text"
-                            value={item.altText || ''}
+                            value={item.altText || ""}
                             onChange={(e) =>
-                              handleImageAltText(
-                                index,
-                                e.target.value,
-                                setposterImage,
-                                'altText'
-                              )
+                              handleImageAltText(index, e.target.value, setposterImage, "altText")
                             }
                           />
                         </div>
@@ -265,19 +260,16 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                 </div>
                 <div>
                   <label className="primary-label">Title</label>
-                  <Field name="title" className="dashboard_input" aria-label='Title' />
+                  <Field name="title" className="dashboard_input" aria-label="Title" />
                   <ErrorMessage name="title" component="div" className="text-red-500 text-sm" />
                 </div>
                 <div>
-                  <label className="primary-label">
-                    Select Category
-                  </label>
+                  <label className="primary-label">Select Category</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
                     <Field
                       as="select"
                       name="category"
-                      aria-label='Select Category'
+                      aria-label="Select Category"
                       className="dashboard_input"
                     >
                       <option value="" disabled>
@@ -290,34 +282,40 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                         </option>
                       ))}
                     </Field>
-
                   </div>
                   <ErrorMessage name="category" component="div" className="text-red-500 " />
                 </div>
                 <div>
                   <label className="primary-label">Custom Url</label>
-                  <Field name="title" className="dashboard_input" aria-label='Custom Url' />
-                  <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
+                  <Field name="title" className="dashboard_input" aria-label="Custom Url" />
+                  <ErrorMessage
+                    name="custom_url"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </div>
                 <Field name="status">
-                  {({ field, form }: import('formik').FieldProps) => (
+                  {({ field, form }: import("formik").FieldProps) => (
                     <div className="flex gap-4 items-center pt-4">
-                      <label className="font-semibold text-black dark:text-white">Blog Status:</label>
+                      <label className="font-semibold text-black dark:text-white">
+                        Blog Status:
+                      </label>
 
-                      {['DRAFT', 'PUBLISHED'].map((status) => {
+                      {["DRAFT", "PUBLISHED"].map((status) => {
                         const isActive = field.value === status;
 
                         return (
                           <button
                             key={status}
                             type="button"
-                            onClick={() => form.setFieldValue('status', status)}
+                            onClick={() => form.setFieldValue("status", status)}
                             disabled={isActive}
                             className={`px-4 py-2 rounded-md text-sm
-                          ${isActive
-                                ? 'dashboard_primary_button cursor-not-allowed'
-                                : 'bg-white text-black cursor-pointer'
-                              }`}
+                          ${
+                            isActive
+                              ? "dashboard_primary_button cursor-not-allowed"
+                              : "bg-white text-black cursor-pointer"
+                          }`}
                           >
                             {status}
                           </button>
@@ -337,44 +335,58 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                   <div>
                     <label className="primary-label">Canonical Tag</label>
                     <Field name="Canonical_Tag" className="dashboard_input" />
-                    <ErrorMessage name="Canonical_Tag" component="div" className="text-red-500 text-sm" />
+                    <ErrorMessage
+                      name="Canonical_Tag"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
                   </div>
                   <div>
                     <label className="primary-label">Redirection URL</label>
                     <Field name="redirectionUrl" className="dashboard_input" />
-                    <ErrorMessage name="redirectionUrl" component="div" className="text-red-500 text-sm" />
+                    <ErrorMessage
+                      name="redirectionUrl"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
                   </div>
                   <div>
                     <label className="primary-label">Meta Title</label>
                     <Field name="Meta_Title" className="dashboard_input" />
-                    <ErrorMessage name="Meta_Title" component="div" className="text-red-500 text-sm" />
+                    <ErrorMessage
+                      name="Meta_Title"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
                   </div>
                   <div>
                     <label className="primary-label">Meta Description</label>
                     <Field name="Meta_Description" className="dashboard_input" />
-                    <ErrorMessage name="Meta_Description" component="div" className="text-red-500 text-sm" />
+                    <ErrorMessage
+                      name="Meta_Description"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
                   </div>
                 </div>
               </div>
-
             </div>
             <div className="flex justify-center">
               <button
                 type="submit"
                 className="mt-4 dashboard_primary_button not-[]:cursor-pointer"
                 disabled={loading || updating}
-                aria-label='InnerButton'
+                aria-label="InnerButton"
               >
                 {loading || updating
-                  ? 'Submitting...'
+                  ? "Submitting..."
                   : editblog?.id
-                    ? 'Update Blog'
-                    : 'Submit Blog'}
+                    ? "Update Blog"
+                    : "Submit Blog"}
               </button>
             </div>
-
           </Form>
-        )
+        );
       }}
     </Formik>
   );

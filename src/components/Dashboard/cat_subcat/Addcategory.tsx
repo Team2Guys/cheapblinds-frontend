@@ -1,45 +1,50 @@
-'use client';
-import React, { SetStateAction, useEffect, useRef, useState } from 'react';
-import { RxCross2 } from 'react-icons/rx';
-import Image from 'next/image';
-import { handleCropClick, handleCropModalCancel, handleCropModalOk, handleImageAltText, ImageRemoveHandler, onCropComplete, onImageLoad } from 'utils/helperFunctions';
-import Toaster from 'components/Toaster/Toaster';
-import { Formik, Form, FormikHelpers, ErrorMessage, Field } from 'formik';
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import ImageUploader from 'components/ImageUploader/ImageUploader';
-import { ProductImage } from 'types/prod';
-import { Category, EDIT_CATEGORY } from 'types/cat';
-import ReactCrop, { Crop } from 'react-image-crop';
-import { Modal } from 'antd';
-import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
-import revalidateTag from 'components/ServerActons/ServerAction';
-import { useSession } from 'next-auth/react';
-import ApoloClient from 'utils/AppoloClient';
-import { CREATE_CATEGORY, GET_ALL_CATEGORIES, UPDATE_CATEGORY } from 'graphql/categories';
-import { categoryValidationSchema } from 'data/Validations';
-import { categoryInitialValues } from 'data/InitialValues';
+"use client";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
+import { RxCross2 } from "react-icons/rx";
+import Image from "next/image";
+import {
+  handleCropClick,
+  handleCropModalCancel,
+  handleCropModalOk,
+  handleImageAltText,
+  ImageRemoveHandler,
+  onCropComplete,
+  onImageLoad,
+} from "utils/helperFunctions";
+import Toaster from "components/Toaster/Toaster";
+import { Formik, Form, FormikHelpers, ErrorMessage, Field } from "formik";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import ImageUploader from "components/ImageUploader/ImageUploader";
+import { ProductImage } from "types/prod";
+import { Category, EDIT_CATEGORY } from "types/cat";
+import ReactCrop, { Crop } from "react-image-crop";
+import { Modal } from "antd";
+import TinyMCEEditor from "components/Dashboard/tinyMc/MyEditor";
+import revalidateTag from "components/ServerActons/ServerAction";
+import { useSession } from "next-auth/react";
+import ApoloClient from "utils/AppoloClient";
+import { CREATE_CATEGORY, GET_ALL_CATEGORIES, UPDATE_CATEGORY } from "graphql/categories";
+import { categoryValidationSchema } from "data/Validations";
+import { categoryInitialValues } from "data/InitialValues";
 
 interface editCategoryProps {
   seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;
   editCategory: Category | undefined | null;
   setMenuType: React.Dispatch<SetStateAction<string>>;
-
 }
 
+const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategoryProps) => {
+  const CategoryName: EDIT_CATEGORY =
+    editCategory && editCategory.name ? editCategory : categoryInitialValues;
 
-
-const AddCategory = ({
-  seteditCategory,
-  editCategory,
-  setMenuType,
-}: editCategoryProps) => {
-  const CategoryName: EDIT_CATEGORY = (editCategory && editCategory.name) ? editCategory : categoryInitialValues;
-
-
-  const session = useSession()
-  const finalToken = session.data?.accessToken
-  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory.posterImageUrl) ? [editCategory.posterImageUrl] : undefined);
-  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.Banners ? [editCategory?.Banners] : undefined);
+  const session = useSession();
+  const finalToken = session.data?.accessToken;
+  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(
+    editCategory && editCategory.posterImageUrl ? [editCategory.posterImageUrl] : undefined,
+  );
+  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(
+    editCategory && editCategory?.Banners ? [editCategory?.Banners] : undefined,
+  );
   const [loading, setloading] = useState<boolean>(false);
   const [editCategoryName, setEditCategoryName] = useState<EDIT_CATEGORY>(CategoryName);
   const [isCropModalVisible, setIsCropModalVisible] = useState<boolean>(false);
@@ -51,10 +56,9 @@ const AddCategory = ({
 
   const onSubmit = async (values: EDIT_CATEGORY, { resetForm }: FormikHelpers<EDIT_CATEGORY>) => {
     try {
-
-      const posterImageUrl = posterimageUrl && posterimageUrl[0] || {};
+      const posterImageUrl = (posterimageUrl && posterimageUrl[0]) || {};
       const Banner = BannerImageUrl && BannerImageUrl[0];
-      if (!posterImageUrl) return Toaster('error', 'Please select relevant Images');
+      if (!posterImageUrl) return Toaster("error", "Please select relevant Images");
       const formValues = { ...values, posterImageUrl, Banners: Banner };
       // eslint-disable-next-line
       const { updatedAt, createdAt, __typename, subCategories, Products, ...newValue } = formValues;
@@ -67,7 +71,7 @@ const AddCategory = ({
             headers: {
               authorization: `Bearer ${finalToken}`,
             },
-            credentials: 'include',
+            credentials: "include",
           },
           variables: { input: { id: Number(editCategory?.id), ...newValue } },
           refetchQueries: [{ query: GET_ALL_CATEGORIES }],
@@ -81,38 +85,38 @@ const AddCategory = ({
             headers: {
               authorization: `Bearer ${finalToken}`,
             },
-            credentials: 'include',
+            credentials: "include",
           },
-
         });
       }
 
-      revalidateTag('categories');
+      revalidateTag("categories");
 
       Toaster(
-        'success',
-        updateFlag ? 'Category has been successfully updated!' : 'Category has been successfully created!',
+        "success",
+        updateFlag
+          ? "Category has been successfully updated!"
+          : "Category has been successfully created!",
       );
 
       seteditCategory?.(undefined);
       setposterimageUrl(undefined);
-      setMenuType('Categories');
+      setMenuType("Categories");
       resetForm();
-    } catch (err) {//eslint-disable-nextline
+    } catch (err) {
+      //eslint-disable-nextline
       //@ts-expect-error("Expected error")
-      Toaster('error', err?.message || "Internal Server Error")
+      Toaster("error", err?.message || "Internal Server Error");
     } finally {
       setloading(false);
     }
   };
-  console.log(CategoryName)
+  console.log(CategoryName);
   useEffect(() => {
-    setEditCategoryName(CategoryName)
-
-  }, [editCategory])
+    setEditCategoryName(CategoryName);
+  }, [editCategory]);
 
   const hasUnsavedChanges = (): boolean => {
-
     let isPosterChanged: boolean;
     let isBannerChanged: boolean;
 
@@ -124,7 +128,7 @@ const AddCategory = ({
         !oldPoster || !newPoster
           ? oldPoster !== newPoster
           : oldPoster.public_id !== newPoster.public_id ||
-          (oldPoster.altText ?? '') !== (newPoster.altText ?? '');
+            (oldPoster.altText ?? "") !== (newPoster.altText ?? "");
 
       const oldBanner = editCategory?.Banners;
       const newBanner = BannerImageUrl?.[0];
@@ -133,59 +137,62 @@ const AddCategory = ({
         !oldBanner || !newBanner
           ? oldBanner !== newBanner
           : oldBanner.public_id !== newBanner.public_id ||
-          (oldBanner.altText ?? '') !== (newBanner.altText ?? '');
+            (oldBanner.altText ?? "") !== (newBanner.altText ?? "");
     } else {
       // Adding mode (initially no images)
       isPosterChanged = !!posterimageUrl && posterimageUrl.length > 0;
       isBannerChanged = !!BannerImageUrl && BannerImageUrl.length > 0;
     }
 
-    const isFormChanged = JSON.stringify(editCategoryName) !== JSON.stringify(formikValuesRef.current);
+    const isFormChanged =
+      JSON.stringify(editCategoryName) !== JSON.stringify(formikValuesRef.current);
 
-    return (isPosterChanged || isBannerChanged || isFormChanged)
+    return isPosterChanged || isBannerChanged || isFormChanged;
   };
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges()) {
         e.preventDefault();
-        e.returnValue = '';
-        return '';
+        e.returnValue = "";
+        return "";
       }
     };
 
     const handlePopState = () => {
       if (hasUnsavedChanges()) {
-        window.history.pushState(null, '', window.location.href);
+        window.history.pushState(null, "", window.location.href);
         Modal.confirm({
-          title: 'Unsaved Changes',
-          content: 'You have unsaved changes. Do you want to discard them?',
-          okText: 'Discard Changes',
-          cancelText: 'Cancel',
+          title: "Unsaved Changes",
+          content: "You have unsaved changes. Do you want to discard them?",
+          okText: "Discard Changes",
+          cancelText: "Cancel",
           onOk: () => {
             setMenuType("Categories");
           },
         });
-      } else { setMenuType("All Reviews"); }
+      } else {
+        setMenuType("All Reviews");
+      }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('popstate', handlePopState);
-    window.history.pushState(null, '', window.location.href);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handlePopState);
+    window.history.pushState(null, "", window.location.href);
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, [editCategoryName, BannerImageUrl, posterimageUrl]);
 
   const handleBack = () => {
     if (hasUnsavedChanges()) {
       Modal.confirm({
-        title: 'Unsaved Changes',
-        content: 'You have unsaved changes. Do you want to discard them?',
-        okText: 'Discard Changes',
-        cancelText: 'Cancel',
+        title: "Unsaved Changes",
+        content: "You have unsaved changes. Do you want to discard them?",
+        okText: "Discard Changes",
+        cancelText: "Cancel",
         onOk: () => {
           setMenuType("Categories");
         },
@@ -206,34 +213,30 @@ const AddCategory = ({
         formikValuesRef.current = formik.values;
 
         return (
-
           <Form onSubmit={formik.handleSubmit}>
-            <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
-              <p
-                className="dashboard_primary_button"
-                onClick={handleBack}
-              >
+            <div className="flex flex-wrap mb-5 gap-2 justify-between items-center">
+              <p className="dashboard_primary_button" onClick={handleBack}>
                 <IoMdArrowRoundBack /> Back
               </p>
               <div className="flex justify-center gap-4">
                 <Field name="status">
-                  {({ field, form }: import('formik').FieldProps) => (
+                  {({ field, form }: import("formik").FieldProps) => (
                     <div className="flex gap-4 items-center border-r-2 border-black dark:border-white px-2">
-
-                      {['DRAFT', 'PUBLISHED'].map((status) => {
+                      {["DRAFT", "PUBLISHED"].map((status) => {
                         const isActive = field.value === status;
 
                         return (
                           <button
                             key={status}
                             type="button"
-                            onClick={() => form.setFieldValue('status', status)}
+                            onClick={() => form.setFieldValue("status", status)}
                             disabled={isActive}
                             className={`px-4 py-2 rounded-md text-sm
-                                              ${isActive
-                                ? 'dashboard_primary_button cursor-not-allowed'
-                                : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
-                              }`}
+                                              ${
+                                                isActive
+                                                  ? "dashboard_primary_button cursor-not-allowed"
+                                                  : "bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer"
+                                              }`}
                           >
                             {status}
                           </button>
@@ -247,7 +250,7 @@ const AddCategory = ({
                   className="dashboard_primary_button cursor-pointer"
                   disabled={loading}
                 >
-                  {loading ? "loading.." : 'Submit'}
+                  {loading ? "loading.." : "Submit"}
                 </button>
               </div>
             </div>
@@ -256,14 +259,11 @@ const AddCategory = ({
                 <div className="">
                   <div className="rounded-sm border border-stroke">
                     <div className="border-b  border-stroke px-2">
-                      <h3 className="primary-label">
-                        Add Poster Image
-                      </h3>
+                      <h3 className="primary-label">Add Poster Image</h3>
                     </div>
                     {posterimageUrl && posterimageUrl.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4  dark:border-white dark:bg-black">
                         {posterimageUrl.map((item: ProductImage, index: number) => {
-
                           return (
                             <div
                               className="relative group rounded-lg overflow-hidden shadow-md border transform transition-transform duration-300 hover:scale-105 flex flex-col"
@@ -277,20 +277,22 @@ const AddCategory = ({
                                     ImageRemoveHandler(
                                       item.public_id,
                                       setposterimageUrl,
-                                      finalToken
+                                      finalToken,
                                     );
                                   }}
                                 />
                               </div>
 
                               <Image
-                                onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
+                                onClick={() =>
+                                  handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)
+                                }
                                 key={index}
                                 className="object-cover w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
                                 width={300}
                                 height={200}
                                 src={item.imageUrl}
-                                loading='lazy'
+                                loading="lazy"
                                 alt={`productImage-${index}`}
                               />
 
@@ -305,7 +307,7 @@ const AddCategory = ({
                                     index,
                                     String(e.target.value),
                                     setposterimageUrl,
-                                    "altText"
+                                    "altText",
                                   )
                                 }
                               />
@@ -320,7 +322,16 @@ const AddCategory = ({
                   <Modal
                     title="Crop Image"
                     open={isCropModalVisible}
-                    onOk={() => handleCropModalOk(croppedImage, imageSrc, setIsCropModalVisible, setCroppedImage, setposterimageUrl, setBannerImageUrl)}
+                    onOk={() =>
+                      handleCropModalOk(
+                        croppedImage,
+                        imageSrc,
+                        setIsCropModalVisible,
+                        setCroppedImage,
+                        setposterimageUrl,
+                        setBannerImageUrl,
+                      )
+                    }
                     onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
                     width={500}
                     height={400}
@@ -337,7 +348,7 @@ const AddCategory = ({
                           ref={imgRef}
                           src={imageSrc}
                           alt="Crop me"
-                          style={{ maxWidth: '100%' }}
+                          style={{ maxWidth: "100%" }}
                           onLoad={(e) => onImageLoad(e, setCrop)}
                           crossOrigin="anonymous"
                         />
@@ -346,9 +357,7 @@ const AddCategory = ({
                   </Modal>
                   <div className="rounded-sm border mt-4 border-stroke dark:border-strokedark ">
                     <div className="border-b border-stroke px-2">
-                      <h3 className="primary-label">
-                        Add Banner Image / Video
-                      </h3>
+                      <h3 className="primary-label">Add Banner Image / Video</h3>
                     </div>
                     {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
                       <div className=" p-4 ">
@@ -368,40 +377,38 @@ const AddCategory = ({
                                     ImageRemoveHandler(
                                       item.public_id,
                                       setBannerImageUrl,
-                                      finalToken
+                                      finalToken,
                                     );
                                   }}
                                 />
                               </div>
 
-                              {item.resource_type == "video" ?
-
+                              {item.resource_type == "video" ? (
                                 <video
                                   key={index}
                                   src={item?.imageUrl || ""}
-                                  height={200} width={200}
+                                  height={200}
+                                  width={200}
                                   className="w-full h-full max-h-[300] max-w-full dark:bg-black dark:shadow-lg"
                                   autoPlay
                                   muted
                                   controls
-
-                                >
-
-
-                                </video>
-
-
-                                :
+                                />
+                              ) : (
                                 <>
-
                                   <Image
-                                    onClick={() => handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)}
+                                    onClick={() =>
+                                      handleCropClick(
+                                        item.imageUrl,
+                                        setImageSrc,
+                                        setIsCropModalVisible,
+                                      )
+                                    }
                                     key={index}
                                     className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
-
                                     width={200}
                                     height={500}
-                                    loading='lazy'
+                                    loading="lazy"
                                     src={item?.imageUrl || ""}
                                     alt={`productImage-${index}`}
                                   />
@@ -417,12 +424,12 @@ const AddCategory = ({
                                         index,
                                         String(e.target.value),
                                         setBannerImageUrl,
-                                        "altText"
+                                        "altText",
                                       )
                                     }
                                   />
                                 </>
-                              }
+                              )}
                             </div>
                           );
                         })}
@@ -434,23 +441,23 @@ const AddCategory = ({
 
                   <div className="flex flex-col">
                     <div>
-                      <label className="primary-label" aria-label='Category Title'>
+                      <label className="primary-label" aria-label="Category Title">
                         Category Title
                       </label>
                       <Field
                         type="text"
                         name="name"
                         placeholder="Title"
-                        className={`primary-input ${formik.touched.name && formik.errors.name ? "red_border" : ""
-                          }`}
+                        className={`primary-input ${
+                          formik.touched.name && formik.errors.name ? "red_border" : ""
+                        }`}
                       />
                       <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
                     </div>
 
-
-                    <div className='flex gap-0 sm:gap-10 flex-wrap sm:flex-nowrap'>
-                      <div className='w-full'>
-                        <label className="primary-label" aria-label='Custom URL'>
+                    <div className="flex gap-0 sm:gap-10 flex-wrap sm:flex-nowrap">
+                      <div className="w-full">
+                        <label className="primary-label" aria-label="Custom URL">
                           Custom URL
                         </label>
                         <Field
@@ -459,31 +466,33 @@ const AddCategory = ({
                           placeholder="Custom URL"
                           className={`primary-input ${formik.touched.custom_url && formik.errors.custom_url ? "red_border" : ""}`}
                         />
-                        <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
-
+                        <ErrorMessage
+                          name="custom_url"
+                          component="div"
+                          className="text-red-500 text-sm"
+                        />
                       </div>
 
-                      <div className='w-full '>
-                        <label className="primary-label">
-
-                          Bread Crum
-                        </label>
+                      <div className="w-full ">
+                        <label className="primary-label">Bread Crum</label>
                         <Field
                           type="text"
                           name="breadCrum"
                           placeholder="breadCrum"
-                          className={`primary-input ${formik.touched.breadCrum && formik.errors.breadCrum ? "red_border" : ""
-                            }`}
+                          className={`primary-input ${
+                            formik.touched.breadCrum && formik.errors.breadCrum ? "red_border" : ""
+                          }`}
                         />
-                        <ErrorMessage name="breadCrum" component="div" className="text-red-500 text-sm" />
+                        <ErrorMessage
+                          name="breadCrum"
+                          component="div"
+                          className="text-red-500 text-sm"
+                        />
                       </div>
-
                     </div>
                     <div className="input_container">
-                      <div className='w-full'>
-                        <label className="primary-label">
-                          Short Description
-                        </label>
+                      <div className="w-full">
+                        <label className="primary-label">Short Description</label>
                         <input
                           type="text"
                           name="short_description"
@@ -491,14 +500,13 @@ const AddCategory = ({
                           onBlur={formik.handleBlur}
                           value={formik.values.short_description}
                           placeholder="Short Description"
-                          className={`primary-input ${formik.touched.short_description &&
-                            formik.errors.short_description
-                            ? 'red_border'
-                            : ''
-                            }`}
+                          className={`primary-input ${
+                            formik.touched.short_description && formik.errors.short_description
+                              ? "red_border"
+                              : ""
+                          }`}
                         />
-                        {formik.touched.short_description &&
-                          formik.errors.short_description ? (
+                        {formik.touched.short_description && formik.errors.short_description ? (
                           <div className="text-red text-sm">
                             {formik.errors.short_description as string}
                           </div>
@@ -508,24 +516,27 @@ const AddCategory = ({
                   </div>
 
                   <Field name="status">
-                    {({ field, form }: import('formik').FieldProps) => (
+                    {({ field, form }: import("formik").FieldProps) => (
                       <div className="flex gap-4 items-center my-4 md:pt-24">
-                        <label className="font-semibold text-black dark:text-white">Category Status:</label>
+                        <label className="font-semibold text-black dark:text-white">
+                          Category Status:
+                        </label>
 
-                        {['DRAFT', 'PUBLISHED'].map((status) => {
+                        {["DRAFT", "PUBLISHED"].map((status) => {
                           const isActive = field.value === status;
 
                           return (
                             <button
                               key={status}
                               type="button"
-                              onClick={() => form.setFieldValue('status', status)}
+                              onClick={() => form.setFieldValue("status", status)}
                               disabled={isActive}
                               className={`px-4 py-2 rounded-md text-sm drop-shadow-md
-                                  ${isActive
-                                  ? 'dashboard_primary_button cursor-not-allowed'
-                                  : 'bg-white text-black cursor-pointer'
-                                }`}
+                                  ${
+                                    isActive
+                                      ? "dashboard_primary_button cursor-not-allowed"
+                                      : "bg-white text-black cursor-pointer"
+                                  }`}
                             >
                               {status}
                             </button>
@@ -537,17 +548,17 @@ const AddCategory = ({
                 </div>
                 <div>
                   <div>
-                    <label className="primary-label">
-                      Category Description
-                    </label>
+                    <label className="primary-label">Category Description</label>
                     <TinyMCEEditor name="description" />
-                    <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
+                    <ErrorMessage
+                      name="description"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
                   </div>
                   <div className="input_container">
                     <div className="input_iner_container">
-                      <label className="primary-label">
-                        Meta Title
-                      </label>
+                      <label className="primary-label">Meta Title</label>
                       <input
                         type="text"
                         name="Meta_Title"
@@ -555,70 +566,57 @@ const AddCategory = ({
                         onBlur={formik.handleBlur}
                         value={formik.values.Meta_Title}
                         placeholder="Meta Title"
-                        className={`primary-input ${formik.touched.Meta_Title &&
-                          formik.errors.Meta_Title
-                          ? 'red_border'
-                          : ''
-                          }`}
+                        className={`primary-input ${
+                          formik.touched.Meta_Title && formik.errors.Meta_Title ? "red_border" : ""
+                        }`}
                       />
-                      {formik.touched.Meta_Title &&
-                        formik.errors.Meta_Title ? (
-                        <div className="text-red text-sm">
-                          {formik.errors.Meta_Title as string}
-                        </div>
+                      {formik.touched.Meta_Title && formik.errors.Meta_Title ? (
+                        <div className="text-red text-sm">{formik.errors.Meta_Title as string}</div>
                       ) : null}
                     </div>
 
-
                     <div className="input_iner_container">
-                      <label className="primary-label">
-                        Canonical Tag
-                      </label>
+                      <label className="primary-label">Canonical Tag</label>
                       <Field
-                        type='text'
+                        type="text"
                         name="Canonical_Tag"
-
                         placeholder="Canonical Tag"
-                        className={`primary-input ${formik.touched.Canonical_Tag &&
-                          formik.errors.Canonical_Tag
-                          ? 'red_border'
-                          : ''
-                          }`}
+                        className={`primary-input ${
+                          formik.touched.Canonical_Tag && formik.errors.Canonical_Tag
+                            ? "red_border"
+                            : ""
+                        }`}
                       />
-
-
                     </div>
-
-
                   </div>
 
                   <div className="mt-4">
-                    <label className="primary-label">
-                      Meta Description
-                    </label>
+                    <label className="primary-label">Meta Description</label>
                     <Field
                       as="textarea"
                       name="Meta_Description"
                       placeholder="Meta Description"
-                      className={`primary-input ${formik.touched.Meta_Description && formik.errors.Meta_Description
-                        ? "red_border"
-                        : ""
-                        }`}
+                      className={`primary-input ${
+                        formik.touched.Meta_Description && formik.errors.Meta_Description
+                          ? "red_border"
+                          : ""
+                      }`}
                     />
-                    <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
+                    <ErrorMessage
+                      name="Meta_Description"
+                      component="div"
+                      className="text-red text-sm"
+                    />
                   </div>
                   <div className="mt-4">
-                    <label className="primary-label">
-                      Seo Schema
-                    </label>
+                    <label className="primary-label">Seo Schema</label>
                     <Field
                       as="textarea"
                       name="seoSchema"
                       placeholder="Seo Schema"
-                      className={`primary-input ${formik.touched.seoSchema && formik.errors.seoSchema
-                        ? "red_border"
-                        : ""
-                        }`}
+                      className={`primary-input ${
+                        formik.touched.seoSchema && formik.errors.seoSchema ? "red_border" : ""
+                      }`}
                     />
                     <ErrorMessage name="seoSchema" component="div" className="text-red text-sm" />
                   </div>
@@ -626,12 +624,8 @@ const AddCategory = ({
               </div>
             </div>
             <div className="flex justify-center mt-4">
-              <button
-                type="submit"
-                className="dashboard_primary_button "
-                disabled={loading}
-              >
-                {loading ? "loading..." : 'Submit'}
+              <button type="submit" className="dashboard_primary_button " disabled={loading}>
+                {loading ? "loading..." : "Submit"}
               </button>
             </div>
           </Form>
@@ -641,4 +635,4 @@ const AddCategory = ({
   );
 };
 
-export default AddCategory
+export default AddCategory;
