@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { Open_Sans, Rubik } from "next/font/google";
-
+import localFont from "next/font/local";
 import '../styles/globals.css';
 import { ToastContainer } from "react-toastify";
 import PathnameWrapper from "components/PathnameWrapper";
@@ -18,6 +18,16 @@ const rubik = Rubik({
   variable: "--font-rubik",
 });
 
+const currency = localFont({ src: [
+  {
+    path: '../../public/assets/fonts/currency-symbol-v2.otf',
+    weight: '400',
+    style: 'normal',
+  }
+],
+ variable: '--font-currency'
+});
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -31,15 +41,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${openSans.variable} ${rubik.variable} antialiased`}
-      >
+      <body className={`${openSans.variable} ${rubik.variable} ${currency.variable} antialiased`}>
         <PathnameWrapper>
-
           <ToastContainer autoClose={1500} />
           {children}
-
-
         </PathnameWrapper>
       </body>
     </html>

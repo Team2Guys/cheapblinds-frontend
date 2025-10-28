@@ -22,14 +22,13 @@ export default function PriceSlider() {
       <div
         className="absolute top-2 left-[calc(var(--left)*1%)] transform -translate-x-1/2"
         style={{
+          // eslint-disable-next-line
           ["--left" as any]: (((range[0] - min) / (max - min)) * 100),
         }}
       >
-        <div className="relative bg-[#FFC107] text-white px-4 py-1 text-nowrap">
+        <div className="relative bg-primary text-white px-4 py-1 text-nowrap">
           AED {range[0]}
-          <div className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 
-                          border-l-[8px] border-r-[8px] border-t-[8px] 
-                          border-l-transparent border-r-transparent border-t-[#FFC107]" />
+          <div className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px]  border-l-transparent border-r-transparent border-t-primary" />
         </div>
       </div>
 
@@ -37,7 +36,7 @@ export default function PriceSlider() {
       <div className="relative h-0.5 bg-gray-200 rounded">
         {/* Active (filled) range */}
         <div
-          className="absolute h-0.5 bg-[#FFC107] rounded"
+          className="absolute h-0.5 bg-primary rounded"
           style={{
             left: `${((range[0] - min) / (max - min)) * 100}%`,
             right: `${100 - ((range[1] - min) / (max - min)) * 100}%`,
@@ -64,7 +63,7 @@ export default function PriceSlider() {
           style={{ zIndex: range[0] > range[1] ? 3 : 5 }}
         />
 
-        {/* Custom thumb styling */}
+        {/* eslint-disable-next-line */}
         <style jsx>{`
           input[type="range"] {
             pointer-events: none;
@@ -95,8 +94,8 @@ export default function PriceSlider() {
           input[type="range"]::-moz-range-track {
             height: 1px;
             background: transparent;
-          }
-        `}</style>
+          }`}
+        </style>
       </div>
     </div>
   );

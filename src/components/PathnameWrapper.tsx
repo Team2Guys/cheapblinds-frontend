@@ -26,7 +26,7 @@ const PathnameWrapper = ({ children }: { children: ReactNode }) => {
       withoutHeaderPages.includes(pathname)  || pathname.split('/').includes('dashboard') ? null : 
       <Header/>
       }
-        {children}
+      {children}
       {pathname !=="/" && (withoutHeaderPages.includes(pathname) || pathname.split('/').includes('dashboard')) ? null  : 
       <Footer /> 
       }

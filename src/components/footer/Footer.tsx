@@ -6,8 +6,7 @@ import { footerSections } from 'data/footer'
 
 const Footer: React.FC = () => {
     return (
-        <footer className="bg-[#FDBE00] text-black">
-            {/* TOP SECTION */}
+        <footer className="bg-primary text-black mt-10">
             <div className="container mx-auto px-2 pt-10 pb-6 relative">
                 <Image
                     src="/assets/images/footer/footer-girl.png"
@@ -17,7 +16,6 @@ const Footer: React.FC = () => {
                     className="opacity-80 absolute top-16 sm:top-0 left-0 w-full h-[250px] sm:w-2/5 sm:h-[360px] lg:h-full"
                 />
                 <div className="flex flex-col sm:flex-row gap-6 2xl:gap-10 items-start">
-                    {/* LEFT INFO SECTION */}
                     <div className="w-full sm:w-1/3 flex flex-col items-start justify-between relative h-[360px]">
                         <div className="flex items-center space-x-2 font-medium font-rubik text-lg border-b-2 border-black pb-1">
                             <p>Order online ANYTIME, or give us a call.</p>
@@ -62,7 +60,6 @@ const Footer: React.FC = () => {
                         </div>
                     </div>
                     <div className='w-full sm:w-2/3 h-full grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-x-10 lg:gap-y-12 items-start z-0'>
-                        {/* LINK SECTIONS */}
                         {footerSections.map((section) => (
                             <div key={section.title}>
                                 <h3 className="font-semibold">{section.title}</h3>
@@ -78,7 +75,6 @@ const Footer: React.FC = () => {
                             </div>
                         ))}
                         <div className='grid grid-cols-1 lg:grid-cols-2 sm:col-span-3 gap-6 lg:gap-0'>
-                            {/* PAYMENT METHODS */}
                             <div className="lg:mt-10 flex flex-col gap-2">
                                 <p>
                                     Choose Your Payment Method
@@ -104,7 +100,6 @@ const Footer: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* RIGHT NEWSLETTER */}
                             <div className='flex flex-col justify-end lg:items-end gap-2'>
                                 <h3>
                                     For the latest offers and inspiration sign up below
@@ -127,8 +122,6 @@ const Footer: React.FC = () => {
 
                 </div>
             </div>
-
-            {/* BOTTOM BLACK BAR */}
             <div className="bg-black text-white text-sm">
                 <div className="container mx-auto grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-0 px-2 py-4 space-y-3 lg:space-y-0">
                     <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-center xl:justify-start">

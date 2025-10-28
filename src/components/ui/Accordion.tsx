@@ -7,6 +7,7 @@ const Accordion = ({
     openSections,
     toggleSection,
     refObj,
+    // eslint-disable-next-line
 }: any) => {
 
     return (

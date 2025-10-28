@@ -102,3 +102,85 @@ export const categoryFeatures = [
     name: 'Express delivery'
   },
 ]
+
+export const products = [
+  {
+    category: {
+      name: "Roller Blinds",
+      custom_url: "rollar-blinds"
+    },
+    name: "Blackout Roller Blinds",
+    custom_Url: 'blackout',
+    delivery: "Same Day Express Delivery",
+    order_by: "3pm",
+    deliveryImageUrl: {
+      imageUrl: "/assets/images/category/filter-lighting.png",
+      public_id: "ydsgigas",
+      altText: "poster image",
+    },
+    price: "299.25",
+    posterImageUrl: {
+      imageUrl: "/assets/images/product/blackout.png",
+      public_id: "ydsgigas",
+      altText: "poster image",
+    },
+    colorCode: "E0D5C6",
+    windowImage: {
+      imageUrl: "/assets/images/product/blackour-window.png",
+      public_id: "ydsgigas",
+      altText: "poster image",
+    },
+  },
+  {
+    category: {
+      name: "Roller Blinds",
+      custom_url: "rollar-blinds"
+    },
+    name: "Sheer",
+    delivery: "Same Day Express Delivery",
+    order_by: "3pm",
+    deliveryImageUrl: {
+      imageUrl: "/assets/images/category/filter-lighting.png",
+      public_id: "ydsgigas",
+      altText: "poster image",
+    },
+    price: "299.25",
+    posterImageUrl: {
+      imageUrl: "/assets/images/product/sheer.png",
+      public_id: "ydsgigas",
+      altText: "poster image",
+    },
+    colorCode: "E0D5C6",
+    windowImage: {
+      imageUrl: "/assets/images/product/sheer-window.png",
+      public_id: "ydsgigas",
+      altText: "poster image",
+    },
+  },
+  {
+    category: {
+      name: "Roller Blinds",
+      custom_url: "rollar-blinds"
+    },
+    name: "Dim-Out",
+    delivery: "Same Day Express Delivery",
+    order_by: "3pm",
+    deliveryImageUrl: {
+      imageUrl: "/assets/images/category/filter-lighting.png",
+      public_id: "ydsgigas",
+      altText: "poster image",
+    },
+    price: "299.25",
+    posterImageUrl: {
+      imageUrl: "/assets/images/product/dim-out.png",
+      public_id: "ydsgigas",
+      altText: "poster image",
+    },
+    colorCode: "E0D5C6",
+    windowImage: {
+      imageUrl: "/assets/images/product/dim-window.png",
+      public_id: "ydsgigas",
+      altText: "poster image",
+    },
+  }
+]

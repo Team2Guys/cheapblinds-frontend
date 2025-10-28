@@ -98,7 +98,7 @@ const Measurement = ({ appointments, title }: { appointments: IAppointment[], ti
          {appointments && appointments.length > 0 ? (
             <>
                <Table<IAppointment> data={filteredOrders} columns={columns} rowKey="id" />
-               <Modal isOpen={isModalOpen} onClose={handleCancel} onCancel={handleCancel} >
+               <Modal isOpen={isModalOpen} onClose={handleCancel} >
                   {selectedAppointment && (
                      <div className='space-y-3'>
                         <p><strong>Email:</strong> {selectedAppointment.email}</p>
@@ -109,8 +109,6 @@ const Measurement = ({ appointments, title }: { appointments: IAppointment[], ti
                         <p><strong>message:</strong> {selectedAppointment.message || "-"}</p>
                         <p><strong>Selected Option:</strong></p>
                         {selectedAppointment.subCategories.map((value, index) => (<p key={index}>{value || "-"}</p>))}
-
-
 
                      </div>
                   )}

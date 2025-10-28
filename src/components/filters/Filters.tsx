@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import PriceSlider from './PriceSlider';
 import Accordion from 'components/ui/Accordion';
+import { RxCross2 } from 'react-icons/rx';
 
 type SectionKeys =
     | "type"
@@ -29,7 +30,7 @@ const Filters = () => {
         price: true,
     });
 
-    const contentRefs: any = {
+    const contentRefs = {
         type: useRef(null),
         colour: useRef(null),
         width: useRef(null),
@@ -71,6 +72,24 @@ const Filters = () => {
 
     return (
         <div className="flex flex-col gap-6 pb-8">
+            <div className='flex items-center gap-4 border-b border-[#0000003D] px-2 pb-1'>
+                <Image
+                    src='/assets/images/category/filter-lighting.png'
+                    alt='icon'
+                    width={32}
+                    height={32}
+                />
+                <p>Express delivery</p>
+            </div>
+            <div>
+                <p className='font-rubik text-xl font-medium'>Active filters</p>
+                <div className='flex flex-wrap gap-2 pt-4'>
+                    <div className='border border-primary rounded-md w-36 h-10 flex justify-center items-center font-semibold relative'>
+                        Light Filtering
+                    <span className='flex justify-center items-center h-4 w-4 bg-primary text-white rounded-full absolute -top-2 -right-2'><RxCross2 size={12} /></span>
+                    </div>
+                </div>
+            </div>
 
             {/* ---------- Type ---------- */}
             <Accordion
@@ -118,10 +137,7 @@ const Filters = () => {
                 <div className="flex flex-col gap-4 pt-4">
                     {colourOptions.map((item) => (
                         <button key={item.name} className="flex items-center gap-3">
-                            <span
-                                className="jagged-shape w-8 h-8"
-                                style={{ background: item.color }}
-                            ></span>
+                            <span className="jagged-shape w-8 h-8"  style={{ background: item.color }} ></span>
                             <p>{item.name} ({item.count})</p>
                         </button>
                     ))}
@@ -217,7 +233,7 @@ const Filters = () => {
                 toggleSection={toggleSection}
                 refObj={contentRefs.price}
             >
-                <div className="pt-4">
+                <div className="pt-4 w-[250px] mx-auto">
                     <PriceSlider />
                 </div>
             </Accordion>
