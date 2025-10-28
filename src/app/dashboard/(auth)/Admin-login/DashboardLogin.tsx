@@ -49,17 +49,24 @@ const DashboardLogin = () => {
       }
 
       router.push("/dashboard");
-    } catch (err: any) {
-      //eslint-disable-line
-      console.log(err, "err");
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else if (err.message) {
+    } catch (err: unknown) {
+      console.error(err, "err");
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err &&
+        typeof (err as unknown as { response: { data: { message: string } } }).response ===
+          "object" &&
+        (err as unknown as { response: { data: { message: string } } }).response?.data?.message
+      ) {
+        setError(
+          (err as unknown as { response: { data: { message: string } } }).response.data.message,
+        );
+      } else if (err instanceof Error) {
         setError(err.message);
       } else {
         setError("An unexpected error occurred.");
       }
-      throw err;
     }
   };
 

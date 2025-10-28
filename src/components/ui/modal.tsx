@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { ModalProps } from "types/Header";
 
-const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
+const Modal = ({ isOpen, onClose, children, className, paymentModal }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,9 +29,9 @@ const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
     >
       <div
         ref={modalRef}
-        className="bg-white shadow-lg p-5 relative rounded-xl w-full sm:w-[90%] md:w-[600px] lg:w-[700px] transition-all duration-300"
+        className={`bg-white shadow-lg p-2 md:p-5 relative rounded-md w-full sm:w-[90%] ${paymentModal ? "md:w-[1200px]" : "md:w-[600px] lg:w-[700px]"} transition-all duration-300`}
       >
-        <button onClick={onClose} className="absolute top-3 right-3 text-xl">
+        <button onClick={onClose} className="absolute top-3 right-3 text-xl cursor-pointer">
           <RxCross2 />
         </button>
         <div className="mt-6">{children}</div>

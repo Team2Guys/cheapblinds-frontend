@@ -79,12 +79,12 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
           cancelText: "Cancel",
           onOk: () => {
             setselecteMenu("AllAdmin");
-            setEditProduct(undefined);
+            setEditProduct(null);
           },
         });
       } else {
         setselecteMenu("AllAdmin");
-        setEditProduct(undefined);
+        setEditProduct(null);
       }
     };
 
@@ -107,13 +107,13 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
         cancelText: "Cancel",
         onOk: () => {
           setselecteMenu("AllAdmin");
-          setEditProduct(undefined);
+          setEditProduct(null);
         },
       });
       return;
     }
     setselecteMenu("AllAdmin");
-    setEditProduct(undefined);
+    setEditProduct(null);
   };
 
   return (
@@ -145,7 +145,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
 
             setSubmitting(false);
             setselecteMenu("AllAdmin");
-            setEditProduct(undefined);
+            setEditProduct(null);
             setposterimageUrl(undefined);
             showToast("success", `Admin ${updateFlag ? "updated" : "created"} successfully`);
             revalidateTag("Admins");

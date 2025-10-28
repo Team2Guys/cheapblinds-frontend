@@ -29,13 +29,21 @@ describe("AddProd Component", () => {
     {
       id: 1,
       name: "Category A",
-      posterImageUrl: { imageUrl: "/img1.jpg", public_id: "img1", resource_type: "image" },
+      posterImageUrl: {
+        imageUrl: "/img1.jpg",
+        public_id: "img1",
+        resource_type: "image",
+      },
       custom_url: "b",
     },
     {
       id: 2,
       name: "Category B",
-      posterImageUrl: { imageUrl: "/img1.jpg", public_id: "img1", resource_type: "image" },
+      posterImageUrl: {
+        imageUrl: "/img1.jpg",
+        public_id: "img1",
+        resource_type: "image",
+      },
       custom_url: "a",
     },
   ];
@@ -90,7 +98,9 @@ describe("AddProd Component", () => {
     });
 
     // Mock category & subcategory selection
-    fireEvent.change(screen.getByLabelText(/Category/i), { target: { value: "1" } });
+    fireEvent.change(screen.getByLabelText(/Category/i), {
+      target: { value: "1" },
+    });
     // fireEvent.change(screen.getByLabelText(/Subcategory/i), { target: { value: "1" } });
 
     // Click submit

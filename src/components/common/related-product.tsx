@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { RelatedProductProps } from "types/common";
 
-const RelatedProduct = ({ title, description, data }: RelatedProductProps) => {
+const RelatedProduct = ({ title, description, data, titleStart }: RelatedProductProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const handleMouseDown = () => setIsDragging(false);
   const handleMouseMove = () => setIsDragging(true);
@@ -16,7 +16,7 @@ const RelatedProduct = ({ title, description, data }: RelatedProductProps) => {
   };
   return (
     <div className="container mx-auto px-2 space-y-3 mt-10 md:mt-16 ">
-      <h2 className="text-heading text-center">{title}</h2>
+      <h2 className={`text-heading ${titleStart ? "text-start" : "text-center"}`}>{title}</h2>
       <p className="text-center">{description}</p>
       <SlickSlider slidesToShow={4}>
         {data.map((array, index) => (

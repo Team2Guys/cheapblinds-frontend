@@ -55,7 +55,11 @@ const mockCategories: Category[] = [
     name: "Electronics",
     description: "All electronics",
     custom_url: "electronics",
-    posterImageUrl: { imageUrl: "/img1.jpg", public_id: "img1", resource_type: "image" },
+    posterImageUrl: {
+      imageUrl: "/img1.jpg",
+      public_id: "img1",
+      resource_type: "image",
+    },
     createdAt: new Date("2025-08-08T10:00:00.000Z"),
     updatedAt: new Date("2025-08-08T10:00:00.000Z"),
     last_editedBy: "admin",

@@ -162,3 +162,17 @@ export interface Shipping {
   otherEmiratesFee?: number;
   freeShippingFee?: number;
 }
+
+export interface SideBySideMagnifierProps {
+  imageSrc: string;
+  largeImageSrc: string;
+  zoomScale?: number;
+  inPlace?: boolean;
+  alignTop?: boolean;
+  altText?: string;
+}
+
+export interface PaymentMethodProps {
+  showheading?: boolean;
+  installments: number;
+}

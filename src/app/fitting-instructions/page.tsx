@@ -5,10 +5,12 @@ import BlindFitting from "components/common/blind-fitting";
 import Reviews from "components/common/reviews";
 import ContactBanner from "components/Home/contactbanner";
 import React from "react";
+import Breadcrumb from "components/Layout/breadcrumb";
 
 const FittinInstructions: React.FC = () => {
   return (
     <>
+      <Breadcrumb title="Fitting Instructions" />
       <Reviews />
       <BlindFitting />
       <div className="container mx-auto px-2">

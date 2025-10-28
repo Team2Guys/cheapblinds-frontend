@@ -7,6 +7,7 @@ export const wishlistItems = [
   { name: "Luxury Sofa", image: "/assets/images/bin/product.png", price: "AED 899" },
 ];
 
+
 export const cartItems = [
   {
     name: "Velvet Chair",
@@ -116,3 +117,4 @@ export const menuItems: MenuItem[] = [
     link: "/faqs",
   },
 ];
+

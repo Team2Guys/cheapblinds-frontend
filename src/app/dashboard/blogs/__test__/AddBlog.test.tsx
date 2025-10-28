@@ -77,13 +77,21 @@ describe("AddBlogs Component", () => {
     {
       id: 1,
       name: "Category 1",
-      posterImageUrl: { imageUrl: "/img1.jpg", public_id: "img1", resource_type: "image" },
+      posterImageUrl: {
+        imageUrl: "/img1.jpg",
+        public_id: "img1",
+        resource_type: "image",
+      },
       custom_url: "b",
     },
     {
       id: 2,
       name: "Category 2",
-      posterImageUrl: { imageUrl: "/img1.jpg", public_id: "img1", resource_type: "image" },
+      posterImageUrl: {
+        imageUrl: "/img1.jpg",
+        public_id: "img1",
+        resource_type: "image",
+      },
       custom_url: "a",
     },
   ];
@@ -105,12 +113,18 @@ describe("AddBlogs Component", () => {
     render(<AddBlogs setselecteMenu={setselecteMenu} subCategories={subCategories} />);
 
     // ✅ fill required fields
-    fireEvent.change(screen.getByLabelText(/Title/i), { target: { value: "New Blog" } });
+    fireEvent.change(screen.getByLabelText(/Title/i), {
+      target: { value: "New Blog" },
+    });
     fireEvent.change(screen.getByLabelText(/Select Category/i), {
       target: { value: "Category 1" },
     });
-    fireEvent.change(screen.getByLabelText(/Custom Url/i), { target: { value: "new-blog" } });
-    fireEvent.change(screen.getByLabelText(/Content/i), { target: { value: "Some blog content" } });
+    fireEvent.change(screen.getByLabelText(/Custom Url/i), {
+      target: { value: "new-blog" },
+    });
+    fireEvent.change(screen.getByLabelText(/Content/i), {
+      target: { value: "Some blog content" },
+    });
 
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /Submit Blog/i }));
@@ -125,7 +139,9 @@ describe("AddBlogs Component", () => {
 
   it("shows modal on back button click with unsaved changes", async () => {
     render(<AddBlogs setselecteMenu={setselecteMenu} subCategories={subCategories} />);
-    fireEvent.change(screen.getByLabelText(/Title/i), { target: { value: "Changed Blog" } });
+    fireEvent.change(screen.getByLabelText(/Title/i), {
+      target: { value: "Changed Blog" },
+    });
     fireEvent.click(screen.getByText(/Back/i));
 
     await waitFor(() => {

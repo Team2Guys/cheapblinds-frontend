@@ -54,7 +54,11 @@ const mockSubCategories: ISUBCATEGORY[] = [
     createdAt: new Date("2025-08-08T10:00:00.000Z"),
     updatedAt: new Date("2025-08-08T10:00:00.000Z"),
     last_editedBy: "admin",
-    posterImageUrl: { imageUrl: "/img1.jpg", public_id: "img1", resource_type: "image" },
+    posterImageUrl: {
+      imageUrl: "/img1.jpg",
+      public_id: "img1",
+      resource_type: "image",
+    },
     custom_url: "laptops",
     Canonical_Tag: "",
     Meta_Description: "",

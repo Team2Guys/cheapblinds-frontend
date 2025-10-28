@@ -1,5 +1,4 @@
-import { SetStateAction } from "react";
-import { Admin, AdminValues } from "./type";
+import { Admin } from "./type";
 
 export interface adminCheckBox {
   canAddProduct: boolean;
@@ -32,8 +31,8 @@ export interface adminCheckBox {
 }
 
 export interface CreateAdminProps {
-  setselecteMenu: React.Dispatch<SetStateAction<string | null | undefined>>;
-  EditAdminValue?: Admin | undefined;
-  EditInitialValues?: AdminValues | undefined;
-  setEditProduct: React.Dispatch<SetStateAction<Admin | undefined>>;
+  setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
+  EditAdminValue?: Admin;
+  EditInitialValues?: Admin | null;
+  setEditProduct: React.Dispatch<React.SetStateAction<Admin | null>>;
 }

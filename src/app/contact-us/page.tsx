@@ -1,12 +1,13 @@
 import Herobanner from "components/common/hero-banner";
 import Reviews from "components/common/reviews";
-
 import Contact from "components/contact/contact";
 import React from "react";
+import Breadcrumb from "components/Layout/breadcrumb";
 
 const page = () => {
   return (
     <>
+      <Breadcrumb title="Contact Us" />
       <Reviews />
       <div className="bg-primary-light">
         <Herobanner

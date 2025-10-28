@@ -27,6 +27,7 @@ export interface RelatedProductProps {
   title: string;
   description?: string;
   data: RelatedProductItem[];
+  titleStart?: boolean;
 }
 
 export interface SlickSliderProps {

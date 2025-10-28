@@ -393,7 +393,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
                                   autoPlay
                                   muted
                                   controls
-                                ></video>
+                                />
                               ) : (
                                 <>
                                   <Image

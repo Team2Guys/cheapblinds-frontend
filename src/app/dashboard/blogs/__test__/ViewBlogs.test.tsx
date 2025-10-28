@@ -85,7 +85,11 @@ describe("ViewBlog Component", () => {
       category: "Category 1",
       createdAt: "2025-08-20T00:00:00Z",
       updatedAt: "2025-08-21T00:00:00Z",
-      posterImage: { imageUrl: "/img1.jpg", altText: "Image 1", public_id: "dsdasd" },
+      posterImage: {
+        imageUrl: "/img1.jpg",
+        altText: "Image 1",
+        public_id: "dsdasd",
+      },
       status: "PUBLISHED",
       content: "This is blog 1 content", // ✅ added
       isPublished: true, // ✅ added
@@ -97,7 +101,11 @@ describe("ViewBlog Component", () => {
       category: "Category 2",
       createdAt: "2025-08-19T00:00:00Z",
       updatedAt: "2025-08-20T00:00:00Z",
-      posterImage: { imageUrl: "/img2.jpg", altText: "Image 2", public_id: "dsdasdasdasd" },
+      posterImage: {
+        imageUrl: "/img2.jpg",
+        altText: "Image 2",
+        public_id: "dsdasdasdasd",
+      },
       status: "DRAFT",
       content: "This is blog 2 content", // ✅ added
       isPublished: false, // ✅ added

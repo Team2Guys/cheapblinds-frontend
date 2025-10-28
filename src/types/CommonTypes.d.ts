@@ -43,6 +43,10 @@ export type meta_props = {
 };
 
 export type IPRODUCT_META = {
-  params: Promise<{ subCategoryname: string; product: string; careersName?: string }>;
+  params: Promise<{
+    subCategoryname: string;
+    product: string;
+    careersName?: string;
+  }>;
   searchParams: Promise<{ variant?: string; size?: string }>;
 };

@@ -49,14 +49,8 @@ export interface DASHBOARD_MAIN_PRODUCT_PROPS {
 
 export interface BreadcrumbProps {
   title?: string;
-  image?: string;
   slug?: string;
   subcategory?: string;
-  altText?: string;
-  isImagetext?: boolean;
-  imageClass?: string;
-  showTitle?: boolean;
-  careersName?: string;
 }
 
 export interface productCardProps {

@@ -924,7 +924,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 autoPlay
                                 muted
                                 controls
-                              ></video>
+                              />
                             ) : (
                               <>
                                 <Image

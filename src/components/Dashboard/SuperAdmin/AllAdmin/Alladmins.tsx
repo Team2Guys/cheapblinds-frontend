@@ -6,8 +6,13 @@ import { Admin } from "types/type";
 import { useMutation } from "@apollo/client";
 import { REMOVE_ADMIN } from "graphql/mutations";
 import Table from "components/ui/table";
+interface AlladminsProps {
+  setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
+  setEditAdmin: React.Dispatch<React.SetStateAction<Admin | null>>;
+  AllAdminData: Admin[];
+}
 
-function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {
+function Alladmins({ setselecteMenu, setEditAdmin, AllAdminData }: AlladminsProps) {
   //eslint-disable-line
   const [delLoading, setDelLoading] = useState<string | number | undefined>(undefined);
   const [removeAdmin] = useMutation(REMOVE_ADMIN);
@@ -112,8 +117,8 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdmins }: any) {
           </button>
         </div>
       </div>
-      {AllAdmins && AllAdmins.length > 0 ? (
-        <Table<Admin> data={AllAdmins} columns={columns} rowKey="id" />
+      {AllAdminData && AllAdminData.length > 0 ? (
+        <Table<Admin> data={AllAdminData} columns={columns} rowKey="id" />
       ) : (
         <div className="flex justify-center"> No Admin found</div>
       )}

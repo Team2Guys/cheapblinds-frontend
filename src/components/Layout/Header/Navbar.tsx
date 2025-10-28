@@ -23,6 +23,7 @@ const Navbar = ({ className }: { className?: string }) => {
             >
               <div className="flex items-center gap-1 cursor-pointer hover:text-primary font-semibold max-lg:text-xs  ">
                 {item.link ? <Link href={item.link}>{item.name}</Link> : <span>{item.name}</span>}
+                {item.link ? <Link href={item.link}>{item.name}</Link> : <span>{item.name}</span>}
 
                 {hasSubmenu && <FaAngleDown className="mt-0.5" size={12} />}
               </div>

@@ -40,7 +40,10 @@ export const faqData: FaqCategory[] = [
         question: "How to measure for blinds?",
         answer: "Follow our guide to measure both recess and exact fits accurately.",
       },
-      { question: "Do I need special tools?", answer: "A tape measure and pencil are enough." },
+      {
+        question: "Do I need special tools?",
+        answer: "A tape measure and pencil are enough.",
+      },
       {
         question: "Our measuring and fitting guides help?",
         answer:
