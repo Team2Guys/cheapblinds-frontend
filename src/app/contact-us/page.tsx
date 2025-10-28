@@ -16,7 +16,7 @@ const page = () => {
         className='container mx-auto h-[300px] lg:h-[350px]'
     />
     </div>
-    <Contact/>
+    <Contact HideHeading />
       <div className="px-2">
         <Herobanner
           desktopImage="/assets/images/home/free-order/freeorder.webp"

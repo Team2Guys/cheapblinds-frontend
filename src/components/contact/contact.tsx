@@ -7,13 +7,17 @@ import ContactForm from "./contactform";
 import Link from "next/link";
 
 
-const Contact = () => {
+const Contact = ({HideHeading}: {HideHeading?: boolean}) => {
   return (
    <>
+   {
+    HideHeading ? null : (
       <h1 className="font-rubik font-semibold text-[24px] lg:text-[36px] flex justify-center items-center my-3 text-black">
         Need Help?
       </h1>
-      <div className="container mx-auto text-black flex flex-col md:flex-row w-full  mb-10">
+    )
+   }
+      <div className="container mx-auto text-black flex flex-col md:flex-row w-full  mb-10 mt-10 md:mt-16">
       {/* Contact */}
 
       <div className="bg-secondary p-2 mx-2 md:w-[50%]">
