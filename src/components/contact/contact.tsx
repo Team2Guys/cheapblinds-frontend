@@ -6,18 +6,13 @@ import GoogleMap from "../userComponent/map/map";
 import ContactForm from "./contactform";
 import Link from "next/link";
 
-
-const Contact = ({HideHeading}: {HideHeading?: boolean}) => {
+const Contact = () => {
   return (
    <>
-   {
-    HideHeading ? null : (
       <h1 className="font-rubik font-semibold text-[24px] lg:text-[36px] flex justify-center items-center my-3 text-black">
         Need Help?
       </h1>
-    )
-   }
-      <div className="container mx-auto text-black flex flex-col md:flex-row w-full  mb-10 mt-10 md:mt-16">
+      <div className="container mx-auto text-black flex flex-col md:flex-row w-full  mb-10">
       {/* Contact */}
 
       <div className="bg-secondary p-2 mx-2 md:w-[50%]">
