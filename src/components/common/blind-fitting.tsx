@@ -29,6 +29,7 @@ const BlindFitting = () => {
   );
 
   return (
+    <div className="px-2">
     <div className="container mx-auto px-4 bg-primary-light mt-10 md:mt-16 py-8 space-y-5">
       {/* Header Section */}
       <div className="flex items-center justify-center gap-4">
@@ -96,6 +97,7 @@ const BlindFitting = () => {
           </Link>
         ))}
       </div>
+    </div>
     </div>
   );
 };
