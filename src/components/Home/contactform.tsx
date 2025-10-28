@@ -2,11 +2,8 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import React from "react";
-interface ContactFormProps {
-  variant?: "withLabel" | "noLabel"; 
-}
 
-const ContactForm: React.FC<ContactFormProps> = ({ variant = "withLabel" }) => {
+const ContactForm: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -23,31 +20,25 @@ const ContactForm: React.FC<ContactFormProps> = ({ variant = "withLabel" }) => {
     onSubmit: (values, { resetForm }) => {
       console.log("Submitted values:", values);
       alert("Form submitted successfully!");
-      resetForm(); 
+      resetForm();
     },
   });
 
   const inputBase =
     "w-full bg-gray-100 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 placeholder:text-gray-400";
-  const labelClass = "block text-sm font-medium text-gray-700 mb-1";
   const errorClass = "text-red-500 text-xs mt-1";
 
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className={`${
-        variant === "noLabel"
-          ? "bg-white shadow-xl rounded-2xl p-6 w-full md:max-w-sm"
-          : "w-full max-w-lg"
-      }`}
+      className="bg-white shadow-xl rounded-2xl p-6 w-full md:max-w-sm"
     >
       {/* Email */}
       <div className="mb-4">
-        {variant === "withLabel" && <label className={labelClass}>Email</label>}
         <input
           type="email"
           name="email"
-          placeholder={variant === "noLabel" ? "Email*" : ""}
+          placeholder="Email*"
           className={inputBase}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -60,11 +51,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ variant = "withLabel" }) => {
 
       {/* Name */}
       <div className="mb-4">
-        {variant === "withLabel" && <label className={labelClass}>Your name</label>}
         <input
           type="text"
           name="name"
-          placeholder={variant === "noLabel" ? "Your name*" : ""}
+          placeholder="Your name*"
           className={inputBase}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -77,11 +67,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ variant = "withLabel" }) => {
 
       {/* Phone */}
       <div className="mb-4">
-        {variant === "withLabel" && <label className={labelClass}>Mobile Number</label>}
         <input
           type="text"
           name="phone"
-          placeholder={variant === "noLabel" ? "Phone Number*" : ""}
+          placeholder="Phone Number*"
           className={inputBase}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -94,12 +83,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ variant = "withLabel" }) => {
 
       {/* Message */}
       <div className="mb-4">
-        {variant === "withLabel" && (
-          <label className={labelClass}>Your message (optional)</label>
-        )}
         <textarea
           name="message"
-          placeholder={variant === "noLabel" ? "Comment" : ""}
+          placeholder="Comment"
           className={`${inputBase} min-h-[100px]`}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -110,11 +96,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ variant = "withLabel" }) => {
       {/* Submit Button */}
       <button
         type="submit"
-        className={`${
-          variant === "noLabel"
-            ? "bg-yellow-400 hover:bg-yellow-500 text-white font-medium rounded-full px-6 py-2"
-            : "bg-black text-white font-medium px-6 py-2 rounded-md hover:bg-gray-800"
-        }`}
+        className="bg-yellow-400 hover:bg-yellow-500 text-white font-medium rounded-full px-6 py-2"
       >
         Submit
       </button>

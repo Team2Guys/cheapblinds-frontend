@@ -36,7 +36,7 @@ const ContactBanner = () => {
 
         {/* Right Section */}
         <div className="w-full lg:w-[50%] xl:w-[40%] lg:pl-15">
-          <ContactForm variant="noLabel" />
+          <ContactForm />
         </div>
         <div className="flex justify-center items-center h-[200px] w-full sm:hidden mt-7">
           <Image
