@@ -23,6 +23,7 @@ const Navbar = ({ className }: { className?: string }) => {
             >
               <div className="flex items-center gap-1 cursor-pointer hover:text-primary font-semibold max-lg:text-xs  ">
                 {item.link ? <Link href={item.link}>{item.name}</Link> : <span>{item.name}</span>}
+                {item.link ? <Link href={item.link}>{item.name}</Link> : <span>{item.name}</span>}
 
                 {hasSubmenu && <FaAngleDown className="mt-0.5" size={12} />}
               </div>
@@ -41,13 +42,15 @@ const Navbar = ({ className }: { className?: string }) => {
                         href={sub.link}
                         className="flex gap-2 text-sm items-center px-4 py-3 hover:bg-primary hover:text-white rounded-sm transition"
                       >
-                        <Image
-                          className="h-auto"
-                          src={sub.image}
-                          alt={sub.name}
-                          width={20}
-                          height={20}
-                        />{" "}
+                        {sub.desktopimage && (
+                          <Image
+                            src={sub.desktopimage}
+                            alt={sub.name}
+                            width={20}
+                            height={20}
+                            className="h-auto"
+                          />
+                        )}
                         {sub.name}
                       </Link>
                     </li>

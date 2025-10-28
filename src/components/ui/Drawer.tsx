@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { DrawerProps } from "types/Header";
 
-const Drawer = ({ title, content, open, onOpen, onClose, width = 300, className }: DrawerProps) => {
+const Drawer = ({ title, content, open, onOpen, onClose, className }: DrawerProps) => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -20,26 +20,27 @@ const Drawer = ({ title, content, open, onOpen, onClose, width = 300, className 
       <div
         onClick={onClose}
         className={`fixed inset-0 bg-black/40 transition-opacity duration-300 z-40 ${open ? "opacity-100 visible" : "opacity-0 invisible"}`}
-      />
+      >
+        
+      </div>
 
       <div
-        className={`fixed top-0 left-0 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out w-full ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
-        style={{ width }}
       >
-        <div className="flex justify-end p-4 border-b">
+        <div className="flex justify-end px-2 pt-2">
           <button
             onClick={onClose}
             className="text-2xl w-8 h-8 rounded-md flex items-center justify-center shadow-14"
             title="Hide menu"
             type="button"
           >
-            <RxCross2 />
+            <RxCross2 size={20} />
           </button>
         </div>
 
-        <div className="h-full overflow-y-auto p-4">{content}</div>
+        <div className="h-full overflow-y-auto px-4 pb-4">{content}</div>
       </div>
     </>
   );
