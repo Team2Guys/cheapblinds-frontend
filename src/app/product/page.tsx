@@ -3,7 +3,7 @@ import RelatedProduct from "components/common/related-product";
 import OrderSection from "components/Home/ordersample";
 import Breadcrumb from "components/Layout/breadcrumb";
 import ProductDetail from "components/product/Product-detail";
-import { chooseblinds, chooseimage } from "data/home";
+import { chooseblinds } from "data/home";
 import React from "react";
 
 const ProductPage = () => {

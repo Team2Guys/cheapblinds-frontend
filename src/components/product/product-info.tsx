@@ -3,9 +3,6 @@ import Calculation from "./calculation";
 import HelpingModal from "./helping-modal";
 import RecessSelector from "./Recess-select";
 import PaymentMethod from "components/common/payment";
-import Image from "next/image";
-import { CiSquarePlus } from "react-icons/ci";
-import { TbTruckDelivery } from "react-icons/tb";
 import DeliveryIcon from "components/svg/delivery";
 const ProductInfo = () => {
   return (

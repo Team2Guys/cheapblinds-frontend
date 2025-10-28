@@ -1,17 +1,17 @@
 "use client";
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "components/Dashboard/DefaultLayout";
+import Alladmins from "components/Dashboard/SuperAdmin/AllAdmin/Alladmins";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
-import { Admin, AdminValues } from "types/type";
-const Alladmins = dynamic(() => import("components/Dashboard/SuperAdmin/AllAdmin/Alladmins"));
+import { Admin } from "types/type";
 const CreateAdmin = dynamic(
   () => import("components/Dashboard/SuperAdmin/CreateAdmin/CreateAdmin"),
 );
 
 const Admins = ({ admins }: { admins: Admin[] }) => {
-  const [editAdmin, setEditAdmin] = useState<AdminValues | undefined>();
-  const [selecteMenu, setselecteMenu] = useState<string | null | undefined>("AllAdmin");
+const [editAdmin, setEditAdmin] = useState<Admin | null>(null);
+const [selecteMenu, setselecteMenu] = useState<string>("AllAdmin");
 
   return (
     <DefaultLayout>
@@ -21,7 +21,7 @@ const Admins = ({ admins }: { admins: Admin[] }) => {
           <Alladmins
             setselecteMenu={setselecteMenu}
             setEditAdmin={setEditAdmin}
-            AllAdmins={admins}
+            AllAdminData={admins}
           />
         ) : (
           <CreateAdmin

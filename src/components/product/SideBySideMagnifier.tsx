@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { useState, useRef, useEffect, FC } from "react";
+import { useState, useRef, useEffect } from "react";
 import { PiPlusBold } from "react-icons/pi";
-import { SlMagnifierAdd } from "react-icons/sl";
 import { SideBySideMagnifierProps } from "types/prod";
 
 const SideBySideMagnifier = ({
