@@ -20,9 +20,7 @@ const Drawer = ({ title, content, open, onOpen, onClose, className }: DrawerProp
       <div
         onClick={onClose}
         className={`fixed inset-0 bg-black/40 transition-opacity duration-300 z-40 ${open ? "opacity-100 visible" : "opacity-0 invisible"}`}
-      >
-        
-      </div>
+      ></div>
 
       <div
         className={`fixed top-0 left-0 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out w-full ${
