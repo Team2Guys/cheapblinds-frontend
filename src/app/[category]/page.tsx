@@ -1,10 +1,8 @@
-import React from 'react'
-import Category from './Category'
+import React from "react";
+import Category from "./Category";
 
 const Page = () => {
-  return (
-    <Category />
-  )
-}
+  return <Category />;
+};
 
-export default Page
+export default Page;

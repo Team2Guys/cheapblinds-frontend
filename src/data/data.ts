@@ -73,42 +73,41 @@ export const checkboxAdminData = [
   { name: "canViewAppointments", label: "Can View Appointments" },
 ];
 
-
 export const categoryFeatures = [
   {
-    imageUrl: '/assets/images/category/Blackout.png',
-    name: 'Blackout'
+    imageUrl: "/assets/images/category/Blackout.png",
+    name: "Blackout",
   },
   {
-    imageUrl: '/assets/images/category/Dimout.png',
-    name: 'Dimout'
+    imageUrl: "/assets/images/category/Dimout.png",
+    name: "Dimout",
   },
   {
-    imageUrl: '/assets/images/category/Visible.png',
-    name: 'Visible'
+    imageUrl: "/assets/images/category/Visible.png",
+    name: "Visible",
   },
   {
-    imageUrl: '/assets/images/category/Waterproof.png',
-    name: 'Waterproof'
+    imageUrl: "/assets/images/category/Waterproof.png",
+    name: "Waterproof",
   },
   {
-    imageUrl: '/assets/images/category/Motorised.png',
-    name: 'Motorised'
+    imageUrl: "/assets/images/category/Motorised.png",
+    name: "Motorised",
   },
   {
-    imageUrl: '/assets/images/category/Express.png',
-    name: 'Express delivery'
+    imageUrl: "/assets/images/category/Express.png",
+    name: "Express delivery",
   },
-]
+];
 
 export const products = [
   {
     category: {
       name: "Roller Blinds",
-      custom_url: "rollar-blinds"
+      custom_url: "rollar-blinds",
     },
     name: "Blackout Roller Blinds",
-    custom_Url: 'blackout',
+    custom_Url: "blackout",
     delivery: "Same Day Express Delivery",
     order_by: "3pm",
     deliveryImageUrl: {
@@ -132,7 +131,7 @@ export const products = [
   {
     category: {
       name: "Roller Blinds",
-      custom_url: "rollar-blinds"
+      custom_url: "rollar-blinds",
     },
     name: "Sheer",
     delivery: "Same Day Express Delivery",
@@ -158,7 +157,7 @@ export const products = [
   {
     category: {
       name: "Roller Blinds",
-      custom_url: "rollar-blinds"
+      custom_url: "rollar-blinds",
     },
     name: "Dim-Out",
     delivery: "Same Day Express Delivery",
@@ -180,5 +179,5 @@ export const products = [
       public_id: "ydsgigas",
       altText: "poster image",
     },
-  }
-]
+  },
+];
