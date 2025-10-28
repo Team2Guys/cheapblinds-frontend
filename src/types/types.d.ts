@@ -285,3 +285,22 @@ interface Column<T> {
   key: string;
   render?: (_record: T) => React.ReactNode;
 }
+
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface FaqCategory {
+  id: string;
+  title: string;
+  icon: React.ElementType;
+  items: FaqItem[];
+}
+export interface AccordionItemProps {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onToggle: () => void;
+}

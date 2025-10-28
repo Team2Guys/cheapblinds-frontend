@@ -1,12 +1,13 @@
-import ContactForm from "components/contactform";
+
 import Phone from "components/svg/phone";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import ContactForm from "./contactform";
 
 const ContactBanner = () => {
   return (
-    <div className="container mx-auto px-2 mt-10 md:mt-16">
+    <div className="container mx-auto mt-10 md:mt-16">
       <div className="flex flex-col sm:flex-row text-black bg-primary-light bg-no-repeat sm:gap-4 sm:bg-center bg-fill sm:bg-[url('/assets/images/phnperson.webp')] w-full px-5 pt-10 sm:pb-3">
         {/* left section */}
         <div className="flex flex-col w-full lg:w-[50%] xl:w-[60%] lg:p-10 mb-5">
@@ -24,7 +25,7 @@ const ContactBanner = () => {
             className="flex items-start gap-3 mt-10"
           >
             <p>
-              <Phone className="h-8 w-8 mt-2" />
+              <Phone className="h-6 w-6 mt-2" />
             </p>
             <div className="flex flex-col text-[20px] font-rubik font-medium">
               <p>Call NOW!</p>
