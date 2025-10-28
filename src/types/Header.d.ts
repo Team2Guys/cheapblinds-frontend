@@ -21,13 +21,14 @@ export interface SocialLink {
 export interface SubmenuItem {
   name: string;
   link: string;
-  image: string;
+  mobileimage?: string;
+  desktopimage?: string;
 }
 
 export interface MenuItem {
   name: string;
   link?: string;
-  icon?: IconType;
+  image?: string;
   submenu?: SubmenuItem[];
 }
 

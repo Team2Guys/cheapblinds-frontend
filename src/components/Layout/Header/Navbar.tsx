@@ -41,12 +41,21 @@ const Navbar = ({className}:{className?:string}) => {
                 >
                   {item.submenu?.map((sub, index) => (
                     <li key={index}>
-                      <Link
+                       <Link
                         href={sub.link}
                         className="flex gap-2 text-sm items-center px-4 py-3 hover:bg-primary hover:text-white rounded-sm transition"
-                      >
-                       <Image className="h-auto" src={sub.image} alt={sub.name} width={20} height={20}/> {sub.name}
-                      </Link>
+                       >
+                        {sub.desktopimage && (
+                          <Image
+                            src={sub.desktopimage}
+                            alt={sub.name}
+                            width={20}
+                            height={20}
+                            className="h-auto"
+                          />
+                        )}
+                        {sub.name}
+                       </Link>
                     </li>
                   ))}
                 </ul>

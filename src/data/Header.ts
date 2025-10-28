@@ -24,33 +24,41 @@ export const socialLinks: SocialLink[] = [
 export const menuItems: MenuItem[] = [
   {
     name: "Roller Blinds",
+    link: "/roller-blinds",
+    image:"/assets/images/bin/mobile/roller.png",
     submenu: [
-      { name: "Blackout Roller Blinds", link: "/roller-blinds/blackout" , image:"/assets/images/bin/menu1.png"},
-      { name: "Sunscreen Roller Blinds", link: "/roller-blinds/sunscreen", image:"/assets/images/bin/menu2.png" },
-      { name: "Double Roller Blinds", link: "/roller-blinds/double", image:"/assets/images/bin/menu3.png" },
+      { name: "Blackout Roller Blinds", link: "/roller-blinds/blackout" , desktopimage:"/assets/images/bin/menu1.png", mobileimage: "/assets/images/bin/mobile/blackout.png",},
+      { name: "Sunscreen Roller Blinds", link: "/roller-blinds/sunscreen", desktopimage:"/assets/images/bin/menu2.png",  mobileimage: "", },
+      { name: "Double Roller Blinds", link: "/roller-blinds/double", desktopimage:"/assets/images/bin/menu3.png",  mobileimage: "", },
     ],
   },
   {
     name: "Roman Blinds",
-     link: "/roman-blinds",
+    link: "/roman-blinds",
+    image:"/assets/images/bin/mobile/roman.png", 
   },
   {
     name: "Zebra Blinds",
+    link: "/zebra-blinds",
+    image:"/assets/images/bin/mobile/zebra.png",
     submenu: [
-      { name: "Sheer Zebra Blinds", link: "/zebra-blinds/sheer", image:"/assets/images/bin/menu3.png" },
-      { name: "Translucent Zebra Blinds", link: "/zebra-blinds/translucent", image:"/assets/images/bin/menu1.png" },
+      { name: "Sheer Zebra Blinds", link: "/zebra-blinds/sheer", desktopimage:"/assets/images/bin/menu3.png" ,  mobileimage: "/assets/images/bin/mobile/sheer.png"},
+      { name: "Translucent Zebra Blinds", link: "/zebra-blinds/translucent", desktopimage:"/assets/images/bin/menu1.png", mobileimage: "" },
     ],
   },
   {
     name: "Vertical Blinds",
+    link: "/vertical-blinds",
+    image:"/assets/images/bin/mobile/vertical.png",
     submenu: [
-      { name: "PVC Vertical Blinds", link: "/vertical-blinds/pvc", image:"/assets/images/bin/menu2.png" },
-      { name: "Fabric Vertical Blinds", link: "/vertical-blinds/fabric", image:"/assets/images/bin/menu1.png" },
+      { name: "PVC Vertical Blinds", link: "/vertical-blinds/pvc", desktopimage:"/assets/images/bin/menu2.png", mobileimage: "" },
+      { name: "Fabric Vertical Blinds", link: "/vertical-blinds/fabric", desktopimage:"/assets/images/bin/menu1.png", mobileimage: "" },
     ],
   },
   {
     name: "Motorisation",
     link: "/motorisation",
+    image:"/assets/images/bin/mobile/motorisation.png",
   },
   {
     name: "About Us",

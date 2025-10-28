@@ -8,6 +8,7 @@ import SocialLink from './social'
 import { FaBars } from 'react-icons/fa6'
 import Drawer from 'components/ui/Drawer'
 import Link from 'next/link'
+import MobileMenu from 'components/ui/mobilemenu'
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -28,12 +29,9 @@ const Header = () => {
             open={open}
             onOpen={() => setOpen(true)}
             onClose={onClose}
-            width={300}
             title={ <FaBars className='block md:hidden' size={20} />}
             content={
-              <>
-              asd
-              </>
+              <MobileMenu />
         
             }
           />
