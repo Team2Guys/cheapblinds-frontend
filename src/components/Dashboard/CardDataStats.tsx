@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react";
 
 interface CardDataStatsProps {
   title: string;
@@ -13,7 +13,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   title,
   total,
   children,
-  className = '',
+  className = "",
 }) => {
   return (
     <div

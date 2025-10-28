@@ -106,14 +106,15 @@ describe("AddBlogs Component", () => {
 
     // ✅ fill required fields
     fireEvent.change(screen.getByLabelText(/Title/i), { target: { value: "New Blog" } });
-    fireEvent.change(screen.getByLabelText(/Select Category/i), { target: { value: "Category 1" } });
+    fireEvent.change(screen.getByLabelText(/Select Category/i), {
+      target: { value: "Category 1" },
+    });
     fireEvent.change(screen.getByLabelText(/Custom Url/i), { target: { value: "new-blog" } });
     fireEvent.change(screen.getByLabelText(/Content/i), { target: { value: "Some blog content" } });
 
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /Submit Blog/i }));
     });
-
   });
 
   it("calls setselecteMenu on back button click without unsaved changes", () => {

@@ -1,5 +1,4 @@
-import { gql } from '@apollo/client';
-
+import { gql } from "@apollo/client";
 
 export const REMOVE_INNER_SUBCATEGORY = gql`
   mutation RemovesInnerubcategory($id: Int!) {
@@ -8,10 +7,6 @@ export const REMOVE_INNER_SUBCATEGORY = gql`
     }
   }
 `;
-
-
-
-
 
 export const ADMIN_LOGIN = gql`
   mutation AdminLogin($email: String!, $password: String!) {
@@ -66,9 +61,6 @@ export const super_admin_ADMIN_LOGIN = gql`
   }
 `;
 
-
-
-;
 export const UPDATE_ADMIN = gql`
   mutation UpdateAdmin($input: UpdateAdminInput!) {
     updateAdmin(updateAdminInput: $input) {
@@ -95,7 +87,6 @@ export const UPDATE_ADMIN = gql`
   }
 `;
 
-
 export const CREATE_ADMIN = gql`
   mutation CreateAdmin($input: CreateAdminInput!) {
     createAdmin(createAdminInput: $input) {
@@ -119,11 +110,8 @@ export const CREATE_ADMIN = gql`
       canVeiwTotalCategories
       posterImageUrl
     }
-      
   }
 `;
-
-
 
 export const CONTACT_US_EMAIL_MUTATION = gql`
   mutation ContactEmail($contactUsEmail: contactUsEmailInput!) {
@@ -133,20 +121,18 @@ export const CONTACT_US_EMAIL_MUTATION = gql`
   }
 `;
 
-
 export const INITIATE_PAYMENT = gql`
-mutation CreateSalesProduct($createSalesProductInput: CreateOrderInput!) {
-  createSalesProduct(createSalesProductInput: $createSalesProductInput) {
-    paymentKey
+  mutation CreateSalesProduct($createSalesProductInput: CreateOrderInput!) {
+    createSalesProduct(createSalesProductInput: $createSalesProductInput) {
+      paymentKey
+    }
   }
-}`
-
-
+`;
 
 export const POST_PAYMENT_STATUS = gql`
-mutation PostPaymentStatus($postpaymentStatus: PaymentQueryDto!) {
-  postpaymentStatus(postpaymentStatus: $postpaymentStatus) {
-firstName
+  mutation PostPaymentStatus($postpaymentStatus: PaymentQueryDto!) {
+    postpaymentStatus(postpaymentStatus: $postpaymentStatus) {
+      firstName
       lastName
       email
       country
@@ -169,32 +155,30 @@ firstName
       checkoutDate
       shippingMethod
       products {
-            id
-            name
-            price
-            discountPrice
-            colors
-            sizes
-            variant
-            stock
-            quantity
-            totalPrice
-            image
-            dimension
-        }
+        id
+        name
+        price
+        discountPrice
+        colors
+        sizes
+        variant
+        stock
+        quantity
+        totalPrice
+        image
+        dimension
+      }
+    }
   }
-}
 `;
 
-
 export const ADD_REVIEW = gql`
-mutation AddReview($createGeneralInput:CreateGeneralInput!){
-Create_reviews(createGeneralInput: $createGeneralInput){
-name
-}
-
-}`
-
+  mutation AddReview($createGeneralInput: CreateGeneralInput!) {
+    Create_reviews(createGeneralInput: $createGeneralInput) {
+      name
+    }
+  }
+`;
 
 export const UPDATE_REVIEW = gql`
   mutation update_Reviews($updateGeneralInput: UpdateGeneralInput!) {
@@ -204,73 +188,61 @@ export const UPDATE_REVIEW = gql`
   }
 `;
 
-
-
 export const REMOVE_REVIEW = gql`
   mutation Delete_Review($id: Int!) {
     Delete_Review(id: $id) {
-   name
+      name
     }
   }
 `;
 
-
-
 export const CREATE_APPOINTMENT = gql`
-mutation CreateAppointments($createAppointments: createAppointments!) 
-{ Create_Appointments(createAppointments: $createAppointments){
-  id
-   phoneNumber 
-  email
-   name
-   location
-   whatsApp 
-  subCategories 
+  mutation CreateAppointments($createAppointments: createAppointments!) {
+    Create_Appointments(createAppointments: $createAppointments) {
+      id
+      phoneNumber
+      email
+      name
+      location
+      whatsApp
+      subCategories
+    }
   }
-  }
-  
-  `;
+`;
 
-
-
-// RedirectUrls 
+// RedirectUrls
 
 export const ADD_REDIRECTURLS = gql`
-   mutation CreateRedirectURL($CreatedRedirecturls: CreatedRedirecturls!) {
+  mutation CreateRedirectURL($CreatedRedirecturls: CreatedRedirecturls!) {
     createRedirecturls(CreatedRedirecturls: $CreatedRedirecturls) {
       id
-  
     }
   }
 `;
 
 export const UPDATE_REDIRECTURLS = gql`
- mutation UpdateRedirectURL($UpdateRedirecturls: UpdateRedirecturls!) {
+  mutation UpdateRedirectURL($UpdateRedirecturls: UpdateRedirecturls!) {
     updateRedirecturls(UpdateRedirecturls: $UpdateRedirecturls) {
-    id}
-
-}`
-
-
-
-
+      id
+    }
+  }
+`;
 
 // Delet Admins
 
 export const REMOVE_ADMIN = gql`
   mutation RemoveAdmin($id: Int!) {
     removeAdmin(id: $id) {
-    fullname
+      fullname
     }
   }
 `;
 
-
 export const FIND_ONE_REDIRECT_URL = gql`
   mutation findOneRedirecturls($url: String!) {
     findOneRedirecturls(url: $url) {
-        url
-        redirectedUrl
+      url
+      redirectedUrl
     }
   }
 `;

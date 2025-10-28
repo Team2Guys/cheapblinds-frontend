@@ -1,5 +1,4 @@
-
-import NewsLetter from './NewsLetter';
+import NewsLetter from "./NewsLetter";
 
 // const productHandler = async () => {
 //   try {
@@ -17,12 +16,10 @@ import NewsLetter from './NewsLetter';
 const UserNewsletter = async () => {
   /* eslint-disable */
 
-  const newsLetters:any = []
-  
+  const newsLetters: any = [];
+
   // await productHandler();
   return <NewsLetter newsLetters={newsLetters} />;
 };
-
-
 
 export default UserNewsletter;

@@ -1,22 +1,21 @@
+import Herobanner from "components/common/hero-banner";
+import Reviews from "components/common/reviews";
 
-import Herobanner from 'components/common/hero-banner'
-import Reviews from 'components/common/reviews'
-
-import Contact from 'components/contact/contact'
-import React from 'react'
+import Contact from "components/contact/contact";
+import React from "react";
 
 const page = () => {
   return (
     <>
-    <Reviews/>
-    <div className='bg-primary-light'>
-    <Herobanner
-        desktopImage="/assets/images/callbanner.webp"
-        mobileImage="/assets/images/callbannermobile.webp"
-        className='container mx-auto h-[300px] lg:h-[350px]'
-    />
-    </div>
-    <Contact />
+      <Reviews />
+      <div className="bg-primary-light">
+        <Herobanner
+          desktopImage="/assets/images/callbanner.webp"
+          mobileImage="/assets/images/callbannermobile.webp"
+          className="container mx-auto h-[300px] lg:h-[350px]"
+        />
+      </div>
+      <Contact />
       <div className="px-2">
         <Herobanner
           desktopImage="/assets/images/home/free-order/freeorder.webp"
@@ -29,7 +28,7 @@ const page = () => {
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;

@@ -3,13 +3,11 @@ import { AdditionalInformation, IProduct, ProductImage } from "./prod";
 import { StaticImageData } from "next/image";
 import { ISUBCATEGORY } from "./cat";
 
-
 export interface Feature {
   icon: string;
   label: string;
   width: number;
   height: number;
-
 }
 export interface FlooringType {
   name?: string;
@@ -20,14 +18,13 @@ export interface FlooringType {
 interface FlooringProduct {
   image: string;
   price: string;
-  name: string
+  name: string;
 }
 
 interface Color {
   name: string;
   detail: string;
 }
-
 
 export type Block = {
   id: number;
@@ -101,12 +98,10 @@ export interface BoxData {
   link: string;
 }
 
-
 export interface CardData {
   id: number;
   heading: string;
   content: string[];
-
 }
 
 export interface CategoryData {
@@ -150,22 +145,20 @@ export interface RECORDS {
   totalRevenue: string;
   totalSubCategories: string;
   Total_abandant_order: string;
-  totalorders:string
-  appointments:string
-  ecomereceProducts:string
-  redirecturls:string
-  blogs:string
-  blogs_comments:string
-  jobs:string
-  jobApplication:string
+  totalorders: string;
+  appointments: string;
+  ecomereceProducts: string;
+  redirecturls: string;
+  blogs: string;
+  blogs_comments: string;
+  jobs: string;
+  jobApplication: string;
 }
 
 export interface specsDetails {
   id: number;
   specsDetails: string;
 }
-
-
 
 export interface Sizes {
   name: string;
@@ -199,16 +192,20 @@ export interface IPaymentStatus {
   paymentStatus: boolean;
 }
 
-
-export interface modelDetails { name: string; detail: string };
-export interface spacification { specsDetails: string };
+export interface modelDetails {
+  name: string;
+  detail: string;
+}
+export interface spacification {
+  specsDetails: string;
+}
 
 /* eslint-disable */
 
 export interface FormValues {
   name: string;
   description: string;
-  short_description: string
+  short_description: string;
   salePrice: string;
   purchasePrice: string;
   discountPrice: string;
@@ -224,8 +221,8 @@ export interface FormValues {
   variantStockQuantities: { variant: string; quantity: number }[];
   price?: string;
   AdditionalInformation?: [];
-  FAQS?: []
-  box: string
+  FAQS?: [];
+  box: string;
 }
 
 export interface USRPROPS {
@@ -288,21 +285,21 @@ export type Permissions = {
   canDeleteRedirecturls?: boolean;
   canEditRedirecturls?: boolean;
   canVeiwTotalRedirecturls?: boolean;
-  canViewAppointments?: boolean
+  canViewAppointments?: boolean;
 };
 
 export interface Admin extends Permissions {
-  id?:string | number
+  id?: string | number;
   fullname?: string;
   email?: string;
   password?: string;
-  posterImageUrl?:ProductImage
-  __typename?: string
+  posterImageUrl?: ProductImage;
+  __typename?: string;
 }
 
 export interface AdminValues extends Admin {
-  id?:string | number
-} 
+  id?: string | number;
+}
 
 export interface IOrderList {
   orderData: IOrder[];
@@ -359,14 +356,11 @@ export interface PrivacyPolicyProps {
   data?: PrivacyPolicyItem[];
 }
 
-
-
-
 export interface IfilterValues {
-  commercialWarranty: string,
-  residentialWarranty: string,
-  thicknesses: string,
-  plankWidth: string,
+  commercialWarranty: string;
+  residentialWarranty: string;
+  thicknesses: string;
+  plankWidth: string;
 }
 
 export interface ProductTableProps {
@@ -382,16 +376,16 @@ export interface InfoWithImageProps {
   paragraphs?: string[];
   imageSrc: ProductImage;
   reverse?: boolean;
-  imageheight?: string
+  imageheight?: string;
   dataInfo?: AdditionalInformation[];
-  button?: boolean
+  button?: boolean;
 }
 export interface Section {
-  QualityHeadings:AdditionalInformation[]
-  QualityText:AdditionalInformation[]
-  QualityImages:ProductImage[]
-  dataInfo?: DataInfo[]
-  reverse?: boolean
+  QualityHeadings: AdditionalInformation[];
+  QualityText: AdditionalInformation[];
+  QualityImages: ProductImage[];
+  dataInfo?: DataInfo[];
+  reverse?: boolean;
 }
 
 export interface DataInfo {
@@ -400,9 +394,9 @@ export interface DataInfo {
     title: string;
     paragraphs: string[];
   }[];
-  imageSrc: string,
+  imageSrc: string;
   reverse?: boolean;
-  button?: boolean
+  button?: boolean;
 }
 
 export type GridItem = {
@@ -413,9 +407,9 @@ export type GridItem = {
 };
 
 export type BlindsGridProps = {
-  category_url: string
-  products: IProduct[]
-  subcategory_url: string
+  category_url: string;
+  products: IProduct[];
+  subcategory_url: string;
 };
 
 export interface FormData {

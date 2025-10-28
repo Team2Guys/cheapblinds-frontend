@@ -21,7 +21,7 @@ export default function Home() {
       />
       <Information />
       <ChildSafety />
-      <ShopSlider productData={productData}/>
+      <ShopSlider productData={productData} />
       <OrderSection
         reverse={false}
         image1="/assets/images/home/blindimg.webp"
@@ -50,7 +50,7 @@ export default function Home() {
         btnLink="/sample"
         samplesection
       />
-      <BlindFitting/>
+      <BlindFitting />
       <ContactBanner />
       <RelatedProduct
         title="Jobs Done"

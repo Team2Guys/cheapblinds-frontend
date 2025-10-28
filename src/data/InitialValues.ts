@@ -4,72 +4,66 @@ import { IProductValues } from "types/prod";
 import { Admin } from "types/type";
 
 export const categoryInitialValues: EDIT_CATEGORY = {
-  name: '', //done
-  description: '', // done
-  short_description: '',
-  Meta_Description: '', //done
-  Meta_Title: '', //done
-  Canonical_Tag: '', //done
+  name: "", //done
+  description: "", // done
+  short_description: "",
+  Meta_Description: "", //done
+  Meta_Title: "", //done
+  Canonical_Tag: "", //done
   custom_url: "", //done
   seoSchema: "",
-  status: 'DRAFT',
+  status: "DRAFT",
 };
 
-
 export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
-
-  name: '',
-  description: '',
-  short_description: '',
-  Meta_Description: '',
-  Meta_Title: '',
+  name: "",
+  description: "",
+  short_description: "",
+  Meta_Description: "",
+  Meta_Title: "",
   custom_url: "",
   category: "",
   Canonical_Tag: "",
-  status: 'DRAFT',
+  status: "DRAFT",
 };
 
-
-
-
 export const AddproductsinitialValues: IProductValues = {
-  name: '',
+  name: "",
   price: 0,
-  description: '',
-  short_description: '',
+  description: "",
+  short_description: "",
   stock: 0,
   discountPrice: 0,
-  custom_url: '',
-  Meta_Title: '',
-  Canonical_Tag: '',
-  Meta_Description: '',
+  custom_url: "",
+  Meta_Title: "",
+  Canonical_Tag: "",
+  Meta_Description: "",
   seoSchema: "",
   breadCrum: "",
-  status: 'DRAFT',
-  category: '',
-  subcategory: ''
+  status: "DRAFT",
+  category: "",
+  subcategory: "",
 };
 
 export const AddBlogInitialValues = {
-  title: '',
-  content: '',
-  custom_url: '',
-  category: '',
-  status: 'DRAFT' as BlogStatus,
+  title: "",
+  content: "",
+  custom_url: "",
+  category: "",
+  status: "DRAFT" as BlogStatus,
   isPublished: false,
   posterImage: undefined,
-  last_editedBy: '',
-  Canonical_Tag: '',
-  Meta_Description: '',
-  Meta_Title: '',
-  redirectionUrl: '',
-}
-
+  last_editedBy: "",
+  Canonical_Tag: "",
+  Meta_Description: "",
+  Meta_Title: "",
+  redirectionUrl: "",
+};
 
 export const initialAdminValues: Admin = {
-  fullname: '',
-  email: '',
-  password: '',
+  fullname: "",
+  email: "",
+  password: "",
   canAddProduct: false,
   canEditProduct: false,
   canDeleteProduct: false,
@@ -100,6 +94,6 @@ export const initialAdminValues: Admin = {
 };
 
 export const initialRedirctUlrsValues = {
-  url: '',
-  redirectedUrl: '',
-}
+  url: "",
+  redirectedUrl: "",
+};

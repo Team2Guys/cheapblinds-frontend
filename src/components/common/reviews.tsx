@@ -14,9 +14,7 @@ const Reviews = () => {
             </div>
           ))}
         </div>
-        <span className="hidden md:block">
-          4.7 out of 5 based on 84,290 reviews
-        </span>
+        <span className="hidden md:block">4.7 out of 5 based on 84,290 reviews</span>
       </div>
     </div>
   );

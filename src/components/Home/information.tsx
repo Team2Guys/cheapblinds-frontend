@@ -13,12 +13,7 @@ const Information = () => {
           }`}
         >
           <div className="relative w-16 h-16 md:w-24 lg:h-24 mb-3">
-            <Image
-              src={item.image}
-              alt={item.text}
-              fill
-              className="object-contain"
-            />
+            <Image src={item.image} alt={item.text} fill className="object-contain" />
           </div>
           <p className="font-semibold">{item.text}</p>
         </div>

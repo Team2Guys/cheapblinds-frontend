@@ -13,27 +13,22 @@ export interface ImagesProps {
 }
 
 interface PROPS {
-  setImagesUrl?: React.Dispatch<SetStateAction<ImagesProps[] | ProductImage[] | undefined>>;  
-  video?: boolean
-  multiple?: boolean
-  s3Flag?: boolean
-  Ispdf?: boolean
+  setImagesUrl?: React.Dispatch<SetStateAction<ImagesProps[] | ProductImage[] | undefined>>;
+  video?: boolean;
+  multiple?: boolean;
+  s3Flag?: boolean;
+  Ispdf?: boolean;
 }
-
-
 
 const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) => {
   const [isDraggableArea, setIsDraggableArea] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-
-
-
   const handleDrop = async (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     const files = Array.from(e.dataTransfer.files) as File[];
-        if (files.length > 10) return showToast("error", `You Can Upload maximum 10 files at Once`);
+    if (files.length > 10) return showToast("error", `You Can Upload maximum 10 files at Once`);
 
     for (const file of files) {
       let SingleFile;
@@ -44,7 +39,7 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
         const response = await uploadPhotosToBackend(SingleFile ? SingleFile : file, s3Flag, Ispdf);
         if (!response) continue;
 
-       setImagesUrl?.((prev = []) => multiple ? [...prev, response] :  [response]  );
+        setImagesUrl?.((prev = []) => (multiple ? [...prev, response] : [response]));
       } catch (error) {
         throw error;
       } finally {
@@ -61,19 +56,14 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
     for (const file of files) {
       try {
         const response = await uploadPhotosToBackend(file, s3Flag, Ispdf);
-        console.log(response, "response")
-        if (!response) continue
-       setImagesUrl?.((prev = []) => multiple ? [...prev, response] :  [response]  );
+        console.log(response, "response");
+        if (!response) continue;
+        setImagesUrl?.((prev = []) => (multiple ? [...prev, response] : [response]));
       } catch (error) {
         throw error;
       }
-
     }
-
-
-
   };
-
 
   const handleDivClick = () => {
     if (fileInputRef.current) {
@@ -83,7 +73,7 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
 
   return (
     <div
-      className={`m-4 cursor-pointer ${isDraggableArea ? 'border border-sky-500' : 'border border-stroke'}`}
+      className={`m-4 cursor-pointer ${isDraggableArea ? "border border-sky-500" : "border border-stroke"}`}
       onDrop={handleDrop}
       onDragOver={(e) => {
         e.preventDefault();
@@ -100,9 +90,13 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
       <div className="p-4 text-center text-black dark:text-white">
         <input
           type="file"
-          accept={video ? "image/*,video/*" : Ispdf
-            ? ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            : "image/*"}
+          accept={
+            video
+              ? "image/*,video/*"
+              : Ispdf
+                ? ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                : "image/*"
+          }
           onChange={handleFileChange}
           className="hidden"
           id="fileInput"
@@ -114,9 +108,7 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
         ) : (
           <BsCloudUpload className="inline-block mb-2 text-4xl text-black dark:text-white" />
         )}
-        <p className="text-black dark:text-white">
-          Drag & Drop or Click to Upload
-        </p>
+        <p className="text-black dark:text-white">Drag & Drop or Click to Upload</p>
       </div>
     </div>
   );

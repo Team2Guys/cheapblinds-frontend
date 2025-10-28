@@ -8,11 +8,9 @@ const SuperAdmin = async () => {
   const session = await getServerSession(authOptions);
 
   const accessToken = session?.accessToken;
-  if(session?.user.role === 'Admin') return redirect('/not-found');
-  const admins = await get_allAdmins(accessToken)
-  return (
-    <Admins admins={admins} />
-  );
+  if (session?.user.role === "Admin") return redirect("/not-found");
+  const admins = await get_allAdmins(accessToken);
+  return <Admins admins={admins} />;
 };
 
 export default SuperAdmin;

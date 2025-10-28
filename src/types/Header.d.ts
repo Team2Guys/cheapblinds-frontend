@@ -6,16 +6,16 @@ export interface DropdownPanelProps {
     name: string;
     image: string;
     price?: string;
-    requiredBoxes?: number; 
+    requiredBoxes?: number;
   }[];
   viewLink?: string;
   emptyMessage?: string;
 }
 
 export interface SocialLink {
-    id: number;
-    href: string;
-    Icon: IconType;
+  id: number;
+  href: string;
+  Icon: IconType;
 }
 
 export interface SubmenuItem {

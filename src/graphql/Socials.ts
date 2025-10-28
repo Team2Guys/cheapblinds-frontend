@@ -1,11 +1,10 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 // Mutation: Create Social Link
 export const CREATE_SOCIAL = gql`
   mutation CreateSocial($CreateGeneralsocial: CreateGeneralsocial!) {
     createSocial(CreateGeneralsocial: $CreateGeneralsocial) {
       id
- 
     }
   }
 `;
@@ -14,11 +13,11 @@ export const CREATE_SOCIAL = gql`
 export const GET_SOCIAL_LINKS = gql`
   query {
     SocialLinks {
-          id
-        post_links
-        posterImageUrl
-        createdAt
-        updatedAt
+      id
+      post_links
+      posterImageUrl
+      createdAt
+      updatedAt
     }
   }
 `;

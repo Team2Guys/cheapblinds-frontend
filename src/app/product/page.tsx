@@ -6,7 +6,6 @@ import ProductInfo from "components/product/productinfo";
 import SampleRequest from "components/product/sample-request";
 import React from "react";
 
-
 const mockImages = [
   "/products/blind1.jpg",
   "/products/blind2.jpg",

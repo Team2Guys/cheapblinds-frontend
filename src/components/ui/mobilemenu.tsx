@@ -29,22 +29,19 @@ const MobileMenu = () => {
                   href={item.link}
                   className="flex items-center gap-2 text-[14px] font-open_Sans font-semibold text-gray-900 hover:text-primary transition"
                 >
-                  
                   {item.image && (
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={22}
-                        height={22}
-                        className="rounded-sm"
-                      />
-                    )}
-                    {item.name}
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={22}
+                      height={22}
+                      className="rounded-sm"
+                    />
+                  )}
+                  {item.name}
                 </Link>
               ) : (
-                <span className="text-[15px] font-semibold text-gray-900">
-                  {item.name}
-                </span>
+                <span className="text-[15px] font-semibold text-gray-900">{item.name}</span>
               )}
 
               {hasSubmenu && (

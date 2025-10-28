@@ -6,7 +6,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { menuItems } from "data/Header";
 import Image from "next/image";
 
-const Navbar = ({className}:{className?:string}) => {
+const Navbar = ({ className }: { className?: string }) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
@@ -22,11 +22,7 @@ const Navbar = ({className}:{className?:string}) => {
               onMouseLeave={() => setOpenMenu(null)}
             >
               <div className="flex items-center gap-1 cursor-pointer hover:text-primary font-semibold max-lg:text-xs  ">
-                {item.link ? (
-                  <Link href={item.link}>{item.name}</Link>
-                ) : (
-                  <span>{item.name}</span>
-                )}
+                {item.link ? <Link href={item.link}>{item.name}</Link> : <span>{item.name}</span>}
 
                 {hasSubmenu && <FaAngleDown className="mt-0.5" size={12} />}
               </div>
@@ -41,10 +37,10 @@ const Navbar = ({className}:{className?:string}) => {
                 >
                   {item.submenu?.map((sub, index) => (
                     <li key={index}>
-                       <Link
+                      <Link
                         href={sub.link}
                         className="flex gap-2 text-sm items-center px-4 py-3 hover:bg-primary hover:text-white rounded-sm transition"
-                       >
+                      >
                         {sub.desktopimage && (
                           <Image
                             src={sub.desktopimage}
@@ -55,7 +51,7 @@ const Navbar = ({className}:{className?:string}) => {
                           />
                         )}
                         {sub.name}
-                       </Link>
+                      </Link>
                     </li>
                   ))}
                 </ul>

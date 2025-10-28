@@ -1,30 +1,26 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 export const subcategoryValidationSchema = Yup.object({
-  name: Yup.string().required('Add Sub Category Name'),
-  category: Yup.string().required('Select Category'),
-  custom_url: Yup.string().required('Custom URL is required'),
+  name: Yup.string().required("Add Sub Category Name"),
+  category: Yup.string().required("Select Category"),
+  custom_url: Yup.string().required("Custom URL is required"),
 });
-
 
 export const categoryValidationSchema = Yup.object({
-  name: Yup.string().required('Add  Category Name'),
-  custom_url: Yup.string().required('Custom URL is required'),
-  breadCrum: Yup.string().required('Bread Crum is required'),
+  name: Yup.string().required("Add  Category Name"),
+  custom_url: Yup.string().required("Custom URL is required"),
+  breadCrum: Yup.string().required("Bread Crum is required"),
 });
 
-
-
 export const AddProductvalidationSchema = Yup.object().shape({
-  name: Yup.string().min(2, 'Too Short!').required('Product Name is Required'),
-  description: Yup.string().required('Description is  Required'),
-  custom_url: Yup.string().required('Custom Url is Required'),
+  name: Yup.string().min(2, "Too Short!").required("Product Name is Required"),
+  description: Yup.string().required("Description is  Required"),
+  custom_url: Yup.string().required("Custom Url is Required"),
   // price: Yup.number()
   //   .min(1, 'Minimum sales price must be at least 1')
   //   .required('Required'),
   discountPrice: Yup.number().nullable(),
 });
-
 
 // Validation Schema
 export const getValidationSchema = (isSignup: boolean) =>
@@ -32,11 +28,15 @@ export const getValidationSchema = (isSignup: boolean) =>
     name: isSignup ? Yup.string().required("Full Name is required") : Yup.string(),
     phone: isSignup ? Yup.string().required("Phone number is required") : Yup.string(),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    password: isSignup ? Yup.string().min(6, "Password must be at least 6 characters").required("Password is required") : Yup.string().required("Password is required"),
+    password: isSignup
+      ? Yup.string()
+          .min(6, "Password must be at least 6 characters")
+          .required("Password is required")
+      : Yup.string().required("Password is required"),
     confirmPassword: isSignup
       ? Yup.string()
-        .required("Confirm Password is required")
-        .oneOf([Yup.ref("password")], "Passwords must match")
+          .required("Confirm Password is required")
+          .oneOf([Yup.ref("password")], "Passwords must match")
       : Yup.string(),
   });
 
@@ -48,9 +48,6 @@ export const initialValues = {
   confirmPassword: "",
 };
 
-
-
-
 // profile
 export const validationSchema = Yup.object({
   name: Yup.string().required("Full name is required"),
@@ -58,11 +55,10 @@ export const validationSchema = Yup.object({
   address: Yup.string().required("Address is required"),
 });
 
-
 export const validationAdminSchema = Yup.object().shape({
-  fullname: Yup.string().required('Full Name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  password: Yup.string().required('Password is required'),
+  fullname: Yup.string().required("Full Name is required"),
+  email: Yup.string().email("Invalid email address").required("Email is required"),
+  password: Yup.string().required("Password is required"),
   canAddProduct: Yup.boolean(),
   canEditProduct: Yup.boolean(),
   canDeleteProduct: Yup.boolean(),
@@ -92,9 +88,9 @@ export const validationAdminSchema = Yup.object().shape({
 });
 
 export const validationBlogSchema = Yup.object({
-  title: Yup.string().required('Title is required'),
-  content: Yup.string().required('Content is required'),
-  category: Yup.string().required('Category is required'),
+  title: Yup.string().required("Title is required"),
+  content: Yup.string().required("Content is required"),
+  category: Yup.string().required("Category is required"),
   Canonical_Tag: Yup.string().nullable(),
   Meta_Description: Yup.string().nullable(),
   Meta_Title: Yup.string().nullable(),
@@ -102,6 +98,6 @@ export const validationBlogSchema = Yup.object({
 });
 
 export const validationRedirctUlrsSchema = Yup.object({
-  url: Yup.string().required('Url is required'),
-  redirectedUrl: Yup.string().required('redirectedUrl is required'),
+  url: Yup.string().required("Url is required"),
+  redirectedUrl: Yup.string().required("redirectedUrl is required"),
 });

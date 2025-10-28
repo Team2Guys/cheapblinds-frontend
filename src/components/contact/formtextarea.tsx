@@ -4,7 +4,7 @@ interface FormTextareaProps {
   label: string;
   name: string;
   value: string;
- onChange: (_e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange: (_e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onBlur: (_e: React.FocusEvent<HTMLTextAreaElement>) => void;
   error?: string;
   touched?: boolean;

@@ -6,16 +6,17 @@ import { AuthOptions } from "next-auth";
 import ApoloClient from "utils/AppoloClient";
 import { ADMIN_LOGIN, super_admin_ADMIN_LOGIN } from "graphql/Admins";
 
-type CustomUser = User & Permissions & {
-  id: string; // MUST be string to match NextAuth types
-  name: string;
-  email: string;
-  posterImageUrl?: {
-    imageUrl: string;
-    public_id?: string;
+type CustomUser = User &
+  Permissions & {
+    id: string; // MUST be string to match NextAuth types
+    name: string;
+    email: string;
+    posterImageUrl?: {
+      imageUrl: string;
+      public_id?: string;
+    };
+    public?: string | null;
   };
-  public?: string | null;
-};
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -27,7 +28,6 @@ export const authOptions: AuthOptions = {
         IsAdmin: { label: "IsAdmin", type: "text" },
       },
       async authorize(credentials) {
-
         const isAdmin = credentials?.IsAdmin === "true";
         const key = isAdmin ? "adminLogin" : "superAdminLogin";
 
@@ -40,36 +40,30 @@ export const authOptions: AuthOptions = {
             },
           });
 
-       if (!data || !data[key]) {
-      // 👇 throw an error with your custom message
-      throw new Error("Invalid email or password");
-    }
+          if (!data || !data[key]) {
+            // 👇 throw an error with your custom message
+            throw new Error("Invalid email or password");
+          }
 
           const adminData = data?.[key];
           return adminData
             ? ({
-              ...adminData,
-              id: String(adminData.id), // Ensure it's a string
-            } as CustomUser)
+                ...adminData,
+                id: String(adminData.id), // Ensure it's a string
+              } as CustomUser)
             : null;
-            //eslint-disable-next-line
-        } catch (error:any)  {
-          console.log(error?.networkError?.result, 'Login failed')
-    throw new Error(error.message || "Login failed");
+          //eslint-disable-next-line
+        } catch (error: any) {
+          console.log(error?.networkError?.result, "Login failed");
+          throw new Error(error.message || "Login failed");
         }
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user, }) {
-      if (user && 'id' in user) {
-        const {
-          id,
-          email,
-          name,
-          posterImageUrl,
-          ...permissions
-        } = user as CustomUser;
+    async jwt({ token, user }) {
+      if (user && "id" in user) {
+        const { id, email, name, posterImageUrl, ...permissions } = user as CustomUser;
 
         return {
           ...token,
@@ -92,7 +86,7 @@ export const authOptions: AuthOptions = {
         name,
         picture,
         public: public_id,
-        token:accessToken,
+        token: accessToken,
         ...permissions
       } = token;
 
@@ -106,8 +100,8 @@ export const authOptions: AuthOptions = {
         ...permissions,
       };
       //@ts-expect-error("expected ")
-      session.accessToken = accessToken; 
-    return session;
+      session.accessToken = accessToken;
+      return session;
     },
   },
   session: {

@@ -1,17 +1,17 @@
-
-import  { DefaultSession } from "next-auth";
-import { Permissions } from "./types/permissions"; 
+import { DefaultSession } from "next-auth";
+import { Permissions } from "./types/permissions";
 
 declare module "next-auth" {
-export interface Session {
+  export interface Session {
     user: {
       id: number;
       email: string;
       name: string;
       image?: string | null;
       public?: string | null;
-    } & Permissions & DefaultSession["user"];
-    accessToken?:string
+    } & Permissions &
+      DefaultSession["user"];
+    accessToken?: string;
   }
 
   interface User extends Permissions {
