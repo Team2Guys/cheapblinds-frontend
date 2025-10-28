@@ -48,9 +48,7 @@ const Calculation = () => {
               onChange={() => handleUnitChange(u)}
               className="hidden"
             />
-            <span
-              className="w-5 h-5 rounded-full border-4 flex items-center justify-center transition-all duration-200 border-secondary"
-            >
+            <span className="w-5 h-5 rounded-full border-4 flex items-center justify-center transition-all duration-200 border-secondary">
               {unit === u && <span className="w-2.5 h-2.5 bg-primary rounded-full" />}
             </span>
             <span>{u}</span>
@@ -68,10 +66,11 @@ const Calculation = () => {
               setWidth(numericValue);
               validateValue("width", numericValue);
             }}
-            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-1 ${errors.width
+            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-1 ${
+              errors.width
                 ? "border-red-400 focus:ring-red-400"
                 : "border-secondary focus:ring-primary"
-              }`}
+            }`}
             placeholder="Enter width"
           />
           <p className="mt-1">Min: 300 mm | Max: 2600 mm</p>
@@ -87,10 +86,11 @@ const Calculation = () => {
               setHeight(numericValue);
               validateValue("height", numericValue);
             }}
-            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-1 ${errors.height
+            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-1 ${
+              errors.height
                 ? "border-red-400 focus:ring-red-400"
                 : "border-secondary focus:ring-primary"
-              }`}
+            }`}
             placeholder="Enter height"
           />
           <p className="mt-1">Min: 300 mm | Max: 3000 mm</p>

@@ -49,22 +49,25 @@ const DashboardLogin = () => {
       }
 
       router.push("/dashboard");
-      } catch (err: unknown) {
-        console.error(err, "err");
-        if (
-          typeof err === "object" &&
-          err !== null &&
-          "response" in err &&
-          typeof (err as unknown as { response: { data: { message: string } } }).response === "object" &&
-          (err as unknown as { response: { data: { message: string } } }).response?.data?.message
-        ) {
-          setError((err as unknown as { response: { data: { message: string } } }).response.data.message);
-        } else if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unexpected error occurred.");
-        }
+    } catch (err: unknown) {
+      console.error(err, "err");
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err &&
+        typeof (err as unknown as { response: { data: { message: string } } }).response ===
+          "object" &&
+        (err as unknown as { response: { data: { message: string } } }).response?.data?.message
+      ) {
+        setError(
+          (err as unknown as { response: { data: { message: string } } }).response.data.message,
+        );
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unexpected error occurred.");
       }
+    }
   };
 
   const inputFields = [

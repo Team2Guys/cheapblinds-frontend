@@ -10,8 +10,8 @@ const CreateAdmin = dynamic(
 );
 
 const Admins = ({ admins }: { admins: Admin[] }) => {
-const [editAdmin, setEditAdmin] = useState<Admin | null>(null);
-const [selecteMenu, setselecteMenu] = useState<string>("AllAdmin");
+  const [editAdmin, setEditAdmin] = useState<Admin | null>(null);
+  const [selecteMenu, setselecteMenu] = useState<string>("AllAdmin");
 
   return (
     <DefaultLayout>
