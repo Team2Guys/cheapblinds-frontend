@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { RelatedProductProps } from "types/common";
 
-const RelatedProduct = ({ title, description, data,titleStart }: RelatedProductProps) => {
+const RelatedProduct = ({ title, description, data, titleStart }: RelatedProductProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const handleMouseDown = () => setIsDragging(false);
   const handleMouseMove = () => setIsDragging(true);

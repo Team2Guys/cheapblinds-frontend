@@ -12,17 +12,17 @@ const ProductPage = () => {
       <Breadcrumb title="Product" />
       <div className="container mx-auto px-2">
         <ProductDetail />
-        <RelatedProduct titleStart title="RELATED PRODUCTS" data={chooseblinds}/>
-      <BlindFitting />
-       <OrderSection
-        className="mt-10 md:mt-16"
-        reverse
-        image1="/assets/images/home/cheap.webp"
-        image2="/assets/images/home/sample.webp"
-        btnText="Order Free Samples"
-        btnLink="/sample"
-        samplesection
-      />
+        <RelatedProduct titleStart title="RELATED PRODUCTS" data={chooseblinds} />
+        <BlindFitting />
+        <OrderSection
+          className="mt-10 md:mt-16"
+          reverse
+          image1="/assets/images/home/cheap.webp"
+          image2="/assets/images/home/sample.webp"
+          btnText="Order Free Samples"
+          btnLink="/sample"
+          samplesection
+        />
       </div>
     </>
   );

@@ -173,6 +173,6 @@ export interface SideBySideMagnifierProps {
 }
 
 export interface PaymentMethodProps {
-  showheading?: boolean
-  installments: number
+  showheading?: boolean;
+  installments: number;
 }

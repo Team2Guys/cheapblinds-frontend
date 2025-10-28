@@ -14,9 +14,7 @@ const RecessSelector = () => {
             key={opt.id}
             onClick={() => setSelected(opt.id)}
             className={`relative border-3 cursor-pointer transition-all duration-200 w-6/12 md:w-4/12  ${
-              selected === opt.id
-                ? "border-black shadow-md"
-                : "border-secondary"
+              selected === opt.id ? "border-black shadow-md" : "border-secondary"
             }`}
           >
             {selected === opt.id && (

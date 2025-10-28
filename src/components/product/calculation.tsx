@@ -39,10 +39,7 @@ const Calculation = () => {
     <>
       <div className="flex items-center justify-between mx-auto max-w-sm">
         {["mm", "cm", "Inches"].map((u) => (
-          <label
-            key={u}
-            className="flex items-center gap-2 cursor-pointer select-none"
-          >
+          <label key={u} className="flex items-center gap-2 cursor-pointer select-none">
             <input
               type="radio"
               name="unit"
@@ -54,9 +51,7 @@ const Calculation = () => {
             <span
               className={`w-5 h-5 rounded-full border-4 flex items-center justify-center transition-all duration-200 border-secondary`}
             >
-              {unit === u && (
-                <span className="w-2.5 h-2.5 bg-primary rounded-full" />
-              )}
+              {unit === u && <span className="w-2.5 h-2.5 bg-primary rounded-full" />}
             </span>
             <span>{u}</span>
           </label>
@@ -64,10 +59,8 @@ const Calculation = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="block mb-1">
-            Width ({unit})
-          </label>
-           <input
+          <label className="block mb-1">Width ({unit})</label>
+          <input
             type="text"
             value={width}
             onChange={(e) => {
@@ -82,18 +75,12 @@ const Calculation = () => {
             }`}
             placeholder="Enter width"
           />
-          <p className="mt-1">
-            Min: 300 mm | Max: 2600 mm
-          </p>
-          {errors.width && (
-            <p className=" text-red-500 mt-1">{errors.width}</p>
-          )}
+          <p className="mt-1">Min: 300 mm | Max: 2600 mm</p>
+          {errors.width && <p className=" text-red-500 mt-1">{errors.width}</p>}
         </div>
         <div>
-          <label className="block mb-1">
-            Height ({unit})
-          </label>
-           <input
+          <label className="block mb-1">Height ({unit})</label>
+          <input
             type="text"
             value={height}
             onChange={(e) => {
@@ -108,12 +95,8 @@ const Calculation = () => {
             }`}
             placeholder="Enter height"
           />
-          <p className="mt-1">
-            Min: 300 mm | Max: 3000 mm
-          </p>
-          {errors.height && (
-            <p className=" text-red-500 mt-1">{errors.height}</p>
-          )}
+          <p className="mt-1">Min: 300 mm | Max: 3000 mm</p>
+          {errors.height && <p className=" text-red-500 mt-1">{errors.height}</p>}
         </div>
       </div>
     </>
