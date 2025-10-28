@@ -23,7 +23,7 @@ export default function PriceSlider() {
         className="absolute top-2 left-[calc(var(--left)*1%)] transform -translate-x-1/2"
         style={{
           // eslint-disable-next-line
-          ["--left" as any]: (((range[0] - min) / (max - min)) * 100),
+          ["--left" as any]: ((range[0] - min) / (max - min)) * 100,
         }}
       >
         <div className="relative bg-primary text-white px-4 py-1 text-nowrap">
@@ -64,37 +64,39 @@ export default function PriceSlider() {
         />
 
         {/* eslint-disable-next-line */}
-        <style jsx>{`
-          input[type="range"] {
-            pointer-events: none;
-          }
-          input[type="range"]::-webkit-slider-thumb {
-            pointer-events: all;
-            -webkit-appearance: none;
-            height: 10px;
-            width: 10px;
-            border-radius: 50%;
-            background: #ffc107;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-            margin-top: -5px;
-          }
-          input[type="range"]::-moz-range-thumb {
-            pointer-events: all;
-            height: 10px;
-            width: 10px;
-            border-radius: 50%;
-            background: #ffc107;
-            border: none;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-          }
-          input[type="range"]::-webkit-slider-runnable-track {
-            height: 1px;
-            background: transparent;
-          }
-          input[type="range"]::-moz-range-track {
-            height: 1px;
-            background: transparent;
-          }`}
+        <style jsx>
+          {`
+            input[type="range"] {
+              pointer-events: none;
+            }
+            input[type="range"]::-webkit-slider-thumb {
+              pointer-events: all;
+              -webkit-appearance: none;
+              height: 10px;
+              width: 10px;
+              border-radius: 50%;
+              background: #ffc107;
+              box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+              margin-top: -5px;
+            }
+            input[type="range"]::-moz-range-thumb {
+              pointer-events: all;
+              height: 10px;
+              width: 10px;
+              border-radius: 50%;
+              background: #ffc107;
+              border: none;
+              box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            input[type="range"]::-webkit-slider-runnable-track {
+              height: 1px;
+              background: transparent;
+            }
+            input[type="range"]::-moz-range-track {
+              height: 1px;
+              background: transparent;
+            }
+          `}
         </style>
       </div>
     </div>

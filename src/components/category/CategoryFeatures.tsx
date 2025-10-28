@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import Image from 'next/image';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import Image from "next/image";
 
 interface Features {
   imageUrl: string;
@@ -19,9 +19,8 @@ export default function CategoryFeatures({ categoryFeatures }: { categoryFeature
         spaceBetween={10}
         pagination={{
           clickable: true,
-          el: '.custom-pagination',
-          renderBullet: (_, className) =>
-            `<span class="${className} custom-bullet"></span>`,
+          el: ".custom-pagination",
+          renderBullet: (_, className) => `<span class="${className} custom-bullet"></span>`,
         }}
         breakpoints={{
           0: { slidesPerView: 2 },
