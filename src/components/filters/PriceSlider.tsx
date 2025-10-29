@@ -21,7 +21,7 @@ export default function PriceSlider() {
       <div
         className="absolute top-2 left-[calc(var(--left)*1%)] transform -translate-x-1/2"
         style={{
-          ["--left" as any]: ((range[0] - min) / (max - min)) * 100,
+          ["--left" as string]: ((range[0] - min) / (max - min)) * 100,
         }}
       >
         <div className="relative bg-primary text-white px-4 py-1 text-nowrap z-20">
