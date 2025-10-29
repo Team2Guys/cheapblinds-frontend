@@ -1,5 +1,6 @@
 "use client";
 import CategoryFeatures from "components/category/CategoryFeatures";
+import Herobanner from "components/common/hero-banner";
 import Filters from "components/filters/Filters";
 import Card from "components/ui/Card";
 import SortDropdown from "components/ui/SortDropdown";
@@ -41,6 +42,8 @@ const Category = () => {
     setIsTruncated(false);
   };
   return (
+    <>
+    <Herobanner desktopImage="/assets/images/category/desktop-banner.jpg" mobileImage="/assets/images/category/mobile-banner.png"/>
     <div className="container mx-auto px-2 flex gap-6 xl:gap-10 mt-10">
       <div className="hidden lg:block lg:w-[25%]">
         <Filters />
@@ -167,6 +170,7 @@ const Category = () => {
         </div>
       </div>
     </div>
+     </>
   );
 };
 
