@@ -4,7 +4,6 @@ import OrderSection from "components/Home/ordersample";
 import Breadcrumb from "components/Layout/breadcrumb";
 import ProductDetail from "components/product/Product-detail";
 import { chooseblinds } from "data/home";
-import React from "react";
 
 const ProductPage = () => {
   return (
