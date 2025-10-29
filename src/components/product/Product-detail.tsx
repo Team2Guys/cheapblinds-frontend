@@ -2,6 +2,7 @@ import React from "react";
 import Thumbnail from "./thumbnail";
 import { productImages } from "data/bin";
 import ProductInfo from "./product-info";
+import ProductTabs from "./ProductTabs";
 
 const ProductDetail = () => {
   return (
@@ -20,6 +21,9 @@ const ProductDetail = () => {
         <div className="col-span-12 md:col-span-6">
           <ProductInfo />
         </div>
+      </div>
+      <div className="mt-10 md:mt-16 py-4">
+        <ProductTabs />
       </div>
     </div>
   );
