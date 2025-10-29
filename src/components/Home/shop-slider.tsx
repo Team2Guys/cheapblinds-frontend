@@ -111,7 +111,7 @@ export default function ShopByTypeSlider({
   );
 
   return (
-    <div ref={sliderRef} className="relative mt-10 container mx-auto overflow-hidden px-2">
+    <div ref={sliderRef} className="relative my-10 container mx-auto overflow-hidden px-2">
       <div className="text-center font-bold mb-16 md:mb-10">
         <p className="text-heading">Shop By Type</p>
       </div>
