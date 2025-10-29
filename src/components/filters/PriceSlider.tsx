@@ -18,23 +18,19 @@ export default function PriceSlider() {
 
   return (
     <div className="relative w-full py-14">
-      {/* Price label for left thumb */}
       <div
         className="absolute top-2 left-[calc(var(--left)*1%)] transform -translate-x-1/2"
         style={{
-          // eslint-disable-next-line
           ["--left" as any]: ((range[0] - min) / (max - min)) * 100,
         }}
       >
-        <div className="relative bg-primary text-white px-4 py-1 text-nowrap">
+        <div className="relative bg-primary text-white px-4 py-1 text-nowrap z-20">
           AED {range[0]}
           <div className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px]  border-l-transparent border-r-transparent border-t-primary" />
         </div>
       </div>
 
-      {/* Slider track */}
       <div className="relative h-0.5 bg-gray-200 rounded">
-        {/* Active (filled) range */}
         <div
           className="absolute h-0.5 bg-primary rounded"
           style={{

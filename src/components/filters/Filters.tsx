@@ -242,7 +242,7 @@ const Filters = () => {
         toggleSection={toggleSection}
         refObj={contentRefs.price}
       >
-        <div className="pt-4 w-[250px] mx-auto">
+        <div className="pt-4 mx-auto">
           <PriceSlider />
         </div>
       </Accordion>

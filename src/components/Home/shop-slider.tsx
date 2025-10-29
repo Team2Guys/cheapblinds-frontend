@@ -102,7 +102,9 @@ export default function ShopByTypeSlider({
               className="object-cover"
             />
           </div>
-          <p className="text-center mt-3 font-semibold font-rubik text-lg">{item.name}</p>
+          <p className="text-center mt-3 font-semibold font-rubik text-sm md:text-lg">
+            {item.name}
+          </p>
         </div>
       )),
     [productData, getPositionClass, activeIndex],
@@ -110,20 +112,20 @@ export default function ShopByTypeSlider({
 
   return (
     <div ref={sliderRef} className="relative mt-10 container mx-auto overflow-hidden px-2">
-      <div className="text-center font-bold mb-10">
+      <div className="text-center font-bold mb-16 md:mb-10">
         <p className="text-heading">Shop By Type</p>
       </div>
 
       <div
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        className="relative flex items-center justify-center sm:h-[580px] h-[250px] overflow-visible"
+        className="relative flex items-center justify-center sm:h-[580px] h-[250px] overflow-visible top-0"
       >
         {slideElements}
 
         <button
           onClick={handlePrev}
-          className="absolute left-0 top-0  cursor-pointer text-black bg-secondary rounded-full p-1"
+          className="absolute left-0 -top-14 md:top-0  cursor-pointer text-black bg-secondary rounded-full p-1"
           aria-label="Previous"
         >
           <HiArrowSmallLeft size={28} />
@@ -131,7 +133,7 @@ export default function ShopByTypeSlider({
 
         <button
           onClick={handleNext}
-          className="absolute right-0 top-0  cursor-pointer text-black bg-secondary rounded-full p-1"
+          className="absolute right-0 -top-14 md:top-0 cursor-pointer text-black bg-secondary rounded-full p-1"
           aria-label="Next"
         >
           <HiArrowSmallRight size={28} />

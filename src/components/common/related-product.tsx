@@ -18,11 +18,11 @@ const RelatedProduct = ({ title, description, data, titleStart }: RelatedProduct
     <div className="container mx-auto px-2 space-y-3 mt-10 md:mt-16 ">
       <h2 className={`text-heading ${titleStart ? "text-start" : "text-center"}`}>{title}</h2>
       <p className="text-center">{description}</p>
-      <SlickSlider slidesToShow={4}>
+      <SlickSlider>
         {data.map((array, index) => (
           <div
             key={index}
-            className="md:px-2 h-fit"
+            className="px-2 h-fit"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
           >

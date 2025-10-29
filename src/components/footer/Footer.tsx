@@ -127,7 +127,7 @@ const Footer: React.FC = () => {
             <Link href="/account/order-tracking">Order Tracking</Link>
           </div>
 
-          <p className="text-center">
+          <p className="text-center hidden md:block">
             © Cheap blinds {new Date().getFullYear()} All rights reserved
           </p>
 
@@ -135,6 +135,9 @@ const Footer: React.FC = () => {
             <p>Follow Us</p>
             <SocialLink />
           </div>
+          <p className="text-center block md:hidden">
+            © Cheap blinds {new Date().getFullYear()} All rights reserved
+          </p>
         </div>
       </div>
     </footer>

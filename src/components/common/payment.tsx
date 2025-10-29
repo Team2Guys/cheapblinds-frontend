@@ -24,8 +24,8 @@ const PaymentMethod = ({ showheading, installments }: PaymentMethodProps) => {
   return (
     <div className="border border-secondary rounded-md p-2">
       {showheading && <p className="font-semibold">Guaranteed Safe Checkout</p>}
-      <div className="flex gap-2 font-inter pt-4">
-        <div className="relative w-1/2 border-4 border-[#00FFBC] px-1 py-4 xl:px-2  shadow">
+      <div className="flex flex-wrap gap-8 md:gap-2 font-inter pt-4">
+        <div className="relative  sm:w-1/2 w-full border-4 border-[#00FFBC] px-1 py-4 xl:px-2  shadow">
           <span className="absolute -top-4 left-2 bg-[#00FFBC] px-2 py-1 font-extrabold rounded-md">
             tabby
           </span>
@@ -54,7 +54,7 @@ const PaymentMethod = ({ showheading, installments }: PaymentMethodProps) => {
             ))}
           </div>
         </div>
-        <div className="relative w-1/2 border-4 border-[#D47C84] px-1 py-4 xl:px-2 shadow">
+        <div className="relative sm:w-1/2 w-full border-4 border-[#D47C84] px-1 py-4 xl:px-2 shadow">
           <span className="absolute -top-4 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1 rounded-md">
             tamara
           </span>

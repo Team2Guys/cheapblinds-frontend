@@ -1,5 +1,6 @@
 "use";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { ProductImage } from "types/prod";
@@ -22,7 +23,10 @@ interface Product {
 
 const Card = ({ card }: { card: Product }) => {
   return (
-    <div className="card-wrapper relative p-2 rounded-md">
+    <Link
+      href="/roller-blinds/blackout-blind/Sheer-blinds"
+      className="card-wrapper relative p-2 rounded-md"
+    >
       <div className="relative h-40 md:h-80 xl:h-72">
         <Image
           src={card.posterImageUrl.imageUrl}
@@ -79,7 +83,7 @@ const Card = ({ card }: { card: Product }) => {
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
