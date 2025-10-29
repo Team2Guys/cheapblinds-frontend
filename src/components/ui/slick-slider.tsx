@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,7 +12,7 @@ interface ArrowProps {
 
 const NextArrow: React.FC<ArrowProps> = ({ onClick }) => (
   <div
-    className="absolute top-5 right-2 -translate-y-1/2 z-10 cursor-pointer text-black bg-secondary rounded-full p-1"
+    className="absolute top-0 md:top-2 right-2 z-10 cursor-pointer text-black bg-secondary rounded-full p-1"
     onClick={onClick}
   >
     <HiArrowSmallRight size={25} />
@@ -21,45 +21,44 @@ const NextArrow: React.FC<ArrowProps> = ({ onClick }) => (
 
 const PrevArrow: React.FC<ArrowProps> = ({ onClick }) => (
   <div
-    className="absolute top-5 left-2 -translate-y-1/2 z-10 cursor-pointer text-black bg-secondary rounded-full p-1"
+    className="absolute top-0 md:top-2 left-2 z-10 cursor-pointer text-black bg-secondary rounded-full p-1"
     onClick={onClick}
   >
     <HiArrowSmallLeft size={25} />
   </div>
 );
 
-const SlickSlider = ({ children, slidesToShow = 4, responsive = [] }: SlickSliderProps) => {
+const SlickSlider = ({ children, slidesToShow = 4 }: SlickSliderProps) => {
+  const [slides, setSlides] = useState(slidesToShow);
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width <= 480) setSlides(1);
+      else if (width <= 768) setSlides(2);
+      else if (width <= 1024) setSlides(3);
+      else setSlides(slidesToShow);
+    };
+
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [slidesToShow]);
+
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow,
-    swipeToSlide: true,
+    slidesToShow: slides,
     slidesToScroll: 1,
+    swipeToSlide: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     draggable: true,
-    responsive: responsive.length
-      ? responsive
-      : [
-          {
-            breakpoint: 1024,
-            settings: { slidesToShow: 3 },
-          },
-          {
-            breakpoint: 768,
-            settings: { slidesToShow: 2 },
-          },
-          {
-            breakpoint: 480,
-            settings: { slidesToShow: 1 },
-          },
-        ],
   };
 
   return (
-    <div className="relative ">
-      <Slider {...settings} className="pt-16">
+    <div className="relative w-full">
+      <Slider {...settings} className="pt-14">
         {children}
       </Slider>
     </div>
