@@ -24,7 +24,7 @@ const PaymentMethod = ({ showheading, installments }: PaymentMethodProps) => {
   return (
     <div className="border border-secondary rounded-md p-2">
       {showheading && <p className="font-semibold">Guaranteed Safe Checkout</p>}
-      <div className="flex flex-wrap gap-8 md:gap-2 font-inter pt-4">
+      <div className="flex flex-wrap sm:flex-nowrap gap-8 md:gap-2 font-inter pt-4">
         <div className="relative  sm:w-1/2 w-full border-4 border-[#00FFBC] px-1 py-4 xl:px-2  shadow">
           <span className="absolute -top-4 left-2 bg-[#00FFBC] px-2 py-1 font-extrabold rounded-md">
             tabby
