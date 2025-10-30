@@ -25,7 +25,7 @@ const Card = ({ card }: { card: Product }) => {
   return (
     <Link
       href="/roller-blinds/blackout-blind/Sheer-blinds"
-      className="card-wrapper relative p-2 rounded-md"
+      className="card-wrapper relative rounded-md pb-2"
     >
       <div className="relative h-40 md:h-80 xl:h-72">
         <Image
@@ -52,7 +52,7 @@ const Card = ({ card }: { card: Product }) => {
           </p>
         </div>
       </div>
-      <div className="pt-3 space-y-4">
+      <div className="pt-3 space-y-4 px-2">
         <div className="flex justify-between md:items-center gap-1 md:gap-2">
           <div className="space-y-1">
             <p className="text-xs md:text-base">{card.category.name}</p>

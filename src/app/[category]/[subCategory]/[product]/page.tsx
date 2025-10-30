@@ -5,10 +5,11 @@ import Breadcrumb from "components/Layout/breadcrumb";
 import ProductDetail from "components/product/Product-detail";
 import { chooseblinds } from "data/home";
 
-const ProductPage = () => {
+const ProductPage = async ({ params }: { params: Promise<{ category: string; subCategory: string; product: string }> }) => {
+  const resolvedParams = await params;
   return (
     <>
-      <Breadcrumb title="Product" />
+      <Breadcrumb slug={resolvedParams.category} subcategory={resolvedParams.subCategory} title={resolvedParams.product} />
       <div className="container mx-auto px-2">
         <ProductDetail />
         <RelatedProduct titleStart title="RELATED PRODUCTS" data={chooseblinds} />

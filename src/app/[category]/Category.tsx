@@ -150,7 +150,7 @@ const Category = () => {
               <SortDropdown />
             </div>
           </div>
-          <div className="grid grid-cols-2 xl:grid-cols-3 gap-2 pt-6">
+          <div className="grid grid-cols-2 xl:grid-cols-3 gap-5 pt-6">
             {Array(3)
               .fill(products)
               .flat()

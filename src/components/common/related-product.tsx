@@ -1,5 +1,6 @@
 "use client";
 import SlickSlider from "components/ui/slick-slider";
+import { generateSlug } from "config/Sociallinks";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -26,21 +27,21 @@ const RelatedProduct = ({ title, description, data, titleStart }: RelatedProduct
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
           >
-            <Link href={array.title ?? "#"} onClick={handleClick}>
-              <div className="overflow-hidden hover:shadow-sm md:p-2 ">
+            <Link href={`roller-blinds/roller/${generateSlug(array.title)}`} onClick={handleClick}>
+              <div className="overflow-hidden hover:shadow-md ">
                 <div className="relative w-full h-auto max-h-[350px] aspect-square">
                   <Image src={array.image} alt={array.title ?? ""} fill className="h-auto" />
                 </div>
-                {array.title && (
-                  <div className="py-3 space-y-1">
+                  <div className="py-3 space-y-1 px-2">
                     <h3>{array.title}</h3>
                     <p className="text-medium underline">{array.description}</p>
-                    <p className="text-2xl font-rubik font-semibold flex items-center gap-2">
-                      <span className="font-currency text-2xl mb-1"></span>
-                      {array.price}
-                    </p>
+                    {array.price && (
+                      <p className="text-2xl font-rubik font-semibold">
+                        <span className="font-currency text-2xl mb-1"></span>
+                        {array.price}
+                      </p>
+                    )}
                   </div>
-                )}
               </div>
             </Link>
           </div>

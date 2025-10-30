@@ -17,7 +17,7 @@ export interface OrderSectionProps {
 }
 
 export interface RelatedProductItem {
-  title?: string;
+  title: string;
   description?: string;
   price?: string;
   image: string;

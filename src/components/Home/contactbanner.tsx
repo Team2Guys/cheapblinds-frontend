@@ -7,9 +7,9 @@ import ContactForm from "./contactform";
 const ContactBanner = () => {
   return (
     <div className="container mx-auto mt-10 md:mt-16">
-      <div className="flex flex-col sm:flex-row text-black bg-primary-light bg-no-repeat sm:gap-4 sm:bg-center bg-fill sm:bg-[url('/assets/images/phnperson.webp')] w-full px-5 pt-10 sm:pb-3">
+      <div className="flex flex-col sm:flex-row justify-between text-black bg-primary-light bg-no-repeat sm:gap-4 sm:bg-bottom bg-fill sm:bg-[url('/assets/images/phnperson.webp')] w-full px-5 pt-10 sm:pb-3">
         {/* left section */}
-        <div className="flex flex-col w-full lg:w-[50%] xl:w-[60%] lg:p-10 mb-5">
+        <div className="flex flex-col w-full sm:w-[50%] lg:w-[78%] lg:p-10 mb-5">
           <p className="text-primary text-[51px] lg:text-[57px] font-rubik font-semibold leading-[0.7]">
             Ready{" "}
             <span className="font-medium text-[27px] text-black">
@@ -29,9 +29,7 @@ const ContactBanner = () => {
             </div>
           </Link>
         </div>
-
-        {/* Right Section */}
-        <div className="w-full lg:w-[50%] xl:w-[40%] lg:pl-15">
+        <div className="w-full sm:w-[50%] lg:w-[36%] lg:pl-15">
           <ContactForm />
         </div>
         <div className="flex justify-center items-center h-[200px] w-full sm:hidden mt-7">

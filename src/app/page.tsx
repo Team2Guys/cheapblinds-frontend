@@ -1,7 +1,7 @@
 import BlindFitting from "components/common/blind-fitting";
 import Herobanner from "components/common/hero-banner";
+import JobDone from "components/common/JobDone";
 import RelatedProduct from "components/common/related-product";
-import Reviews from "components/common/reviews";
 import ChildSafety from "components/Home/child-safety";
 import ContactBanner from "components/Home/contactbanner";
 import Information from "components/Home/information";
@@ -13,7 +13,6 @@ import React from "react";
 export default function Home() {
   return (
     <>
-      <Reviews />
       <Herobanner
         desktopImage="/assets/images/home/banner.webp"
         mobileImage="/assets/images/home/banner-mobile.webp"
@@ -32,12 +31,12 @@ export default function Home() {
       <div className="px-2">
         <Herobanner
           desktopImage="/assets/images/home/free-order/freeorder.webp"
-          mobileImage="/assets/images/home/free-order/freeorder-mobile.webp"
-          className="container mx-auto h-[395px] md:h-[468px]"
+          mobileImage="/assets/images/home/free-order/freeorder-mobile-new.png"
+          className="container mx-auto h-[400px] md:h-auto md:max-h-[500px]"
         />
         <Herobanner
           desktopImage="/assets/images/home/payment.webp"
-          className="container mx-auto h-[202px] md:h-[455px] mt-10 md:mt-16"
+          className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
         />
       </div>
       <RelatedProduct title="Browse Products" data={chooseblinds} />
@@ -52,7 +51,7 @@ export default function Home() {
       />
       <BlindFitting />
       <ContactBanner />
-      <RelatedProduct
+      <JobDone
         title="Jobs Done"
         description="You can prevent the use of cookies by changing the settings in your web browser so that (i) it does not accept new cookies, (ii) it informs you about new cookies, or (iii) it deletes all already received cookies. By deleting or disabling future cookies, your user experience may "
         data={chooseimage}
