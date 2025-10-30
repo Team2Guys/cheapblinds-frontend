@@ -6,7 +6,7 @@ import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa6";
 import { menuItems } from "data/Header";
 
-const MobileMenu = () => {
+const MobileMenu = ({ onClose }: { onClose: () => void }) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   const toggleMenu = (name: string) => {
@@ -26,6 +26,7 @@ const MobileMenu = () => {
             >
               {item.link ? (
                 <Link
+                  onClick={onClose}
                   href={item.link}
                   className="flex items-center gap-2 text-[14px] font-open_Sans font-semibold text-gray-900 hover:text-primary transition"
                 >
@@ -65,6 +66,7 @@ const MobileMenu = () => {
                   <Link
                     key={subIndex}
                     href={sub.link}
+                    onClick={onClose}
                     className="flex items-center gap-2 font-open_Sans py-2 text-sm text-gray-700 hover:text-primary transition"
                   >
                     {sub.mobileimage && (

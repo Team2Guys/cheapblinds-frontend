@@ -1,10 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+});
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
 import { SlickSliderProps } from "types/common";
+import dynamic from "next/dynamic";
 
 interface ArrowProps {
   onClick?: () => void;

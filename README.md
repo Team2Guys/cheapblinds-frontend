@@ -2,17 +2,17 @@
 
 ## Install Dependencies 
  <!-- used -->
-pnpm install
+npm install
 ///////////////
 
 ## Start Development Server 
 <!-- used -->
-pnpm run dev
+npm run dev
 ///////////////
 
 ## Run Tests
 <!--  used -->
-pnpm run test
+npm run test
 ///////////////
 
 ## Environment Setup Copy 

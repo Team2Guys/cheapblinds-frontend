@@ -14,7 +14,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const onClose = () => setOpen(false);
   return (
-    <>
+    <div className="sticky top-0 z-50 bg-white">
       <div className="flex md:hidden justify-between items-center py-2 border-b border-[#0000001F] px-2 container mx-auto">
         <SocialLink />
         <UserIcons />
@@ -37,7 +37,7 @@ const Header = () => {
               onOpen={() => setOpen(true)}
               onClose={onClose}
               title={<FaBars className="block md:hidden" size={20} />}
-              content={<MobileMenu />}
+              content={<MobileMenu onClose={onClose} />}
             />
           </div>
         </div>
@@ -67,7 +67,7 @@ const Header = () => {
           <SocialLink />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

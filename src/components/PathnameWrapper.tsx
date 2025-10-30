@@ -7,6 +7,7 @@ import "@ant-design/v5-patch-for-react-19";
 import { usePathname } from "next/navigation";
 import Header from "./Layout/Header/Header";
 import Footer from "./footer/Footer";
+import Reviews from "./common/reviews";
 
 const PathnameWrapper = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
@@ -22,7 +23,10 @@ const PathnameWrapper = ({ children }: { children: ReactNode }) => {
       <ApolloProvider client={ApoloClient}>
         {withoutHeaderPages.includes(pathname) ||
         pathname.split("/").includes("dashboard") ? null : (
+         <>
           <Header />
+          <Reviews />
+         </>
         )}
         {children}
         {pathname !== "/" &&

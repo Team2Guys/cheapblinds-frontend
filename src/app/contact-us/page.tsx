@@ -1,5 +1,4 @@
 import Herobanner from "components/common/hero-banner";
-import Reviews from "components/common/reviews";
 import Contact from "components/contact/contact";
 import React from "react";
 import Breadcrumb from "components/Layout/breadcrumb";
@@ -8,7 +7,6 @@ const page = () => {
   return (
     <>
       <Breadcrumb title="Contact Us" />
-      <Reviews />
       <div className="bg-primary-light">
         <Herobanner
           desktopImage="/assets/images/callbanner.webp"
@@ -17,17 +15,17 @@ const page = () => {
         />
       </div>
       <Contact />
-      <div className="px-2">
+          <div className="px-2">
         <Herobanner
           desktopImage="/assets/images/home/free-order/freeorder.webp"
-          mobileImage="/assets/images/home/free-order/freeorder-mobile.webp"
-          className="container mx-auto h-[395px] md:h-[468px]"
+          mobileImage="/assets/images/home/free-order/freeorder-mobile-new.png"
+          className="container mx-auto h-[400px] md:h-auto md:max-h-[500px]"
         />
         <Herobanner
           desktopImage="/assets/images/home/payment.webp"
-          className="container mx-auto h-[202px] md:h-[455px] mt-10 md:mt-16"
+          className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
         />
-      </div>
+          </div>
     </>
   );
 };
