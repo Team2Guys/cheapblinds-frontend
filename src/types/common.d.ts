@@ -41,3 +41,15 @@ export interface SlickSliderProps {
     };
   }[];
 }
+
+export interface Review {
+  rating: number;
+  date: string;
+  title: string;
+  text: string;
+  author: string;
+}
+
+export interface TestimonialProps {
+  reviews: Review[];
+}

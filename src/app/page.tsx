@@ -3,11 +3,11 @@ import Herobanner from "components/common/hero-banner";
 import JobDone from "components/common/JobDone";
 import RelatedProduct from "components/common/related-product";
 import ChildSafety from "components/Home/child-safety";
-import ContactBanner from "components/Home/contactbanner";
 import Information from "components/Home/information";
-import OrderSection from "components/Home/ordersample";
+import OrderSection from "components/Home/OrderSection";
 import ShopSlider from "components/Home/shop-slider";
 import { chooseblinds, chooseimage, productData } from "data/home";
+import ContactBanner from "components/Home/ContactBanner";
 import React from "react";
 
 export default function Home() {
@@ -35,7 +35,7 @@ export default function Home() {
           className="container mx-auto h-[400px] md:h-auto md:max-h-[500px]"
         />
         <Herobanner
-          desktopImage="/assets/images/home/payment.webp"
+          desktopImage="/assets/images/home/payment.jpg"
           className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
         />
       </div>

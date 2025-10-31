@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-
+import Testimonial from "../common/Testimonial";
+import { TestimonialReview } from "data/detail-page";
 const ProductTabs = () => {
   const [activeTab, setActiveTab] = useState("description");
 
@@ -12,9 +13,8 @@ const ProductTabs = () => {
   ];
 
   return (
-    <div className="lg:max-w-[850px] w-full mx-auto px-2">
-      {/* Tabs Header */}
-      <div className="overflow-x-auto">
+    <div>
+      <div className="overflow-x-auto lg:max-w-[850px] w-full mx-auto px-2 ">
         <div className="flex flex-nowrap gap-4 min-w-[800px]">
           {tabs.map((tab) => (
             <button
@@ -32,10 +32,9 @@ const ProductTabs = () => {
         </div>
       </div>
 
-      {/* Tabs Content */}
-      <div className="mt-6 text-xl">
+      <div className="mt-6 text-xl ">
         {activeTab === "description" && (
-          <ul className="list-disc pl-6 space-y-2">
+          <ul className="list-disc pl-6 space-y-2 lg:max-w-[850px] w-full mx-auto px-2 ">
             <li>
               Fully <span className="font-semibold">Made-to-Measure</span>
             </li>
@@ -50,7 +49,7 @@ const ProductTabs = () => {
 
         {activeTab === "additional" && <p>No additional information available.</p>}
 
-        {activeTab === "reviews" && <p>There are no reviews yet.</p>}
+        {activeTab === "reviews" && <Testimonial reviews={TestimonialReview} />}
 
         {activeTab === "guide" && (
           <p>Please refer to our measuring guide for detailed instructions.</p>

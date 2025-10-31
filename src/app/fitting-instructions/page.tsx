@@ -2,7 +2,7 @@
 
 import Instructions from "components/common";
 import BlindFitting from "components/common/blind-fitting";
-import ContactBanner from "components/Home/contactbanner";
+import ContactBanner from "components/Home/ContactBanner";
 import React from "react";
 import Breadcrumb from "components/Layout/breadcrumb";
 

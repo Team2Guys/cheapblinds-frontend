@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
-import Thumbnail from "./thumbnail";
+import dynamic from "next/dynamic";
+const Thumbnail = dynamic(() => import("./thumbnail"));
 import { productImages } from "data/bin";
-import ProductInfo from "./product-info";
-import ProductTabs from "./ProductTabs";
+const ProductInfo = dynamic(() => import("./product-info"));
+const ProductTabs = dynamic(() => import("./ProductTabs"));
 
 const ProductDetail = () => {
   return (

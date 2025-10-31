@@ -8,7 +8,8 @@ const ProductInfo = () => {
   return (
     <div className="space-y-6">
       <h2 className="font-medium">
-        From: <span className="font-currency text-2xl md:text-3xl font-normal"></span><span className="font-semibold text-2xl md:text-3xl">299.25</span>
+        From: <span className="font-currency text-2xl md:text-3xl font-normal"></span>
+        <span className="font-semibold text-2xl md:text-3xl">299.25</span>
       </h2>
       <p>
         A luxurious medium-weight chenille in a rose pink colourway, which makes Romans hang well
