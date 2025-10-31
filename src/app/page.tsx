@@ -3,11 +3,11 @@ import Herobanner from "components/common/hero-banner";
 import JobDone from "components/common/JobDone";
 import RelatedProduct from "components/common/related-product";
 import ChildSafety from "components/Home/child-safety";
+import ContactBanner from "components/Home/contact-banner";
 import Information from "components/Home/information";
 import OrderSection from "components/Home/OrderSection";
 import ShopSlider from "components/Home/shop-slider";
 import { chooseblinds, chooseimage, productData } from "data/home";
-import ContactBanner from "components/Home/ContactBanner";
 import React from "react";
 
 export default function Home() {
