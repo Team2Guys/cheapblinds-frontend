@@ -52,14 +52,14 @@ vi.mock("next-auth/react", async () => {
 });
 
 // Mock ServerActions revalidateTag
-vi.mock("components/ServerActons/ServerAction", () => ({
+vi.mock("@components/ServerActons/ServerAction", () => ({
   __esModule: true,
   default: vi.fn(),
   revalidateTag: vi.fn(),
 }));
 
 // Mock Toaster
-vi.mock("components/Toaster/Toaster", () => ({
+vi.mock("@components/Toaster/Toaster", () => ({
   __esModule: true,
   default: vi.fn(),
 }));

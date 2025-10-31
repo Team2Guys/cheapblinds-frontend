@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
-import revalidateTag from "components/ServerActons/ServerAction";
-import { Admin } from "types/type";
+import revalidateTag from "@components/ServerActons/ServerAction";
+import { Admin } from "@types/type";
 import { useMutation } from "@apollo/client";
-import { REMOVE_ADMIN } from "graphql/mutations";
-import Table from "components/ui/table";
+import { REMOVE_ADMIN } from "@/graphql/mutations";
+import Table from "@components/ui/table";
 interface AlladminsProps {
   setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
   setEditAdmin: React.Dispatch<React.SetStateAction<Admin | null>>;

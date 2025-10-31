@@ -1,10 +1,10 @@
 "use client";
-import CategoryFeatures from "components/category/CategoryFeatures";
-import Herobanner from "components/common/hero-banner";
-import Filters from "components/filters/Filters";
-import Card from "components/ui/Card";
-import SortDropdown from "components/ui/SortDropdown";
-import { categoryFeatures, products } from "data/data";
+import CategoryFeatures from "@components/category/CategoryFeatures";
+import Herobanner from "@components/common/hero-banner";
+import Filters from "@components/filters/Filters";
+import Card from "@components/ui/Card";
+import SortDropdown from "@components/ui/SortDropdown";
+import { categoryFeatures, products } from "@/data/data";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

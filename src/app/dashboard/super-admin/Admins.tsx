@@ -1,12 +1,12 @@
 "use client";
-import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
-import DefaultLayout from "components/Dashboard/DefaultLayout";
-import Alladmins from "components/Dashboard/SuperAdmin/AllAdmin/Alladmins";
+import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
+import DefaultLayout from "@components/Dashboard/DefaultLayout";
+import Alladmins from "@components/Dashboard/SuperAdmin/AllAdmin/Alladmins";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
-import { Admin } from "types/type";
+import { Admin } from "@types/type";
 const CreateAdmin = dynamic(
-  () => import("components/Dashboard/SuperAdmin/CreateAdmin/CreateAdmin"),
+  () => import("@components/Dashboard/SuperAdmin/CreateAdmin/CreateAdmin"),
 );
 
 const Admins = ({ admins }: { admins: Admin[] }) => {

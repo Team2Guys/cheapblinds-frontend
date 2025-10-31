@@ -1,7 +1,7 @@
 import React from "react";
 import { MdStarRate } from "react-icons/md";
 import { TestimonialProps } from "types/common";
-import SwiperSlider from "components/ui/swiper-slider";
+import SwiperSlider from "@components/ui/swiper-slider";
 import { SwiperSlide } from "swiper/react";
 import { TestimonialBreakpoints } from "data/Slider-breakpoints";
 

@@ -1,4 +1,4 @@
-import Phone from "components/svg/phone";
+import Phone from "@components/svg/phone";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

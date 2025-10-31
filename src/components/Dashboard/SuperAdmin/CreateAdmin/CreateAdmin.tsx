@@ -3,18 +3,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useMutation } from "@apollo/client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Admin } from "types/type";
-import showToast from "components/Toaster/Toaster";
-import revalidateTag from "components/ServerActons/ServerAction";
-import { CREATE_ADMIN, UPDATE_ADMIN } from "graphql/Admins";
+import { Admin } from "@/types/type";
+import showToast from "@components/Toaster/Toaster";
+import revalidateTag from "@components/ServerActons/ServerAction";
+import { CREATE_ADMIN, UPDATE_ADMIN } from "@/graphql/Admins";
 import { useSession } from "next-auth/react";
 import { Modal } from "antd";
-import { initialAdminValues } from "data/InitialValues";
-import { checkboxAdminData } from "data/data";
-import { validationAdminSchema } from "data/Validations";
-import { adminCheckBox, CreateAdminProps } from "types/admin";
-import { ProductImage } from "types/prod";
-import ImageUploader from "components/ImageUploader/ImageUploader";
+import { initialAdminValues } from "@/data/InitialValues";
+import { checkboxAdminData } from "@/data/data";
+import { validationAdminSchema } from "@/data/Validations";
+import { adminCheckBox, CreateAdminProps } from "@/types/admin";
+import { ProductImage } from "@/types/prod";
+import ImageUploader from "@components/ImageUploader/ImageUploader";
 import {
   handleCropClick,
   handleCropModalCancel,
@@ -23,7 +23,7 @@ import {
   ImageRemoveHandler,
   onCropComplete,
   onImageLoad,
-} from "utils/helperFunctions";
+} from "@utils/helperFunctions";
 import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import ReactCrop, { Crop } from "react-image-crop";

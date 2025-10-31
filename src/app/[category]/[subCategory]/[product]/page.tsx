@@ -1,8 +1,8 @@
-import BlindFitting from "components/common/blind-fitting";
-import RelatedProduct from "components/common/related-product";
-import OrderSection from "components/Home/OrderSection";
-import Breadcrumb from "components/Layout/breadcrumb";
-import ProductDetail from "components/product/Product-detail";
+import BlindFitting from "@components/common/blind-fitting";
+import RelatedProduct from "@components/common/related-product";
+import OrderSection from "@components/Home/OrderSection";
+import Breadcrumb from "@components/Layout/breadcrumb";
+import ProductDetail from "@components/product/Product-detail";
 import { chooseblinds } from "data/home";
 
 const ProductPage = async ({

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
-import showToast from "components/Toaster/Toaster";
+import showToast from "@components/Toaster/Toaster";
 import { notification, Table } from "antd/es";
 
 interface Product {

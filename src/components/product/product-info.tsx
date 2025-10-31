@@ -2,8 +2,8 @@ import React from "react";
 import Calculation from "./calculation";
 import HelpingModal from "./helping-modal";
 import RecessSelector from "./Recess-select";
-import PaymentMethod from "components/common/payment";
-import DeliveryIcon from "components/svg/delivery";
+import PaymentMethod from "@components/common/payment";
+import DeliveryIcon from "@components/svg/delivery";
 const ProductInfo = () => {
   return (
     <div className="space-y-6">

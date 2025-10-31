@@ -1,10 +1,10 @@
 "use client";
-import DefaultLayout from "components/Dashboard/DefaultLayout";
+import DefaultLayout from "@components/Dashboard/DefaultLayout";
 import React, { useState } from "react";
 import ViewBlog from "./view-blog";
 import AddBlogs from "./Add-blog";
-import { IBlog } from "types/general";
-import { ISUBCATEGORY } from "types/cat";
+import { IBlog } from "@types/general";
+import { ISUBCATEGORY } from "@types/cat";
 
 const Mainpage = ({ blogs, subCategories }: { blogs: IBlog[]; subCategories: ISUBCATEGORY[] }) => {
   const [selecteMenu, setselecteMenu] = useState<string>("All Blogs");

@@ -14,12 +14,12 @@ import {
   onCropComplete,
   onImageLoad,
 } from "utils/helperFunctions";
-import Toaster from "components/Toaster/Toaster";
+import Toaster from "@components/Toaster/Toaster";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { FormValues } from "types/type";
-import revalidateTag from "components/ServerActons/ServerAction";
+import revalidateTag from "@components/ServerActons/ServerAction";
 import { IProductValues, ProductImage } from "types/prod";
-import ImageUploader from "components/ImageUploader/ImageUploader";
+import ImageUploader from "@components/ImageUploader/ImageUploader";
 import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from "types/PagesProps";
 import { useMutation } from "@apollo/client";
 import ReactCrop, { Crop } from "react-image-crop";

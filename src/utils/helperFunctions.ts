@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { Dispatch, RefObject, SetStateAction } from "react";
-import { ProductImage } from "types/prod";
-import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from "graphql/Fileupload";
+import { ProductImage } from "@/types/prod";
+import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from "@/graphql/Fileupload";
 import { uploadPhotosToBackend } from "./fileUploadhandlers";
-import Toaster from "components/Toaster/Toaster";
+import Toaster from "@components/Toaster/Toaster";
 import { Crop } from "react-image-crop";
-import { centerAspectCrop } from "types/product-crop";
+import { centerAspectCrop } from "@/types/product-crop";
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,

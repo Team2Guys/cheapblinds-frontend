@@ -1,4 +1,4 @@
-import Breadcrumb from "components/Layout/breadcrumb";
+import Breadcrumb from "@components/Layout/breadcrumb";
 import Category from "./Category";
 
 const Page = async ({ params }: { params: Promise<{ category: string; subCategory: string }> }) => {

@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
-const ECommerce = dynamic(() => import("components/Dashboard/E-commerce"));
-import DefaultLayout from "components/Dashboard/DefaultLayout";
+const ECommerce = dynamic(() => import("@components/Dashboard/E-commerce"));
+import DefaultLayout from "@components/Dashboard/DefaultLayout";
 import { get_all_records } from "config/fetch";
 import { MONTHLYSTATS_HANDLER, WEEEKLYSTATSHANDLER } from "config/generals";
 import { STATUS } from "types/general";

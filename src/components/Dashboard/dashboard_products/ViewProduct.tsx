@@ -9,11 +9,11 @@ import Link from "next/link";
 import { IProduct } from "types/prod";
 import { DASHBOARD_MAIN_PRODUCT_PROPS } from "types/PagesProps";
 import { useMutation } from "@apollo/client";
-import showToast from "components/Toaster/Toaster";
+import showToast from "@components/Toaster/Toaster";
 import { DateFormatHandler } from "utils/helperFunctions";
 import { BsEyeFill } from "react-icons/bs";
 import { GET_ALL_PRODUCTS, REMOVE_PRODUCT } from "graphql/prod";
-import Table from "components/ui/table";
+import Table from "@components/ui/table";
 import { getPermission } from "utils/permissionHandlers";
 import { useSession } from "next-auth/react";
 

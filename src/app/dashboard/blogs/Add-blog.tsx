@@ -2,23 +2,23 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import ImageUploader from "components/ImageUploader/ImageUploader";
+import ImageUploader from "@components/ImageUploader/ImageUploader";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { ProductImage } from "types/prod";
-import { handleImageAltText, ImageRemoveHandler } from "utils/helperFunctions";
-import { IBlog } from "types/general";
+import { ProductImage } from "@types/prod";
+import { handleImageAltText, ImageRemoveHandler } from "@utils/helperFunctions";
+import { IBlog } from "@types/general";
 import { ApolloError, useMutation } from "@apollo/client";
-import showToast from "components/Toaster/Toaster";
-import { CREATE_BLOG, UPDATE_BLOG } from "graphql/blogs";
-import revalidateTag from "components/ServerActons/ServerAction";
-import TinyMCEEditor from "components/Dashboard/tinyMc/MyEditor";
-import { ISUBCATEGORY } from "types/cat";
+import showToast from "@components/Toaster/Toaster";
+import { CREATE_BLOG, UPDATE_BLOG } from "@/graphql/blogs";
+import revalidateTag from "@components/ServerActons/ServerAction";
+import TinyMCEEditor from "@components/Dashboard/tinyMc/MyEditor";
+import { ISUBCATEGORY } from "@types/cat";
 import { useSession } from "next-auth/react";
 import { Modal } from "antd";
-import { AddBlogInitialValues } from "data/InitialValues";
-import { validationBlogSchema } from "data/Validations";
+import { AddBlogInitialValues } from "@/data/InitialValues";
+import { validationBlogSchema } from "@/data/Validations";
 
 interface AddBlogProps {
   setselecteMenu: React.Dispatch<React.SetStateAction<string>>;

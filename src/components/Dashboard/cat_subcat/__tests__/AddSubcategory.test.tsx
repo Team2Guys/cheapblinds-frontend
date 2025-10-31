@@ -26,19 +26,19 @@ vi.mock("utils/helperFunctions", () => ({
 }));
 
 // Mock components
-vi.mock("components/Toaster/Toaster", () => ({
+vi.mock("@components/Toaster/Toaster", () => ({
   __esModule: true,
   default: vi.fn(() => null),
 }));
-vi.mock("components/ImageUploader/ImageUploader", () => ({
+vi.mock("@components/ImageUploader/ImageUploader", () => ({
   __esModule: true,
   default: vi.fn(() => <div>ImageUploaderMock</div>),
 }));
-vi.mock("components/Dashboard/tinyMc/MyEditor", () => ({
+vi.mock("@components/Dashboard/tinyMc/MyEditor", () => ({
   __esModule: true,
   default: vi.fn(() => <textarea aria-label="tiny-mce-editor" />),
 }));
-vi.mock("components/ServerActons/ServerAction", () => ({
+vi.mock("@components/ServerActons/ServerAction", () => ({
   __esModule: true,
   default: vi.fn(),
 }));

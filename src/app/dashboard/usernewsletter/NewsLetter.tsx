@@ -1,9 +1,9 @@
 "use client";
 
-import ViewNewsletter from "components/Dashboard/ViewNewsletter";
+import ViewNewsletter from "@components/Dashboard/ViewNewsletter";
 import { useState } from "react";
-import DefaultLayout from "components/Dashboard/DefaultLayout";
-import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
+import DefaultLayout from "@components/Dashboard/DefaultLayout";
+import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
 
 interface Product {
   id: string;

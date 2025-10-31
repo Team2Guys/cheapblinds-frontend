@@ -54,7 +54,7 @@ vi.mock("sweetalert2", async () => {
 });
 
 // Mock helper functions
-vi.mock("components/ServerActons/ServerAction", () => ({
+vi.mock("@components/ServerActons/ServerAction", () => ({
   __esModule: true,
   default: vi.fn(),
 }));

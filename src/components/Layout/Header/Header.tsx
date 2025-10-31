@@ -5,9 +5,9 @@ import SearchBar from "./Search";
 import UserIcons from "./user-icons";
 import SocialLink from "./social";
 import { FaBars } from "react-icons/fa6";
-import Drawer from "components/ui/Drawer";
+import Drawer from "@components/ui/Drawer";
 import Link from "next/link";
-import MobileMenu from "components/ui/mobilemenu";
+import MobileMenu from "@components/ui/mobilemenu";
 import Navbar from "./Navbar";
 
 const Header = () => {

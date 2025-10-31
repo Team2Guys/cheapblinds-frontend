@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import DashboardCat from "../dashboard_cat";
 import { REMOVE_CATEGORY } from "../../../../graphql/categories";
 import { vi } from "vitest";
-import revalidateTag from "components/ServerActons/ServerAction";
+import revalidateTag from "@components/ServerActons/ServerAction";
 
 // Partial mock for next-auth/react (SessionProvider + useSession)
 vi.mock("next-auth/react", async () => {
@@ -31,7 +31,7 @@ vi.mock("next-auth/react", async () => {
   };
 });
 
-vi.mock("components/ServerActons/ServerAction", () => ({
+vi.mock("@components/ServerActons/ServerAction", () => ({
   __esModule: true,
   default: vi.fn(() => Promise.resolve()),
 }));

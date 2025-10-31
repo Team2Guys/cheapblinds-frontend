@@ -5,12 +5,12 @@ import { vi } from "vitest";
 import { SessionProvider } from "next-auth/react"; // <-- import this
 import { REMOVE_SUBCATEGORY } from "graphql/categories";
 import Swal from "sweetalert2";
-import revalidateTag from "components/ServerActons/ServerAction";
+import revalidateTag from "@components/ServerActons/ServerAction";
 import { ISUBCATEGORY } from "types/cat";
 import ViewSubcategries from "../ViewSubcategries";
 
 // 🧪 Mocks (keep these as is)
-vi.mock("components/ServerActons/ServerAction", () => ({
+vi.mock("@components/ServerActons/ServerAction", () => ({
   __esModule: true,
   default: vi.fn(() => Promise.resolve()),
 }));

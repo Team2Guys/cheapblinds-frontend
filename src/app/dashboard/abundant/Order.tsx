@@ -1,8 +1,8 @@
 "use client";
-import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
-import DefaultLayout from "components/Dashboard/DefaultLayout";
-import Modal from "components/ui/modal";
-import Table from "components/ui/table";
+import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
+import DefaultLayout from "@components/Dashboard/DefaultLayout";
+import Modal from "@components/ui/modal";
+import Table from "@components/ui/table";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BsEyeFill } from "react-icons/bs";

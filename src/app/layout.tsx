@@ -4,7 +4,7 @@ import { Open_Sans, Rubik } from "next/font/google";
 import localFont from "next/font/local";
 import "../styles/globals.css";
 import { ToastContainer } from "react-toastify";
-import PathnameWrapper from "components/PathnameWrapper";
+import PathnameWrapper from "@/components/PathnameWrapper";
 
 const openSans = Open_Sans({
   subsets: ["latin"],

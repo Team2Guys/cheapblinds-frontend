@@ -42,7 +42,7 @@ vi.mock("next-auth/react", async () => {
 });
 
 // Mock TinyMCE editor → behaves like input
-vi.mock("components/Dashboard/tinyMc/MyEditor", () => ({
+vi.mock("@components/Dashboard/tinyMc/MyEditor", () => ({
   __esModule: true,
   // eslint-disable-next-line
   default: ({ name, onChange }: { name: string; onChange?: any }) => {
@@ -57,7 +57,7 @@ vi.mock("components/Dashboard/tinyMc/MyEditor", () => ({
 }));
 
 // Mock showToast
-vi.mock("components/Toaster/Toaster", () => ({
+vi.mock("@components/Toaster/Toaster", () => ({
   __esModule: true,
   default: vi.fn(),
 }));

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-import USRcomponent from "components/userComponent/userComponent";
+import USRcomponent from "@components/userComponent/userComponent";
 import { IoIosLock, IoMdMail } from "react-icons/io";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
