@@ -1,32 +1,19 @@
 "use client";
-import SlickSlider from "components/ui/slick-slider";
+import SwiperSlider from "components/ui/swiper-slider";
+import { RelatedBreakpoints } from "data/Slider-breakpoints";
 import Image from "next/image";
-import React, { useState } from "react";
+import { SwiperSlide } from "swiper/react";
 import { RelatedProductProps } from "types/common";
 
 const JobDone = ({ title, description, data }: RelatedProductProps) => {
-  const [isDragging, setIsDragging] = useState(false);
-
-  const handleMouseDown = () => setIsDragging(false);
-  const handleMouseMove = () => setIsDragging(true);
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isDragging) e.preventDefault();
-  };
-
   return (
     <div className="container mx-auto px-2 space-y-3 mt-10 md:mt-16">
       <h2 className="text-heading text-center">{title}</h2>
       <p className="text-center">{description}</p>
-
-      <SlickSlider>
+      <SwiperSlider navigation loop spaceBetween={10} breakpoints={RelatedBreakpoints}>
         {data.map((array, index) => (
-          <div
-            key={index}
-            className="px-2 h-fit"
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-          >
-            <div onClick={handleClick}>
+          <SwiperSlide key={index}>
+            <div>
               <div className="relative overflow-hidden group">
                 <div className="relative w-full aspect-square">
                   <Image
@@ -42,9 +29,9 @@ const JobDone = ({ title, description, data }: RelatedProductProps) => {
                 </div>
               </div>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
-      </SlickSlider>
+      </SwiperSlider>
     </div>
   );
 };

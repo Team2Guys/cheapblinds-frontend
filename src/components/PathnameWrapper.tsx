@@ -23,10 +23,10 @@ const PathnameWrapper = ({ children }: { children: ReactNode }) => {
       <ApolloProvider client={ApoloClient}>
         {withoutHeaderPages.includes(pathname) ||
         pathname.split("/").includes("dashboard") ? null : (
-         <>
-          <Header />
-          <Reviews />
-         </>
+          <>
+            <Header />
+            <Reviews />
+          </>
         )}
         {children}
         {pathname !== "/" &&

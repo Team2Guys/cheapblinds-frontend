@@ -15,7 +15,7 @@ const page = () => {
         />
       </div>
       <Contact />
-          <div className="px-2">
+      <div className="px-2">
         <Herobanner
           desktopImage="/assets/images/home/free-order/freeorder.webp"
           mobileImage="/assets/images/home/free-order/freeorder-mobile-new.png"
@@ -25,7 +25,7 @@ const page = () => {
           desktopImage="/assets/images/home/payment.webp"
           className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
         />
-          </div>
+      </div>
     </>
   );
 };
