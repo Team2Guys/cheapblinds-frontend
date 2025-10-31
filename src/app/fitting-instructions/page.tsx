@@ -2,9 +2,9 @@
 
 import Instructions from "components/common";
 import BlindFitting from "components/common/blind-fitting";
-import ContactBanner from "components/Home/ContactBanner";
 import React from "react";
 import Breadcrumb from "components/Layout/breadcrumb";
+import ContactBanner from "components/Home/contact-banner";
 
 const FittinInstructions: React.FC = () => {
   return (
