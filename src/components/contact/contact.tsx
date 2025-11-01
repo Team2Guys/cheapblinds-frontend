@@ -4,7 +4,7 @@ import Call from "../svg/call";
 import Calender from "../svg/calender";
 import GoogleMap from "../userComponent/map/map";
 import Link from "next/link";
-import ContactForm from "./ContactForm";
+import FormContact from "./FormContact";
 
 const Contact = () => {
   return (
@@ -58,7 +58,7 @@ const Contact = () => {
         <div className="hidden md:block w-[3px] md:h-[800px] lg:h-[780px] xl:h-[730px] bg-gray-400" />
 
         <div className="p-2 w-full md:w-[50%]">
-          <ContactForm />
+          <FormContact />
         </div>
       </div>
     </>
