@@ -4,7 +4,7 @@ import Call from "../svg/call";
 import Calender from "../svg/calender";
 import GoogleMap from "../userComponent/map/map";
 import Link from "next/link";
-import ContactForm from "./contactform";
+import ContactForm from "./ContactForm";
 
 const Contact = () => {
   return (
