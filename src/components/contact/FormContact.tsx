@@ -7,7 +7,7 @@ import FormInput from "./forminput";
 import FormTextarea from "./formtextarea";
 import { FormData } from "@/types/type";
 
-const ContactForm = () => {
+const FormContact = () => {
   const formik = useFormik<FormData>({
     initialValues: {
       contactType: "Email",
@@ -112,4 +112,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default FormContact;
