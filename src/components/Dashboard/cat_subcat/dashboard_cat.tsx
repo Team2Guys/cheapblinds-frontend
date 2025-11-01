@@ -7,13 +7,13 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import Swal from "sweetalert2";
-import { Category } from "types/cat";
+import { Category } from "@/types/cat";
 import { useMutation } from "@apollo/client";
-import { REMOVE_CATEGORY } from "graphql/categories";
+import { REMOVE_CATEGORY } from "@graphql/categories";
 import Table from "@components/ui/table";
 import { useSession } from "next-auth/react";
-import { DateFormatHandler } from "utils/helperFunctions";
-import { getPermission } from "utils/permissionHandlers";
+import { DateFormatHandler } from "@utils/helperFunctions";
+import { getPermission } from "@utils/permissionHandlers";
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
   seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;

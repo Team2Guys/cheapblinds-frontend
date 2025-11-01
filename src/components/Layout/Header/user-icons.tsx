@@ -4,7 +4,7 @@ import { LuHeart, LuUser } from "react-icons/lu";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import FreeSample from "@components/svg/free-sample";
 import DropdownPanel from "./Dropdownpanel";
-import { cartItems, wishlistItems } from "data/Header";
+import { cartItems, wishlistItems } from "@data/Header";
 
 const UserIcons = ({ className }: { className?: string }) => {
   return (

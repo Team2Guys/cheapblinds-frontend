@@ -1,4 +1,4 @@
-// data/footer.ts
+// @data/footer.ts
 export const footerSections = [
   {
     title: "Products",

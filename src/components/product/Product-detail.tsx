@@ -2,7 +2,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 const Thumbnail = dynamic(() => import("./thumbnail"));
-import { productImages } from "data/bin";
+import { productImages } from "@data/bin";
 const ProductInfo = dynamic(() => import("./product-info"));
 const ProductTabs = dynamic(() => import("./ProductTabs"));
 

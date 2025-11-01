@@ -1,7 +1,7 @@
-import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from "types/cat";
-import { BlogStatus } from "types/general";
-import { IProductValues } from "types/prod";
-import { Admin } from "types/type";
+import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from "@/types/cat";
+import { BlogStatus } from "@/types/general";
+import { IProductValues } from "@/types/prod";
+import { Admin } from "@/types/type";
 
 export const categoryInitialValues: EDIT_CATEGORY = {
   name: "", //done

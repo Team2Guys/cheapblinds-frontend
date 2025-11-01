@@ -1,6 +1,6 @@
-import { fetchOrders } from "config/fetch";
+import { fetchOrders } from "@config/fetch";
 import Order from "./Order";
-import { Order as ProdOrder } from "types/prod";
+import { Order as ProdOrder } from "@/types/prod";
 
 const Abandoned = async () => {
   const ordersData = await fetchOrders();

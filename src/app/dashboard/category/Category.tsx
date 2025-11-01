@@ -6,7 +6,7 @@ const DashboardCat = dynamic(() => import("@components/Dashboard/cat_subcat/dash
 import DefaultLayout from "@components/Dashboard/DefaultLayout";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { Category } from "types/cat";
+import { Category } from "@/types/cat";
 
 const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
   const [menuType, setMenuType] = useState<string>("Categories");

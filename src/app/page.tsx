@@ -7,7 +7,7 @@ import ContactBanner from "@components/Home/contact-banner";
 import Information from "@components/Home/information";
 import OrderSection from "@components/Home/OrderSection";
 import ShopSlider from "@components/Home/shop-slider";
-import { chooseblinds, chooseimage, productData } from "data/home";
+import { chooseblinds, chooseimage, productData } from "@data/home";
 import React from "react";
 
 export default function Home() {

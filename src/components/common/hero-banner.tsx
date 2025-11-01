@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { HerobannerProps } from "types/common";
+import { HerobannerProps } from "@/types/common";
 const Herobanner = ({
   desktopImage,
   mobileImage,

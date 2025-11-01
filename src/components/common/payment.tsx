@@ -12,9 +12,9 @@ import {
   tamarafeature,
   tamaralist,
   tamarawhy,
-} from "data/produuct-detail";
-import { formatAED } from "utils/helperFunctions";
-import { PaymentMethodProps } from "types/prod";
+} from "@data/produuct-detail";
+import { formatAED } from "@utils/helperFunctions";
+import { PaymentMethodProps } from "@/types/prod";
 
 const PaymentMethod = ({ showheading, installments }: PaymentMethodProps) => {
   const [tabbyOpen, setTabbyOpen] = useState(false);

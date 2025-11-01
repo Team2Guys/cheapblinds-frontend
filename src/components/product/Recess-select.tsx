@@ -1,5 +1,5 @@
 "use client";
-import { Receptions } from "data/detail-page";
+import { Receptions } from "@data/detail-page";
 import Image from "next/image";
 import React, { useState } from "react";
 import { IoMdCheckmark } from "react-icons/io";

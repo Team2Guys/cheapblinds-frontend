@@ -1,12 +1,12 @@
 "use client";
 import SwiperSlider from "@components/ui/swiper-slider";
-import { generateSlug } from "config/Sociallinks";
-import { RelatedBreakpoints } from "data/Slider-breakpoints";
+import { generateSlug } from "@config/Sociallinks";
+import { RelatedBreakpoints } from "@data/Slider-breakpoints";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { SwiperSlide } from "swiper/react";
-import { RelatedProductProps } from "types/common";
+import { RelatedProductProps } from "@/types/common";
 
 const RelatedProduct = ({ title, description, data, titleStart }: RelatedProductProps) => {
   return (

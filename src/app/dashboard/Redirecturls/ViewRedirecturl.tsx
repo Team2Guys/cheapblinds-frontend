@@ -3,13 +3,13 @@
 import { useMutation } from "@apollo/client";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import Table from "@components/ui/table";
-import { REMOVE_REVIEW } from "@/graphql/mutations";
+import { REMOVE_REVIEW } from "@graphql/mutations";
 import { useSession } from "next-auth/react";
 import React, { SetStateAction, useState } from "react";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
-import { RedirectUrls } from "@types/general";
+import { RedirectUrls } from "@/types/general";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
 

@@ -4,8 +4,8 @@ import { MockedProvider } from "@apollo/client/testing";
 import { vi } from "vitest";
 import { SessionProvider } from "next-auth/react";
 import Swal from "sweetalert2";
-import { REMOVE_PRODUCT } from "graphql/prod";
-import { IProduct } from "types/prod";
+import { REMOVE_PRODUCT } from "@graphql/prod";
+import { IProduct } from "@/types/prod";
 import ViewProduct from "../ViewProduct";
 
 // 🧪 Mocks

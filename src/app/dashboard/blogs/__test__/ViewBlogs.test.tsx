@@ -4,8 +4,8 @@ import { vi } from "vitest";
 import { MockedProvider } from "@apollo/client/testing";
 import Swal from "sweetalert2";
 import ViewBlog from "../view-blog";
-import { IBlog } from "types/general";
-import { REMOVE_BLOG } from "graphql/blogs";
+import { IBlog } from "@/types/general";
+import { REMOVE_BLOG } from "@graphql/blogs";
 
 // Mock useMutation
 const mockRemoveBlog = vi.fn();

@@ -6,7 +6,7 @@ import Table from "@components/ui/table";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BsEyeFill } from "react-icons/bs";
-import { Order as prodOrder } from "types/prod";
+import { Order as prodOrder } from "@/types/prod";
 
 const Order = ({ title, ordersData }: { title: string; ordersData: prodOrder[] }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

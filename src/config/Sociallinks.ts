@@ -1,6 +1,6 @@
 import { DocumentNode } from "@apollo/client";
-import { GET_SOCIAL_LINKS } from "graphql/Socials";
-import ApoloClient from "utils/AppoloClient";
+import { GET_SOCIAL_LINKS } from "@graphql/Socials";
+import ApoloClient from "@utils/AppoloClient";
 
 export const fetchSocialLinks = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) => {
   try {

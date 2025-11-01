@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { FaRegUser } from "react-icons/fa";
-import { USRPROPS } from "types/type";
+import { USRPROPS } from "@/types/type";
 
 export default function UserComponent({
   handleSubmit,

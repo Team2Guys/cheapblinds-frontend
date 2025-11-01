@@ -7,15 +7,15 @@ import {
   FIND_ONE_SUB_CATEGORY,
   GET_ALL_ADMINS,
   GET_ALL_RECORDS,
-} from "graphql/queries";
+} from "@graphql/queries";
 
 import { DocumentNode } from "@apollo/client";
-import { FETCH_ALL_ECOMERECE, FIND_ONE_Accessory } from "graphql/Accessories";
-import { Category } from "types/cat";
+import { FETCH_ALL_ECOMERECE, FIND_ONE_Accessory } from "@graphql/Accessories";
+import { Category } from "@/types/cat";
 // import { getToken } from '@components/ServerActons/ServerAction';
-import ApoloClient from "utils/AppoloClient";
-import { GET_ALL_CATEGORIES, GET_ALL_SUBCATEGORIES } from "graphql/categories";
-import { GET_ALL_PRODUCTS } from "graphql/prod";
+import ApoloClient from "@utils/AppoloClient";
+import { GET_ALL_CATEGORIES, GET_ALL_SUBCATEGORIES } from "@graphql/categories";
+import { GET_ALL_PRODUCTS } from "@graphql/prod";
 
 export const fetchProducts = async (CUSTOMIZE_QUERY?: DocumentNode) => {
   try {

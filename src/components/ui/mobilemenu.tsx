@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa6";
-import { menuItems } from "data/Header";
+import { menuItems } from "@data/Header";
 
 const MobileMenu = ({ onClose }: { onClose: () => void }) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);

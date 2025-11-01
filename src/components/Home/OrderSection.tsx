@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { OrderSectionProps } from "types/common";
+import { OrderSectionProps } from "@/types/common";
 
 const OrderSection = ({
   reverse,

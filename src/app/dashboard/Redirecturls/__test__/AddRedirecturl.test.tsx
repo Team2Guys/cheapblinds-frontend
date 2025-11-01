@@ -4,7 +4,7 @@ import AddRedirecturl from "../AddRedirecturl";
 import { vi } from "vitest";
 import { MockedProvider } from "@apollo/client/testing";
 import { SessionProvider } from "next-auth/react";
-import { ADD_REDIRECTURLS } from "graphql/mutations";
+import { ADD_REDIRECTURLS } from "@graphql/mutations";
 
 // --- Mocks for Apollo useMutation
 const mockAddRedirectUrls = vi.fn();

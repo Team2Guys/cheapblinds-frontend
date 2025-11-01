@@ -2,11 +2,11 @@
 
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { Category } from "types/cat";
+import { Category } from "@/types/cat";
 import { MockedProvider } from "@apollo/client/testing";
 import Swal from "sweetalert2";
 import DashboardCat from "../dashboard_cat";
-import { REMOVE_CATEGORY } from "../../../../graphql/categories";
+import { REMOVE_CATEGORY } from "../../../../@graphql/categories";
 import { vi } from "vitest";
 import revalidateTag from "@components/ServerActons/ServerAction";
 

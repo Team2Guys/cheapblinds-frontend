@@ -5,7 +5,7 @@ import Modal from "@components/ui/modal";
 import Table from "@components/ui/table";
 import React, { useState } from "react";
 import { BsEyeFill } from "react-icons/bs";
-import { IAppointment } from "types/types";
+import { IAppointment } from "@/types/types";
 
 const Measurement = ({ appointments, title }: { appointments: IAppointment[]; title: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

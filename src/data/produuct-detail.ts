@@ -1,4 +1,4 @@
-import { ITabbyList, ITabbyPayList, ITamaraList } from "types/type";
+import { ITabbyList, ITabbyPayList, ITamaraList } from "@/types/type";
 import masterCard from "./../../public/assets/images/payment-icons/Mastercard-Logo.png";
 import viseCard from "./../../public/assets/images/payment-icons/visacard-logo.png";
 import gPayCard from "./../../public/assets/images/payment-icons/googlepay-logo.png";

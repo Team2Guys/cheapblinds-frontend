@@ -1,5 +1,5 @@
 "use client";
-import { InstructionData } from "data/faqs";
+import { InstructionData } from "@data/faqs";
 import React, { useState } from "react";
 import { AccordionItem } from "./accordian";
 

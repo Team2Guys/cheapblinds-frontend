@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import { vi } from "vitest";
-import { CREATE_BLOG, UPDATE_BLOG } from "graphql/blogs";
-import { ISUBCATEGORY } from "types/cat";
+import { CREATE_BLOG, UPDATE_BLOG } from "@graphql/blogs";
+import { ISUBCATEGORY } from "@/types/cat";
 import AddBlogs from "../Add-blog";
 import { Modal } from "antd";
 

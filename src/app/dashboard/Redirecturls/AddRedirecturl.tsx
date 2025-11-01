@@ -1,16 +1,16 @@
 "use client";
 import React, { SetStateAction, useEffect, useRef, useState } from "react";
-import { initialRedirectUrls, RedirectUrls } from "@types/general";
+import { initialRedirectUrls, RedirectUrls } from "@/types/general";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { useMutation } from "@apollo/client";
-import { ADD_REDIRECTURLS, UPDATE_REDIRECTURLS } from "@/graphql/mutations";
+import { ADD_REDIRECTURLS, UPDATE_REDIRECTURLS } from "@graphql/mutations";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import showToast from "@components/Toaster/Toaster";
 import { useSession } from "next-auth/react";
 import { Modal } from "antd";
-import { initialRedirctUlrsValues } from "@/data/InitialValues";
-import { validationRedirctUlrsSchema } from "@/data/Validations";
+import { initialRedirctUlrsValues } from "@data/InitialValues";
+import { validationRedirctUlrsSchema } from "@data/Validations";
 
 interface IVIEWREDIRECTURLS {
   setRedirectUrls: React.Dispatch<SetStateAction<RedirectUrls | undefined>>;

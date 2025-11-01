@@ -1,5 +1,5 @@
-import { fetchOrders } from "config/fetch";
-import { Order as ProdOrder } from "types/prod";
+import { fetchOrders } from "@config/fetch";
+import { Order as ProdOrder } from "@/types/prod";
 import Order from "../abundant/Order";
 
 const OrdersPage = async () => {

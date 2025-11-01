@@ -2,9 +2,9 @@
 import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@components/Dashboard/DefaultLayout";
 import { useEffect, useState } from "react";
-import { ISUBCATEGORY } from "types/cat";
+import { ISUBCATEGORY } from "@/types/cat";
 import dynamic from "next/dynamic";
-import { SubCategoryComponentProps_dashboard } from "types/PagesProps";
+import { SubCategoryComponentProps_dashboard } from "@/types/PagesProps";
 const AddSubcategory = dynamic(() => import("@components/Dashboard/cat_subcat/AddSubcategory"));
 const ViewSubcategries = dynamic(() => import("@components/Dashboard/cat_subcat/ViewSubcategries"));
 

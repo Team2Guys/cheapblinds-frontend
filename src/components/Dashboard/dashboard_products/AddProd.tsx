@@ -13,23 +13,22 @@ import {
   ImageRemoveHandler,
   onCropComplete,
   onImageLoad,
-} from "utils/helperFunctions";
+} from "@utils/helperFunctions";
 import Toaster from "@components/Toaster/Toaster";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { FormValues } from "types/type";
+import { FormValues } from "@/types/type";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import { IProductValues, ProductImage } from "types/prod";
+import { IProductValues, ProductImage } from "@/types/prod";
 import ImageUploader from "@components/ImageUploader/ImageUploader";
-import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from "types/PagesProps";
+import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from "@/types/PagesProps";
 import { useMutation } from "@apollo/client";
 import ReactCrop, { Crop } from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
 import { useRouter } from "next/navigation";
-import { AddproductsinitialValues } from "data/InitialValues";
-import { AddProductvalidationSchema } from "data/Validations";
-import { ISUBCATEGORY } from "types/cat";
+import { AddproductsinitialValues } from "@data/InitialValues";
+import { AddProductvalidationSchema } from "@data/Validations";
+import { ISUBCATEGORY } from "@/types/cat";
 import { Modal } from "antd";
-import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "graphql/prod";
+import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "@graphql/prod";
 import { useSession } from "next-auth/react";
 
 const initialErrors = {

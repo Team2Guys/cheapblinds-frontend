@@ -1,4 +1,4 @@
-import { fetchCategories, fetchProducts } from "config/fetch";
+import { fetchCategories, fetchProducts } from "@config/fetch";
 import dynamic from "next/dynamic";
 const Product = dynamic(() => import("./Products"));
 

@@ -1,4 +1,4 @@
-import { socialLinks } from "data/Header";
+import { socialLinks } from "@data/Header";
 import Link from "next/link";
 import React from "react";
 

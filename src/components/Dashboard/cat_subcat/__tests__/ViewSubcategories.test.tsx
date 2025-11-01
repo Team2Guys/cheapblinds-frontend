@@ -3,10 +3,10 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { vi } from "vitest";
 import { SessionProvider } from "next-auth/react"; // <-- import this
-import { REMOVE_SUBCATEGORY } from "graphql/categories";
+import { REMOVE_SUBCATEGORY } from "@graphql/categories";
 import Swal from "sweetalert2";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import { ISUBCATEGORY } from "types/cat";
+import { ISUBCATEGORY } from "@/types/cat";
 import ViewSubcategries from "../ViewSubcategries";
 
 // 🧪 Mocks (keep these as is)

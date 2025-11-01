@@ -5,8 +5,8 @@ import { vi } from "vitest";
 import { MockedProvider } from "@apollo/client/testing";
 import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
-import { REMOVE_REVIEW } from "graphql/mutations";
-import { RedirectUrls } from "types/general";
+import { REMOVE_REVIEW } from "@graphql/mutations";
+import { RedirectUrls } from "@/types/general";
 
 // Mock useMutation
 const mockMutate = vi.fn();
@@ -59,11 +59,11 @@ vi.mock("@components/ServerActons/ServerAction", () => ({
   default: vi.fn(),
 }));
 
-vi.mock("utils/permissionHandlers", () => ({
+vi.mock("@utils/permissionHandlers", () => ({
   getPermission: vi.fn(() => true),
 }));
 
-vi.mock("utils/helperFunctions", () => ({
+vi.mock("@utils/helperFunctions", () => ({
   DateFormatHandler: vi.fn((date) => date.toISOString()),
 }));
 

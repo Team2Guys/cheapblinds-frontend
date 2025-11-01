@@ -3,7 +3,7 @@ import Fitting from "@components/svg/fitting";
 import Measure from "@components/svg/measure";
 import Package from "@components/svg/package";
 import Support from "@components/svg/support";
-import { FaqCategory } from "types/types";
+import { FaqCategory } from "@/types/types";
 
 export const faqData: FaqCategory[] = [
   {
