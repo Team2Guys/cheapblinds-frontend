@@ -2,7 +2,7 @@ import Phone from "@components/svg/phone";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import ContactForm from "./ContactForm";
+import ContactForm from "./contact-form";
 
 const ContactBanner = () => {
   return (
