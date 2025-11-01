@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
-import { fittingTypes } from "data/home";
+import { fittingTypes } from "@data/home";
 
 const BlindFitting = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

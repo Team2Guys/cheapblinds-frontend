@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { TableProps } from "types/types";
+import { TableProps } from "@/types/types";
 
 const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: TableProps<T>) => {
   const [currentPage, setCurrentPage] = useState<number>(1);

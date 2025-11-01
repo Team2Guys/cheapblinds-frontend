@@ -2,14 +2,14 @@
 import { useMutation } from "@apollo/client";
 import { notification } from "antd";
 import Table from "@components/ui/table";
-import { REMOVE_BLOG } from "@/graphql/blogs";
+import { REMOVE_BLOG } from "@graphql/blogs";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { SetStateAction, useEffect, useMemo, useState } from "react";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
-import { IBlog } from "@types/general";
+import { IBlog } from "@/types/general";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
 

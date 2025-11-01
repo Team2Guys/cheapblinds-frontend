@@ -24,6 +24,9 @@
       "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"],
       "@types/*": ["./src/types/*"],
+      "@data/*": ["./src/data/*"],
+      "@config/*": ["./src/config/*"],
+      "@graphql/*": ["./src/graphql/*"],
     }
   },
   "include": [
@@ -32,7 +35,9 @@
     "**/*.tsx",
     "**/*.d.ts",
     ".next/types/**/*.ts",
-    "vitest.config.mts"
+    "vitest.config.mts",
+    "next-env.d.ts",
+    "global.d.ts",
   ],
   "exclude": ["node_modules"]
 }

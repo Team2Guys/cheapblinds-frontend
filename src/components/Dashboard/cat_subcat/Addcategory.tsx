@@ -10,22 +10,22 @@ import {
   ImageRemoveHandler,
   onCropComplete,
   onImageLoad,
-} from "utils/helperFunctions";
+} from "@utils/helperFunctions";
 import Toaster from "@components/Toaster/Toaster";
 import { Formik, Form, FormikHelpers, ErrorMessage, Field } from "formik";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import ImageUploader from "@components/ImageUploader/ImageUploader";
-import { ProductImage } from "types/prod";
-import { Category, EDIT_CATEGORY } from "types/cat";
+import { ProductImage } from "@/types/prod";
+import { Category, EDIT_CATEGORY } from "@/types/cat";
 import ReactCrop, { Crop } from "react-image-crop";
 import { Modal } from "antd";
 import TinyMCEEditor from "@components/Dashboard/tinyMc/MyEditor";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import { useSession } from "next-auth/react";
-import ApoloClient from "utils/AppoloClient";
-import { CREATE_CATEGORY, GET_ALL_CATEGORIES, UPDATE_CATEGORY } from "graphql/categories";
-import { categoryValidationSchema } from "data/Validations";
-import { categoryInitialValues } from "data/InitialValues";
+import ApoloClient from "@utils/AppoloClient";
+import { CREATE_CATEGORY, GET_ALL_CATEGORIES, UPDATE_CATEGORY } from "@graphql/categories";
+import { categoryValidationSchema } from "@data/Validations";
+import { categoryInitialValues } from "@data/InitialValues";
 
 interface editCategoryProps {
   seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;

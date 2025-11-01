@@ -10,24 +10,23 @@ import {
   ImageRemoveHandler,
   onCropComplete,
   onImageLoad,
-} from "utils/helperFunctions";
+} from "@utils/helperFunctions";
 import { Formik, Form, FormikHelpers, Field, ErrorMessage } from "formik";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import showToast from "@components/Toaster/Toaster";
-import { DASHBOARD_ADD_SUBCATEGORIES_PROPS } from "types/PagesProps";
-import { ProductImage } from "types/prod";
-import { ISUBCATEGORY_EDIT } from "types/cat";
+import { DASHBOARD_ADD_SUBCATEGORIES_PROPS } from "@/types/PagesProps";
+import { ProductImage } from "@/types/prod";
+import { ISUBCATEGORY_EDIT } from "@/types/cat";
 import ImageUploader from "@components/ImageUploader/ImageUploader";
 import { useMutation } from "@apollo/client";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import ReactCrop, { Crop } from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
 import { Modal } from "antd";
 import TinyMCEEditor from "@components/Dashboard/tinyMc/MyEditor";
-import { subcategoryInitialValues } from "data/InitialValues";
-import { subcategoryValidationSchema } from "data/Validations";
+import { subcategoryInitialValues } from "@data/InitialValues";
+import { subcategoryValidationSchema } from "@data/Validations";
 import { useSession } from "next-auth/react";
-import { CREATE_SUBCATEGORY, GET_ALL_SUBCATEGORIES, UPDATE_SUBCATEGORY } from "graphql/categories";
+import { CREATE_SUBCATEGORY, GET_ALL_SUBCATEGORIES, UPDATE_SUBCATEGORY } from "@graphql/categories";
 
 const AddSubcategory = ({
   seteditCategory,

@@ -8,14 +8,14 @@ import { LiaEdit } from "react-icons/lia";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import Swal from "sweetalert2";
 
-import { DASHBOARD_VIEW_SUBCATEGORIES_PROPS } from "types/PagesProps";
-import { ISUBCATEGORY } from "types/cat";
+import { DASHBOARD_VIEW_SUBCATEGORIES_PROPS } from "@/types/PagesProps";
+import { ISUBCATEGORY } from "@/types/cat";
 import { useMutation } from "@apollo/client";
-import { DateFormatHandler } from "utils/helperFunctions";
-import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from "graphql/categories";
+import { DateFormatHandler } from "@utils/helperFunctions";
+import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from "@graphql/categories";
 import Table from "@components/ui/table";
 import { useSession } from "next-auth/react";
-import { getPermission } from "utils/permissionHandlers";
+import { getPermission } from "@utils/permissionHandlers";
 const ViewSubcategries = ({
   setMenuType,
   seteditCategory,

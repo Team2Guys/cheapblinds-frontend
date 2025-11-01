@@ -1,6 +1,6 @@
 import { FaFacebookF, FaPinterest } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io";
-import { MenuItem, SocialLink } from "types/Header";
+import { MenuItem, SocialLink } from "@/types/Header";
 
 export const wishlistItems = [
   { name: "Modern Lamp", image: "/assets/images/bin/product.png", price: "AED 199" },

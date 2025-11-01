@@ -3,7 +3,7 @@ import RelatedProduct from "@components/common/related-product";
 import OrderSection from "@components/Home/OrderSection";
 import Breadcrumb from "@components/Layout/breadcrumb";
 import ProductDetail from "@components/product/Product-detail";
-import { chooseblinds } from "data/home";
+import { chooseblinds } from "@data/home";
 
 const ProductPage = async ({
   params,

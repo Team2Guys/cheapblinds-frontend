@@ -2,9 +2,10 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { FormData } from "types/type";
+
 import FormInput from "./forminput";
 import FormTextarea from "./formtextarea";
+import { FormData } from "@/types/type";
 
 const ContactForm = () => {
   const formik = useFormik<FormData>({

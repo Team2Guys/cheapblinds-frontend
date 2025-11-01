@@ -1,4 +1,4 @@
-import { fetchCategories, fetchSubCategories } from "config/fetch";
+import { fetchCategories, fetchSubCategories } from "@config/fetch";
 import SubCategoryComponent from "./SubCategory";
 
 const AddSubCategory = async () => {

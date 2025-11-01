@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { RxCross2 } from "react-icons/rx";
-import { ModalProps } from "types/Header";
+import { ModalProps } from "@/types/Header";
 
 const Modal = ({ isOpen, onClose, children, className, paymentModal }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);

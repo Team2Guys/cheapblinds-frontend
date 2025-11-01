@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AccordionItemProps } from "types/types";
+import { AccordionItemProps } from "@/types/types";
 import Chevron from "./svg/chevron";
 
 export const AccordionItem: React.FC<AccordionItemProps> = ({

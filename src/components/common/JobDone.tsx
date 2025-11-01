@@ -1,9 +1,9 @@
 "use client";
 import SwiperSlider from "@components/ui/swiper-slider";
-import { RelatedBreakpoints } from "data/Slider-breakpoints";
+import { RelatedBreakpoints } from "@data/Slider-breakpoints";
 import Image from "next/image";
 import { SwiperSlide } from "swiper/react";
-import { RelatedProductProps } from "types/common";
+import { RelatedProductProps } from "@/types/common";
 
 const JobDone = ({ title, description, data }: RelatedProductProps) => {
   return (

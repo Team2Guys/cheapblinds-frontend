@@ -1,10 +1,10 @@
 import { Session, SessionStrategy, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
-import { Permissions } from "types/type";
+import { Permissions } from "@/types/type";
 import { AuthOptions } from "next-auth";
-import ApoloClient from "utils/AppoloClient";
-import { ADMIN_LOGIN, super_admin_ADMIN_LOGIN } from "graphql/Admins";
+import ApoloClient from "@utils/AppoloClient";
+import { ADMIN_LOGIN, super_admin_ADMIN_LOGIN } from "@/graphql/Admins";
 
 type CustomUser = User &
   Permissions & {

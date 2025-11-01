@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaRegHeart } from "react-icons/fa";
-import { ProductImage } from "types/prod";
+import { ProductImage } from "@/types/prod";
 
 interface Product {
   category: {

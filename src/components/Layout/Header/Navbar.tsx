@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FaAngleDown } from "react-icons/fa";
-import { menuItems } from "data/Header";
+import { menuItems } from "@data/Header";
 import Image from "next/image";
 
 const Navbar = ({ className }: { className?: string }) => {

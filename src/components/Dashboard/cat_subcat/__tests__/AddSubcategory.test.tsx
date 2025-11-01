@@ -15,7 +15,7 @@ vi.mock("next-auth/react", () => ({
 }));
 
 // Mock utils/helperFunctions
-vi.mock("utils/helperFunctions", () => ({
+vi.mock("@utils/helperFunctions", () => ({
   handleCropClick: vi.fn(),
   handleCropModalCancel: vi.fn(),
   handleCropModalOk: vi.fn(),

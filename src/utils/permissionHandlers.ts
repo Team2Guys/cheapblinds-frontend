@@ -1,5 +1,5 @@
 import { Session } from "next-auth";
-import { Permissions } from "types/type";
+import { Permissions } from "@/types/type";
 
 type PermissionKey = keyof Permissions;
 

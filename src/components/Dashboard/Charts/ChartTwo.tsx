@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
-import { WEEKLYGRAPH } from "types/general";
+import { WEEKLYGRAPH } from "@/types/general";
 
 const baseColorArray = ["#80CAEE", "#3C50E0"];
 

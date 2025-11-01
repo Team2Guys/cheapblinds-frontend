@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
-import { MONTHLYGRAPH } from "types/general";
+import { MONTHLYGRAPH } from "@/types/general";
 
 const baseColorArray = ["#80CAEE", "#3C50E0"];
 

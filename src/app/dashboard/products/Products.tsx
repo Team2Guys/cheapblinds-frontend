@@ -4,8 +4,8 @@ import DefaultLayout from "@components/Dashboard/DefaultLayout";
 import ViewProduct from "@components/Dashboard/dashboard_products/ViewProduct";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { IProduct } from "types/prod";
-import { DASHBOARD_MAINPAGE_PROPS } from "types/PagesProps";
+import { IProduct } from "@/types/prod";
+import { DASHBOARD_MAINPAGE_PROPS } from "@/types/PagesProps";
 const AddProd = dynamic(() => import("@components/Dashboard/dashboard_products/AddProd"));
 
 const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {

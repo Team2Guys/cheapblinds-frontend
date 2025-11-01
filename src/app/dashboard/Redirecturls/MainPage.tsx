@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { RedirectUrls } from "@types/general";
+import { RedirectUrls } from "@/types/general";
 import dynamic from "next/dynamic";
 import DefaultLayout from "@components/Dashboard/DefaultLayout";
 const AddRedirecturl = dynamic(() => import("./AddRedirecturl"));

@@ -1,4 +1,4 @@
-import { fetchAppointments } from "config/fetch";
+import { fetchAppointments } from "@config/fetch";
 import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 import React from "react";

@@ -7,17 +7,17 @@ import {
   FIND_ONE_SUB_CATEGORY_SEO,
   FIND_PRODUCT_META,
   GET_ADMIN_DATA,
-} from "graphql/queries";
+} from "@graphql/queries";
 import { headers } from "next/headers";
 import {
   fetchSingeEComProduct,
   fetchSingeProduct,
   fetchSingeSubCategory,
   fetchSingleCategory,
-} from "config/fetch";
+} from "@config/fetch";
 import { Metadata } from "next";
-import { ISEO_TAGS, SEARCH_PARAMS } from "types/CommonTypes";
-import ApoloClient from "utils/AppoloClient";
+import { ISEO_TAGS, SEARCH_PARAMS } from "@/types/CommonTypes";
+import ApoloClient from "@utils/AppoloClient";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@components/auth/authOptions";
 

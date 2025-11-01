@@ -14,7 +14,7 @@ vi.mock("next-auth/react", () => ({
 }));
 
 // Mock utils/helperFunctions to avoid errors
-vi.mock("utils/helperFunctions", () => ({
+vi.mock("@utils/helperFunctions", () => ({
   handleCropClick: vi.fn(),
   handleCropModalCancel: vi.fn(),
   handleCropModalOk: vi.fn(),
@@ -44,7 +44,7 @@ vi.mock("@components/ServerActons/ServerAction", () => ({
 
 // Mock graphql mutations/queries if used directly (optional)
 // Also mock ApolloClient if needed
-vi.mock("utils/AppoloClient", () => ({
+vi.mock("@utils/AppoloClient", () => ({
   __esModule: true,
   default: {
     mutate: vi.fn().mockResolvedValue({}),

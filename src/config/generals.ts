@@ -5,18 +5,18 @@ import {
   GET_ALL_PROD_REVIEWS,
   GET_ALL_PRODUCT_QUESTIONS,
   WEEKLY_STATS,
-} from "graphql/general";
-import { FIND_ONE_REDIRECT_URL } from "graphql/mutations";
+} from "@graphql/general";
+import { FIND_ONE_REDIRECT_URL } from "@graphql/mutations";
 import {
   FETCH_ALL_ECOMMERCE_PAGINATED_PRODUCTS,
   FIND_ONE_USER_ORDER,
   GET_Redirecturls,
   GET_REVIEWS,
   ORDER_QUERY,
-} from "graphql/queries";
-import { fetchAllblogs, GET_ALL_BLOGS } from "graphql/blogs";
-import { GET_ALL_JOB_APPLICATIONS, GET_ALL_JOBS, GET_SINGLE_JOB } from "graphql/JobsModule";
-import ApoloClient from "utils/AppoloClient";
+} from "@graphql/queries";
+import { fetchAllblogs, GET_ALL_BLOGS } from "@graphql/blogs";
+import { GET_ALL_JOB_APPLICATIONS, GET_ALL_JOBS, GET_SINGLE_JOB } from "@graphql/JobsModule";
+import ApoloClient from "@utils/AppoloClient";
 import { DocumentNode } from "@apollo/client";
 
 export const fetchRedirectUrls = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) => {

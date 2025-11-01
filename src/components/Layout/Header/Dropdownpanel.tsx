@@ -5,7 +5,7 @@ import Link from "next/link";
 import { IoIosClose } from "react-icons/io";
 import { TbShoppingBag } from "react-icons/tb";
 import { LuMinus, LuPlus } from "react-icons/lu";
-import { DropdownPanelProps } from "types/Header";
+import { DropdownPanelProps } from "@/types/Header";
 
 const DropdownPanel = ({
   icon,
