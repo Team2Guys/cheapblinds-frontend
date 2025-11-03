@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 interface FormInputProps {
@@ -10,7 +11,7 @@ interface FormInputProps {
   error?: string;
   touched?: boolean;
   as?: "input" | "select";
-  options?: string[]; // used if as="select"
+  options?: string[];
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -25,11 +26,20 @@ const FormInput: React.FC<FormInputProps> = ({
   as = "input",
   options = [],
 }) => {
+  // Split label and highlight the "*" in red if it exists
+  const renderLabel = () => {
+    const parts = label.split("*");
+    return (
+      <label htmlFor={name} className="block mb-1 text-[16px]">
+        {parts[0]}
+        {label.includes("*") && <span className="text-red-500">*</span>}
+      </label>
+    );
+  };
+
   return (
     <div>
-      <label htmlFor={name} className="block mb-1 text-[16px]">
-        {label}
-      </label>
+      {renderLabel()}
 
       {as === "select" ? (
         <select
@@ -58,7 +68,7 @@ const FormInput: React.FC<FormInputProps> = ({
         />
       )}
 
-      {touched && error && <p className="text-red-500 text-sm">{error}</p>}
+      {touched && error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 };

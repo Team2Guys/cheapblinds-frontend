@@ -27,3 +27,15 @@ interface PropsImage {
   posterImageUrl?: { imageUrl: string };
   posterImageUrl?: string;
 }
+
+export interface SelectOptionProps {
+  selected: string;
+  setSelected: React.Dispatch<React.SetStateAction<string>>;
+  className?: string;
+  CartOptions: {
+    id: string;
+    title: string;
+    features: string[];
+    price: string;
+  }[];
+}

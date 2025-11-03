@@ -1,6 +1,6 @@
 export const TestimonialBreakpoints = {
   0: { slidesPerView: 1 },
-  350: { slidesPerView: 1.5 },
+  450: { slidesPerView: 1.7 },
   768: { slidesPerView: 2 },
   1024: { slidesPerView: 2.7 },
   1280: { slidesPerView: 4 },

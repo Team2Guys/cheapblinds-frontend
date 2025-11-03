@@ -16,16 +16,20 @@ import {
 import { formatAED } from "@utils/helperFunctions";
 import { PaymentMethodProps } from "@/types/prod";
 
-const PaymentMethod = ({ showheading, installments }: PaymentMethodProps) => {
+const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodProps) => {
   const [tabbyOpen, setTabbyOpen] = useState(false);
   const [tamaraOpen, setTamaraOpen] = useState(false);
   const paymentLabels = ["Today", "In 1 month", "In 2 months", "In 3 months"];
 
   return (
-    <div className="border border-secondary rounded-md p-2">
+    <div className={`rounded-md p-2 ${isCheckout ? "" : "border border-secondary "}`}>
       {showheading && <p className="font-semibold">Guaranteed Safe Checkout</p>}
-      <div className="flex flex-wrap sm:flex-nowrap gap-8 md:gap-2 font-inter pt-4">
-        <div className="relative  sm:w-1/2 w-full border-4 border-[#00FFBC] px-1 py-4 xl:px-2  shadow">
+      <div
+        className={`flex flex-wrap ${isCheckout ? "" : "sm:flex-nowrap md:gap-2 pt-4"} gap-8  font-inter `}
+      >
+        <div
+          className={`relative  ${isCheckout ? "sm:w-full" : "sm:w-1/2"} w-full border-4 border-[#00FFBC] px-1 py-4 xl:px-2  shadow`}
+        >
           <span className="absolute -top-4 left-2 bg-[#00FFBC] px-2 py-1 font-extrabold rounded-md">
             tabby
           </span>
@@ -54,7 +58,9 @@ const PaymentMethod = ({ showheading, installments }: PaymentMethodProps) => {
             ))}
           </div>
         </div>
-        <div className="relative sm:w-1/2 w-full border-4 border-[#D47C84] px-1 py-4 xl:px-2 shadow">
+        <div
+          className={`relative ${isCheckout ? "sm:w-full" : "sm:w-1/2"} w-full border-4 border-[#D47C84] px-1 py-4 xl:px-2 shadow`}
+        >
           <span className="absolute -top-4 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1 rounded-md">
             tamara
           </span>
@@ -82,7 +88,6 @@ const PaymentMethod = ({ showheading, installments }: PaymentMethodProps) => {
         </div>
       </div>
 
-      {/* Tabby Modal */}
       <Modal isOpen={tabbyOpen} onClose={() => setTabbyOpen(false)} paymentModal>
         <h2 className="text-2xl font-bold py-2">Easy Monthly Installments</h2>
         <div className="py-5 ps-5 xs:ps-10 md:ps-20 pe-4 me-4 xs:me-7">

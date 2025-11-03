@@ -9,6 +9,7 @@ interface FormTextareaProps {
   error?: string;
   touched?: boolean;
   rows?: number;
+  placeholder?: string;
 }
 
 const FormTextarea: React.FC<FormTextareaProps> = ({
@@ -20,6 +21,7 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
   error,
   touched,
   rows = 4,
+  placeholder,
 }) => {
   return (
     <div>
@@ -34,6 +36,7 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
         onChange={onChange}
         onBlur={onBlur}
         className="w-full border border-gray-300 rounded-md p-2"
+        placeholder={placeholder}
       />
       {touched && error && <p className="text-red-500 text-sm">{error}</p>}
     </div>

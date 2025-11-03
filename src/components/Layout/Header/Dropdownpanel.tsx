@@ -126,7 +126,11 @@ const DropdownPanel = ({
           )}
           {localItems.length > 0 && (
             <div className="w-full mt-2 space-y-1">
-              <Link href={viewLink} className="w-full block text-center bg-black text-white py-1">
+              <Link
+                href={viewLink}
+                onClick={() => setIsOpen(false)}
+                className="w-full block text-center bg-black text-white py-1"
+              >
                 View {title}
               </Link>
 

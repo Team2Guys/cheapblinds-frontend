@@ -11,7 +11,7 @@ import { RelatedProductProps } from "@/types/common";
 const RelatedProduct = ({ title, description, data, titleStart }: RelatedProductProps) => {
   return (
     <div className="container mx-auto px-2 space-y-3 mt-10 md:mt-16 ">
-      <h2 className={`text-heading ${titleStart ? "text-start" : "text-center"}`}>{title}</h2>
+      <h2 className={`text-heading pb-5 ${titleStart ? "text-start" : "text-center"}`}>{title}</h2>
       <p className="text-center">{description}</p>
       <SwiperSlider navigation spaceBetween={10} loop breakpoints={RelatedBreakpoints}>
         {data.map((array, index) => (
