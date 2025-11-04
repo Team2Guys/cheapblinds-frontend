@@ -34,7 +34,7 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
             tabby
           </span>
           <p className="font-semibold">
-            Pay 4 interest-free payments of <span className="font-currency font-normal"></span>{" "}
+            Pay 4 interest-free payments of <span className="font-currency text-xl font-normal"></span>{" "}
             {formatAED(installments)}{" "}
             <span
               className="underline cursor-pointer text-primary"
@@ -50,7 +50,7 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
                 className="text-black font-medium 2xl:font-semibold pb-1 text-center "
               >
                 <p className="text-nowrap">
-                  <span className="font-currency font-normal text-xs 2xl:text-sm"></span>{" "}
+                  <span className="font-currency font-normal text-xs 2xl:text-xl"></span>{" "}
                   {formatAED(installments)}
                 </p>
                 <p className="text-xs text-[#8D8D8D]">{label}</p>
@@ -65,7 +65,7 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
             tamara
           </span>
           <p className="font-semibold">
-            Pay 4 interest-free payments of <span className="font-currency font-normal"></span>{" "}
+            Pay 4 interest-free payments of <span className="font-currency text-xl font-normal"></span>{" "}
             {formatAED(installments)}{" "}
             <span
               className="underline cursor-pointer text-primary"
@@ -78,7 +78,7 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
             {paymentLabels.map((label, index) => (
               <div key={index} className="text-black pb-1 text-center ">
                 <p className="text-nowrap font-semibold">
-                  <span className="font-currency font-normal text-xs 2xl:text-sm"></span>{" "}
+                  <span className="font-currency font-normal text-xs 2xl:text-xl"></span>{" "}
                   {formatAED(installments)}
                 </p>
                 <p className="text-xs text-[#8D8D8D]">{label}</p>

@@ -12,7 +12,7 @@ interface FormTextareaProps {
   placeholder?: string;
 }
 
-const FormTextarea: React.FC<FormTextareaProps> = ({
+export const FormTextarea: React.FC<FormTextareaProps> = ({
   label,
   name,
   value,
@@ -42,5 +42,3 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
     </div>
   );
 };
-
-export default FormTextarea;

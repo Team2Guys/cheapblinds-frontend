@@ -27,7 +27,7 @@ const Testimonial = ({ reviews }: TestimonialProps) => {
         </div>
       </div>
 
-      <div className="col-span-12 md:col-span-9">
+      <div className="col-span-12 md:col-span-9 lg:col-span-10">
         <SwiperSlider navigation isCart loop spaceBetween={10} breakpoints={TestimonialBreakpoints}>
           {reviews.map((item, index) => (
             <SwiperSlide key={index}>
