@@ -5,7 +5,6 @@ import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import Swal from "sweetalert2";
 import { Category } from "@/types/cat";
 import { useMutation } from "@apollo/client";
 import { REMOVE_CATEGORY } from "@graphql/categories";
@@ -14,6 +13,7 @@ import { useSession } from "next-auth/react";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
 import { showToast } from "@/components/Toaster/Toaster";
+import { ConfirmToast } from "@components/common/ConfirmToast";
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
   seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -64,17 +64,14 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
   console.log(session, "session");
 
   const confirmDelete = (key: string | number) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Once deleted, the Category cannot be recovered.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleDelete(key);
-      }
+    ConfirmToast({
+      message: "Once deleted, the Category cannot be recovered.",
+      confirmText: "Yes, delete it!",
+      cancelText: "No, keep it",
+      onConfirm: () => handleDelete(key),
+      onCancel: () => {
+        console.log("Category deletion cancelled");
+      },
     });
   };
 
@@ -94,11 +91,11 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
         prev ? prev.filter((item) => item.id !== key) : [],
       );
       revalidateTag("categories");
-        showToast("success", "Category Deleted");
-        } catch (err) {
-          showToast("error", "There was an error deleting the category.");
-          return err;
-        }
+      showToast("success", "Category Deleted");
+    } catch (err) {
+      showToast("error", "There was an error deleting the category.");
+      return err;
+    }
   };
 
   const handleEdit = (record: Category) => {

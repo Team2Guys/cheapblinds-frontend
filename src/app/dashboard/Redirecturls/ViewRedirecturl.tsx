@@ -8,10 +8,10 @@ import { useSession } from "next-auth/react";
 import React, { SetStateAction, useState } from "react";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import Swal from "sweetalert2";
 import { RedirectUrls } from "@/types/general";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
+import { ConfirmToast } from "@components/common/ConfirmToast";
 
 interface IView_RedirectUrls {
   Redirecturls: RedirectUrls[];
@@ -48,23 +48,15 @@ export default function ViewRedirecturl({
   };
 
   const confirmDelete = (key: number) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Once deleted, the Sub Category cannot be recovered.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
-    })
-      .then((result) => {
-        console.log(result, "result");
-        if (result.isConfirmed) {
-          handleDelete(key);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    ConfirmToast({
+      message: "Once deleted, the Sub Category cannot be recovered.",
+      confirmText: "Yes, delete it!",
+      cancelText: "No, keep it",
+      onConfirm: () => handleDelete(key),
+      onCancel: () => {
+        console.log("Sub Category deletion cancelled");
+      },
+    });
   };
 
   const handleDelete = async (key: number) => {

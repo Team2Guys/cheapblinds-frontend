@@ -100,22 +100,22 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
       }
     };
 
-   const handlePopState = () => {
-  if (hasUnsavedChanges()) {
-    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
+      if (hasUnsavedChanges()) {
+        window.history.pushState(null, "", window.location.href);
 
-    ConfirmToast({
-      onConfirm: () => {
+        ConfirmToast({
+          onConfirm: () => {
+            setselecteMenu("All Reviews");
+          },
+          onCancel: () => {
+            // Do nothing, just stay on the same page
+          },
+        });
+      } else {
         setselecteMenu("All Reviews");
-      },
-      onCancel: () => {
-        // Do nothing, just stay on the same page
-      },
-    });
-  } else {
-    setselecteMenu("All Reviews");
-  }
-};
+      }
+    };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
     window.addEventListener("popstate", handlePopState);
@@ -127,21 +127,21 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
     };
   }, [formDate]);
 
- const handleBack = () => {
-  if (hasUnsavedChanges()) {
-    ConfirmToast({
-      onConfirm: () => {
-        setselecteMenu("All Reviews");
-      },
-      onCancel: () => {
-        // User canceled, stay on the same page
-      },
-    });
-    return;
-  }
+  const handleBack = () => {
+    if (hasUnsavedChanges()) {
+      ConfirmToast({
+        onConfirm: () => {
+          setselecteMenu("All Reviews");
+        },
+        onCancel: () => {
+          // User canceled, stay on the same page
+        },
+      });
+      return;
+    }
 
-  setselecteMenu("All Reviews");
-};
+    setselecteMenu("All Reviews");
+  };
 
   return (
     <Formik

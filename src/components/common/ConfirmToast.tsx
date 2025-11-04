@@ -43,6 +43,6 @@ export const ConfirmToast = ({
       autoClose: false,
       closeOnClick: false,
       position: "top-center",
-    }
+    },
   );
 };
