@@ -71,7 +71,7 @@ const Table = <T,>({
                     checked={
                       data.length > 0 &&
                       data.every((item) =>
-                        rowSelection.selectedRowKeys.includes(item[rowKey] as React.Key)
+                        rowSelection.selectedRowKeys.includes(item[rowKey] as React.Key),
                       )
                     }
                     onChange={handleSelectAll}
@@ -101,9 +101,7 @@ const Table = <T,>({
                 return (
                   <tr
                     key={String(key ?? index)}
-                    className={`hover:bg-gray-100 dark:hover:bg-black ${
-                      isHidden && "sr-only"
-                    }`}
+                    className={`hover:bg-gray-100 dark:hover:bg-black ${isHidden && "sr-only"}`}
                   >
                     {rowSelection && (
                       <td className="px-4 py-3">
@@ -159,11 +157,7 @@ const Table = <T,>({
           <div className="flex justify-center items-center gap-1 xs:gap-2">
             {Array.from({ length: totalPages }, (_, i) => i + 1)
               .filter((page) => {
-                return (
-                  page === 1 ||
-                  page === totalPages ||
-                  Math.abs(currentPage - page) <= 1
-                );
+                return page === 1 || page === totalPages || Math.abs(currentPage - page) <= 1;
               })
               .reduce<(number | "ellipsis")[]>((acc, page, i, arr) => {
                 if (i > 0 && page - arr[i - 1] > 1) {
@@ -192,7 +186,7 @@ const Table = <T,>({
                   >
                     {item}
                   </button>
-                )
+                ),
               )}
           </div>
 

@@ -33,17 +33,17 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
   const canDeleteBlog = getPermission(session.data, "canDeleteBlog");
   const canEditBlog = getPermission(session.data, "canEditBlog");
 
-const confirmDelete = (id: number | string) => {
-  ConfirmToast({
-    message: "Once deleted, the blog cannot be recovered.",
-    confirmText: "Yes, delete it!",
-    cancelText: "No, keep it",
-    onConfirm: () => handleDelete(id),
-    onCancel: () => {
-      // Do nothing if canceled
-    },
-  });
-};
+  const confirmDelete = (id: number | string) => {
+    ConfirmToast({
+      message: "Once deleted, the blog cannot be recovered.",
+      confirmText: "Yes, delete it!",
+      cancelText: "No, keep it",
+      onConfirm: () => handleDelete(id),
+      onCancel: () => {
+        // Do nothing if canceled
+      },
+    });
+  };
 
   const handleDelete = async (id: number | string) => {
     try {
@@ -58,7 +58,6 @@ const confirmDelete = (id: number | string) => {
       });
       setAllBlogs((prev) => prev.filter((blog) => blog.id !== id));
       showToast("success", "Blog Deleted");
-  
     } catch {
       showToast("error", "There was an error deleting the blog.");
     }

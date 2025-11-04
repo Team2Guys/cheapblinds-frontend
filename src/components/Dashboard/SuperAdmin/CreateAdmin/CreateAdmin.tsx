@@ -70,23 +70,23 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
       }
     };
 
- const handlePopState = () => {
-  if (hasUnsavedChanges()) {
-    window.history.pushState(null, "", window.location.href);
-    ConfirmToast({
-      onConfirm: () => {
+    const handlePopState = () => {
+      if (hasUnsavedChanges()) {
+        window.history.pushState(null, "", window.location.href);
+        ConfirmToast({
+          onConfirm: () => {
+            setselecteMenu("AllAdmin");
+            setEditProduct(null);
+          },
+          onCancel: () => {
+            // Do nothing if user cancels
+          },
+        });
+      } else {
         setselecteMenu("AllAdmin");
         setEditProduct(null);
-      },
-      onCancel: () => {
-        // Do nothing if user cancels
-      },
-    });
-  } else {
-    setselecteMenu("AllAdmin");
-    setEditProduct(null);
-  }
-};
+      }
+    };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
     window.addEventListener("popstate", handlePopState);
@@ -98,23 +98,23 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
     };
   }, [formValues]);
 
-const handleBack = () => {
-  if (hasUnsavedChanges()) {
-    ConfirmToast({
-      onConfirm: () => {
-        setselecteMenu("AllAdmin");
-        setEditProduct(null);
-      },
-      onCancel: () => {
-        // Do nothing if canceled
-      },
-    });
-    return;
-  }
+  const handleBack = () => {
+    if (hasUnsavedChanges()) {
+      ConfirmToast({
+        onConfirm: () => {
+          setselecteMenu("AllAdmin");
+          setEditProduct(null);
+        },
+        onCancel: () => {
+          // Do nothing if canceled
+        },
+      });
+      return;
+    }
 
-  setselecteMenu("AllAdmin");
-  setEditProduct(null);
-};
+    setselecteMenu("AllAdmin");
+    setEditProduct(null);
+  };
 
   return (
     <div className="max-w-4xl mx-auto">

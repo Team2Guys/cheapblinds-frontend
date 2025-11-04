@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
-import Swal from "sweetalert2";
 import Link from "next/link";
 import { IProduct } from "@/types/prod";
 import { DASHBOARD_MAIN_PRODUCT_PROPS } from "@/types/PagesProps";
@@ -16,6 +15,7 @@ import Table from "@components/ui/table";
 import { getPermission } from "@utils/permissionHandlers";
 import { useSession } from "next-auth/react";
 import { showToast } from "@components/Toaster/Toaster";
+import { ConfirmToast } from "@components/common/ConfirmToast";
 
 const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   products,
@@ -83,17 +83,15 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
 
   const confirmDelete = (key: string | number) => {
     const type = "product";
-    Swal.fire({
-      title: "Are you sure?",
-      text: `Once deleted, the ${type} cannot be recovered.`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleDelete(key, type);
-      }
+
+    ConfirmToast({
+      message: `Once deleted, the ${type} cannot be recovered.`,
+      confirmText: "Yes, delete it!",
+      cancelText: "No, keep it",
+      onConfirm: () => handleDelete(key, type),
+      onCancel: () => {
+        console.log(`${type} deletion cancelled`);
+      },
     });
   };
 

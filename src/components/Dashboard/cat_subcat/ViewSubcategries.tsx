@@ -5,8 +5,6 @@ import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import Swal from "sweetalert2";
-
 import { DASHBOARD_VIEW_SUBCATEGORIES_PROPS } from "@/types/PagesProps";
 import { ISUBCATEGORY } from "@/types/cat";
 import { useMutation } from "@apollo/client";
@@ -16,6 +14,7 @@ import Table from "@components/ui/table";
 import { useSession } from "next-auth/react";
 import { getPermission } from "@utils/permissionHandlers";
 import { showToast } from "@/components/Toaster/Toaster";
+import { ConfirmToast } from "@components/common/ConfirmToast";
 const ViewSubcategries = ({
   setMenuType,
   seteditCategory,
@@ -56,17 +55,14 @@ const ViewSubcategries = ({
   const canEditSubCategory = getPermission(session.data, "canEditSubCategory");
 
   const confirmDelete = (key: number) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Once deleted, the Sub Category cannot be recovered.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleDelete(key);
-      }
+    ConfirmToast({
+      message: "Once deleted, the Sub Category cannot be recovered.",
+      confirmText: "Yes, delete it!",
+      cancelText: "No, keep it",
+      onConfirm: () => handleDelete(key),
+      onCancel: () => {
+        console.log("Deletion cancelled");
+      },
     });
   };
 
