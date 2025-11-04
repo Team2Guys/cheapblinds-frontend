@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Email from "../svg/email";
 import Call from "../svg/call";
@@ -6,7 +7,7 @@ import GoogleMap from "../userComponent/map/map";
 import Link from "next/link";
 import FormContact from "./FormContact";
 
-export const Contact = ({ IsHide }: { IsHide?: boolean }) => {
+export const ContactPage = ({ IsHide }: { IsHide?: boolean }) => {
   return (
     <>
       {!IsHide && (

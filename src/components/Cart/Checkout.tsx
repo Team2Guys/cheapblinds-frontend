@@ -11,7 +11,9 @@ const Checkout = () => {
       <div className="border space-y-3">
         <div className="flex justify-between items-center font-semibold p-2 border-b border-secondary">
           <p>Subtotal</p>
-          <p><span className="font-currency text-xl font-normal"></span>1,915</p>
+          <p>
+            <span className="font-currency text-xl font-normal"></span>1,915
+          </p>
         </div>
         <div className="p-2 space-y-2">
           <p>Shipping</p>
@@ -22,7 +24,9 @@ const Checkout = () => {
         </div>
         <div className="flex justify-between items-center font-medium text-xl p-2 border">
           <p>Total</p>
-          <p><span className="font-currency text-2xl font-normal"></span>1,915</p>
+          <p>
+            <span className="font-currency text-2xl font-normal"></span>1,915
+          </p>
         </div>
         <p className="font-semibold py-2">Prices are inclusive of VAT</p>
         <Link

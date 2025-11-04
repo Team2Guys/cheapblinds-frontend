@@ -34,8 +34,8 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
             tabby
           </span>
           <p className="font-semibold">
-            Pay 4 interest-free payments of <span className="font-currency text-xl font-normal"></span>{" "}
-            {formatAED(installments)}{" "}
+            Pay 4 interest-free payments of{" "}
+            <span className="font-currency text-xl font-normal"></span> {formatAED(installments)}{" "}
             <span
               className="underline cursor-pointer text-primary"
               onClick={() => setTabbyOpen(true)}
@@ -65,8 +65,8 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
             tamara
           </span>
           <p className="font-semibold">
-            Pay 4 interest-free payments of <span className="font-currency text-xl font-normal"></span>{" "}
-            {formatAED(installments)}{" "}
+            Pay 4 interest-free payments of{" "}
+            <span className="font-currency text-xl font-normal"></span> {formatAED(installments)}{" "}
             <span
               className="underline cursor-pointer text-primary"
               onClick={() => setTamaraOpen(true)}
@@ -108,8 +108,8 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
             <h3 className="font-bold text-2xl sm:text-3xl">How it works</h3>
             <ul className="font-medium text-lg xs:text-xl md:text-2xl mt-3 md:leading-relaxed">
               {tabbyhowitwork.map((item) => (
-                <li className="flex items-center gap-2" key={item.id}>
-                  <span className="rounded-full bg-lightbackground min-w-10 h-10 flex items-center">
+                <li className="flex items-center gap-2 space-y-1" key={item.id}>
+                  <span className="rounded-full bg-primary-light min-w-10 h-10 flex items-center justify-center">
                     {item.id}
                   </span>
                   <span className="w-full">{item.para}</span>

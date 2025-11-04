@@ -1,36 +1,31 @@
 "use client";
 import React from "react";
+import { Field, ErrorMessage } from "formik";
 
 interface InputProps {
   label: string;
   name: string;
   type?: string;
-  value: string;
-  onChange: (_e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-  onBlur: (_e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
-  error?: string;
-  touched?: boolean;
-  as?: "input" | "select";
+  as?: "input" | "select" | "textarea";
   options?: string[];
+  rows?: number;
+  placeholder?: string;
 }
 
-export const Input = ({
+export const Input: React.FC<InputProps> = ({
   label,
   name,
   type = "text",
-  value,
-  onChange,
-  onBlur,
-  error,
-  touched,
   as = "input",
   options = [],
-}:InputProps) => {
+  rows,
+  placeholder,
+}) => {
   // Split label and highlight the "*" in red if it exists
   const renderLabel = () => {
     const parts = label.split("*");
     return (
-      <label htmlFor={name} className="block mb-1 text-[16px]">
+      <label htmlFor={name} className="block mb-1 text-[16px] font-medium">
         {parts[0]}
         {label.includes("*") && <span className="text-red-500">*</span>}
       </label>
@@ -42,34 +37,43 @@ export const Input = ({
       {renderLabel()}
 
       {as === "select" ? (
-        <select
+        <Field
+          as="select"
           id={name}
           name={name}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          className="w-full border border-gray-300 rounded-md p-2"
+          className="w-full border border-gray-300 rounded-md p-2 focus:ring-1 focus:ring-primary focus:outline-none"
         >
+          <option value="">Select an option</option>
           {options.map((opt) => (
             <option key={opt} value={opt}>
               {opt}
             </option>
           ))}
-        </select>
-      ) : (
-        <input
+        </Field>
+      ) : as === "textarea" ? (
+        <Field
+          as="textarea"
           id={name}
-          type={type}
           name={name}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          className="w-full border border-gray-300 rounded-md p-2"
+          rows={rows}
+          placeholder={placeholder}
+          className="w-full border border-gray-300 rounded-md p-2 focus:ring-1 focus:ring-primary focus:outline-none"
+        />
+      ) : (
+        <Field
+          id={name}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          className="w-full border border-gray-300 rounded-md p-2 focus:ring-1 focus:ring-primary focus:outline-none"
         />
       )}
 
-      {touched && error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+      <ErrorMessage
+        name={name}
+        component="p"
+        className="text-red-500 text-sm mt-1"
+      />
     </div>
   );
 };
-
