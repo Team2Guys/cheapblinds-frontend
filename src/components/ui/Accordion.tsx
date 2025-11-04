@@ -1,28 +1,28 @@
+import { AccordionProps } from "@/types/Ui";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-const Accordion = ({
+export const Accordion = ({
   title,
   children,
   sectionKey,
   openSections,
   toggleSection,
   refObj,
-  // eslint-disable-next-line
-}: any) => {
+}: AccordionProps) => {
   return (
     <div>
-      {/* header */}
       <div
         className="flex items-center justify-between border-b border-[#0000003D] px-2 pb-1 cursor-pointer"
         onClick={() => toggleSection(sectionKey)}
       >
         <p className="font-semibold">{title}</p>
         <MdKeyboardArrowDown
-          className={`transition-transform duration-300 ${openSections[sectionKey] ? "rotate-180" : ""}`}
+          className={`transition-transform duration-300 ${
+            openSections[sectionKey] ? "rotate-180" : ""
+          }`}
         />
       </div>
 
-      {/* animated wrapper */}
       <div
         ref={refObj}
         className="overflow-hidden transition-all duration-300"
@@ -35,5 +35,3 @@ const Accordion = ({
     </div>
   );
 };
-
-export default Accordion;
