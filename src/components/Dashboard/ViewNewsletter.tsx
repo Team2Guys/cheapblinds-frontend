@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
-import showToast from "@components/Toaster/Toaster";
-import { notification, Table } from "antd/es";
+import { showToast } from "../Toaster/Toaster";
+import Table from "../ui/table";
 
 interface Product {
   id: string;
@@ -41,17 +41,9 @@ const ViewNewsletter: React.FC<CategoryProps> = ({ Categories, setCategory, sets
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newsletters/del-user/${key}`);
       setCategory((prev) => prev.filter((item) => item.id !== key));
-      notification.success({
-        message: "Email Deleted",
-        description: "The Email has been successfully deleted.",
-        placement: "topRight",
-      });
+      showToast("success", "Email Deleted");
     } catch (err) {
-      notification.error({
-        message: "Deletion Failed",
-        description: "There was an error deleting the Email.",
-        placement: "topRight",
-      });
+      showToast("error", "There was an error deleting the Email.");
       throw err;
     }
   };
@@ -71,13 +63,12 @@ const ViewNewsletter: React.FC<CategoryProps> = ({ Categories, setCategory, sets
   const columns = [
     {
       title: "Email",
-      dataIndex: "email",
       key: "email",
     },
     {
       title: "Action",
       key: "action",
-      render: (text: string, record: Product) => (
+      render: (record: Product) => (
         <RiDeleteBin6Line
           className="text-red-600 cursor-pointer"
           size={20}
@@ -129,15 +120,14 @@ const ViewNewsletter: React.FC<CategoryProps> = ({ Categories, setCategory, sets
           {!sendingLoading ? "Broadcast Email" : "Sending"}
         </button>
       </div>
-      <Table
+      <Table<Product>
+        data={filteredProducts}
+        columns={columns}
         rowKey="id"
         rowSelection={{
           selectedRowKeys,
           onChange: onSelectChange,
         }}
-        dataSource={filteredProducts}
-        columns={columns}
-        pagination={false}
       />
     </div>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { notification } from "antd";
 import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
@@ -16,6 +15,7 @@ import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from "@graphql/categories";
 import Table from "@components/ui/table";
 import { useSession } from "next-auth/react";
 import { getPermission } from "@utils/permissionHandlers";
+import { showToast } from "@/components/Toaster/Toaster";
 const ViewSubcategries = ({
   setMenuType,
   seteditCategory,
@@ -87,18 +87,9 @@ const ViewSubcategries = ({
         prev ? prev.filter((item: ISUBCATEGORY) => item.id != key) : [],
       );
       revalidateTag("subcategories");
-      notification.success({
-        message: "Category Deleted",
-        description: "The category has been successfully deleted.",
-        placement: "topRight",
-      });
+      showToast("success", "Category Deleted");
     } catch (err) {
-      notification.error({
-        message: "Deletion Failed",
-        description: "There was an error deleting the category.",
-        placement: "topRight",
-      });
-
+      showToast("error", "Deletion Failed");
       throw err;
     }
   };

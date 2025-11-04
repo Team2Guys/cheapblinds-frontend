@@ -17,10 +17,8 @@
     "check-format": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
-    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@apollo/client": "^3.13.9",
     "@tinymce/tinymce-react": "^6.3.0",
-    "antd": "^5.26.7",
     "apexcharts": "^5.3.2",
     "axios": "^1.11.0",
     "formik": "^2.4.6",

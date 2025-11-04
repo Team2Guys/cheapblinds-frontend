@@ -1,9 +1,16 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { TableProps } from "@/types/types";
 
-const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: TableProps<T>) => {
+const Table = <T,>({
+  data,
+  columns,
+  rowKey,
+  emptyMessage = "No data found",
+  rowSelection,
+}: TableProps<T>) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize] = useState<number>(10);
 
@@ -13,7 +20,7 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
 
   const totalPages = Math.ceil(data.length / pageSize);
 
-  // Scroll to heading on page change
+  // Smooth scroll to table heading on page change
   const scrollToHeading = () => {
     const headingEl = document.getElementById("custom-table-head");
     if (headingEl) {
@@ -26,15 +33,51 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
   useEffect(() => {
     scrollToHeading();
   }, [currentPage]);
+
+  // Handle single row select
+  const handleSelect = (key: React.Key) => {
+    if (!rowSelection) return;
+    const selected = new Set(rowSelection.selectedRowKeys);
+    if (selected.has(key)) {
+      selected.delete(key);
+    } else {
+      selected.add(key);
+    }
+    rowSelection.onChange(Array.from(selected));
+  };
+
+  // Handle select all
+  const handleSelectAll = () => {
+    if (!rowSelection) return;
+    const allKeys = data.map((item) => item[rowKey] as React.Key);
+    const isAllSelected = allKeys.every((key) => rowSelection.selectedRowKeys.includes(key));
+    rowSelection.onChange(isAllSelected ? [] : allKeys);
+  };
+
   return (
     <div>
       <div className="overflow-auto border rounded-md">
         <table
-          className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700 bg-white dark:bg-white/20 "
+          className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700 bg-white dark:bg-white/20"
           id="custom-table-head"
         >
+          {/* ---------- TABLE HEADER ---------- */}
           <thead className="bg-gray-50 dark:bg-black">
             <tr>
+              {rowSelection && (
+                <th className="p-2 md:p-4 text-left">
+                  <input
+                    type="checkbox"
+                    checked={
+                      data.length > 0 &&
+                      data.every((item) =>
+                        rowSelection.selectedRowKeys.includes(item[rowKey] as React.Key)
+                      )
+                    }
+                    onChange={handleSelectAll}
+                  />
+                </th>
+              )}
               {columns.map((col, index) => (
                 <th
                   key={index}
@@ -45,20 +88,36 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 dark:divide-neutral-700 ">
+
+          {/* ---------- TABLE BODY ---------- */}
+          <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
             {data.length > 0 ? (
               data.map((item, index) => {
                 const isHidden =
                   index < (currentPage - 1) * pageSize || index >= currentPage * pageSize;
+                const key = item[rowKey] as React.Key;
+                const isChecked = rowSelection?.selectedRowKeys.includes(key);
+
                 return (
                   <tr
-                    key={String(item[rowKey] ?? index)}
-                    className={`hover:bg-gray-100 dark:hover:bg-black ${isHidden && "sr-only"}`}
+                    key={String(key ?? index)}
+                    className={`hover:bg-gray-100 dark:hover:bg-black ${
+                      isHidden && "sr-only"
+                    }`}
                   >
+                    {rowSelection && (
+                      <td className="px-4 py-3">
+                        <input
+                          type="checkbox"
+                          checked={!!isChecked}
+                          onChange={() => handleSelect(key)}
+                        />
+                      </td>
+                    )}
                     {columns.map((col, idx) => (
                       <td
                         key={idx}
-                        className="px-4 py-3 text-sm  dark:text-neutral-200 whitespace-nowrap text-black"
+                        className="px-4 py-3 text-sm dark:text-neutral-200 whitespace-nowrap text-black"
                       >
                         {col.render ? col.render(item) : String(item[col.key as keyof T])}
                       </td>
@@ -69,7 +128,7 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
             ) : (
               <tr>
                 <td
-                  colSpan={columns.length}
+                  colSpan={columns.length + (rowSelection ? 1 : 0)}
                   className="text-center px-4 py-6 text-black dark:text-white"
                 >
                   {emptyMessage}
@@ -79,7 +138,8 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
           </tbody>
         </table>
       </div>
-      {/* Pagination */}
+
+      {/* ---------- PAGINATION ---------- */}
       {totalPages > 1 && (
         <div className="flex justify-between items-center gap-2 xs:gap-4 mt-8">
           {/* Back Button */}
@@ -99,11 +159,13 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
           <div className="flex justify-center items-center gap-1 xs:gap-2">
             {Array.from({ length: totalPages }, (_, i) => i + 1)
               .filter((page) => {
-                // Always show first, last, current, and 1 around current
-                return page === 1 || page === totalPages || Math.abs(currentPage - page) <= 1;
+                return (
+                  page === 1 ||
+                  page === totalPages ||
+                  Math.abs(currentPage - page) <= 1
+                );
               })
               .reduce<(number | "ellipsis")[]>((acc, page, i, arr) => {
-                // Add ellipsis where pages are skipped
                 if (i > 0 && page - arr[i - 1] > 1) {
                   acc.push("ellipsis");
                 }
@@ -124,13 +186,13 @@ const Table = <T,>({ data, columns, rowKey, emptyMessage = "No data found" }: Ta
                     }}
                     className={`dashboard_primary_button border border-black dark:border-primary ${
                       currentPage === item
-                        ? " text-white dark:bg-primary"
+                        ? "text-white dark:bg-primary"
                         : "bg-transparent text-black dark:text-primary"
                     }`}
                   >
                     {item}
                   </button>
-                ),
+                )
               )}
           </div>
 
