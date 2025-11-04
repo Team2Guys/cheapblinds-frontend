@@ -4,11 +4,9 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useMutation } from "@apollo/client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Admin } from "@/types/type";
-import showToast from "@components/Toaster/Toaster";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import { CREATE_ADMIN, UPDATE_ADMIN } from "@graphql/Admins";
 import { useSession } from "next-auth/react";
-import { Modal } from "antd";
 import { initialAdminValues } from "@data/InitialValues";
 import { checkboxAdminData } from "@data/data";
 import { validationAdminSchema } from "@data/Validations";
@@ -27,6 +25,9 @@ import {
 import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import ReactCrop, { Crop } from "react-image-crop";
+import { showToast } from "@components/Toaster/Toaster";
+import { ConfirmToast } from "@components/common/ConfirmToast";
+import Modal from "@components/ui/modal";
 
 const CreateAdmin: React.FC<CreateAdminProps> = ({
   setselecteMenu,
@@ -69,24 +70,23 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
       }
     };
 
-    const handlePopState = () => {
-      if (hasUnsavedChanges()) {
-        window.history.pushState(null, "", window.location.href);
-        Modal.confirm({
-          title: "Unsaved Changes",
-          content: "You have unsaved changes. Do you want to discard them?",
-          okText: "Discard Changes",
-          cancelText: "Cancel",
-          onOk: () => {
-            setselecteMenu("AllAdmin");
-            setEditProduct(null);
-          },
-        });
-      } else {
+ const handlePopState = () => {
+  if (hasUnsavedChanges()) {
+    window.history.pushState(null, "", window.location.href);
+    ConfirmToast({
+      onConfirm: () => {
         setselecteMenu("AllAdmin");
         setEditProduct(null);
-      }
-    };
+      },
+      onCancel: () => {
+        // Do nothing if user cancels
+      },
+    });
+  } else {
+    setselecteMenu("AllAdmin");
+    setEditProduct(null);
+  }
+};
 
     window.addEventListener("beforeunload", handleBeforeUnload);
     window.addEventListener("popstate", handlePopState);
@@ -98,23 +98,23 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
     };
   }, [formValues]);
 
-  const handleBack = () => {
-    if (hasUnsavedChanges()) {
-      Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
-        onOk: () => {
-          setselecteMenu("AllAdmin");
-          setEditProduct(null);
-        },
-      });
-      return;
-    }
-    setselecteMenu("AllAdmin");
-    setEditProduct(null);
-  };
+const handleBack = () => {
+  if (hasUnsavedChanges()) {
+    ConfirmToast({
+      onConfirm: () => {
+        setselecteMenu("AllAdmin");
+        setEditProduct(null);
+      },
+      onCancel: () => {
+        // Do nothing if canceled
+      },
+    });
+    return;
+  }
+
+  setselecteMenu("AllAdmin");
+  setEditProduct(null);
+};
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -335,7 +335,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
 
                 <Modal
                   title="Crop Image"
-                  open={isCropModalVisible}
+                  isOpen={isCropModalVisible}
                   onOk={() =>
                     handleCropModalOk(
                       croppedImage,
@@ -345,7 +345,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
                       setposterimageUrl,
                     )
                   }
-                  onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
+                  onClose={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
                   width={500}
                   height={400}
                 >

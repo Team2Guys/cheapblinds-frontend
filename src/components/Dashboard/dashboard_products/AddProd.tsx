@@ -14,7 +14,6 @@ import {
   onCropComplete,
   onImageLoad,
 } from "@utils/helperFunctions";
-import Toaster from "@components/Toaster/Toaster";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { FormValues } from "@/types/type";
 import revalidateTag from "@components/ServerActons/ServerAction";
@@ -27,9 +26,11 @@ import { useRouter } from "next/navigation";
 import { AddproductsinitialValues } from "@data/InitialValues";
 import { AddProductvalidationSchema } from "@data/Validations";
 import { ISUBCATEGORY } from "@/types/cat";
-import { Modal } from "antd";
 import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "@graphql/prod";
 import { useSession } from "next-auth/react";
+import { showToast } from "@components/Toaster/Toaster";
+import { ConfirmToast } from "@components/common/ConfirmToast";
+import Modal from "@components/ui/modal";
 
 const initialErrors = {
   categoryError: "",
@@ -200,7 +201,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
       // ✅ Revalidate and show success message
       revalidateTag("products");
-      Toaster(
+      showToast(
         "success",
         updateFlag
           ? "Product has been successfully updated!"
@@ -330,14 +331,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     const handlePopState = () => {
       if (hasUnsavedChanges()) {
         window.history.pushState(null, "", window.location.href);
-        Modal.confirm({
-          title: "Unsaved Changes",
-          content: "You have unsaved changes. Do you want to discard them?",
-          okText: "Discard Changes",
-          cancelText: "Cancel",
-          onOk: () => {
+        ConfirmToast({
+          onConfirm: () => {
             setselecteMenu("Add All Products");
             setEditProduct?.(() => undefined);
+          },
+          onCancel: () => {
+            // Do nothing if canceled
           },
         });
       } else {
@@ -358,14 +358,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
   const handleBack = () => {
     if (hasUnsavedChanges()) {
-      Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
-        onOk: () => {
+      ConfirmToast({
+        onConfirm: () => {
           setselecteMenu("Add All Products");
           setEditProduct?.(() => undefined);
+        },
+        onCancel: () => {
+          // Do nothing if canceled
         },
       });
       return;
@@ -1098,7 +1097,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             </button>
             <Modal
               title="Crop Image"
-              open={isCropModalVisible}
+              isOpen={isCropModalVisible}
               onOk={() =>
                 handleCropModalOk(
                   croppedImage,
@@ -1110,7 +1109,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                   setImagesUrl,
                 )
               }
-              onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
+              onClose={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
               width={500}
               height={400}
             >

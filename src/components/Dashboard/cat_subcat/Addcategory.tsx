@@ -11,14 +11,12 @@ import {
   onCropComplete,
   onImageLoad,
 } from "@utils/helperFunctions";
-import Toaster from "@components/Toaster/Toaster";
 import { Formik, Form, FormikHelpers, ErrorMessage, Field } from "formik";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import ImageUploader from "@components/ImageUploader/ImageUploader";
 import { ProductImage } from "@/types/prod";
 import { Category, EDIT_CATEGORY } from "@/types/cat";
 import ReactCrop, { Crop } from "react-image-crop";
-import { Modal } from "antd";
 import TinyMCEEditor from "@components/Dashboard/tinyMc/MyEditor";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import { useSession } from "next-auth/react";
@@ -26,6 +24,9 @@ import ApoloClient from "@utils/AppoloClient";
 import { CREATE_CATEGORY, GET_ALL_CATEGORIES, UPDATE_CATEGORY } from "@graphql/categories";
 import { categoryValidationSchema } from "@data/Validations";
 import { categoryInitialValues } from "@data/InitialValues";
+import { showToast } from "@/components/Toaster/Toaster";
+import { ConfirmToast } from "@/components/common/ConfirmToast";
+import Modal from "@/components/ui/modal";
 
 interface editCategoryProps {
   seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -58,7 +59,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
     try {
       const posterImageUrl = (posterimageUrl && posterimageUrl[0]) || {};
       const Banner = BannerImageUrl && BannerImageUrl[0];
-      if (!posterImageUrl) return Toaster("error", "Please select relevant Images");
+      if (!posterImageUrl) return showToast("error", "Please select relevant Images");
       const formValues = { ...values, posterImageUrl, Banners: Banner };
       // eslint-disable-next-line
       const { updatedAt, createdAt, __typename, subCategories, Products, ...newValue } = formValues;
@@ -92,7 +93,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
 
       revalidateTag("categories");
 
-      Toaster(
+      showToast(
         "success",
         updateFlag
           ? "Category has been successfully updated!"
@@ -162,13 +163,12 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
     const handlePopState = () => {
       if (hasUnsavedChanges()) {
         window.history.pushState(null, "", window.location.href);
-        Modal.confirm({
-          title: "Unsaved Changes",
-          content: "You have unsaved changes. Do you want to discard them?",
-          okText: "Discard Changes",
-          cancelText: "Cancel",
-          onOk: () => {
+        ConfirmToast({
+          onConfirm: () => {
             setMenuType("Categories");
+          },
+          onCancel: () => {
+            // do nothing, just stay on current page
           },
         });
       } else {
@@ -188,13 +188,12 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
 
   const handleBack = () => {
     if (hasUnsavedChanges()) {
-      Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
-        onOk: () => {
+      ConfirmToast({
+        onConfirm: () => {
           setMenuType("Categories");
+        },
+        onCancel: () => {
+          // do nothing, stay in form
         },
       });
       return;
@@ -321,7 +320,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
                   </div>
                   <Modal
                     title="Crop Image"
-                    open={isCropModalVisible}
+                    isOpen={isCropModalVisible}
                     onOk={() =>
                       handleCropModalOk(
                         croppedImage,
@@ -332,7 +331,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
                         setBannerImageUrl,
                       )
                     }
-                    onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
+                    onClose={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
                     width={500}
                     height={400}
                   >

@@ -272,6 +272,10 @@ export interface TableProps<T> {
   columns: Column<T>[];
   rowKey: keyof T;
   emptyMessage?: string;
+  rowSelection?: {
+    selectedRowKeys: React.Key[];
+    onChange: (_newSelectedRowKeys: React.Key[]) => void;
+  };
 }
 interface Column<T> {
   title: string;

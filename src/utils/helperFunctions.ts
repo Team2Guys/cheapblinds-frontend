@@ -3,9 +3,9 @@ import React, { Dispatch, RefObject, SetStateAction } from "react";
 import { ProductImage } from "@/types/prod";
 import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from "@graphql/Fileupload";
 import { uploadPhotosToBackend } from "./fileUploadhandlers";
-import Toaster from "@components/Toaster/Toaster";
 import { Crop } from "react-image-crop";
 import { centerAspectCrop } from "@/types/product-crop";
+import { showToast } from "@components/Toaster/Toaster";
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
@@ -265,7 +265,7 @@ export const handleCropModalOk = async (
       }, 0);
     } catch (error) {
       console.log(error);
-      Toaster("error", "Failed to upload cropped image");
+      showToast("error", "Failed to upload cropped image");
       return error;
     }
   }

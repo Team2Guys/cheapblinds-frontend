@@ -6,11 +6,11 @@ import { useMutation } from "@apollo/client";
 import { ADD_REDIRECTURLS, UPDATE_REDIRECTURLS } from "@graphql/mutations";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import showToast from "@components/Toaster/Toaster";
 import { useSession } from "next-auth/react";
-import { Modal } from "antd";
 import { initialRedirctUlrsValues } from "@data/InitialValues";
 import { validationRedirctUlrsSchema } from "@data/Validations";
+import { showToast } from "@/components/Toaster/Toaster";
+import { ConfirmToast } from "@/components/common/ConfirmToast";
 
 interface IVIEWREDIRECTURLS {
   setRedirectUrls: React.Dispatch<SetStateAction<RedirectUrls | undefined>>;
@@ -100,22 +100,22 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
       }
     };
 
-    const handlePopState = () => {
-      if (hasUnsavedChanges()) {
-        window.history.pushState(null, "", window.location.href);
-        Modal.confirm({
-          title: "Unsaved Changes",
-          content: "You have unsaved changes. Do you want to discard them?",
-          okText: "Discard Changes",
-          cancelText: "Cancel",
-          onOk: () => {
-            setselecteMenu("All Reviews");
-          },
-        });
-      } else {
+   const handlePopState = () => {
+  if (hasUnsavedChanges()) {
+    window.history.pushState(null, "", window.location.href);
+
+    ConfirmToast({
+      onConfirm: () => {
         setselecteMenu("All Reviews");
-      }
-    };
+      },
+      onCancel: () => {
+        // Do nothing, just stay on the same page
+      },
+    });
+  } else {
+    setselecteMenu("All Reviews");
+  }
+};
 
     window.addEventListener("beforeunload", handleBeforeUnload);
     window.addEventListener("popstate", handlePopState);
@@ -127,22 +127,21 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
     };
   }, [formDate]);
 
-  const handleBack = () => {
-    if (hasUnsavedChanges()) {
-      Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
-        onOk: () => {
-          setselecteMenu("All Reviews");
-        },
-      });
-      return;
-    }
+ const handleBack = () => {
+  if (hasUnsavedChanges()) {
+    ConfirmToast({
+      onConfirm: () => {
+        setselecteMenu("All Reviews");
+      },
+      onCancel: () => {
+        // User canceled, stay on the same page
+      },
+    });
+    return;
+  }
 
-    setselecteMenu("All Reviews");
-  };
+  setselecteMenu("All Reviews");
+};
 
   return (
     <Formik

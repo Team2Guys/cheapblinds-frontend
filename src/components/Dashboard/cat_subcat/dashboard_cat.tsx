@@ -1,7 +1,6 @@
 "use client";
 
 import React, { SetStateAction, useEffect, useState } from "react";
-import { notification } from "antd";
 import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
@@ -14,6 +13,7 @@ import Table from "@components/ui/table";
 import { useSession } from "next-auth/react";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
+import { showToast } from "@/components/Toaster/Toaster";
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
   seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -94,20 +94,11 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
         prev ? prev.filter((item) => item.id !== key) : [],
       );
       revalidateTag("categories");
-
-      notification.success({
-        message: "Category Deleted",
-        description: "The category has been successfully deleted.",
-        placement: "topRight",
-      });
-    } catch (err) {
-      notification.error({
-        message: "Deletion Failed",
-        description: "There was an error deleting the category.",
-        placement: "topRight",
-      });
-      return err;
-    }
+        showToast("success", "Category Deleted");
+        } catch (err) {
+          showToast("error", "There was an error deleting the category.");
+          return err;
+        }
   };
 
   const handleEdit = (record: Category) => {

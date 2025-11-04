@@ -10,15 +10,15 @@ import { ProductImage } from "@/types/prod";
 import { handleImageAltText, ImageRemoveHandler } from "@utils/helperFunctions";
 import { IBlog } from "@/types/general";
 import { ApolloError, useMutation } from "@apollo/client";
-import showToast from "@components/Toaster/Toaster";
 import { CREATE_BLOG, UPDATE_BLOG } from "@graphql/blogs";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import TinyMCEEditor from "@components/Dashboard/tinyMc/MyEditor";
 import { ISUBCATEGORY } from "@/types/cat";
 import { useSession } from "next-auth/react";
-import { Modal } from "antd";
 import { AddBlogInitialValues } from "@data/InitialValues";
 import { validationBlogSchema } from "@data/Validations";
+import { ConfirmToast } from "@/components/common/ConfirmToast";
+import { showToast } from "@components/Toaster/Toaster";
 
 interface AddBlogProps {
   setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
@@ -112,14 +112,10 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
     const handlePopState = () => {
       if (hasUnsavedChanges()) {
         window.history.pushState(null, "", window.location.href);
-        Modal.confirm({
-          title: "Unsaved Changes",
-          content: "You have unsaved changes. Do you want to discard them?",
-          okText: "Discard Changes",
-          cancelText: "Cancel",
-          onOk: () => {
-            setselecteMenu("All Blogs");
-          },
+
+        ConfirmToast({
+          onConfirm: () => setselecteMenu("All Blogs"),
+          onCancel: () => {},
         });
       } else {
         setselecteMenu("All Blogs");
@@ -137,16 +133,10 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
   }, [initialBlogValues, posterImage]);
 
   const handleBack = () => {
-    console.log("first");
     if (hasUnsavedChanges()) {
-      Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
-        onOk: () => {
-          setselecteMenu("All Blogs");
-        },
+      ConfirmToast({
+        onConfirm: () => setselecteMenu("All Blogs"),
+        onCancel: () => {},
       });
       return;
     }

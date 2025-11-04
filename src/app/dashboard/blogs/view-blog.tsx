@@ -1,6 +1,5 @@
 "use client";
 import { useMutation } from "@apollo/client";
-import { notification } from "antd";
 import Table from "@components/ui/table";
 import { REMOVE_BLOG } from "@graphql/blogs";
 import { useSession } from "next-auth/react";
@@ -8,10 +7,11 @@ import Image from "next/image";
 import React, { SetStateAction, useEffect, useMemo, useState } from "react";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import Swal from "sweetalert2";
 import { IBlog } from "@/types/general";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
+import { ConfirmToast } from "@/components/common/ConfirmToast";
+import { showToast } from "@/components/Toaster/Toaster";
 
 interface ViewBlogProps {
   setselecteMenu: React.Dispatch<SetStateAction<string>>;
@@ -33,20 +33,17 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
   const canDeleteBlog = getPermission(session.data, "canDeleteBlog");
   const canEditBlog = getPermission(session.data, "canEditBlog");
 
-  const confirmDelete = (id: number | string) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Once deleted, the blog cannot be recovered.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleDelete(id);
-      }
-    });
-  };
+const confirmDelete = (id: number | string) => {
+  ConfirmToast({
+    message: "Once deleted, the blog cannot be recovered.",
+    confirmText: "Yes, delete it!",
+    cancelText: "No, keep it",
+    onConfirm: () => handleDelete(id),
+    onCancel: () => {
+      // Do nothing if canceled
+    },
+  });
+};
 
   const handleDelete = async (id: number | string) => {
     try {
@@ -60,17 +57,10 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
         },
       });
       setAllBlogs((prev) => prev.filter((blog) => blog.id !== id));
-      notification.success({
-        message: "Blog Deleted",
-        description: "The blog has been successfully deleted.",
-        placement: "topRight",
-      });
+      showToast("success", "Blog Deleted");
+  
     } catch {
-      notification.error({
-        message: "Deletion Failed",
-        description: "There was an error deleting the blog.",
-        placement: "topRight",
-      });
+      showToast("error", "There was an error deleting the blog.");
     }
   };
 

@@ -13,7 +13,6 @@ import {
 } from "@utils/helperFunctions";
 import { Formik, Form, FormikHelpers, Field, ErrorMessage } from "formik";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import showToast from "@components/Toaster/Toaster";
 import { DASHBOARD_ADD_SUBCATEGORIES_PROPS } from "@/types/PagesProps";
 import { ProductImage } from "@/types/prod";
 import { ISUBCATEGORY_EDIT } from "@/types/cat";
@@ -21,12 +20,14 @@ import ImageUploader from "@components/ImageUploader/ImageUploader";
 import { useMutation } from "@apollo/client";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import ReactCrop, { Crop } from "react-image-crop";
-import { Modal } from "antd";
 import TinyMCEEditor from "@components/Dashboard/tinyMc/MyEditor";
 import { subcategoryInitialValues } from "@data/InitialValues";
 import { subcategoryValidationSchema } from "@data/Validations";
 import { useSession } from "next-auth/react";
 import { CREATE_SUBCATEGORY, GET_ALL_SUBCATEGORIES, UPDATE_SUBCATEGORY } from "@graphql/categories";
+import { showToast } from "@/components/Toaster/Toaster";
+import { ConfirmToast } from "@/components/common/ConfirmToast";
+import Modal from "@/components/ui/modal";
 
 const AddSubcategory = ({
   seteditCategory,
@@ -66,7 +67,7 @@ const AddSubcategory = ({
     { resetForm }: FormikHelpers<ISUBCATEGORY_EDIT>,
   ) => {
     if (!values.category) {
-      return showToast("warn", "Select parent category!!");
+      return showToast("warning", "Select parent category!!");
     }
     try {
       setloading(true);
@@ -192,20 +193,17 @@ const AddSubcategory = ({
     const handlePopState = () => {
       if (hasUnsavedChanges()) {
         window.history.pushState(null, "", window.location.href);
-        Modal.confirm({
-          title: "Unsaved Changes",
-          content: "You have unsaved changes. Do you want to discard them?",
-          okText: "Discard Changes",
-          cancelText: "Cancel",
-          onOk: () => {
+
+        ConfirmToast({
+          onConfirm: () => {
             setMenuType("Sub Categories");
           },
+          onCancel: () => {},
         });
       } else {
         setMenuType("Sub Categories");
       }
     };
-
     window.addEventListener("beforeunload", handleBeforeUnload);
     window.addEventListener("popstate", handlePopState);
     window.history.pushState(null, "", window.location.href);
@@ -218,13 +216,12 @@ const AddSubcategory = ({
 
   const handleBack = () => {
     if (hasUnsavedChanges()) {
-      Modal.confirm({
-        title: "Unsaved Changes",
-        content: "You have unsaved changes. Do you want to discard them?",
-        okText: "Discard Changes",
-        cancelText: "Cancel",
-        onOk: () => {
+      ConfirmToast({
+        onConfirm: () => {
           setMenuType("Sub Categories");
+        },
+        onCancel: () => {
+          // optional: do nothing
         },
       });
       return;
@@ -609,7 +606,7 @@ const AddSubcategory = ({
             </div>
             <Modal
               title="Crop Image"
-              open={isCropModalVisible}
+              isOpen={isCropModalVisible}
               onOk={() =>
                 handleCropModalOk(
                   croppedImage,
@@ -621,6 +618,7 @@ const AddSubcategory = ({
                 )
               }
               onCancel={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
+              onClose={() => setIsCropModalVisible(false)}
               width={500}
               height={400}
             >

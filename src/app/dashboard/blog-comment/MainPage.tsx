@@ -3,9 +3,9 @@ import React, { useState, useMemo } from "react";
 import { useMutation } from "@apollo/client";
 import { UPDATE_COMMENT_STATUS, UPDATE_REPLY_STATUS } from "@graphql/blogs";
 import { IBlogComment } from "@/types/general";
-import showToast from "@components/Toaster/Toaster";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import { useSession } from "next-auth/react";
+import { showToast } from "@components/Toaster/Toaster";
 
 interface Props {
   AllComment: IBlogComment[];
