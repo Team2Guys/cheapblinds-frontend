@@ -6,16 +6,18 @@ import GoogleMap from "../userComponent/map/map";
 import Link from "next/link";
 import FormContact from "./FormContact";
 
-const Contact = () => {
+export const Contact = ({ IsHide }: { IsHide?: boolean }) => {
   return (
     <>
-      <h1 className="font-rubik font-semibold text-[24px] lg:text-[36px] flex justify-center items-center my-3 text-black">
-        Need Help?
-      </h1>
-      <div className="container mx-auto text-black flex flex-col md:flex-row w-full  mb-10">
+      {!IsHide && (
+        <h1 className="font-rubik font-semibold text-[24px] lg:text-[36px] flex justify-center items-center my-3 text-black">
+          Need Help?
+        </h1>
+      )}
+      <div className="container mx-auto text-black flex flex-col md:flex-row w-full my-10">
         {/* Contact */}
 
-        <div className="bg-secondary p-2 mx-2 md:w-[50%]">
+        <div className="bg-primary-light p-2 mx-2 md:w-[50%]">
           <h2 className="font-rubik font-semibold text-[36px] leading-[1.2]">
             Let us know how to contact you
           </h2>
@@ -64,5 +66,3 @@ const Contact = () => {
     </>
   );
 };
-
-export default Contact;

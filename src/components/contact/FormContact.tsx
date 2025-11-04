@@ -3,8 +3,8 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import FormInput from "./forminput";
-import FormTextarea from "./formtextarea";
+import FormInput from "./FormInput";
+import {FormTextarea} from "./FormTextarea";
 import { FormData } from "@/types/type";
 
 const FormContact = () => {

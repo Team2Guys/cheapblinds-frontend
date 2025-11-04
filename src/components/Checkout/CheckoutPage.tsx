@@ -2,8 +2,8 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import FormInput from "../contact/forminput";
-import FormTextarea from "../contact/formtextarea";
+import FormInput from "../contact/FormInput";
+import {FormTextarea} from "../contact/FormTextarea";
 import { FaLock } from "react-icons/fa";
 import Link from "next/link";
 import OrderProducts from "./OrderProduct";
@@ -140,13 +140,6 @@ const CheckoutPage = () => {
             onBlur={formik.handleBlur}
             placeholder="Notes about your order, e.g. special notes for delivery"
           />
-
-          <button
-            type="submit"
-            className="bg-primary px-4 py-2 rounded-md font-semibold hover:bg-primary/80"
-          >
-            Place Order
-          </button>
         </form>
       </div>
       <div className="col-span-12 md:col-span-6 lg:col-span-4 space-y-4">
@@ -156,7 +149,7 @@ const CheckoutPage = () => {
           <div className="border space-y-3">
             <div className="flex justify-between items-center font-semibold p-2 border-b border-secondary">
               <p>Subtotal</p>
-              <p>1,915</p>
+              <p><span className="font-currency text-xl font-normal"></span>1,915</p>
             </div>
             <div className="p-2 space-y-2">
               <p>Shipping</p>
@@ -166,7 +159,7 @@ const CheckoutPage = () => {
             </div>
             <div className="flex justify-between items-center font-medium text-xl p-2 border">
               <p>Total</p>
-              <p>1,915</p>
+              <p><span className="font-currency text-2xl font-normal"></span>1,915</p>
             </div>
           </div>
         </div>

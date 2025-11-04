@@ -1,7 +1,8 @@
 import Herobanner from "@components/common/hero-banner";
-import Contact from "@components/contact/contact";
 import React from "react";
 import Breadcrumb from "@components/Layout/breadcrumb";
+import { Contact } from "@/components/contact/Contact";
+import { ContactHelp } from "@/components/contact/ContactHelp";
 
 const page = () => {
   return (
@@ -14,7 +15,8 @@ const page = () => {
           className="container mx-auto h-[300px] lg:h-[350px]"
         />
       </div>
-      <Contact />
+      <ContactHelp/>
+      <Contact IsHide />
       <div className="px-2">
         <Herobanner
           desktopImage="/assets/images/home/free-order/freeorder.webp"
@@ -22,8 +24,8 @@ const page = () => {
           className="container mx-auto h-[400px] md:h-auto md:max-h-[500px]"
         />
         <Herobanner
-          desktopImage="/assets/images/home/payment.webp"
-          className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
+          desktopImage="/assets/images/home/payment.jpg"
+          className="container mx-auto h-auto md:max-h-[500px] mt-10 md:mt-16"
         />
       </div>
     </>

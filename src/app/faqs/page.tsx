@@ -1,4 +1,4 @@
-import Contact from "@components/contact/contact";
+import {Contact} from "@/components/contact/Contact";
 import Breadcrumb from "@components/Layout/breadcrumb";
 
 import FaqSection from "@components/userComponent/faqs";

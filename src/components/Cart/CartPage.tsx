@@ -119,7 +119,7 @@ const CartPage = () => {
         <h2 className="text-heading">Order summary</h2>
         <Checkout />
         <Link
-          href="/shop"
+          href="/"
           className="bg-primary hover:bg-primary/90 font-semibold rounded-lg text-center py-3 flex justify-center items-center gap-2"
         >
           <FaArrowLeft size={20} /> Continue Shopping

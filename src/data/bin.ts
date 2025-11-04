@@ -58,3 +58,18 @@ export const OrderData = [
     image: "/assets/images/bin/product.png",
   },
 ];
+
+export const OrderSummary=[
+    {
+      image: "/assets/images/bin/product.png",
+      title: "Lindsay White Blackout Roller Blinds",
+      quantity: 1,
+      price: 315,
+    },
+    {
+      image: "/assets/images/bin/product.png",
+      title: "Classic Beige Roller Roller Blinds",
+      quantity: 1,
+      price: 420,
+    },
+  ]
