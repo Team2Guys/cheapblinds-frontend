@@ -62,12 +62,7 @@ const FormContact = () => {
             <Input label="Your name" name="name" />
             <Input label="Your email" name="email" type="email" />
             <Input label="Mobile Number" name="phone" type="tel" />
-            <Input
-              label="Your message (optional)"
-              name="message"
-              rows={5}
-              as="textarea"
-            />
+            <Input label="Your message (optional)" name="message" rows={5} as="textarea" />
 
             <button
               type="submit"

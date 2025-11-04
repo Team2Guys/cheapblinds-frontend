@@ -9,7 +9,6 @@ import { OrderData } from "@/data/bin";
 import { Input } from "../ui/Input";
 
 const CheckoutPage = () => {
-
   return (
     <div className=" container mx-auto px-2 grid grid-cols-12 gap-4 my-10">
       {/* Billing Details */}

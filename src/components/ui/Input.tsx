@@ -69,11 +69,7 @@ export const Input: React.FC<InputProps> = ({
         />
       )}
 
-      <ErrorMessage
-        name={name}
-        component="p"
-        className="text-red-500 text-sm mt-1"
-      />
+      <ErrorMessage name={name} component="p" className="text-red-500 text-sm mt-1" />
     </div>
   );
 };
