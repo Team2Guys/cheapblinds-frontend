@@ -2,12 +2,12 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import FormInput from "../contact/FormInput";
-import {FormTextarea} from "../contact/FormTextarea";
 import { FaLock } from "react-icons/fa";
 import Link from "next/link";
 import OrderProducts from "./OrderProduct";
 import { OrderData } from "@/data/bin";
+import { Input } from "../ui/Input";
+import { TextArea } from "../ui/textArea";
 
 const CheckoutPage = () => {
   const formik = useFormik({
@@ -44,7 +44,7 @@ const CheckoutPage = () => {
 
         <form onSubmit={formik.handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormInput
+            <Input
               label="First Name*"
               name="firstName"
               value={formik.values.firstName}
@@ -54,7 +54,7 @@ const CheckoutPage = () => {
               touched={formik.touched.firstName}
             />
 
-            <FormInput
+            <Input
               label="Last Name*"
               name="lastName"
               value={formik.values.lastName}
@@ -72,7 +72,7 @@ const CheckoutPage = () => {
             <p className="font-semibold">United Arab Emirates</p>
           </div>
 
-          <FormInput
+          <Input
             label="Street Address*"
             name="street"
             value={formik.values.street}
@@ -82,7 +82,7 @@ const CheckoutPage = () => {
             touched={formik.touched.street}
           />
 
-          <FormInput
+          <Input
             label="Town / City*"
             name="city"
             value={formik.values.city}
@@ -92,7 +92,7 @@ const CheckoutPage = () => {
             touched={formik.touched.city}
           />
 
-          <FormInput
+          <Input
             label="State / County (optional)"
             name="state"
             value={formik.values.state}
@@ -100,7 +100,7 @@ const CheckoutPage = () => {
             onBlur={formik.handleBlur}
           />
 
-          <FormInput
+          <Input
             label="Phone*"
             name="phone"
             type="tel"
@@ -111,7 +111,7 @@ const CheckoutPage = () => {
             touched={formik.touched.phone}
           />
 
-          <FormInput
+          <Input
             label="Email Address*"
             name="email"
             type="email"
@@ -132,7 +132,7 @@ const CheckoutPage = () => {
               Ship to a different address?
             </label>
           </div>
-          <FormTextarea
+          <TextArea
             label="Order Notes (optional)"
             name="notes"
             value={formik.values.notes}
