@@ -2,10 +2,9 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
-import FormInput from "./FormInput";
-import {FormTextarea} from "./FormTextarea";
 import { FormData } from "@/types/type";
+import { Input } from "../ui/Input";
+import { TextArea } from "../ui/textArea";
 
 const FormContact = () => {
   const formik = useFormik<FormData>({
@@ -47,7 +46,7 @@ const FormContact = () => {
       <p className="font-bold mb-6">Get in touch with us.</p>
 
       <form onSubmit={formik.handleSubmit} className="space-y-4">
-        <FormInput
+        <Input
           label="Contact Type"
           name="contactType"
           value={formik.values.contactType}
@@ -59,7 +58,7 @@ const FormContact = () => {
           options={["Email", "Call", "WhatsApp"]}
         />
 
-        <FormInput
+        <Input
           label="Your name"
           name="name"
           value={formik.values.name}
@@ -69,7 +68,7 @@ const FormContact = () => {
           touched={formik.touched.name}
         />
 
-        <FormInput
+        <Input
           label="Your email"
           name="email"
           type="email"
@@ -80,7 +79,7 @@ const FormContact = () => {
           touched={formik.touched.email}
         />
 
-        <FormInput
+        <Input
           label="Mobile Number"
           name="phone"
           type="tel"
@@ -91,7 +90,7 @@ const FormContact = () => {
           touched={formik.touched.phone}
         />
 
-        <FormTextarea
+        <TextArea
           label="Your message (optional)"
           name="message"
           value={formik.values.message}

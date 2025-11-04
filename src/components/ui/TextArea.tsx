@@ -1,6 +1,6 @@
 import React from "react";
 
-interface FormTextareaProps {
+interface TextAreaProps {
   label: string;
   name: string;
   value: string;
@@ -12,7 +12,7 @@ interface FormTextareaProps {
   placeholder?: string;
 }
 
-export const FormTextarea: React.FC<FormTextareaProps> = ({
+export const TextArea: React.FC<TextAreaProps> = ({
   label,
   name,
   value,

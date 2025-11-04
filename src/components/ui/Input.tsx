@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-interface FormInputProps {
+interface InputProps {
   label: string;
   name: string;
   type?: string;
@@ -14,7 +14,7 @@ interface FormInputProps {
   options?: string[];
 }
 
-const FormInput: React.FC<FormInputProps> = ({
+export const Input = ({
   label,
   name,
   type = "text",
@@ -25,7 +25,7 @@ const FormInput: React.FC<FormInputProps> = ({
   touched,
   as = "input",
   options = [],
-}) => {
+}:InputProps) => {
   // Split label and highlight the "*" in red if it exists
   const renderLabel = () => {
     const parts = label.split("*");
@@ -73,4 +73,3 @@ const FormInput: React.FC<FormInputProps> = ({
   );
 };
 
-export default FormInput;
