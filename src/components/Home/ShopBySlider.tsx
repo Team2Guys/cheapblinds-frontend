@@ -3,11 +3,11 @@ import React, { useState, useRef, useEffect, useCallback, TouchEvent, useMemo } 
 import Image from "next/image";
 import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
 
-export default function ShopByTypeSlider({
+export const ShopBySlider = ({
   productData,
 }: {
   productData: { image: string; name: string }[];
-}) {
+}) => {
   const [activeIndex, setActiveIndex] = useState(2);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -141,4 +141,4 @@ export default function ShopByTypeSlider({
       </div>
     </div>
   );
-}
+};

@@ -9,8 +9,8 @@ import revalidateTag from "@components/ServerActons/ServerAction";
 import { useSession } from "next-auth/react";
 import { initialRedirctUlrsValues } from "@data/InitialValues";
 import { validationRedirctUlrsSchema } from "@data/Validations";
-import { showToast } from "@/components/Toaster/Toaster";
-import { ConfirmToast } from "@/components/common/ConfirmToast";
+import { showToast } from "@components/Toaster/Toaster";
+import { ConfirmToast } from "@components/common/ConfirmToast";
 
 interface IVIEWREDIRECTURLS {
   setRedirectUrls: React.Dispatch<SetStateAction<RedirectUrls | undefined>>;

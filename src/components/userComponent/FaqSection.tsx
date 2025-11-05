@@ -1,9 +1,9 @@
 "use client";
-import { AccordionItem } from "@components/accordian";
+import { AccordionItem } from "@components/ui/AccordionItem";
 import { faqData } from "@data/faqs";
 import React, { useState } from "react";
 
-const FaqSection: React.FC = () => {
+export const FaqSection = () => {
   const [openIndex, setOpenIndex] = useState<{ [key: string]: number | null }>({});
 
   const toggleAccordion = (categoryId: string, index: number) => {
@@ -72,5 +72,3 @@ const FaqSection: React.FC = () => {
     </section>
   );
 };
-
-export default FaqSection;

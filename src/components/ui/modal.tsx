@@ -60,23 +60,20 @@ const Modal = ({
           ${paymentModal ? "md:w-[1200px]" : "md:w-[600px] lg:w-[700px]"}`}
       >
         {/* Header */}
-        <div className="flex justify-between items-center border-b pb-3">
+        <div className="flex justify-between items-center border-b relative pb-10">
           {title && <h2 className="text-lg font-semibold">{title}</h2>}
           <button
             onClick={() => {
               onCancel?.();
               onClose?.();
             }}
-            className="text-xl cursor-pointer"
+            className="text-xl cursor-pointer right-0 top-0 absolute p-2 hover:bg-gray-200 rounded-md"
           >
             <RxCross2 />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="mt-4">{children}</div>
-
-        {/* Footer Buttons (only if ok/cancel exist) */}
+        <div className="mt-4 max-h-[600px] overflow-y-auto">{children}</div>
         {(onOk || onCancel) && (
           <div className="flex justify-end gap-3 mt-6 border-t pt-3">
             <button

@@ -1,7 +1,7 @@
-import RelatedProduct from "@/components/common/related-product";
-import { Orders } from "@/components/thank-you/Orders";
-import { OrderSummary } from "@/data/bin";
-import { chooseblinds } from "@/data/home";
+import { RelatedProduct } from "@components";
+import { Orders } from "@components/thank-you/Orders";
+import { OrderSummary } from "@data/bin";
+import { chooseblinds } from "@data/home";
 import Link from "next/link";
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa6";

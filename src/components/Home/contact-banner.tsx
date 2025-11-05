@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 import ContactForm from "./contact-form";
 
-const ContactBanner = () => {
+export const ContactBanner = () => {
   return (
     <div className="container mx-auto mt-10 md:mt-16">
       <div className="flex flex-col sm:flex-row justify-between text-black bg-primary-light bg-no-repeat sm:gap-4 sm:bg-bottom bg-fill sm:bg-[url('/assets/images/phnperson.webp')] w-full px-5 pt-10 sm:pb-3">
@@ -45,5 +45,3 @@ const ContactBanner = () => {
     </div>
   );
 };
-
-export default ContactBanner;

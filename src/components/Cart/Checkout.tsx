@@ -1,9 +1,9 @@
 import React from "react";
 import { FaLock } from "react-icons/fa6";
-import PaymentMethod from "../common/payment";
-import { PaymentOption } from "@/data/cart";
+import { PaymentOption } from "@data/cart";
 import Image from "next/image";
 import Link from "next/link";
+import { PaymentMethod } from "@components/common";
 
 const Checkout = () => {
   return (

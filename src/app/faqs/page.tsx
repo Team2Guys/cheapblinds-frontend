@@ -1,9 +1,6 @@
-import { ContactPage } from "@/components/contact/ContactPage";
-import Breadcrumb from "@components/Layout/breadcrumb";
-import FaqSection from "@components/userComponent/faqs";
+import { Breadcrumb, ContactPage, FaqSection } from "@components";
 import React from "react";
-
-const page = () => {
+const Faqs = () => {
   return (
     <>
       <Breadcrumb title="FAQs" />
@@ -13,4 +10,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Faqs;

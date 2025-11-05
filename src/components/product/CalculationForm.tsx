@@ -1,19 +1,37 @@
 "use client";
-import React, { useState } from "react";
-const Calculation = () => {
-  const [unit, setUnit] = useState("cm");
+import React, { useState, useEffect } from "react";
+
+interface CalculationProps {
+  onValuesChange?: (_values: { width: string; height: string; unit: string }) => void;
+}
+
+export const CalculationForm = ({ onValuesChange }: CalculationProps) => {
+  const [unit, setUnit] = useState<"mm" | "cm" | "Inches">("cm");
   const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
   const [errors, setErrors] = useState({ width: "", height: "" });
-  const handleUnitChange = (value: string) => setUnit(value);
+
+  const unitRanges = {
+    mm: { min: 300, maxWidth: 2600, maxHeight: 3000 },
+    cm: { min: 30, maxWidth: 260, maxHeight: 300 },
+    Inches: { min: 11.8, maxWidth: 102.3, maxHeight: 118.1 },
+  };
+
+  const handleUnitChange = (value: "mm" | "cm" | "Inches") => {
+    setUnit(value);
+    setErrors({ width: "", height: "" });
+    setWidth("");
+    setHeight("");
+  };
+
   const handleNumericInput = (value: string) => {
     return value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
   };
 
   const validateValue = (field: "width" | "height", value: string) => {
     const numValue = Number(value);
-    const min = 300;
-    const max = field === "width" ? 2600 : 3000;
+    const { min, maxWidth, maxHeight } = unitRanges[unit];
+    const max = field === "width" ? maxWidth : maxHeight;
 
     if (!value) {
       setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -23,17 +41,23 @@ const Calculation = () => {
     if (numValue < min) {
       setErrors((prev) => ({
         ...prev,
-        [field]: `Value must be at least ${min} mm.`,
+        [field]: `Value must be at least ${min} ${unit}.`,
       }));
     } else if (numValue > max) {
       setErrors((prev) => ({
         ...prev,
-        [field]: `Value cannot exceed ${max} mm.`,
+        [field]: `Value cannot exceed ${max} ${unit}.`,
       }));
     } else {
       setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
+
+  useEffect(() => {
+    onValuesChange?.({ width, height, unit });
+  }, [width, height, unit, onValuesChange]);
+
+  const currentRange = unitRanges[unit];
 
   return (
     <>
@@ -45,7 +69,7 @@ const Calculation = () => {
               name="unit"
               value={u}
               checked={unit === u}
-              onChange={() => handleUnitChange(u)}
+              onChange={() => handleUnitChange(u as "mm" | "cm" | "Inches")}
               className="hidden"
             />
             <span className="w-5 h-5 rounded-full border-4 flex items-center justify-center transition-all duration-200 border-secondary">
@@ -55,6 +79,7 @@ const Calculation = () => {
           </label>
         ))}
       </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label className="block mb-1">Width ({unit})</label>
@@ -71,10 +96,12 @@ const Calculation = () => {
                 ? "border-red-400 focus:ring-red-400"
                 : "border-secondary focus:ring-primary"
             }`}
-            placeholder="Enter width"
+            placeholder={`Enter width in ${unit}`}
           />
-          <p className="mt-1">Min: 300 mm | Max: 2600 mm</p>
-          {errors.width && <p className=" text-red-500 mt-1">{errors.width}</p>}
+          <p className="mt-1 text-sm text-gray-500">
+            Min: {currentRange.min} {unit} | Max: {currentRange.maxWidth} {unit}
+          </p>
+          {errors.width && <p className="text-red-500 mt-1">{errors.width}</p>}
         </div>
         <div>
           <label className="block mb-1">Height ({unit})</label>
@@ -91,14 +118,14 @@ const Calculation = () => {
                 ? "border-red-400 focus:ring-red-400"
                 : "border-secondary focus:ring-primary"
             }`}
-            placeholder="Enter height"
+            placeholder={`Enter height in ${unit}`}
           />
-          <p className="mt-1">Min: 300 mm | Max: 3000 mm</p>
-          {errors.height && <p className=" text-red-500 mt-1">{errors.height}</p>}
+          <p className="mt-1 text-sm text-gray-500">
+            Min: {currentRange.min} {unit} | Max: {currentRange.maxHeight} {unit}
+          </p>
+          {errors.height && <p className="text-red-500 mt-1">{errors.height}</p>}
         </div>
       </div>
     </>
   );
 };
-
-export default Calculation;

@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { OrderSectionProps } from "@/types/common";
 
-const OrderSection = ({
+export const OrderSection = ({
   reverse,
   image1,
   image2,
@@ -50,5 +50,3 @@ const OrderSection = ({
     </div>
   );
 };
-
-export default OrderSection;

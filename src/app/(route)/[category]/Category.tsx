@@ -1,6 +1,6 @@
 "use client";
 import CategoryFeatures from "@components/category/CategoryFeatures";
-import Herobanner from "@components/common/hero-banner";
+import { Herobanner } from "@components";
 import Filters from "@components/filters/Filters";
 import Card from "@components/ui/Card";
 import SortDropdown from "@components/ui/SortDropdown";

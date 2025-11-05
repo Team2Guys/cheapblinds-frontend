@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { HerobannerProps } from "@/types/common";
-const Herobanner = ({
+export const Herobanner = ({
   desktopImage,
   mobileImage,
   isHome = false,
@@ -17,13 +17,19 @@ const Herobanner = ({
         alt={alt}
         fill
         priority
+        fetchPriority="high"
         className={`${mobileImage ? "hidden sm:block" : "block"}`}
       />
       {mobileImage && (
-        <Image src={mobileImage} alt={alt} fill priority className="block sm:hidden" />
+        <Image
+          src={mobileImage}
+          alt={alt}
+          fill
+          priority
+          fetchPriority="high"
+          className="block sm:hidden"
+        />
       )}
     </div>
   );
 };
-
-export default Herobanner;

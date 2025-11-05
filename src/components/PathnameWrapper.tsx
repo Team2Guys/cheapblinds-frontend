@@ -6,7 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Header from "./Layout/Header/Header";
 import Footer from "./footer/Footer";
-import Reviews from "./common/reviews";
+import { ReviewsSection } from "./common";
 
 const PathnameWrapper = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
@@ -24,7 +24,7 @@ const PathnameWrapper = ({ children }: { children: ReactNode }) => {
         pathname.split("/").includes("dashboard") ? null : (
           <>
             <Header />
-            <Reviews />
+            <ReviewsSection />
           </>
         )}
         {children}

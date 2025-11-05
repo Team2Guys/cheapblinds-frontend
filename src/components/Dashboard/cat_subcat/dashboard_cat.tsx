@@ -12,7 +12,7 @@ import Table from "@components/ui/table";
 import { useSession } from "next-auth/react";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
-import { showToast } from "@/components/Toaster/Toaster";
+import { showToast } from "@components/Toaster/Toaster";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;

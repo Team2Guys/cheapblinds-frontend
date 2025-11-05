@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { BreadcrumbProps } from "@/types/PagesProps";
 
-const Breadcrumb = ({
+export const Breadcrumb = ({
   title = "",
   slug = "",
   subcategory = "",
@@ -56,5 +56,3 @@ const Breadcrumb = ({
     </div>
   );
 };
-
-export default Breadcrumb;

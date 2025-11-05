@@ -1,7 +1,7 @@
 import React from "react";
 import { IoStarSharp } from "react-icons/io5";
 
-const Reviews = () => {
+export const ReviewsSection = () => {
   return (
     <div className="bg-primary text-black py-2">
       <div className="flex items-center justify-center gap-2 text-sm">
@@ -19,5 +19,3 @@ const Reviews = () => {
     </div>
   );
 };
-
-export default Reviews;

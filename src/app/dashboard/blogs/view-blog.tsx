@@ -10,8 +10,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { IBlog } from "@/types/general";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
-import { ConfirmToast } from "@/components/common/ConfirmToast";
-import { showToast } from "@/components/Toaster/Toaster";
+import { ConfirmToast } from "@components/common/ConfirmToast";
+import { showToast } from "@components/Toaster/Toaster";
 
 interface ViewBlogProps {
   setselecteMenu: React.Dispatch<SetStateAction<string>>;

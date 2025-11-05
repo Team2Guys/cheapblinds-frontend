@@ -25,9 +25,9 @@ import { subcategoryInitialValues } from "@data/InitialValues";
 import { subcategoryValidationSchema } from "@data/Validations";
 import { useSession } from "next-auth/react";
 import { CREATE_SUBCATEGORY, GET_ALL_SUBCATEGORIES, UPDATE_SUBCATEGORY } from "@graphql/categories";
-import { showToast } from "@/components/Toaster/Toaster";
-import { ConfirmToast } from "@/components/common/ConfirmToast";
-import Modal from "@/components/ui/modal";
+import { showToast } from "@components/Toaster/Toaster";
+import { ConfirmToast } from "@components/common/ConfirmToast";
+import Modal from "@components/ui/modal";
 
 const AddSubcategory = ({
   seteditCategory,
