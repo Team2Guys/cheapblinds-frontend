@@ -1,7 +1,4 @@
-import BlindFitting from "@components/common/blind-fitting";
-import RelatedProduct from "@components/common/related-product";
-import OrderSection from "@components/Home/OrderSection";
-import Breadcrumb from "@components/Layout/breadcrumb";
+import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting } from "@/components";
 import ProductDetail from "@components/product/Product-detail";
 import { chooseblinds } from "@data/home";
 
@@ -19,7 +16,10 @@ const ProductPage = async ({
         title={resolvedParams.product}
       />
       <div className="container mx-auto px-2">
-        <ProductDetail />
+        <ProductDetail
+          category={resolvedParams.category}
+          subCategory={resolvedParams.subCategory}
+        />
         <RelatedProduct titleStart title="RELATED PRODUCTS" data={chooseblinds} />
         <BlindFitting />
         <OrderSection

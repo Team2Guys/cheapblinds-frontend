@@ -1,8 +1,5 @@
-import Herobanner from "@components/common/hero-banner";
+import { Herobanner, Breadcrumb, ContactHelp, ContactPage } from "@/components";
 import React from "react";
-import Breadcrumb from "@components/Layout/breadcrumb";
-import { ContactHelp } from "@/components/contact/ContactHelp";
-import { ContactPage } from "@/components/contact/ContactPage";
 
 const page = () => {
   return (

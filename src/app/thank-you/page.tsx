@@ -1,4 +1,4 @@
-import RelatedProduct from "@/components/common/related-product";
+import { RelatedProduct } from "@/components";
 import { Orders } from "@/components/thank-you/Orders";
 import { OrderSummary } from "@/data/bin";
 import { chooseblinds } from "@/data/home";

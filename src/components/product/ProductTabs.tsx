@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Testimonial from "../common/Testimonial";
+import { Testimonial } from "@/components";
 import { TestimonialReview } from "@data/detail-page";
 const ProductTabs = () => {
   const [activeTab, setActiveTab] = useState("description");

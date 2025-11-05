@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-const ChildSafety = () => {
+export const ChildSafety = () => {
   return (
     <div className="bg-secondary py-5">
       <div className="container mx-auto flex flex-col md:flex-row items-center gap-6">
@@ -26,5 +26,3 @@ const ChildSafety = () => {
     </div>
   );
 };
-
-export default ChildSafety;

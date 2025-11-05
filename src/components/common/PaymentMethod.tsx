@@ -16,7 +16,7 @@ import {
 import { formatAED } from "@utils/helperFunctions";
 import { PaymentMethodProps } from "@/types/prod";
 
-const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodProps) => {
+export const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodProps) => {
   const [tabbyOpen, setTabbyOpen] = useState(false);
   const [tamaraOpen, setTamaraOpen] = useState(false);
   const paymentLabels = ["Today", "In 1 month", "In 2 months", "In 3 months"];
@@ -91,7 +91,7 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
       <Modal isOpen={tabbyOpen} onClose={() => setTabbyOpen(false)} paymentModal>
         <h2 className="text-2xl font-bold py-2">Easy Monthly Installments</h2>
         <div className="py-5 ps-5 xs:ps-10 md:ps-20 pe-4 me-4 xs:me-7">
-          <Image height={130} width={130} src={tabbyLogo} alt="logo" className=" " />
+          <Image height={130} width={130} src={tabbyLogo} alt="logo" />
           <h2 className="text-xl xs:text-2xl sm:text-lg md:text-xl font-bold mt-5 leading-10 xs:leading-tight">
             <span className="rounded-full bg-[#3BFFC1] px-4 py-0 text-nowrap">Shop now,</span>
             <br />
@@ -106,10 +106,10 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
           </ul>
           <div className="mt-5">
             <h3 className="font-bold text-2xl sm:text-3xl">How it works</h3>
-            <ul className="font-medium text-lg xs:text-xl md:text-2xl mt-3 md:leading-relaxed">
+            <ul className="font-medium text-lg xs:text-xl mt-3 md:leading-relaxed">
               {tabbyhowitwork.map((item) => (
                 <li className="flex items-center gap-2 space-y-1" key={item.id}>
-                  <span className="rounded-full bg-primary-light min-w-10 h-10 flex items-center justify-center">
+                  <span className="rounded-full bg-primary-light min-w-8 h-8 flex items-center justify-center">
                     {item.id}
                   </span>
                   <span className="w-full">{item.para}</span>
@@ -181,5 +181,3 @@ const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodP
     </div>
   );
 };
-
-export default PaymentMethod;

@@ -48,3 +48,63 @@ export const TestimonialReview = [
     author: "HappyCustomer",
   },
 ];
+
+export const headrailOptions = [
+  {
+    id: "Classic",
+    label: "Classic",
+    price: "119.78",
+    imageUrl: "/assets/images/detail-page/formimg.png",
+  },
+  {
+    id: "Cassette",
+    label: "Cassette",
+    price: "159.70",
+    imageUrl: "/assets/images/detail-page/formimg.png",
+  },
+  { id: "Cassette Motorised", label: "Cassette Motorised", price: "781.28" },
+];
+export const StackingStyle = [
+  {
+    id: "Cascade",
+    label: "Cascade",
+    imageUrl: "/assets/images/detail-page/formimg.png",
+  },
+  {
+    id: "Stacked",
+    label: "Stacked",
+    imageUrl: "/assets/images/detail-page/formimg.png",
+  },
+];
+export const controlOptions = [
+  { id: "Nickel", label: "Nickel", imageUrl: "/assets/images/detail-page/formimg.png" },
+  { id: "Brass", label: "Brass", imageUrl: "/assets/images/detail-page/formimg.png" },
+  { id: "Black", label: "Black", imageUrl: "/assets/images/detail-page/formimg.png" },
+  { id: "White", label: "White", imageUrl: "/assets/images/detail-page/formimg.png" },
+];
+
+export const Lining = [
+  {
+    id: "Polycotton",
+    label: "Polycotton",
+    imageUrl: "/assets/images/detail-page/formimg.png",
+  },
+  {
+    id: "Satin",
+    label: "Satin",
+    price: "49.99",
+    imageUrl: "/assets/images/detail-page/formimg.png",
+  },
+  {
+    id: "Blackout",
+    label: "Blackout",
+    price: "49.99",
+    imageUrl: "/assets/images/detail-page/formimg.png",
+  },
+  {
+    id: "Bonded",
+    label: "Bonded",
+    price: "49.99",
+    imageUrl: "/assets/images/detail-page/formimg.png",
+  },
+];

@@ -1,9 +1,9 @@
 "use client";
+import { AccordionItem } from "@components/ui/AccordionItem";
 import { InstructionData } from "@data/faqs";
 import React, { useState } from "react";
-import { AccordionItem } from "./accordian";
 
-const Instructions: React.FC = () => {
+export const Instructions = () => {
   const [openIndex, setOpenIndex] = useState<{ [key: string]: number | null }>({});
 
   const toggleAccordion = (categoryId: string, index: number) => {
@@ -32,5 +32,3 @@ const Instructions: React.FC = () => {
     </>
   );
 };
-
-export default Instructions;

@@ -52,4 +52,5 @@ export interface Review {
 
 export interface TestimonialProps {
   reviews: Review[];
+  showPaymentInfo?: boolean;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AccordionItemProps } from "@/types/types";
-import Chevron from "./svg/chevron";
+import Chevron from "@components/svg/chevron";
 
 export const AccordionItem: React.FC<AccordionItemProps> = ({
   question,

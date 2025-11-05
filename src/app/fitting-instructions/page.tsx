@@ -1,11 +1,7 @@
 "use client";
 
-import Instructions from "@components/common";
-import BlindFitting from "@components/common/blind-fitting";
 import React from "react";
-import Breadcrumb from "@components/Layout/breadcrumb";
-import ContactBanner from "@components/Home/contact-banner";
-
+import { Breadcrumb, BlindFitting, Instructions, ContactBanner } from "@/components";
 const FittinInstructions: React.FC = () => {
   return (
     <>

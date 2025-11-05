@@ -6,7 +6,8 @@ import { productImages } from "@data/bin";
 const ProductInfo = dynamic(() => import("./product-info"));
 const ProductTabs = dynamic(() => import("./ProductTabs"));
 
-const ProductDetail = () => {
+const ProductDetail = ({ category, subCategory }: { category: string; subCategory: string }) => {
+  console.log(subCategory);
   return (
     <div className="mt-10 space-y-3">
       <h1 className="text-heading">Luft Noir Screen Roller Blinds</h1>
@@ -21,7 +22,7 @@ const ProductDetail = () => {
           <Thumbnail images={productImages} />
         </div>
         <div className="col-span-12 md:col-span-6">
-          <ProductInfo />
+          <ProductInfo category={category} />
         </div>
       </div>
       <div className="mt-10 md:mt-16 py-4">

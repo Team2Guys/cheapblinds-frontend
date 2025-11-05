@@ -1,12 +1,14 @@
-import BlindFitting from "@components/common/blind-fitting";
-import Herobanner from "@components/common/hero-banner";
-import JobDone from "@components/common/JobDone";
-import RelatedProduct from "@components/common/related-product";
-import ChildSafety from "@components/Home/child-safety";
-import ContactBanner from "@components/Home/contact-banner";
-import Information from "@components/Home/information";
-import OrderSection from "@components/Home/OrderSection";
-import ShopSlider from "@components/Home/shop-slider";
+import {
+  InformationSection,
+  ChildSafety,
+  ContactBanner,
+  OrderSection,
+  ShopBySlider,
+  RelatedProduct,
+  JobDone,
+  Herobanner,
+  BlindFitting,
+} from "@/components";
 import { chooseblinds, chooseimage, productData } from "@data/home";
 import React from "react";
 
@@ -18,9 +20,9 @@ export default function Home() {
         mobileImage="/assets/images/home/banner-mobile.webp"
         isHome
       />
-      <Information />
+      <InformationSection className="hidden md:grid" />
       <ChildSafety />
-      <ShopSlider productData={productData} />
+      <ShopBySlider productData={productData} />
       <OrderSection
         reverse={false}
         image1="/assets/images/home/blindimg.webp"

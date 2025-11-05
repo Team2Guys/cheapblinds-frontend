@@ -419,3 +419,8 @@ export interface FormData {
   phone: string;
   message: string;
 }
+
+export interface FormProps {
+  values: { width: string; height: string; unit: string };
+  recessType: string;
+}

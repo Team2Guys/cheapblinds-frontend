@@ -3,9 +3,9 @@ import React from "react";
 import Email from "../svg/email";
 import Call from "../svg/call";
 import Calender from "../svg/calender";
-import GoogleMap from "../userComponent/map/map";
 import Link from "next/link";
 import FormContact from "./FormContact";
+import { GoogleMap } from "@components/userComponent";
 
 export const ContactPage = ({ IsHide }: { IsHide?: boolean }) => {
   return (

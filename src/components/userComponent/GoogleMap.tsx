@@ -1,5 +1,6 @@
 import React from "react";
-function GoogleMap() {
+
+export const GoogleMap = () => {
   return (
     <iframe
       className="w-full h-[200px] md:h-[400px]"
@@ -8,6 +9,4 @@ function GoogleMap() {
       referrerPolicy="no-referrer-when-downgrade"
     />
   );
-}
-
-export default GoogleMap;
+};
