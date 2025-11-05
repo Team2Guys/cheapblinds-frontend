@@ -4,7 +4,7 @@ import { showToast } from "@components/Toaster/Toaster";
 import { FormSelect } from "./FormSelect";
 import { FormProps } from "@/types/type";
 import Image from "next/image";
-import { controlOptions, headrailOptions } from "@/data/detail-page";
+import { controlOptions, headrailOptions } from "@data/detail-page";
 
 export const RollerBlindsForm = ({ values, recessType }: FormProps) => {
   const [headrail, setHeadrail] = useState("Classic");

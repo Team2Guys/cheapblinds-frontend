@@ -17,7 +17,7 @@ import { ISUBCATEGORY } from "@/types/cat";
 import { useSession } from "next-auth/react";
 import { AddBlogInitialValues } from "@data/InitialValues";
 import { validationBlogSchema } from "@data/Validations";
-import { ConfirmToast } from "@/components/common/ConfirmToast";
+import { ConfirmToast } from "@components/common/ConfirmToast";
 import { showToast } from "@components/Toaster/Toaster";
 
 interface AddBlogProps {

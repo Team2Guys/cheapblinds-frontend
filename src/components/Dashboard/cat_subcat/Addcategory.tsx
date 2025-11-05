@@ -24,9 +24,9 @@ import ApoloClient from "@utils/AppoloClient";
 import { CREATE_CATEGORY, GET_ALL_CATEGORIES, UPDATE_CATEGORY } from "@graphql/categories";
 import { categoryValidationSchema } from "@data/Validations";
 import { categoryInitialValues } from "@data/InitialValues";
-import { showToast } from "@/components/Toaster/Toaster";
-import { ConfirmToast } from "@/components/common/ConfirmToast";
-import Modal from "@/components/ui/modal";
+import { showToast } from "@components/Toaster/Toaster";
+import { ConfirmToast } from "@components/common/ConfirmToast";
+import Modal from "@components/ui/modal";
 
 interface editCategoryProps {
   seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;

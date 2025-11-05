@@ -8,7 +8,7 @@ import {
   JobDone,
   Herobanner,
   BlindFitting,
-} from "@/components";
+} from "@components";
 import { chooseblinds, chooseimage, productData } from "@data/home";
 import React from "react";
 

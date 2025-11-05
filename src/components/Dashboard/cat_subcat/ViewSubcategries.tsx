@@ -13,7 +13,7 @@ import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from "@graphql/categories";
 import Table from "@components/ui/table";
 import { useSession } from "next-auth/react";
 import { getPermission } from "@utils/permissionHandlers";
-import { showToast } from "@/components/Toaster/Toaster";
+import { showToast } from "@components/Toaster/Toaster";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 const ViewSubcategries = ({
   setMenuType,

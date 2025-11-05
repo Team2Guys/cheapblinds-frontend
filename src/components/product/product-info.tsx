@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import HelpingModal from "./helping-modal";
 import RecessSelector from "./Recess-select";
-import { PaymentMethod } from "@/components";
+import { PaymentMethod } from "@components";
 import DeliveryIcon from "@components/svg/delivery";
 import { RollerBlindsForm } from "./RollerBlindsForm";
 import { RomanBlindsForm } from "./RomanBlindsForm";

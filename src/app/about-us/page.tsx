@@ -1,5 +1,5 @@
-import { Breadcrumb, AboutInformation, InformationSection, Testimonial } from "@/components";
-import { TestimonialReview } from "@/data/detail-page";
+import { Breadcrumb, AboutInformation, InformationSection, Testimonial } from "@components";
+import { TestimonialReview } from "@data/detail-page";
 import React from "react";
 
 const AboutUs = () => {

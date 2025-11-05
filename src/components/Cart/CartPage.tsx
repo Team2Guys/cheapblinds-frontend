@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { SelectOption } from "./SelectOption";
 import { HiOutlineTrash } from "react-icons/hi2";
-import { CartItems, CartOptions } from "@/data/bin";
+import { CartItems, CartOptions } from "@data/bin";
 import Counter from "./Counter";
 import Checkout from "./Checkout";
 import Link from "next/link";

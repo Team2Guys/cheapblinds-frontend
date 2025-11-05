@@ -1,8 +1,6 @@
-"use client";
-
 import React from "react";
-import { Breadcrumb, BlindFitting, Instructions, ContactBanner } from "@/components";
-const FittinInstructions: React.FC = () => {
+import { Breadcrumb, BlindFitting, Instructions, ContactBanner } from "@components";
+const FittinInstructions = () => {
   return (
     <>
       <Breadcrumb title="Fitting Instructions" />

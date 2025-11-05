@@ -1,6 +1,5 @@
-import { Breadcrumb, ContactPage, FaqSection } from "@/components";
+import { Breadcrumb, ContactPage, FaqSection } from "@components";
 import React from "react";
-
 const Faqs = () => {
   return (
     <>

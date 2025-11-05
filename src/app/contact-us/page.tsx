@@ -1,4 +1,4 @@
-import { Herobanner, Breadcrumb, ContactHelp, ContactPage } from "@/components";
+import { Herobanner, Breadcrumb, ContactHelp, ContactPage } from "@components";
 import React from "react";
 
 const page = () => {

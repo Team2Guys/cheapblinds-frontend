@@ -1,4 +1,4 @@
-import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting } from "@/components";
+import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting } from "@components";
 import ProductDetail from "@components/product/Product-detail";
 import { chooseblinds } from "@data/home";
 

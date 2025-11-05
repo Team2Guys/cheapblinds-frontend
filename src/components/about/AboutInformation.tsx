@@ -1,4 +1,4 @@
-import { aboutSections } from "@/data/about";
+import { aboutSections } from "@data/about";
 import { AboutSectionProps } from "@/types/about";
 import Image from "next/image";
 import React from "react";

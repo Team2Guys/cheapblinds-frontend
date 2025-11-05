@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { FaLock } from "react-icons/fa";
 import Link from "next/link";
 import OrderProducts from "./OrderProduct";
-import { OrderData } from "@/data/bin";
+import { OrderData } from "@data/bin";
 import { Input } from "../ui/Input";
 
 const CheckoutPage = () => {

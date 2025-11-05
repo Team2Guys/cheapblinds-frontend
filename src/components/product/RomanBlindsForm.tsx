@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FormSelect } from "./FormSelect";
 import { showToast } from "@components/Toaster/Toaster";
-import { controlOptions, headrailOptions, Lining, StackingStyle } from "@/data/detail-page";
+import { controlOptions, headrailOptions, Lining, StackingStyle } from "@data/detail-page";
 
 export const RomanBlindsForm = ({ values, recessType }: FormProps) => {
   const [headrail, setHeadrail] = useState("Classic");
