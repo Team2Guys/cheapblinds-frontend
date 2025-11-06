@@ -10,13 +10,7 @@ import { ReviewsSection } from "./common";
 
 const PathnameWrapper = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
-  const withoutHeaderPages = [
-    "/login",
-    "/register",
-    "/superAdminlogin",
-    "/forgot-password",
-    "/dashboard",
-  ];
+  const withoutHeaderPages = ["/superAdminlogin", "/dashboard"];
   return (
     <SessionProvider>
       <ApolloProvider client={ApoloClient}>

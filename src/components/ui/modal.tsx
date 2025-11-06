@@ -51,7 +51,7 @@ const Modal = ({
   return (
     <div
       onClick={handleOverlayClick}
-      className={`fixed inset-0 z-50 flex items-start justify-center overflow-y-auto pt-[80px] px-4 sm:px-6 ${className || ""}`}
+      className={`fixed inset-0 z-50 flex items-start justify-center overflow-y-auto pt-20 px-4 sm:px-6 ${className || ""}`}
     >
       <div
         ref={modalRef}
@@ -60,7 +60,9 @@ const Modal = ({
           ${paymentModal ? "md:w-[1200px]" : "md:w-[600px] lg:w-[700px]"}`}
       >
         {/* Header */}
-        <div className="flex justify-between items-center border-b relative pb-10">
+        <div
+          className={`flex justify-between items-center border-b relative ${title ? "pb-4" : "pb-10"} `}
+        >
           {title && <h2 className="text-lg font-semibold">{title}</h2>}
           <button
             onClick={() => {
