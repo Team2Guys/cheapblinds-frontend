@@ -3,7 +3,7 @@ import React from "react";
 import { Field, ErrorMessage } from "formik";
 
 interface InputProps {
-  label: string;
+  label?: string;
   name: string;
   type?: string;
   as?: "input" | "select" | "textarea";
@@ -21,8 +21,10 @@ export const Input: React.FC<InputProps> = ({
   rows,
   placeholder,
 }) => {
-  // Split label and highlight the "*" in red if it exists
+  // ✅ Only render label if provided
   const renderLabel = () => {
+    if (!label) return null;
+
     const parts = label.split("*");
     return (
       <label htmlFor={name} className="block mb-1 text-[16px] font-medium">

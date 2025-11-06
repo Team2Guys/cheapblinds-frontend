@@ -56,13 +56,13 @@ const Table = <T,>({
 
   return (
     <div>
-      <div className="overflow-auto border rounded-md">
+      <div className="overflow-auto">
         <table
-          className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700 bg-white dark:bg-white/20"
+          className="min-w-full divide-y divide-secondary  bg-white dark:bg-secondary"
           id="custom-table-head"
         >
           {/* ---------- TABLE HEADER ---------- */}
-          <thead className="bg-gray-50 dark:bg-black">
+          <thead className="bg-primary-light dark:bg-primary">
             <tr>
               {rowSelection && (
                 <th className="p-2 md:p-4 text-left">
@@ -81,7 +81,7 @@ const Table = <T,>({
               {columns.map((col, index) => (
                 <th
                   key={index}
-                  className="p-2 md:p-4 text-left text-sm font-semibold text-gray-600 dark:text-neutral-300 capitalize whitespace-nowrap"
+                  className="p-2 text-left text-xl font-medium font-rubik dark:text-neutral-300 capitalize whitespace-nowrap"
                 >
                   {col.title}
                 </th>
@@ -90,7 +90,7 @@ const Table = <T,>({
           </thead>
 
           {/* ---------- TABLE BODY ---------- */}
-          <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
+          <tbody className="divide-y divide-secondary">
             {data.length > 0 ? (
               data.map((item, index) => {
                 const isHidden =
@@ -101,7 +101,7 @@ const Table = <T,>({
                 return (
                   <tr
                     key={String(key ?? index)}
-                    className={`hover:bg-gray-100 dark:hover:bg-black ${isHidden && "sr-only"}`}
+                    className={`hover:bg-gray-100   ${isHidden && "sr-only"}`}
                   >
                     {rowSelection && (
                       <td className="px-4 py-3">
@@ -115,7 +115,7 @@ const Table = <T,>({
                     {columns.map((col, idx) => (
                       <td
                         key={idx}
-                        className="px-4 py-3 text-sm dark:text-neutral-200 whitespace-nowrap text-black"
+                        className="px-4 py-3 font-semibold whitespace-nowrap text-black "
                       >
                         {col.render ? col.render(item) : String(item[col.key as keyof T])}
                       </td>
