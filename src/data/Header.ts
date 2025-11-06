@@ -100,7 +100,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     name: "Motorisation",
-    link: "/motorisation",
+    link: "/motorised-blinds",
     image: "/assets/images/bin/mobile/motorisation.png",
   },
   {
