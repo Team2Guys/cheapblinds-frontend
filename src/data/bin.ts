@@ -73,3 +73,30 @@ export const OrderSummary = [
     price: 420,
   },
 ];
+
+export const FreeSample = [
+  {
+    id: 1,
+    name: "Roller Blinds Blackout Roller Blinds",
+    dispatch: "Dispatch Today",
+    img: "/assets/images/free-sample/sample.webp",
+  },
+  {
+    id: 2,
+    name: "Roller Blinds Blackout Roller Blinds",
+    dispatch: "Dispatch Today",
+    img: "/assets/images/free-sample/sample.webp",
+  },
+  {
+    id: 3,
+    name: "Roller Blinds Blackout Roller Blinds",
+    dispatch: "Dispatch Today",
+    img: "/assets/images/free-sample/sample.webp",
+  },
+  {
+    id: 4,
+    name: "Roller Blinds Blackout Roller Blinds",
+    dispatch: "Dispatch Today",
+    img: "/assets/images/free-sample/sample.webp",
+  },
+];

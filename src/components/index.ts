@@ -6,3 +6,4 @@ export * from "./userComponent";
 export * from "./motorised";
 export * from "./forms";
 export * from "./accounts";
+export * from "./free-sample";
