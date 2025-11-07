@@ -5,13 +5,14 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import FreeSample from "@components/svg/free-sample";
 import DropdownPanel from "./Dropdownpanel";
 import { cartItems, wishlistItems } from "@data/Header";
+import Link from "next/link";
 
 const UserIcons = ({ className }: { className?: string }) => {
   return (
     <div className={`flex items-center ${className}`}>
-      <div className="border-r lg:pr-1.5">
+      <Link href="/account" className="border-r lg:pr-1.5">
         <LuUser size={25} />
-      </div>
+      </Link>
       <div className="border-r lg:pr-1.5">
         <DropdownPanel
           icon={<LuHeart size={25} />}

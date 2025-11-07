@@ -8,7 +8,7 @@ export const MyAccount = () => {
       <div className="space-y-2">
         <h2 className="text-xl font-medium font-rubik uppercase">DEFAULT ADDRESSES</h2>
         <hr className="border-b-2 border-secondary" />
-        <div className="grid grid-cols-1 md:grid-cols-2 mt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
           <div className="space-y-2">
             <h3 className="font-semibold">Contact Information</h3>
             <p>Your Name</p>
@@ -30,7 +30,7 @@ export const MyAccount = () => {
           <button className="text-primary cursor-pointer">Manage Addresses</button>
         </div>
         <hr className="border-b-2 border-secondary" />
-        <div className="grid grid-cols-1 md:grid-cols-2 mt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
           <div className="space-y-2">
             <h3 className="font-semibold">Default Billing Address</h3>
             <p>You have not set a default billing address</p>

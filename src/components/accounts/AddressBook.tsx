@@ -7,7 +7,7 @@ export const AddressBook = () => {
       <div className="space-y-2">
         <h2 className="text-xl font-medium font-rubik uppercase">Account Information</h2>
         <hr className="border-b-2 border-secondary" />
-        <div className="grid grid-cols-1 md:grid-cols-2 mt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
           <div className="space-y-2">
             <h3 className="font-semibold">Default Billing Address</h3>
             <p>You have not set a diefault billing address</p>
