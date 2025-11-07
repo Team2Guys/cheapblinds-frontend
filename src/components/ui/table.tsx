@@ -21,19 +21,19 @@ const Table = <T,>({
   const totalPages = Math.ceil(data.length / pageSize);
 
   // Smooth scroll to table heading on page change
-const scrollToHeading = () => {
-  const headingEl = document.getElementById("custom-table-head");
-  if (headingEl) {
-    const yOffset = -200; // adjust to fit your layout
-    const y = headingEl.getBoundingClientRect().top + window.scrollY + yOffset;
-    window.scrollTo({ top: y, behavior: "smooth" });
-  }
-};
+  const scrollToHeading = () => {
+    const headingEl = document.getElementById("custom-table-head");
+    if (headingEl) {
+      const yOffset = -200; // adjust to fit your layout
+      const y = headingEl.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
-useEffect(() => {
-  const timeout = setTimeout(scrollToHeading, 100);
-  return () => clearTimeout(timeout);
-}, [currentPage]);
+  useEffect(() => {
+    const timeout = setTimeout(scrollToHeading, 100);
+    return () => clearTimeout(timeout);
+  }, [currentPage]);
 
   // Handle single row select
   const handleSelect = (key: React.Key) => {

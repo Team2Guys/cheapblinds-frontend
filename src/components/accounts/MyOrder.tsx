@@ -12,7 +12,7 @@ export const MyOrder = () => {
     { title: "Order ID", key: "id" },
     { title: "Date", key: "date" },
     { title: "Ship To", key: "shipTo" },
-     {
+    {
       title: "Total",
       key: "total",
       render: (item: Order) => (
@@ -60,7 +60,10 @@ export const MyOrder = () => {
               <p className="font-semibold">{item.id}</p>
               <p> {item.date}</p>
               <p> {item.shipTo}</p>
-              <p><span className="font-currency text-xl font-normal"></span>{item.total}</p>
+              <p>
+                <span className="font-currency text-xl font-normal"></span>
+                {item.total}
+              </p>
               <button
                 className="text-primary underline hover:text-primary/90 cursor-pointer mt-2"
                 onClick={() => setSelectedOrder(item)}
@@ -86,7 +89,8 @@ export const MyOrder = () => {
               <strong>Ship To:</strong> {selectedOrder.shipTo}
             </p>
             <p>
-              <strong>Total:</strong> <span className="font-currency text-xl font-normal"></span>{selectedOrder.total}
+              <strong>Total:</strong> <span className="font-currency text-xl font-normal"></span>
+              {selectedOrder.total}
             </p>
 
             <div>
