@@ -21,18 +21,19 @@ const Table = <T,>({
   const totalPages = Math.ceil(data.length / pageSize);
 
   // Smooth scroll to table heading on page change
-  const scrollToHeading = () => {
-    const headingEl = document.getElementById("custom-table-head");
-    if (headingEl) {
-      const yOffset = -20;
-      const y = headingEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
+const scrollToHeading = () => {
+  const headingEl = document.getElementById("custom-table-head");
+  if (headingEl) {
+    const yOffset = -200; // adjust to fit your layout
+    const y = headingEl.getBoundingClientRect().top + window.scrollY + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
+};
 
-  useEffect(() => {
-    scrollToHeading();
-  }, [currentPage]);
+useEffect(() => {
+  const timeout = setTimeout(scrollToHeading, 100);
+  return () => clearTimeout(timeout);
+}, [currentPage]);
 
   // Handle single row select
   const handleSelect = (key: React.Key) => {
@@ -137,10 +138,8 @@ const Table = <T,>({
         </table>
       </div>
 
-      {/* ---------- PAGINATION ---------- */}
       {totalPages > 1 && (
         <div className="flex justify-between items-center gap-2 xs:gap-4 mt-8">
-          {/* Back Button */}
           <button
             className="dashboard_primary_button relative disabled:opacity-70"
             onClick={() => {
