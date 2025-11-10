@@ -1,26 +1,18 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs, FreeMode } from "swiper/modules";
 import type { Swiper as SwiperClass } from "swiper/types";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/free-mode";
-import "swiper/css/thumbs";
-
-const SideBySideMagnifier = dynamic(() => import("./SideBySideMagnifier"), {
-  ssr: false,
-});
+import {SideBySideMagnifier} from "@components";
+import "../../styles/swiper.css";
 
 interface ImageType {
   imageUrl: string;
   altText?: string;
 }
 
-const Thumbnail = ({ images = [] }: { images?: ImageType[] }) => {
+export const Thumbnail = ({ images = [] }: { images?: ImageType[] }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -88,4 +80,3 @@ const Thumbnail = ({ images = [] }: { images?: ImageType[] }) => {
   );
 };
 
-export default Thumbnail;

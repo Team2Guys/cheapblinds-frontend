@@ -1,5 +1,4 @@
-import { CartPage } from "@components";
-import { RelatedProduct, Testimonial } from "@components";
+import { RelatedProduct, Testimonial, CartPage } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { chooseblinds } from "@data/home";
 import React from "react";

@@ -1,15 +1,10 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import HelpingModal from "./helping-modal";
-import RecessSelector from "./Recess-select";
-import { PaymentMethod } from "@components";
+import {HelpingModal, RecessSelector, RollerBlindsForm, RomanBlindsForm, CalculationForm, PaymentMethod} from "@components";
 import DeliveryIcon from "@components/svg/delivery";
-import { RollerBlindsForm } from "./RollerBlindsForm";
-import { RomanBlindsForm } from "./RomanBlindsForm";
-import { CalculationForm } from "./CalculationForm";
 import { showToast } from "@components/Toaster/Toaster";
 
-const ProductInfo = ({ category }: { category: string }) => {
+export const ProductInfo = ({ category }: { category: string }) => {
   const [showForm, setShowForm] = useState(false);
   const [recessType, setRecessType] = useState("outside");
   const topRef = useRef<HTMLDivElement>(null);
@@ -95,5 +90,3 @@ const ProductInfo = ({ category }: { category: string }) => {
     </div>
   );
 };
-
-export default ProductInfo;

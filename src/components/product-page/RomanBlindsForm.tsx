@@ -2,7 +2,7 @@
 import { FormProps } from "@/types/type";
 import Image from "next/image";
 import React, { useState } from "react";
-import { FormSelect } from "./FormSelect";
+import { FormSelect } from "@components";
 import { showToast } from "@components/Toaster/Toaster";
 import { controlOptions, headrailOptions, Lining, StackingStyle } from "@data/detail-page";
 

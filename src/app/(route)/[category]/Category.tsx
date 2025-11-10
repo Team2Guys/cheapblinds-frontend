@@ -1,7 +1,6 @@
 "use client";
 import CategoryFeatures from "@components/category/CategoryFeatures";
-import { Herobanner, Card, SortDropdown } from "@components";
-import Filters from "@components/filters/Filters";
+import { Herobanner, Card, SortDropdown, Filters } from "@components";
 import { categoryFeatures, products } from "@data/data";
 import Image from "next/image";
 import Link from "next/link";

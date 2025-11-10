@@ -1,5 +1,4 @@
-import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting } from "@components";
-import ProductDetail from "@components/product/Product-detail";
+import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting, ProductDetail } from "@components";
 import { chooseblinds } from "@data/home";
 
 const ProductPage = async ({

@@ -1,12 +1,9 @@
 "use client";
 import React from "react";
-import dynamic from "next/dynamic";
-const Thumbnail = dynamic(() => import("./thumbnail"));
 import { productImages } from "@data/bin";
-const ProductInfo = dynamic(() => import("./product-info"));
-const ProductTabs = dynamic(() => import("./ProductTabs"));
+import { Thumbnail, ProductInfo, ProductTabs } from "@components";
 
-const ProductDetail = ({ category, subCategory }: { category: string; subCategory: string }) => {
+export const ProductDetail = ({ category, subCategory }: { category: string; subCategory: string }) => {
   console.log(subCategory);
   return (
     <div className="mt-10 space-y-3">
@@ -32,4 +29,3 @@ const ProductDetail = ({ category, subCategory }: { category: string; subCategor
   );
 };
 
-export default ProductDetail;
