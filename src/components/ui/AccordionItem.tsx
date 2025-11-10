@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
 import { AccordionItemProps } from "@/types/types";
 import Chevron from "@components/svg/chevron";
@@ -25,7 +26,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
       >
         <span className="flex-1 text-left">{question}</span>
         <Chevron
-          className={`w-5 h-5 flex-shrink-0 transform transition-transform duration-300 cursor-pointer ${
+          className={`w-5 h-5 shrink-0 transform transition-transform duration-300 cursor-pointer ${
             isOpen ? "rotate-180" : ""
           }`}
         />

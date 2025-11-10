@@ -1,4 +1,4 @@
-import CartPage from "@components/Cart/CartPage";
+import { CartPage } from "@components";
 import { RelatedProduct, Testimonial } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { chooseblinds } from "@data/home";

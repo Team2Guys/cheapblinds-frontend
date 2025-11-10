@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Table from "@components/ui/table";
-import Modal from "@components/ui/modal";
+import { CustomTable, Modal } from "@components";
 import { Order } from "@/types/account";
 import { MySampleData } from "@data/account";
 
@@ -29,7 +28,7 @@ export const MySample = () => {
     <div className="container mx-auto space-y-6 py-10">
       <h2 className="text-2xl font-bold text-center md:text-left">My Samples</h2>
       <div className="hidden md:block">
-        <Table<Order>
+        <CustomTable<Order>
           data={MySampleData}
           columns={columns}
           rowKey="id"

@@ -27,7 +27,7 @@ import { RxCross2 } from "react-icons/rx";
 import ReactCrop, { Crop } from "react-image-crop";
 import { showToast } from "@components/Toaster/Toaster";
 import { ConfirmToast } from "@components/common/ConfirmToast";
-import Modal from "@components/ui/modal";
+import { Modal } from "@components";
 
 const CreateAdmin: React.FC<CreateAdminProps> = ({
   setselecteMenu,

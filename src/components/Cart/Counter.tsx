@@ -7,7 +7,7 @@ interface CounterProps {
   handleDecrement: () => void;
 }
 
-const Counter = ({ quantity, handleIncrement, handleDecrement }: CounterProps) => {
+export const Counter = ({ quantity, handleIncrement, handleDecrement }: CounterProps) => {
   return (
     <div className="flex gap-1 items-center justify-center">
       <button
@@ -26,5 +26,3 @@ const Counter = ({ quantity, handleIncrement, handleDecrement }: CounterProps) =
     </div>
   );
 };
-
-export default Counter;

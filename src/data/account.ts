@@ -1,14 +1,5 @@
 import { Order } from "@/types/account";
 
-export const AccountOption = [
-  { id: "account", label: "My Account" },
-  { id: "address", label: "Address Book" },
-  { id: "orders", label: "My Orders" },
-  { id: "wishlist", label: "My WishList" },
-  { id: "newsletter", label: "Newsletter Subscriptions" },
-  { id: "samples", label: "My Samples" },
-];
-
 export const MyOrderData: Order[] = [
   {
     id: "#ORD-1001",

@@ -1,8 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import Checkbox from "@components/ui/Checkbox";
+import { Checkbox, Modal } from "@components";
 import { HiOutlineQuestionMarkCircle } from "react-icons/hi2";
-import Modal from "@components/ui/modal";
 
 interface FormSelectProps {
   title: string;

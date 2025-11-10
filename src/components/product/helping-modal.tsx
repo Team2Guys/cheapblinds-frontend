@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { FaRegQuestionCircle } from "react-icons/fa";
-import Modal from "@components/ui/modal";
+import { Modal } from "@components";
 const HelpingModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (

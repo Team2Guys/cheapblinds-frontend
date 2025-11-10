@@ -1,6 +1,6 @@
 import React from "react";
 
-export const NewsletterSubscritions = () => {
+export const NewsletterSubscriptions = () => {
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold">Newsletter Subscriptions</h2>

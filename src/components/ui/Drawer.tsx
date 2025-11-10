@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { DrawerProps } from "@/types/Header";
 
-const Drawer = ({ title, content, open, onOpen, onClose, className }: DrawerProps) => {
+export const Drawer = ({ title, content, open, onOpen, onClose, className }: DrawerProps) => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -43,5 +43,3 @@ const Drawer = ({ title, content, open, onOpen, onClose, className }: DrawerProp
     </>
   );
 };
-
-export default Drawer;

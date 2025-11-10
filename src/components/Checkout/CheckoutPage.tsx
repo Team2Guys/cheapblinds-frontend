@@ -4,11 +4,10 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FaLock } from "react-icons/fa";
 import Link from "next/link";
-import OrderProducts from "./OrderProduct";
+import { OrderProducts, Input } from "@components";
 import { OrderData } from "@data/bin";
-import { Input } from "../ui/Input";
 
-const CheckoutPage = () => {
+export const CheckoutPage = () => {
   return (
     <div className=" container mx-auto px-2 grid grid-cols-12 gap-4 my-10">
       {/* Billing Details */}

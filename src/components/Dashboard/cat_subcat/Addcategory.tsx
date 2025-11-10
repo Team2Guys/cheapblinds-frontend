@@ -26,7 +26,7 @@ import { categoryValidationSchema } from "@data/Validations";
 import { categoryInitialValues } from "@data/InitialValues";
 import { showToast } from "@components/Toaster/Toaster";
 import { ConfirmToast } from "@components/common/ConfirmToast";
-import Modal from "@components/ui/modal";
+import { Modal } from "@components";
 
 interface editCategoryProps {
   seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;

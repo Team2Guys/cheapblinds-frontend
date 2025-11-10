@@ -12,7 +12,7 @@ interface ExtendedModalProps extends ModalProps {
   height?: number | string;
 }
 
-const Modal = ({
+export const Modal = ({
   isOpen,
   open, // alias support
   onClose,
@@ -99,5 +99,3 @@ const Modal = ({
     </div>
   );
 };
-
-export default Modal;

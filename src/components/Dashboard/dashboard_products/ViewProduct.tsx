@@ -11,7 +11,7 @@ import { useMutation } from "@apollo/client";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { BsEyeFill } from "react-icons/bs";
 import { GET_ALL_PRODUCTS, REMOVE_PRODUCT } from "@graphql/prod";
-import Table from "@components/ui/table";
+import { CustomTable } from "@components";
 import { getPermission } from "@utils/permissionHandlers";
 import { useSession } from "next-auth/react";
 import { showToast } from "@components/Toaster/Toaster";
@@ -258,7 +258,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       </div>
       <div style={{ overflowX: "auto" }}>
         {filteredProducts && filteredProducts.length > 0 ? (
-          <Table<IProduct> data={filteredProducts} columns={columns} rowKey="id" />
+          <CustomTable<IProduct> data={filteredProducts} columns={columns} rowKey="id" />
         ) : (
           <p className="text-primary dark:text-white">No products found</p>
         )}

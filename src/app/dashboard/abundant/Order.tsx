@@ -1,8 +1,7 @@
 "use client";
 import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@components/Dashboard/DefaultLayout";
-import Modal from "@components/ui/modal";
-import Table from "@components/ui/table";
+import { CustomTable, Modal } from "@components";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BsEyeFill } from "react-icons/bs";
@@ -113,7 +112,7 @@ const Order = ({ title, ordersData }: { title: string; ordersData: prodOrder[] }
       </div>
       {ordersData && ordersData.length > 0 ? (
         <>
-          <Table<prodOrder> data={filteredOrders} columns={columns} rowKey="orderId" />
+          <CustomTable<prodOrder> data={filteredOrders} columns={columns} rowKey="orderId" />
           <Modal isOpen={isModalOpen} onClose={handleCancel}>
             {selectedOrder && (
               <div className="space-y-3 max-h-[75vh] overflow-y-auto">

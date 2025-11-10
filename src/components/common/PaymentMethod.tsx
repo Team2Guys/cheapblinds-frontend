@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import tabbyLogo from "../../../public/assets/images/payment-icons/tabby-logo.webp";
 import tamaraLogo from "../../../public/assets/images/payment-icons/tamara-logo.webp";
-import Modal from "@components/ui/modal";
+import { Modal } from "@components";
 import {
   tabbyfeature,
   tabbyhowitwork,

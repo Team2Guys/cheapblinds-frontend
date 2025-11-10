@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PaymentMethod } from "@components/common";
 
-const Checkout = () => {
+export const Checkout = () => {
   return (
     <div className="bg-primary-light p-2">
       <div className="border space-y-3">
@@ -54,5 +54,3 @@ const Checkout = () => {
     </div>
   );
 };
-
-export default Checkout;

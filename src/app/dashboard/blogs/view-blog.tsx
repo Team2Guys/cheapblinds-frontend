@@ -1,6 +1,6 @@
 "use client";
 import { useMutation } from "@apollo/client";
-import Table from "@components/ui/table";
+import { CustomTable } from "@components";
 import { REMOVE_BLOG } from "@graphql/blogs";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -195,7 +195,7 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
           Add Blog
         </button>
       </div>
-      <Table<IBlog> data={filteredBlogs} columns={columns} rowKey="id" />
+      <CustomTable<IBlog> data={filteredBlogs} columns={columns} rowKey="id" />
     </>
   );
 };
