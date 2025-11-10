@@ -5,7 +5,7 @@ import revalidateTag from "@components/ServerActons/ServerAction";
 import { Admin } from "@/types/type";
 import { useMutation } from "@apollo/client";
 import { REMOVE_ADMIN } from "@graphql/mutations";
-import Table from "@components/ui/table";
+import { CustomTable } from "@components";
 interface AlladminsProps {
   setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
   setEditAdmin: React.Dispatch<React.SetStateAction<Admin | null>>;
@@ -117,7 +117,7 @@ function Alladmins({ setselecteMenu, setEditAdmin, AllAdminData }: AlladminsProp
         </div>
       </div>
       {AllAdminData && AllAdminData.length > 0 ? (
-        <Table<Admin> data={AllAdminData} columns={columns} rowKey="id" />
+        <CustomTable<Admin> data={AllAdminData} columns={columns} rowKey="id" />
       ) : (
         <div className="flex justify-center"> No Admin found</div>
       )}

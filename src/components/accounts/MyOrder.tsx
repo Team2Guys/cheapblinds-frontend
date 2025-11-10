@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Table from "@components/ui/table";
-import Modal from "@components/ui/modal";
+import { CustomTable, Modal } from "@components";
 import { Order } from "@/types/account";
 import { MyOrderData } from "@data/account";
 
@@ -42,7 +41,7 @@ export const MyOrder = () => {
 
       {/* 🖥️ Desktop View */}
       <div className="hidden md:block">
-        <Table<Order>
+        <CustomTable<Order>
           data={MyOrderData}
           columns={columns}
           rowKey="id"

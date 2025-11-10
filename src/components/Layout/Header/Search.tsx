@@ -1,4 +1,4 @@
-import Modal from "@components/ui/modal";
+import { Modal } from "@components";
 import React, { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 

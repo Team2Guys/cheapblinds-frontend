@@ -47,7 +47,7 @@ const PrevArrow: React.FC<ArrowProps> = ({ onClick, isCart }) => (
   </div>
 );
 
-const SwiperSlider: React.FC<SwiperSliderProps> = ({
+export const SwiperSlider: React.FC<SwiperSliderProps> = ({
   children,
   spaceBetween = 10,
   slidesPerView = 1,
@@ -139,5 +139,3 @@ const SwiperSlider: React.FC<SwiperSliderProps> = ({
     </div>
   );
 };
-
-export default SwiperSlider;

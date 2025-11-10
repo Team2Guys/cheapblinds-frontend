@@ -11,7 +11,7 @@ interface CheckboxProps {
   imageUrl?: string; // ✅ Optional small image
 }
 
-const Checkbox = ({ label, checked, onChange, price, imageUrl }: CheckboxProps) => {
+export const Checkbox = ({ label, checked, onChange, price, imageUrl }: CheckboxProps) => {
   return (
     <div
       onClick={onChange}
@@ -48,5 +48,3 @@ const Checkbox = ({ label, checked, onChange, price, imageUrl }: CheckboxProps) 
     </div>
   );
 };
-
-export default Checkbox;

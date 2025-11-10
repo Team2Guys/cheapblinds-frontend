@@ -30,7 +30,7 @@ import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "@graphql/prod"
 import { useSession } from "next-auth/react";
 import { showToast } from "@components/Toaster/Toaster";
 import { ConfirmToast } from "@components/common/ConfirmToast";
-import Modal from "@components/ui/modal";
+import { Modal } from "@components";
 
 const initialErrors = {
   categoryError: "",

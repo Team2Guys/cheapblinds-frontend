@@ -2,7 +2,7 @@
 
 import { useMutation } from "@apollo/client";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import Table from "@components/ui/table";
+import { CustomTable } from "@components";
 import { REMOVE_REVIEW } from "@graphql/mutations";
 import { useSession } from "next-auth/react";
 import React, { SetStateAction, useState } from "react";
@@ -168,7 +168,7 @@ export default function ViewRedirecturl({
           </p>
         </div>
       </div>
-      <Table<RedirectUrls> data={filteredRedirectUrls} columns={columns} rowKey="id" />
+      <CustomTable<RedirectUrls> data={filteredRedirectUrls} columns={columns} rowKey="id" />
     </>
   );
 }

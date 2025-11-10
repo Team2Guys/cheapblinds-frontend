@@ -10,7 +10,7 @@ import { ISUBCATEGORY } from "@/types/cat";
 import { useMutation } from "@apollo/client";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from "@graphql/categories";
-import Table from "@components/ui/table";
+import { CustomTable } from "@components";
 import { useSession } from "next-auth/react";
 import { getPermission } from "@utils/permissionHandlers";
 import { showToast } from "@components/Toaster/Toaster";
@@ -213,7 +213,7 @@ const ViewSubcategries = ({
       </div>
 
       {filteredSubCategories && filteredSubCategories.length > 0 ? (
-        <Table<ISUBCATEGORY> data={filteredSubCategories} columns={columns} rowKey="id" />
+        <CustomTable<ISUBCATEGORY> data={filteredSubCategories} columns={columns} rowKey="id" />
       ) : (
         "No Sub Categories found"
       )}

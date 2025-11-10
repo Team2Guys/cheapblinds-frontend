@@ -1,8 +1,7 @@
 "use client";
 import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@components/Dashboard/DefaultLayout";
-import Modal from "@components/ui/modal";
-import Table from "@components/ui/table";
+import { CustomTable, Modal } from "@components";
 import React, { useState } from "react";
 import { BsEyeFill } from "react-icons/bs";
 import { IAppointment } from "@/types/types";
@@ -96,7 +95,7 @@ const Measurement = ({ appointments, title }: { appointments: IAppointment[]; ti
       </div>
       {appointments && appointments.length > 0 ? (
         <>
-          <Table<IAppointment> data={filteredOrders} columns={columns} rowKey="id" />
+          <CustomTable<IAppointment> data={filteredOrders} columns={columns} rowKey="id" />
           <Modal isOpen={isModalOpen} onClose={handleCancel}>
             {selectedAppointment && (
               <div className="space-y-3">

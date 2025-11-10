@@ -6,7 +6,7 @@ import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa6";
 import { menuItems } from "@data/Header";
 
-const MobileMenu = ({ onClose }: { onClose: () => void }) => {
+export const MobileMenus = ({ onClose }: { onClose: () => void }) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   const toggleMenu = (name: string) => {
@@ -89,5 +89,3 @@ const MobileMenu = ({ onClose }: { onClose: () => void }) => {
     </nav>
   );
 };
-
-export default MobileMenu;

@@ -8,7 +8,7 @@ import revalidateTag from "@components/ServerActons/ServerAction";
 import { Category } from "@/types/cat";
 import { useMutation } from "@apollo/client";
 import { REMOVE_CATEGORY } from "@graphql/categories";
-import Table from "@components/ui/table";
+import { CustomTable } from "@components";
 import { useSession } from "next-auth/react";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
@@ -221,7 +221,7 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
       </div>
 
       {filteredCategories && filteredCategories.length > 0 ? (
-        <Table<Category> data={filteredCategories} columns={columns} rowKey="id" />
+        <CustomTable<Category> data={filteredCategories} columns={columns} rowKey="id" />
       ) : (
         <p className="text-primary dark:text-white">No Categories found</p>
       )}

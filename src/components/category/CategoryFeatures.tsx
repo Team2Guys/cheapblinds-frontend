@@ -2,7 +2,7 @@
 
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import SwiperSlider from "@components/ui/swiper-slider";
+import { SwiperSlider } from "@components";
 import { CategoryBreakpoints } from "@data/Slider-breakpoints";
 
 interface Features {

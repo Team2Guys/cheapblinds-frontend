@@ -14,7 +14,7 @@ interface OrderProductsProps {
   products: Product[];
 }
 
-const OrderProducts = ({ products }: OrderProductsProps) => {
+export const OrderProducts = ({ products }: OrderProductsProps) => {
   return (
     <div>
       {products.map((product) => (

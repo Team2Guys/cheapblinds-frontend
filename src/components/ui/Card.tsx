@@ -1,9 +1,9 @@
-"use";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { ProductImage } from "@/types/prod";
+import { TfiTrash } from "react-icons/tfi";
 
 interface Product {
   category: {
@@ -21,7 +21,7 @@ interface Product {
   windowImage: ProductImage;
 }
 
-const Card = ({ card }: { card: Product }) => {
+export const Card = ({ card, IsDeleteButton }: { card: Product; IsDeleteButton?: boolean }) => {
   return (
     <div className="card-wrapper relative rounded-md pb-2">
       <Link href="/roller-blinds/blackout-blind/Sheer-blinds">
@@ -80,13 +80,17 @@ const Card = ({ card }: { card: Product }) => {
             From: <span className="font-currency text-base md:text-[22px] font-normal"></span>
             <span className="font-semibold">{card.price}</span>
           </p>
-          <button className="w-6 md:w-10 h-6 md:h-10 border rounded-md border-black flex justify-center items-center cursor-pointer">
-            <FaRegHeart className="text-xs md:text-xl" />
-          </button>
+          {IsDeleteButton ? (
+            <button className="w-6 md:w-10 h-6 md:h-10 border rounded-md border-secondary flex justify-center items-center cursor-pointer bg-primary-light">
+              <TfiTrash size={25} />
+            </button>
+          ) : (
+            <button className="w-6 md:w-10 h-6 md:h-10 border rounded-md border-black flex justify-center items-center cursor-pointer ">
+              <FaRegHeart className="text-xs md:text-xl" />
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 };
-
-export default Card;

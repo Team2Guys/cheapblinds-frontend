@@ -18,7 +18,7 @@ export const RegisterForm = () => {
   });
 
   return (
-    <div className="max-w-4xl mx-auto px-2">
+    <div className="max-w-4xl mx-auto px-2 space-y-5">
       <h2 className="text-heading">Create new account</h2>
 
       <Formik

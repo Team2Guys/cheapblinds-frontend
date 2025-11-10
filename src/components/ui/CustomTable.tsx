@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { TableProps } from "@/types/types";
 
-const Table = <T,>({
+export const CustomTable = <T,>({
   data,
   columns,
   rowKey,
@@ -206,5 +206,3 @@ const Table = <T,>({
     </div>
   );
 };
-
-export default Table;

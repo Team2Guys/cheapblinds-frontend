@@ -1,8 +1,9 @@
+"use server";
 import { Testimonial, AccountTabs } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import React from "react";
 
-const page = () => {
+const Page = async () => {
   return (
     <>
       <AccountTabs />
@@ -11,4 +12,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

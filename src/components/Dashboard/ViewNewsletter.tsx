@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
 import { showToast } from "../Toaster/Toaster";
-import Table from "../ui/table";
+import { CustomTable } from "@components";
 
 interface Product {
   id: string;
@@ -120,7 +120,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({ Categories, setCategory, sets
           {!sendingLoading ? "Broadcast Email" : "Sending"}
         </button>
       </div>
-      <Table<Product>
+      <CustomTable<Product>
         data={filteredProducts}
         columns={columns}
         rowKey="id"

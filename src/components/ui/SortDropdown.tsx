@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
-export default function SortDropdown() {
+export const SortDropdown = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("Low to High");
 
@@ -20,11 +20,11 @@ export default function SortDropdown() {
       {/* Trigger Button */}
       <div
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 justify-between border border-[#00000066] px-2 py-[6px] rounded-md text-sm cursor-pointer select-none"
+        className="flex items-center gap-2 justify-between border border-[#00000066] px-2 py-1.5 rounded-md text-sm cursor-pointer select-none"
       >
         {selected}
         <div className="flex items-center gap-2">
-          <div className="w-[1px] h-4 bg-[#00000066]"></div>
+          <div className="w-px h-4 bg-[#00000066]"></div>
           <FaChevronDown className={`text-xs transition ${open && "rotate-180"}`} />
         </div>
       </div>
@@ -47,4 +47,4 @@ export default function SortDropdown() {
       )}
     </div>
   );
-}
+};

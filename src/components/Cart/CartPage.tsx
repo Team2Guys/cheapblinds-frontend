@@ -1,15 +1,13 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import { SelectOption } from "./SelectOption";
+import { SelectOption, Counter, Checkout } from "@components";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { CartItems, CartOptions } from "@data/bin";
-import Counter from "./Counter";
-import Checkout from "./Checkout";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa6";
 
-const CartPage = () => {
+export const CartPage = () => {
   const [selected, setSelected] = useState("normal");
   const [quantities, setQuantities] = useState<Record<number, number>>(
     CartItems.reduce((acc, item) => ({ ...acc, [item.id]: 1 }), {}),
@@ -128,5 +126,3 @@ const CartPage = () => {
     </div>
   );
 };
-
-export default CartPage;
