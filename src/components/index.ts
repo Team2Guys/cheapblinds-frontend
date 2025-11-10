@@ -1,4 +1,4 @@
-export * from "./home";
+export * from "./home-page";
 export * from "./common";
 export * from "./about";
 export * from "./contact";
@@ -9,5 +9,5 @@ export * from "./accounts";
 export * from "./free-sample";
 export * from "./ui";
 export * from "./ui/vertical-tabs";
-export * from "./cart";
-export * from "./checkout";
+export * from "./cart-page";
+export * from "./checkout-page";
