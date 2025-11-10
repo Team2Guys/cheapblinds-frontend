@@ -14,7 +14,7 @@ import { GET_ALL_PRODUCTS, REMOVE_PRODUCT } from "@graphql/prod";
 import { CustomTable } from "@components";
 import { getPermission } from "@utils/permissionHandlers";
 import { useSession } from "next-auth/react";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 
 const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
@@ -103,9 +103,9 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       });
       setProducts((prev: IProduct[]) => prev.filter((item) => item.id !== key) || []);
 
-      showToast("success", `${type.charAt(0).toUpperCase() + type.slice(1)} Deleted`);
+      Toaster("success", `${type.charAt(0).toUpperCase() + type.slice(1)} Deleted`);
     } catch (err) {
-      showToast("error", `There was an error deleting the ${type} .`);
+      Toaster("error", `There was an error deleting the ${type} .`);
 
       throw err;
     }

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
-import { showToast } from "../Toaster/Toaster";
+import { Toaster } from "../ui/Toaster";
 import { CustomTable } from "@components";
 
 interface Product {
@@ -41,9 +41,9 @@ const ViewNewsletter: React.FC<CategoryProps> = ({ Categories, setCategory, sets
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newsletters/del-user/${key}`);
       setCategory((prev) => prev.filter((item) => item.id !== key));
-      showToast("success", "Email Deleted");
+      Toaster("success", "Email Deleted");
     } catch (err) {
-      showToast("error", "There was an error deleting the Email.");
+      Toaster("error", "There was an error deleting the Email.");
       throw err;
     }
   };
@@ -93,7 +93,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({ Categories, setCategory, sets
       );
       if (res.status === 201) {
         setSelectedRowKeys([]);
-        showToast("success", res.data.message + "🎉");
+        Toaster("success", res.data.message + "🎉");
         setSendingLoading(false);
       }
     } catch (error) {

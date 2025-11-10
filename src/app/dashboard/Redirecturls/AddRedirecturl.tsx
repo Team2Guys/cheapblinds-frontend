@@ -9,7 +9,7 @@ import revalidateTag from "@components/ServerActons/ServerAction";
 import { useSession } from "next-auth/react";
 import { initialRedirctUlrsValues } from "@data/InitialValues";
 import { validationRedirctUlrsSchema } from "@data/Validations";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 
 interface IVIEWREDIRECTURLS {
@@ -71,7 +71,7 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
       // eslint-disable-next-line
     } catch (error: any) {
       const graphQLError = error?.graphQLErrors?.[0]?.message;
-      showToast("error", graphQLError || "Internal server error");
+      Toaster("error", graphQLError || "Internal server error");
     }
   };
 

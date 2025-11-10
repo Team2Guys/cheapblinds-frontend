@@ -25,7 +25,7 @@ import { subcategoryInitialValues } from "@data/InitialValues";
 import { subcategoryValidationSchema } from "@data/Validations";
 import { useSession } from "next-auth/react";
 import { CREATE_SUBCATEGORY, GET_ALL_SUBCATEGORIES, UPDATE_SUBCATEGORY } from "@graphql/categories";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 import { Modal } from "@components";
 
@@ -67,7 +67,7 @@ const AddSubcategory = ({
     { resetForm }: FormikHelpers<ISUBCATEGORY_EDIT>,
   ) => {
     if (!values.category) {
-      return showToast("warning", "Select parent category!!");
+      return Toaster("warning", "Select parent category!!");
     }
     try {
       setloading(true);
@@ -99,7 +99,7 @@ const AddSubcategory = ({
             },
           },
         });
-        showToast("success", "Sub Category has been successfully updated!");
+        Toaster("success", "Sub Category has been successfully updated!");
       } else {
         // Create New SubCategory
         await createSubCategory({
@@ -113,7 +113,7 @@ const AddSubcategory = ({
             },
           },
         });
-        showToast("success", "Sub Category has been successfully created!");
+        Toaster("success", "Sub Category has been successfully created!");
       }
 
       revalidateTag("subcategories");
@@ -127,7 +127,7 @@ const AddSubcategory = ({
     } catch (err) {
       setloading(false);
 
-      showToast("error", "Something went wrong!");
+      Toaster("error", "Something went wrong!");
       throw err;
     }
   };

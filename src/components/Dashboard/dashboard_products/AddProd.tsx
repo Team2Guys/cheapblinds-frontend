@@ -28,7 +28,7 @@ import { AddProductvalidationSchema } from "@data/Validations";
 import { ISUBCATEGORY } from "@/types/cat";
 import { CREATE_PRODUCT, GET_ALL_PRODUCTS, UPDATE_PRODUCT } from "@graphql/prod";
 import { useSession } from "next-auth/react";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 import { Modal } from "@components";
 
@@ -201,7 +201,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
       // ✅ Revalidate and show success message
       revalidateTag("products");
-      showToast(
+      Toaster(
         "success",
         updateFlag
           ? "Product has been successfully updated!"

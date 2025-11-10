@@ -24,7 +24,7 @@ import ApoloClient from "@utils/AppoloClient";
 import { CREATE_CATEGORY, GET_ALL_CATEGORIES, UPDATE_CATEGORY } from "@graphql/categories";
 import { categoryValidationSchema } from "@data/Validations";
 import { categoryInitialValues } from "@data/InitialValues";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 import { Modal } from "@components";
 
@@ -59,7 +59,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
     try {
       const posterImageUrl = (posterimageUrl && posterimageUrl[0]) || {};
       const Banner = BannerImageUrl && BannerImageUrl[0];
-      if (!posterImageUrl) return showToast("error", "Please select relevant Images");
+      if (!posterImageUrl) return Toaster("error", "Please select relevant Images");
       const formValues = { ...values, posterImageUrl, Banners: Banner };
       // eslint-disable-next-line
       const { updatedAt, createdAt, __typename, subCategories, Products, ...newValue } = formValues;
@@ -93,7 +93,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
 
       revalidateTag("categories");
 
-      showToast(
+      Toaster(
         "success",
         updateFlag
           ? "Category has been successfully updated!"

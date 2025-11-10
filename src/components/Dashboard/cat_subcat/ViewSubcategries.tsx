@@ -13,7 +13,7 @@ import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from "@graphql/categories";
 import { CustomTable } from "@components";
 import { useSession } from "next-auth/react";
 import { getPermission } from "@utils/permissionHandlers";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 const ViewSubcategries = ({
   setMenuType,
@@ -83,9 +83,9 @@ const ViewSubcategries = ({
         prev ? prev.filter((item: ISUBCATEGORY) => item.id != key) : [],
       );
       revalidateTag("subcategories");
-      showToast("success", "Category Deleted");
+      Toaster("success", "Category Deleted");
     } catch (err) {
-      showToast("error", "Deletion Failed");
+      Toaster("error", "Deletion Failed");
       throw err;
     }
   };

@@ -12,7 +12,7 @@ import { CustomTable } from "@components";
 import { useSession } from "next-auth/react";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
@@ -91,9 +91,9 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
         prev ? prev.filter((item) => item.id !== key) : [],
       );
       revalidateTag("categories");
-      showToast("success", "Category Deleted");
+      Toaster("success", "Category Deleted");
     } catch (err) {
-      showToast("error", "There was an error deleting the category.");
+      Toaster("error", "There was an error deleting the category.");
       return err;
     }
   };

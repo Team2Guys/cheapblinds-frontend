@@ -18,7 +18,7 @@ import { useSession } from "next-auth/react";
 import { AddBlogInitialValues } from "@data/InitialValues";
 import { validationBlogSchema } from "@data/Validations";
 import { ConfirmToast } from "@components/common/ConfirmToast";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 
 interface AddBlogProps {
   setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
@@ -63,7 +63,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
             },
           },
         });
-        showToast("success", "Blog updated successfully!");
+        Toaster("success", "Blog updated successfully!");
       } else {
         await createBlogMutation({
           context: {
@@ -76,7 +76,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
             createBlogInput: payload,
           },
         });
-        showToast("success", "Blog created successfully!");
+        Toaster("success", "Blog created successfully!");
       }
 
       setselecteMenu("All Blogs");
@@ -85,7 +85,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
     } catch (error) {
       const graphQLError =
         (error as ApolloError)?.graphQLErrors?.[0]?.message || "Something went wrong";
-      showToast("error", graphQLError);
+      Toaster("error", graphQLError);
     }
   };
 

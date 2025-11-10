@@ -4,7 +4,7 @@ import React, { ChangeEvent, DragEvent, SetStateAction, useRef, useState } from 
 import { BsCloudDownload, BsCloudUpload } from "react-icons/bs";
 import { ProductImage } from "@/types/prod";
 import { uploadPhotosToBackend } from "@utils/fileUploadhandlers";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 
 export interface ImagesProps {
   imageUrl: string;
@@ -29,7 +29,7 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
     e.preventDefault();
     e.stopPropagation();
     const files = Array.from(e.dataTransfer.files) as File[];
-    if (files.length > 10) return showToast("error", `You Can Upload maximum 10 files at Once`);
+    if (files.length > 10) return Toaster("error", `You Can Upload maximum 10 files at Once`);
 
     for (const file of files) {
       let SingleFile;
@@ -52,7 +52,7 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const files = e.target.files ? Array.from(e.target.files) : [];
-    if (files.length > 10) return showToast("error", `You Can Upload maximum 10 files at Once`);
+    if (files.length > 10) return Toaster("error", `You Can Upload maximum 10 files at Once`);
 
     for (const file of files) {
       try {

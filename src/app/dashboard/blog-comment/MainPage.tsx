@@ -5,7 +5,7 @@ import { UPDATE_COMMENT_STATUS, UPDATE_REPLY_STATUS } from "@graphql/blogs";
 import { IBlogComment } from "@/types/general";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import { useSession } from "next-auth/react";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster } from "@components";
 
 interface Props {
   AllComment: IBlogComment[];
@@ -22,11 +22,11 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
   const toggleExpand = (id: string) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
 
   const [updateCommentStatus] = useMutation(UPDATE_COMMENT_STATUS, {
-    onError: (err) => showToast("error", err.message),
+    onError: (err) => Toaster("error", err.message),
   });
 
   const [updateReplyStatus] = useMutation(UPDATE_REPLY_STATUS, {
-    onError: (err) => showToast("error", err.message),
+    onError: (err) => Toaster("error", err.message),
   });
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +92,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
             updatereplyStatus: { id, status, __typename: "BlogReply" },
           },
         });
-        showToast("success", `Reply marked as ${status}`);
+        Toaster("success", `Reply marked as ${status}`);
       } else {
         const { data } = await updateCommentStatus({
           context: {
@@ -108,12 +108,12 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
             UpdateStatus: { id, status, __typename: "BlogComment" },
           },
         });
-        showToast("success", `Comment marked as ${data?.UpdateStatus.status}`);
+        Toaster("success", `Comment marked as ${data?.UpdateStatus.status}`);
       }
       revalidateTag("blogs");
     } catch (error) {
       updateLocalStatus(id, "PENDING", isReply);
-      showToast("error", error instanceof Error ? error.message : "Failed");
+      Toaster("error", error instanceof Error ? error.message : "Failed");
     }
   };
 

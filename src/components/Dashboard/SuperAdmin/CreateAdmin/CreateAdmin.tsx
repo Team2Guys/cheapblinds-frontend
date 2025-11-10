@@ -25,7 +25,7 @@ import {
 import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import ReactCrop, { Crop } from "react-image-crop";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 import { Modal } from "@components";
 
@@ -147,7 +147,7 @@ const CreateAdmin: React.FC<CreateAdminProps> = ({
             setselecteMenu("AllAdmin");
             setEditProduct(null);
             setposterimageUrl(undefined);
-            showToast("success", `Admin ${updateFlag ? "updated" : "created"} successfully`);
+            Toaster("success", `Admin ${updateFlag ? "updated" : "created"} successfully`);
             revalidateTag("Admins");
             // eslint-disable-next-line
           } catch (err: any) {

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 import { FormSelect } from "./FormSelect";
 import { FormProps } from "@/types/type";
 import Image from "next/image";
@@ -12,7 +12,7 @@ export const RollerBlindsForm = ({ values, recessType }: FormProps) => {
   const [chainSide, setChainSide] = useState("Right");
 
   const handleAddToBasket = () => {
-    showToast(
+    Toaster(
       "success",
       `Added ${headrail} with ${control} control and chain on ${chainSide} side to basket!`,
     );

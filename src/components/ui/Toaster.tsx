@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-export const showToast = (
+export const Toaster = (
   type: "success" | "error" | "warning",
   message: string,
   position: "top-right" | "top-center" | "bottom-right" | "bottom-center" = "top-right",

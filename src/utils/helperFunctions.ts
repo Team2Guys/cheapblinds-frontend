@@ -5,7 +5,7 @@ import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from "@graphql/File
 import { uploadPhotosToBackend } from "./fileUploadhandlers";
 import { Crop } from "react-image-crop";
 import { centerAspectCrop } from "@/types/product-crop";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
@@ -265,7 +265,7 @@ export const handleCropModalOk = async (
       }, 0);
     } catch (error) {
       console.log(error);
-      showToast("error", "Failed to upload cropped image");
+      Toaster("error", "Failed to upload cropped image");
       return error;
     }
   }

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {HelpingModal, RecessSelector, RollerBlindsForm, RomanBlindsForm, CalculationForm, PaymentMethod} from "@components";
 import DeliveryIcon from "@components/svg/delivery";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 
 export const ProductInfo = ({ category }: { category: string }) => {
   const [showForm, setShowForm] = useState(false);
@@ -22,7 +22,7 @@ export const ProductInfo = ({ category }: { category: string }) => {
 
   const handleGetPrice = () => {
     if (!calcValues.width || !calcValues.height) {
-      showToast("error", "Please enter width and height before getting the price.");
+      Toaster("error", "Please enter width and height before getting the price.");
       return;
     }
     setShowForm(true);

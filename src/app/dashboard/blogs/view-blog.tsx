@@ -11,7 +11,7 @@ import { IBlog } from "@/types/general";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { getPermission } from "@utils/permissionHandlers";
 import { ConfirmToast } from "@components/common/ConfirmToast";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster} from "@components";
 
 interface ViewBlogProps {
   setselecteMenu: React.Dispatch<SetStateAction<string>>;
@@ -57,9 +57,9 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
         },
       });
       setAllBlogs((prev) => prev.filter((blog) => blog.id !== id));
-      showToast("success", "Blog Deleted");
+      Toaster("success", "Blog Deleted");
     } catch {
-      showToast("error", "There was an error deleting the blog.");
+      Toaster("error", "There was an error deleting the blog.");
     }
   };
 
