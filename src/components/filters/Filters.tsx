@@ -2,13 +2,12 @@
 import Image from "next/image";
 import { useState, useRef } from "react";
 import { FaCheck } from "react-icons/fa";
-import PriceSlider from "./PriceSlider";
-import { Accordion } from "@components/ui/Accordion";
+import { Accordion, PriceSlider } from "@components";
 import { RxCross2 } from "react-icons/rx";
 
 type SectionKeys = "type" | "colour" | "width" | "pattern" | "composition" | "price";
 
-const Filters = () => {
+export const Filters = () => {
   const [selectedPattern, setSelectedPattern] = useState<string[]>([]);
   const [selectedComposition, setSelectedComposition] = useState<string[]>([]);
   const [selectedWidth, setSelectedWidth] = useState<string[]>([]);
@@ -250,4 +249,3 @@ const Filters = () => {
   );
 };
 
-export default Filters;

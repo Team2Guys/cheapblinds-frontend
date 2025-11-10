@@ -9,7 +9,7 @@ interface RecessSelectorProps {
   onChange: (_id: string) => void;
 }
 
-const RecessSelector = ({ selected, onChange }: RecessSelectorProps) => {
+export const RecessSelector = ({ selected, onChange }: RecessSelectorProps) => {
   return (
     <div className="flex flex-col gap-3 mt-5 px-4">
       <div className="flex gap-4">
@@ -49,5 +49,3 @@ const RecessSelector = ({ selected, onChange }: RecessSelectorProps) => {
     </div>
   );
 };
-
-export default RecessSelector;

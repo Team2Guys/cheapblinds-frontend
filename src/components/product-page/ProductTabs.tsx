@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Testimonial } from "@components";
 import { TestimonialReview } from "@data/detail-page";
-const ProductTabs = () => {
+export const ProductTabs = () => {
   const [activeTab, setActiveTab] = useState("description");
 
   const tabs = [
@@ -58,5 +58,3 @@ const ProductTabs = () => {
     </div>
   );
 };
-
-export default ProductTabs;

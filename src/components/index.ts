@@ -11,3 +11,5 @@ export * from "./ui";
 export * from "./ui/vertical-tabs";
 export * from "./cart-page";
 export * from "./checkout-page";
+export * from "./product-page";
+export * from "./filters";

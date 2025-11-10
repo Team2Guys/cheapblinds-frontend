@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { Modal } from "@components";
-const HelpingModal = () => {
+export const HelpingModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
@@ -24,4 +24,3 @@ const HelpingModal = () => {
   );
 };
 
-export default HelpingModal;
