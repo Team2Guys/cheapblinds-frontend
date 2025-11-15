@@ -69,6 +69,8 @@ export const REMOVE_ADMIN_BY_ID = gql`
 `;
 
 
+
+
 export const GET_ADMIN_BY_ID = gql`
   query GetAdminById($input: GetAdminByIdInput!) {
     getAdminById(input: $input) {
