@@ -1,377 +1,141 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+
+import React from "react";
+import { Formik, Form } from "formik";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { Input, Toaster } from "@components";
+import { CreateAdminProps } from "@/types/admin";
+import { PermissionOptions } from "@data/admin";
 import { useMutation } from "@apollo/client";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Admin } from "@/types/type";
-import revalidateTag from "@components/ServerActons/ServerAction";
-import { CREATE_ADMIN, UPDATE_ADMIN } from "@graphql/Admins";
-import { useSession } from "next-auth/react";
-import { initialAdminValues } from "@data/InitialValues";
-import { checkboxAdminData } from "@data/data";
-import { validationAdminSchema } from "@data/Validations";
-import { adminCheckBox, CreateAdminProps } from "@/types/admin";
-import { ProductImage } from "@/types/prod";
-import ImageUploader from "@components/ImageUploader/ImageUploader";
-import {
-  handleCropClick,
-  handleCropModalCancel,
-  handleCropModalOk,
-  handleImageAltText,
-  ImageRemoveHandler,
-  onCropComplete,
-  onImageLoad,
-} from "@utils/helperFunctions";
-import Image from "next/image";
-import { RxCross2 } from "react-icons/rx";
-import ReactCrop, { Crop } from "react-image-crop";
-import { Toaster} from "@components";
-import { ConfirmToast } from "@components/common/ConfirmToast";
-import { Modal } from "@components";
+import { CREATE_ADMIN } from "@graphql/Admins";
+import { useAuth } from "@context/UserContext";
 
-const CreateAdmin: React.FC<CreateAdminProps> = ({
-  setselecteMenu,
-  EditAdminValue,
-  EditInitialValues,
-  setEditProduct,
-}) => {
-  const updateFlag = !!(EditAdminValue && EditInitialValues);
-  const initialFormValues: Admin = updateFlag ? EditAdminValue : initialAdminValues;
-  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(
-    initialFormValues.posterImageUrl ? [initialFormValues.posterImageUrl] : [],
-  );
+const CreateAdmin = ({ setselecteMenu }: CreateAdminProps) => {
+  const handleBack = () => setselecteMenu("AllAdmin");
+  const { admin } = useAuth();
+  const [createAdmin, { loading, error }] = useMutation(CREATE_ADMIN, {
+    context: {
+      headers: {
+        authorization: admin?.accessToken,
+      },
+    },
+  });
 
-  const [isCropModalVisible, setIsCropModalVisible] = useState(false);
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [crop, setCrop] = useState<Crop>();
-  const [croppedImage, setCroppedImage] = useState<string | null>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const session = useSession();
-  const finalToken = session.data?.accessToken;
-  const formikValuesRef = useRef<Admin>(initialFormValues);
-
-  const [createAdmin] = useMutation(CREATE_ADMIN);
-  const [updateAdmin] = useMutation(UPDATE_ADMIN);
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const [formValues] = useState<Admin>(initialFormValues);
-
-  const hasUnsavedChanges = (): boolean => {
-    return JSON.stringify(initialFormValues) !== JSON.stringify(formikValuesRef.current);
-  };
-
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (hasUnsavedChanges()) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-
-    const handlePopState = () => {
-      if (hasUnsavedChanges()) {
-        window.history.pushState(null, "", window.location.href);
-        ConfirmToast({
-          onConfirm: () => {
-            setselecteMenu("AllAdmin");
-            setEditProduct(null);
-          },
-          onCancel: () => {
-            // Do nothing if user cancels
-          },
-        });
-      } else {
-        setselecteMenu("AllAdmin");
-        setEditProduct(null);
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    window.addEventListener("popstate", handlePopState);
-    window.history.pushState(null, "", window.location.href);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      window.removeEventListener("popstate", handlePopState);
-    };
-  }, [formValues]);
-
-  const handleBack = () => {
-    if (hasUnsavedChanges()) {
-      ConfirmToast({
-        onConfirm: () => {
-          setselecteMenu("AllAdmin");
-          setEditProduct(null);
-        },
-        onCancel: () => {
-          // Do nothing if canceled
-        },
+  const handleSubmit = async (values: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    permissions: string[];
+  }) => {
+    try {
+      const result = await createAdmin({
+        variables: { input: values },
       });
-      return;
+      if (result.data?.createAdmin?.status) {
+        Toaster( "success","Admin created successfully!");
+        setselecteMenu("AllAdmin"); 
+      } else {
+        Toaster("error",result.data?.createAdmin?.message);
+      }
+    } catch (err) {
+      Toaster("error", "There was an error creating the admin.");
+      console.error("Error creating admin:", err);
     }
-
-    setselecteMenu("AllAdmin");
-    setEditProduct(null);
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-2xl mx-auto">
+      <button className="dashboard_primary_button mb-4" onClick={handleBack}>
+        <IoMdArrowRoundBack /> Back
+      </button>
+
       <Formik
-        initialValues={initialFormValues}
-        validationSchema={validationAdminSchema}
-        onSubmit={async (values: Admin, { setSubmitting }) => {
-          setLoading(true);
-          try {
-            const posterImage = posterimageUrl?.[0];
-            const inputData = {
-              ...(updateFlag ? { id: EditInitialValues?.id } : {}),
-              ...values,
-              posterImageUrl: posterImage,
-            };
-            // eslint-disable-next-line
-            const { __typename, ...input } = inputData;
-            const mutationFn = updateFlag ? updateAdmin : createAdmin;
-
-            await mutationFn({
-              variables: { input },
-              context: {
-                headers: {
-                  authorization: `Bearer ${finalToken}`,
-                },
-              },
-            });
-
-            setSubmitting(false);
-            setselecteMenu("AllAdmin");
-            setEditProduct(null);
-            setposterimageUrl(undefined);
-            Toaster("success", `Admin ${updateFlag ? "updated" : "created"} successfully`);
-            revalidateTag("Admins");
-            // eslint-disable-next-line
-          } catch (err: any) {
-            setError(err?.message || "An unexpected error occurred.");
-            alert(err?.message || "An error occurred");
-          } finally {
-            setLoading(false);
-          }
+        initialValues={{
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          permissions: [] as string[],
         }}
+        onSubmit={handleSubmit}
       >
-        {({ handleSubmit, values, setValues }) => {
-          formikValuesRef.current = values;
-          return (
-            <>
-              <button className="dashboard_primary_button mb-4" onClick={handleBack}>
-                <IoMdArrowRoundBack /> Back
-              </button>
+        {({ values, setFieldValue }) => (
+          <Form className="bg-white p-6 rounded-lg shadow-lg space-y-4">
+            <h2 className="text-2xl font-bold text-center">Create Admin</h2>
 
-              <Form
-                onSubmit={handleSubmit}
-                className="bg-white dark:bg-black/50 backdrop-blur-3xl p-6 rounded-lg shadow-lg"
-              >
-                <h2 className="text-2xl text-center font-bold mb-6 text-black dark:text-white">
-                  {updateFlag ? "Edit Admin" : "Create New Admin"}
-                </h2>
+            <Input label="First Name" name="firstName" />
+            <Input label="Last Name" name="lastName" />
+            <Input label="Email" name="email" type="email" />
+            <Input label="Password" name="password" type="password" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label
-                      htmlFor="fullname"
-                      className="block text-sm font-medium text-black dark:text-white mb-1"
-                    >
-                      Full Name
-                    </label>
-                    <Field
-                      type="text"
-                      id="fullname"
-                      name="fullname"
-                      placeholder="Full Name"
-                      className="primary-input"
-                    />
-                    <ErrorMessage name="fullname" component="p" className="text-red-500 text-sm" />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-black dark:text-white mb-1"
-                    >
-                      Email
-                    </label>
-                    <Field
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="Enter Email"
-                      className="primary-input"
-                    />
-                    <ErrorMessage name="email" component="p" className="text-red-500 text-sm" />
-                  </div>
-                </div>
-
-                <div className="mb-4">
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">Permissions</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-96 overflow-y-auto p-2">
+                {PermissionOptions.map((permission) => (
                   <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-black dark:text-white mb-1"
+                    key={permission.value}
+                    className="flex items-center gap-3 p-2 border rounded-lg hover:bg-gray-50 cursor-pointer"
                   >
-                    Password
+                    <input
+                      type="checkbox"
+                      checked={values.permissions.includes(permission.value)}
+                      onChange={() => {
+                        const currentPermissions = values.permissions;
+                        if (currentPermissions.includes(permission.value)) {
+                          setFieldValue(
+                            "permissions",
+                            currentPermissions.filter((p) => p !== permission.value),
+                          );
+                        } else {
+                          setFieldValue("permissions", [...currentPermissions, permission.value]);
+                        }
+                      }}
+                      className="w-4 h-4 bg-gray-100 border-gray-300 rounded"
+                    />
+                    <span className="text-sm font-medium">{permission.display}</span>
                   </label>
-                  <Field
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter Password"
-                    className="primary-input"
-                  />
-                  <ErrorMessage name="password" component="p" className="text-red-500 text-sm" />
-                </div>
+                ))}
+              </div>
 
-                <div className="rounded-sm border border-stroke mb-4">
-                  <div className="border-b border-stroke px-4">
-                    <h3 className="primary-label">Add Profile Photo</h3>
+              {values.permissions.length > 0 && (
+                <div className="mt-3 p-3 bg-blue-50 rounded-lg">
+                  <p className="text-sm font-medium text-primary">Selected Permissions:</p>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {values.permissions.map((permissionValue) => {
+                      const permission = PermissionOptions.find((p) => p.value === permissionValue);
+                      return (
+                        <span
+                          key={permissionValue}
+                          className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                        >
+                          {permission ? permission.display : permissionValue}
+                        </span>
+                      );
+                    })}
                   </div>
-
-                  {posterimageUrl && posterimageUrl.length > 0 ? (
-                    <div className="p-3">
-                      {posterimageUrl.map((item, index) => (
-                        <div key={index}>
-                          <div className="relative group rounded-lg overflow-hidden shadow-md w-52 h-52 transform transition-transform duration-300 hover:scale-105">
-                            <div className="absolute top-1 right-1 invisible group-hover:visible text-red z-10 rounded-full">
-                              <RxCross2
-                                className="cursor-pointer border border-black text-red-500 dark:text-red-700"
-                                size={17}
-                                onClick={() => {
-                                  ImageRemoveHandler(item.public_id, setposterimageUrl);
-                                }}
-                              />
-                            </div>
-                            <Image
-                              onClick={() =>
-                                handleCropClick(item.imageUrl, setImageSrc, setIsCropModalVisible)
-                              }
-                              className="cursor-crosshair inset-0"
-                              fill
-                              loading="lazy"
-                              src={item.imageUrl || ""}
-                              alt={`productImage-${index}`}
-                            />
-                          </div>
-                          <div className="my-2">
-                            <input
-                              className="dashboard_input"
-                              placeholder="altText"
-                              type="text"
-                              name="altText"
-                              value={item?.altText || ""}
-                              onChange={(e) =>
-                                handleImageAltText(
-                                  index,
-                                  String(e.target.value),
-                                  setposterimageUrl,
-                                  "altText",
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <ImageUploader setImagesUrl={setposterimageUrl} />
-                  )}
                 </div>
+              )}
+            </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
-                  {checkboxAdminData.map((checkbox) => (
-                    <label key={checkbox.name} className="flex items-center gap-2">
-                      <Field
-                        type="checkbox"
-                        name={checkbox.name}
-                        className="h-4 w-4 accent-black dark:accent-primary border-gray-300 rounded"
-                      />
-                      <span className="text-sm text-black dark:text-white">{checkbox.label}</span>
-                    </label>
-                  ))}
-                </div>
+            {/* Error Message */}
+            {error && (
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-700 text-sm">
+                  Error: {error.message}
+                </p>
+              </div>
+            )}
 
-                <div className="flex justify-between mb-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const clearedPermissions: Partial<Record<keyof adminCheckBox, boolean>> = {};
-                      checkboxAdminData.forEach((cb) => {
-                        clearedPermissions[cb.name as keyof adminCheckBox] = false;
-                      });
-                      setValues({ ...values, ...clearedPermissions });
-                    }}
-                    className="dashboard_primary_button"
-                  >
-                    Clear All
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const allPermissions: Partial<Record<keyof adminCheckBox, boolean>> = {};
-                      checkboxAdminData.forEach((cb) => {
-                        allPermissions[cb.name as keyof adminCheckBox] = true;
-                      });
-                      setValues({ ...values, ...allPermissions });
-                    }}
-                    className="dashboard_primary_button"
-                  >
-                    Mark All Permissions
-                  </button>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`w-full flex justify-center dashboard_primary_button ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
-                >
-                  {loading ? "Loading..." : updateFlag ? "Update Admin" : "Add Admin"}
-                </button>
-
-                {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
-
-                <Modal
-                  title="Crop Image"
-                  isOpen={isCropModalVisible}
-                  onOk={() =>
-                    handleCropModalOk(
-                      croppedImage,
-                      imageSrc,
-                      setIsCropModalVisible,
-                      setCroppedImage,
-                      setposterimageUrl,
-                    )
-                  }
-                  onClose={() => handleCropModalCancel(setIsCropModalVisible, setCroppedImage)}
-                  width={500}
-                  height={400}
-                >
-                  {imageSrc && (
-                    <ReactCrop
-                      crop={crop}
-                      onChange={(newCrop) => setCrop(newCrop)}
-                      onComplete={() => onCropComplete(crop, imgRef, setCroppedImage)}
-                    >
-                      <Image
-                        width={500}
-                        height={300}
-                        ref={imgRef}
-                        src={imageSrc}
-                        alt="Crop me"
-                        style={{ maxWidth: "100%" }}
-                        onLoad={(e) => onImageLoad(e, setCrop)}
-                        crossOrigin="anonymous"
-                      />
-                    </ReactCrop>
-                  )}
-                </Modal>
-              </Form>
-            </>
-          );
-        }}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex justify-center dashboard_primary_button mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Creating Admin..." : "Add Admin"}
+            </button>
+          </Form>
+        )}
       </Formik>
     </div>
   );

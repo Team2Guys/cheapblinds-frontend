@@ -1,145 +1,88 @@
 import { gql } from "@apollo/client";
 
+// --- LOGIN MUTATIONS ---
+
+export const SUPER_ADMIN_LOGIN = gql`
+  mutation SigninSuperAdmin($input: SigninInput!) {
+    signinSuperAdmin(input: $input) {
+      status
+      message
+      data {
+        id
+        accessToken
+        role
+      }
+    }
+  }
+`;
+
 export const ADMIN_LOGIN = gql`
-  mutation AdminLogin($email: String!, $password: String!) {
-    adminLogin(AdminLogin: { email: $email, password: $password }) {
-      id
-      fullname
-      email
-      canAddProduct
-      canEditProduct
-      canDeleteProduct
-      canAddCategory
-      canDeleteCategory
-      canEditCategory
-      canCheckProfit
-      canCheckRevenue
-      canCheckVisitors
-      canViewUsers
-      canViewSales
-      canVeiwAdmins
-      canVeiwTotalproducts
-      canVeiwTotalCategories
-      canAddSubCategory
-      canDeleteSubCategory
-      canEditSubCategory
-      canVeiwTotalSubCategories
-      canAddBlog
-      canDeleteBlog
-      canEditBlog
-      canVeiwTotalBlog
-      canAddRedirecturls
-      canDeleteRedirecturls
-      canEditRedirecturls
-      canVeiwTotalRedirecturls
-      canViewAppointments
-      posterImageUrl
-      role
-      token
+  mutation SigninAdmin($input: SigninInput!) {
+    signinAdmin(input: $input) {
+      status
+      message
+      data {
+        id
+        accessToken
+        role
+      }
     }
   }
 `;
-export const super_admin_ADMIN_LOGIN = gql`
-  mutation superAdminLogin($email: String!, $password: String!) {
-    superAdminLogin(superAdminLogin: { email: $email, password: $password }) {
-      id
-      fullname
-      email
-      canAddProduct
-      canEditProduct
-      canDeleteProduct
-      canAddCategory
-      canDeleteCategory
-      canEditCategory
-      canCheckProfit
-      canCheckRevenue
-      canCheckVisitors
-      canViewUsers
-      canViewSales
-      canVeiwAdmins
-      canVeiwTotalproducts
-      canVeiwTotalCategories
-      posterImageUrl
-      role
-      token
-    }
-  }
-`;
+
+// --- ADMIN MANAGEMENT MUTATIONS ---
 
 export const CREATE_ADMIN = gql`
   mutation CreateAdmin($input: CreateAdminInput!) {
-    createAdmin(createAdminInput: $input) {
-      id
-      fullname
-      email
-      role
-      canAddProduct
-      canEditProduct
-      canDeleteProduct
-      canAddCategory
-      canDeleteCategory
-      canEditCategory
-      canCheckProfit
-      canCheckRevenue
-      canCheckVisitors
-      canViewUsers
-      canViewSales
-      canVeiwAdmins
-      canVeiwTotalproducts
-      canVeiwTotalCategories
-      posterImageUrl
-      canAddSubCategory
-      canDeleteSubCategory
-      canEditSubCategory
-      canVeiwTotalSubCategories
-      canAddBlog
-      canDeleteBlog
-      canEditBlog
-      canVeiwTotalBlog
-      canAddRedirecturls
-      canDeleteRedirecturls
-      canEditRedirecturls
-      canVeiwTotalRedirecturls
-      canViewAppointments
+    createAdmin(input: $input) {
+      status
+      message
     }
   }
 `;
 
-export const UPDATE_ADMIN = gql`
-  mutation UpdateAdmin($input: UpdateAdminInput!) {
-    updateAdmin(updateAdminInput: $input) {
-      id
-      fullname
-      email
-      role
-      canAddProduct
-      canEditProduct
-      canDeleteProduct
-      canAddCategory
-      canDeleteCategory
-      canEditCategory
-      canCheckProfit
-      canCheckRevenue
-      canCheckVisitors
-      canViewUsers
-      canViewSales
-      canVeiwAdmins
-      canVeiwTotalproducts
-      canVeiwTotalCategories
-      posterImageUrl
-      canAddSubCategory
-      canDeleteSubCategory
-      canEditSubCategory
-      canVeiwTotalSubCategories
-      canAddBlog
-      canDeleteBlog
-      canEditBlog
-      canVeiwTotalBlog
-      canAddRedirecturls
-      canDeleteRedirecturls
-      canEditRedirecturls
-      canVeiwTotalRedirecturls
-      canViewAppointments
+export const UPDATE_ADMIN_BY_ID = gql`
+  mutation UpdateAdminById($input: UpdateAdminByIdInput!) {
+    updateAdminById(input: $input) {
+      status
+      message
+      data {
+        id
+        firstName
+        lastName
+        email
+        role
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const REMOVE_ADMIN_BY_ID = gql`
+  mutation removeAdminById($input: RemoveAdminByIdInput!) {
+    removeAdminById(input: $input) {
+      status
+      message
+    }
+  }
+`;
+
+
+export const GET_ADMIN_BY_ID = gql`
+  query GetAdminById($input: GetAdminByIdInput!) {
+    getAdminById(input: $input) {
+      status
+      message
+      data {
+        id
+        firstName
+        lastName
+        email
+        role
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

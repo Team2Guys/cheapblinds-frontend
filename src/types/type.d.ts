@@ -257,43 +257,14 @@ interface Color {
   colorName?: string;
 }
 
-// types/permissions.ts
-export type Permissions = {
-  canAddProduct?: boolean;
-  canEditProduct?: boolean;
-  canDeleteProduct?: boolean;
-  canAddCategory?: boolean;
-  canDeleteCategory?: boolean;
-  canEditCategory?: boolean;
-  canCheckProfit?: boolean;
-  canCheckRevenue?: boolean;
-  canCheckVisitors?: boolean;
-  canViewUsers?: boolean;
-  canViewSales?: boolean;
-  canVeiwAdmins?: boolean;
-  canVeiwTotalproducts?: boolean;
-  canVeiwTotalCategories?: boolean;
-  canAddSubCategory?: boolean;
-  canDeleteSubCategory?: boolean;
-  canEditSubCategory?: boolean;
-  canVeiwTotalSubCategories?: boolean;
-  canAddBlog?: boolean;
-  canDeleteBlog?: boolean;
-  canEditBlog?: boolean;
-  canVeiwTotalBlog?: boolean;
-  canAddRedirecturls?: boolean;
-  canDeleteRedirecturls?: boolean;
-  canEditRedirecturls?: boolean;
-  canVeiwTotalRedirecturls?: boolean;
-  canViewAppointments?: boolean;
-};
 
-export interface Admin extends Permissions {
+export interface Admin  {
   id?: string | number;
-  fullname?: string;
+  firstName?: string;
+  lastName?: string;
   email?: string;
+  Permissions?: string[];
   password?: string;
-  posterImageUrl?: ProductImage;
   __typename?: string;
 }
 

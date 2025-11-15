@@ -1,10 +1,10 @@
 import { DocumentNode } from "@apollo/client";
 import { GET_SOCIAL_LINKS } from "@graphql/Socials";
-import ApoloClient from "@utils/AppoloClient";
+import ApolloCustomClient from "@utils/apollo-client";
 
 export const fetchSocialLinks = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT ? FIND_QUICK_VIEW_PRODUCT : GET_SOCIAL_LINKS,
 
       fetchPolicy: "no-cache",

@@ -9,11 +9,10 @@ import { Category } from "@/types/cat";
 import { useMutation } from "@apollo/client";
 import { REMOVE_CATEGORY } from "@graphql/categories";
 import { CustomTable } from "@components";
-import { useSession } from "next-auth/react";
 import { DateFormatHandler } from "@utils/helperFunctions";
-import { getPermission } from "@utils/permissionHandlers";
-import { Toaster} from "@components";
+import { Toaster } from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
+import { useAuth } from "@context/UserContext";
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
   seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -24,8 +23,7 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
   const [category, setCategory] = useState<Category[] | undefined>(cetagories);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [removeCategory] = useMutation(REMOVE_CATEGORY);
-  const { data: session } = useSession();
-  const finalToken = session?.accessToken;
+  const { user } = useAuth();
   useEffect(() => {
     setCategory(cetagories);
   }, [cetagories]);
@@ -57,12 +55,6 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
         })) ||
     [];
 
-  const canDeleteCategory = getPermission(session, "canDeleteCategory");
-  const canAddCategory = getPermission(session, "canAddCategory");
-  const canEditCategory = getPermission(session, "canEditCategory");
-
-  console.log(session, "session");
-
   const confirmDelete = (key: string | number) => {
     ConfirmToast({
       message: "Once deleted, the Category cannot be recovered.",
@@ -76,12 +68,16 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
   };
 
   const handleDelete = async (key: number | string) => {
+    if (!user?.accessToken) {
+      Toaster("error", "Unauthorized: no token found");
+      return;
+    }
     try {
       await removeCategory({
         variables: { id: Number(key) },
         context: {
           headers: {
-            authorization: `Bearer ${finalToken}`,
+            authorization: `Bearer ${user.accessToken}`,
           },
           credentials: "include",
         },
@@ -168,10 +164,10 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
       render: (record: Category) => (
         <LiaEdit
           aria-label="Edit Category"
-          className={`${canEditCategory && "text-black dark:text-white cursor-pointer transition duration-300 ease-in-out hover:scale-200"} ${!canEditCategory && "cursor-not-allowed text-slate-400"}`}
+          className="text-black dark:text-white cursor-pointer transition duration-300 ease-in-out hover:scale-200"
           size={20}
           onClick={() => {
-            if (canEditCategory) handleEdit(record);
+            handleEdit(record);
           }}
         />
       ),
@@ -183,12 +179,10 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
       render: (record: Category) => (
         <RiDeleteBin6Line
           aria-label="Delete Category"
-          className={`${canDeleteCategory && "text-red-500 cursor-pointer dark:text-red-700 transition duration-300 ease-in-out hover:scale-200"} ${!canDeleteCategory && "cursor-not-allowed text-slate-400"}`}
+          className="text-red-500 cursor-pointer dark:text-red-700 transition duration-300 ease-in-out hover:scale-200"
           size={20}
           onClick={() => {
-            if (canDeleteCategory) {
-              confirmDelete(record.id);
-            }
+            confirmDelete(record.id);
           }}
         />
       ),
@@ -207,12 +201,10 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
         />
         <div>
           <p
-            className={`${!canAddCategory ? "cursor-not-allowed border-0 bg-black/60 dark:bg-primary/60" : "cursor-pointer"} dashboard_primary_button`}
+            className="border-0 bg-black cursor-pointer dashboard_primary_button"
             onClick={() => {
               seteditCategory?.(undefined);
-              if (canAddCategory) {
-                setMenuType("Add Category");
-              }
+              setMenuType("Add Category");
             }}
           >
             Add Category

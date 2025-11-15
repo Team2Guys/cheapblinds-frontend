@@ -17,9 +17,7 @@ import {
 } from "@config/fetch";
 import { Metadata } from "next";
 import { ISEO_TAGS, SEARCH_PARAMS } from "@/types/CommonTypes";
-import ApoloClient from "@utils/AppoloClient";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@components/auth/authOptions";
+import ApolloCustomClient from "@utils/apollo-client";
 
 async function revalidateTag(name: string) {
   revalidate(name);
@@ -30,7 +28,7 @@ export default revalidateTag;
 export const getAdminData = async () => {
   try {
     // const token =   await getToken()
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: GET_ADMIN_DATA,
       // context: {
       //   headers: {
@@ -179,11 +177,4 @@ export const SeoTagsHandlerpproduct = async (
   if (!product) return null;
 
   return await metaObjecthandler(product, search_params);
-};
-
-export const getAdminDetails = async () => {
-  const user = await getServerSession(authOptions);
-  // const user = 'hello';
-
-  return user ? user : "this is my user object";
 };

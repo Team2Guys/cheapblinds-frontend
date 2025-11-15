@@ -1,16 +1,25 @@
-import { get_allAdmins } from "@config/fetch";
+"use client";
+import React, { useEffect, useState } from "react";
 import Admins from "./Admins";
-import { authOptions } from "@components/auth/authOptions";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { useAuth } from "@context/UserContext";
+import { getAllAdmins } from "@config/fetch";
 
-const SuperAdmin = async () => {
-  const session = await getServerSession(authOptions);
+const SuperAdmin = () => {
+  const { admin } = useAuth();
+  const [adminList, setAdminList] = useState([]);
 
-  const accessToken = session?.accessToken;
-  if (session?.user.role === "Admin") return redirect("/not-found");
-  const admins = await get_allAdmins(accessToken);
-  return <Admins admins={admins} />;
+  useEffect(() => {
+    if (!admin?.accessToken) return;
+
+    const fetchAdmins = async () => {
+      const data = await getAllAdmins(admin.accessToken);
+      setAdminList(data);
+    };
+
+    fetchAdmins();
+  }, [admin?.accessToken]);
+
+  return <Admins admins={adminList} />;
 };
 
 export default SuperAdmin;

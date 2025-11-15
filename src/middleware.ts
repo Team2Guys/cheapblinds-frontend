@@ -2,20 +2,22 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
+  return;
   try {
-    const token =
-      req.cookies.get("next-auth.session-token")?.value ||
-      req.cookies.get("__Secure-next-auth.session-token")?.value;
+    // Get token from cookie (store your AdminToken in cookies on login)
+    const token = req.cookies.get("AdminToken")?.value;
 
     const pathname = req.nextUrl.pathname;
     const isAuthRoute =
       pathname === "/dashboard/Admin-login" || pathname === "/dashboard/Admin-login/";
     const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute;
 
+    // If user is logged in and visits login page, redirect to dashboard
     if (token && isAuthRoute) {
       return NextResponse.redirect(new URL("/dashboard/", req.url));
     }
 
+    // If user is not logged in and tries to access protected routes
     if (!token && isProtectedRoute) {
       return NextResponse.redirect(new URL("/dashboard/Admin-login/", req.url));
     }
@@ -28,5 +30,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|.*\\.).+)"],
+  matcher: ["/dashboard/:path*"], // restrict only to dashboard routes
 };

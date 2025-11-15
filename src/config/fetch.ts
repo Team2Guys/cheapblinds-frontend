@@ -13,13 +13,13 @@ import { DocumentNode } from "@apollo/client";
 import { FETCH_ALL_ECOMERECE, FIND_ONE_Accessory } from "@graphql/Accessories";
 import { Category } from "@/types/cat";
 // import { getToken } from '@components/ServerActons/ServerAction';
-import ApoloClient from "@utils/AppoloClient";
 import { GET_ALL_CATEGORIES, GET_ALL_SUBCATEGORIES } from "@graphql/categories";
 import { GET_ALL_PRODUCTS } from "@graphql/prod";
+import ApolloCustomClient from "@utils/apollo-client";
 
 export const fetchProducts = async (CUSTOMIZE_QUERY?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: CUSTOMIZE_QUERY ? CUSTOMIZE_QUERY : GET_ALL_PRODUCTS,
       fetchPolicy: "no-cache",
       context: {
@@ -39,7 +39,7 @@ export const fetchProducts = async (CUSTOMIZE_QUERY?: DocumentNode) => {
 
 export const fetchCategories = async (FETCH_HEADER_CATEGORIES?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FETCH_HEADER_CATEGORIES ? FETCH_HEADER_CATEGORIES : GET_ALL_CATEGORIES,
       fetchPolicy: "no-cache",
       context: {
@@ -56,7 +56,7 @@ export const fetchCategories = async (FETCH_HEADER_CATEGORIES?: DocumentNode) =>
 
 export const fetchSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FETCHSUBCAT ? FETCHSUBCAT : GET_ALL_SUBCATEGORIES,
       fetchPolicy: "no-cache",
       context: {
@@ -72,7 +72,7 @@ export const fetchSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
 
 export const fetchinnerSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FETCHSUBCAT ? FETCHSUBCAT : FETCH_ALL_INNER_SUB_CATEGORIES,
       fetchPolicy: "no-cache",
       context: {
@@ -89,7 +89,7 @@ export const fetchinnerSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
 
 export const fetchAppointments = async (token: string | undefined) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FETCH_ALL_APPOINTMENTS,
       fetchPolicy: "no-cache",
       context: {
@@ -111,7 +111,7 @@ export const fetchAppointments = async (token: string | undefined) => {
 export const get_all_records = async () => {
   // const token  = await getToken()
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: GET_ALL_RECORDS,
       fetchPolicy: "no-cache",
       context: {
@@ -130,30 +130,9 @@ export const get_all_records = async () => {
   }
 };
 
-export const get_allAdmins = async (token: string | undefined) => {
-  try {
-    const { data } = await ApoloClient.query({
-      query: GET_ALL_ADMINS,
-      fetchPolicy: "no-cache",
-      context: {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-        fetchOptions: {
-          next: { tags: ["Admins"] },
-        },
-      },
-    });
-    return data?.admins || [];
-  } catch (error) {
-    return [];
-    return error;
-  }
-};
-
 export const fetchEcomereceProducts = async (CUSTOMISE_ACCESSORIES?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: CUSTOMISE_ACCESSORIES ? CUSTOMISE_ACCESSORIES : FETCH_ALL_ECOMERECE,
       fetchPolicy: "no-cache",
       context: {
@@ -176,7 +155,7 @@ export const fetchSingleCategory = async (
   FIND_ONE_CUSTOM_QUERY?: DocumentNode,
 ): Promise<Category | null> => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : FIND_ONE_CATEGORY,
       variables: { customUrl },
       fetchPolicy: "no-cache",
@@ -197,7 +176,7 @@ export const fetchSingeSubCategory = async (
   FIND_ONE_CUSTOM_QUERY?: DocumentNode,
 ) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : FIND_ONE_SUB_CATEGORY,
       variables: { custom_url, category },
       fetchPolicy: "no-cache",
@@ -219,7 +198,7 @@ export const fetchSingeProduct = async (
   FIND_QUICK_VIEW_PRODUCT?: DocumentNode,
 ) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT ? FIND_QUICK_VIEW_PRODUCT : FIND_ONE_PRODUCT,
       variables: { custom_url: customUrl, category, subCategory },
       fetchPolicy: "no-cache",
@@ -240,7 +219,7 @@ export const fetchSingeEComProduct = async (
   FIND_QUICK_VIEW_PRODUCT?: DocumentNode,
 ) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT ? FIND_QUICK_VIEW_PRODUCT : FIND_ONE_Accessory,
       variables: { custom_url: customUrl, category, subCategory },
       fetchPolicy: "no-cache",
@@ -257,7 +236,7 @@ export const fetchSingeEComProduct = async (
 
 export const fetchOrders = async (FETCH_ORDERS?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FETCH_ORDERS ? FETCH_ORDERS : FETCH_ALL_ORDERS,
       fetchPolicy: "no-cache",
       context: {
@@ -273,5 +252,29 @@ export const fetchOrders = async (FETCH_ORDERS?: DocumentNode) => {
   } catch (error) {
     return [];
     throw error;
+  }
+};
+
+export const getAllAdmins = async (token?: string) => {
+  try {
+    const { data } = await ApolloCustomClient.query({
+      query: GET_ALL_ADMINS,
+      fetchPolicy: "no-cache",
+      context: {
+        headers: {
+          authorization: token,
+        },
+        fetchOptions: {
+          next: { tags: ["Admins"] },
+        },
+      },
+    });
+
+    const admins = data?.getAdmins?.data || [];
+
+    return admins;
+  } catch (error) {
+    console.error("Error fetching admins:", error);
+    return [];
   }
 };

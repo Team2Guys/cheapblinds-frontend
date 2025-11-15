@@ -55,37 +55,6 @@ export const validationSchema = Yup.object({
   address: Yup.string().required("Address is required"),
 });
 
-export const validationAdminSchema = Yup.object().shape({
-  fullname: Yup.string().required("Full Name is required"),
-  email: Yup.string().email("Invalid email address").required("Email is required"),
-  password: Yup.string().required("Password is required"),
-  canAddProduct: Yup.boolean(),
-  canEditProduct: Yup.boolean(),
-  canDeleteProduct: Yup.boolean(),
-  canAddCategory: Yup.boolean(),
-  canDeleteCategory: Yup.boolean(),
-  canEditCategory: Yup.boolean(),
-  canCheckProfit: Yup.boolean(),
-  canCheckRevenue: Yup.boolean(),
-  canCheckVisitors: Yup.boolean(),
-  canViewUsers: Yup.boolean(),
-  canViewSales: Yup.boolean(),
-  canVeiwAdmins: Yup.boolean(),
-  canVeiwTotalproducts: Yup.boolean(),
-  canVeiwTotalCategories: Yup.boolean(),
-  canDeleteSubCategory: Yup.boolean(),
-  canEditSubCategory: Yup.boolean(),
-  canVeiwTotalSubCategories: Yup.boolean(),
-  canAddBlog: Yup.boolean(),
-  canDeleteBlog: Yup.boolean(),
-  canEditBlog: Yup.boolean(),
-  canVeiwTotalBlog: Yup.boolean(),
-  canAddRedirecturls: Yup.boolean(),
-  canDeleteRedirecturls: Yup.boolean(),
-  canEditRedirecturls: Yup.boolean(),
-  canVeiwTotalRedirecturls: Yup.boolean(),
-  canViewAppointments: Yup.boolean(),
-});
 
 export const validationBlogSchema = Yup.object({
   title: Yup.string().required("Title is required"),
@@ -100,4 +69,43 @@ export const validationBlogSchema = Yup.object({
 export const validationRedirctUlrsSchema = Yup.object({
   url: Yup.string().required("Url is required"),
   redirectedUrl: Yup.string().required("redirectedUrl is required"),
+});
+
+export const signUp_validationSchema = Yup.object({
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
+  email: Yup.string().email("Invalid email address").required("Email address is required"),
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[A-Z]/, "Must contain at least one uppercase letter")
+    .matches(/[a-z]/, "Must contain at least one lowercase letter")
+    .matches(/\d/, "Must contain at least one number")
+    .matches(/[@$!%*?&]/, "Must contain at least one special character (@, $, !, %, *, ?, &)")
+    .required("Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), ""], "Passwords must match")
+    .required("Confirm password is required"),
+});
+
+export const SignIn_validationSchema = Yup.object({
+  email: Yup.string().email("Invalid email address").required("Email is required"),
+  password: Yup.string().required("Password is required"),
+});
+
+export const ForgotForm_validationSchema = Yup.object({
+  email: Yup.string().email("Invalid email address").required("Email address is required"),
+});
+
+
+export const UpdatePasswordSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[A-Z]/, "Must contain at least one uppercase letter")
+    .matches(/[a-z]/, "Must contain at least one lowercase letter")
+    .matches(/\d/, "Must contain at least one number")
+    .matches(/[@$!%*?&]/, "Must contain at least one special character (@, $, !, %, *, ?, &)")
+    .required("Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .required("Required"),
 });

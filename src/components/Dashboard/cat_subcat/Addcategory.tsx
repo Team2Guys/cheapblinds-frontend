@@ -19,14 +19,14 @@ import { Category, EDIT_CATEGORY } from "@/types/cat";
 import ReactCrop, { Crop } from "react-image-crop";
 import TinyMCEEditor from "@components/Dashboard/tinyMc/MyEditor";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import { useSession } from "next-auth/react";
-import ApoloClient from "@utils/AppoloClient";
+import ApolloCustomClient from "@utils/apollo-client";
 import { CREATE_CATEGORY, GET_ALL_CATEGORIES, UPDATE_CATEGORY } from "@graphql/categories";
 import { categoryValidationSchema } from "@data/Validations";
 import { categoryInitialValues } from "@data/InitialValues";
-import { Toaster} from "@components";
+import { Toaster } from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
 import { Modal } from "@components";
+import { useAuth } from "@context/UserContext";
 
 interface editCategoryProps {
   seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -37,9 +37,8 @@ interface editCategoryProps {
 const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategoryProps) => {
   const CategoryName: EDIT_CATEGORY =
     editCategory && editCategory.name ? editCategory : categoryInitialValues;
-
-  const session = useSession();
-  const finalToken = session.data?.accessToken;
+  const { user } = useAuth();
+  const finalToken = user?.accessToken;
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(
     editCategory && editCategory.posterImageUrl ? [editCategory.posterImageUrl] : undefined,
   );
@@ -66,7 +65,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
       const updateFlag = editCategoryName ? true : false;
       setloading(true);
       if (updateFlag) {
-        await ApoloClient.mutate({
+        await ApolloCustomClient.mutate({
           mutation: UPDATE_CATEGORY,
           context: {
             headers: {
@@ -78,7 +77,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
           refetchQueries: [{ query: GET_ALL_CATEGORIES }],
         });
       } else {
-        await ApoloClient.mutate({
+        await ApolloCustomClient.mutate({
           mutation: CREATE_CATEGORY,
           variables: { input: newValue },
           refetchQueries: [{ query: GET_ALL_CATEGORIES }],
@@ -315,7 +314,7 @@ const AddCategory = ({ seteditCategory, editCategory, setMenuType }: editCategor
                         })}
                       </div>
                     ) : (
-                      <ImageUploader setImagesUrl={setposterimageUrl} />
+                      <ImageUploader setImagesUrl={setposterimageUrl}  />
                     )}
                   </div>
                   <Modal

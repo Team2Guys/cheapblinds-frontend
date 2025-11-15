@@ -1,9 +1,8 @@
-// auth.js
 import { gql } from "@apollo/client";
 
 export const SIGN_UP = gql`
-  mutation SignUp($input: SignUpInput!) {
-    signUp(input: $input) {
+  mutation Signup($input: SignupInput!) {
+    signup(input: $input) {
       status
       message
     }
@@ -11,13 +10,12 @@ export const SIGN_UP = gql`
 `;
 
 export const SIGN_IN = gql`
-  mutation SignIn($input: SignInInput!) {
-    signIn(input: $input) {
+  mutation Signin($input: SigninInput!) {
+    signin(input: $input) {
       status
       message
       data {
         id
-        role
         accessToken
       }
     }

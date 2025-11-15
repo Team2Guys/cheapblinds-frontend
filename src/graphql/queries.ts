@@ -687,46 +687,7 @@ export const FETCH_ALL_INNER_SUB_CATEGORIES = gql`
   }
 `;
 
-// Admins
-export const GET_ALL_ADMINS = gql`
-  query Admins {
-    admins {
-      id
-      fullname
-      email
-      password
-      canAddProduct
-      canEditProduct
-      canDeleteProduct
-      canAddCategory
-      canDeleteCategory
-      canEditCategory
-      canCheckProfit
-      canCheckRevenue
-      canCheckVisitors
-      canViewUsers
-      canViewSales
-      canVeiwAdmins
-      canVeiwTotalproducts
-      canVeiwTotalCategories
-      canAddSubCategory
-      canDeleteSubCategory
-      canEditSubCategory
-      canVeiwTotalSubCategories
-      canAddBlog
-      canDeleteBlog
-      canEditBlog
-      canVeiwTotalBlog
-      canAddRedirecturls
-      canDeleteRedirecturls
-      canEditRedirecturls
-      canVeiwTotalRedirecturls
-      canViewAppointments
-      posterImageUrl
-      role
-    }
-  }
-`;
+
 
 export const FETCH_ALL_ORDERS = gql`
   query AllOrders {
@@ -767,6 +728,27 @@ export const FETCH_ALL_ORDERS = gql`
         totalPrice
         image
         dimension
+      }
+    }
+  }
+`;
+
+
+// Admins
+export const GET_ALL_ADMINS = gql`
+query GetAdmins {
+    getAdmins {
+      status
+      message
+      data {
+        id
+        firstName
+        lastName
+        email
+        permissions
+        role
+        createdAt
+        updatedAt
       }
     }
   }

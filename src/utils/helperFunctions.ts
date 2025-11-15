@@ -54,85 +54,6 @@ export const handleImageAltText = (
   });
 };
 
-export function getExpectedDeliveryDate(
-  shippingMethod: "Standard Shipping" | "Next-day Shipping" | "Lightning Shipping",
-  orderTime: Date,
-): string {
-  const orderHour = orderTime.getHours();
-  const baseDate = new Date(orderTime);
-
-  /* ───────── Lightning ───────── */
-  if (shippingMethod === "Lightning Shipping") {
-    const deliveryDate = addWorkingDays(baseDate, orderHour < 13 ? 0 : 1);
-    return `Delivery within 1 day i.e. ${formatDate(deliveryDate)}`;
-  }
-
-  /* ───────── Next‑day ───────── */
-  if (shippingMethod === "Next-day Shipping") {
-    const deliveryDate = addWorkingDays(baseDate, orderHour < 13 ? 1 : 2);
-    return `Delivery in 1 day i.e. ${formatDate(deliveryDate)}`;
-  }
-
-  if (shippingMethod === "Standard Shipping") {
-    const fromDate = addWorkingDays(baseDate, 3);
-    const toDate = addWorkingDays(baseDate, 4);
-    return `Delivery in 3–4 days i.e. ${formatDate(fromDate)} to ${formatDate(toDate)}`;
-  }
-  return "";
-}
-
-function addWorkingDays(date: Date, days: number): Date {
-  const result = new Date(date);
-  while (days > 0) {
-    result.setDate(result.getDate() + 1);
-    const day = result.getDay();
-    if (day !== 0 && day !== 6) {
-      // Skip Sunday (0) and Saturday (6)
-      days--;
-    }
-  }
-  return result;
-}
-
-export function trackingOrder(
-  shippingMethod: "Standard Shipping" | "Next-day Shipping" | "Lightning Shipping",
-  orderTime: Date,
-): string {
-  const orderHour = orderTime.getHours();
-  const base = new Date(orderTime);
-
-  switch (shippingMethod) {
-    /* ───────── Lightning ───────── */
-    case "Lightning Shipping": {
-      const delivery = addWorkingDays(base, orderHour < 13 ? 0 : 1);
-      return formatDate(delivery);
-    }
-
-    /* ───────── Next‑day ───────── */
-    case "Next-day Shipping": {
-      const delivery = addWorkingDays(base, orderHour < 13 ? 1 : 2);
-      return formatDate(delivery);
-    }
-
-    /* ───────── Standard (3‑4 working‑day) ───────── */
-    case "Standard Shipping": {
-      const from = addWorkingDays(base, 3);
-      const to = addWorkingDays(base, 4);
-      return `${formatDate(from)} to ${formatDate(to)}`;
-    }
-
-    /* ───────── Fallback (2‑3 *calendar* days) ───────── */
-    default: {
-      const from = new Date(base);
-      from.setDate(from.getDate() + 2);
-
-      const to = new Date(base);
-      to.setDate(to.getDate() + 3);
-
-      return `${formatDate(from)} to ${formatDate(to)}`;
-    }
-  }
-}
 
 export function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
@@ -330,4 +251,12 @@ export const onCropComplete = (
 
   const base64Image = canvas?.toDataURL("image/jpeg");
   setCroppedImage(base64Image);
+};
+
+
+export const formatPermission = (perm: string) => {
+  return perm
+    .split("-")
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ");
 };

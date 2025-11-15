@@ -3,20 +3,19 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Cookies from "js-cookie";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import { signOut, useSession } from "next-auth/react";
+import { useAuth } from "@context/UserContext";
 
-const DropdownUser = () => {
+const DropdownAdmin = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { data: session } = useSession();
+  const { logoutAdmin, role } = useAuth();
 
   const trigger = useRef<HTMLDivElement>(null);
   const dropdown = useRef<HTMLDivElement>(null);
 
-  // close on click outside
+  // Close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
@@ -32,7 +31,7 @@ const DropdownUser = () => {
     return () => document.removeEventListener("click", clickHandler);
   });
 
-  // close if the esc key is pressed
+  // Close on ESC key
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
       if (!dropdownOpen || keyCode !== 27) return;
@@ -42,14 +41,8 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
-  const logoutHhandler = () => {
-    try {
-      Cookies.remove("admin_access_token");
-      Cookies.remove("super_admin_access_token");
-      signOut({ callbackUrl: "/dashboard/Admin-login" });
-    } catch (err) {
-      throw err;
-    }
+  const handleLogout = () => {
+    logoutAdmin();
   };
 
   return (
@@ -61,39 +54,32 @@ const DropdownUser = () => {
       >
         <div>
           <span className="text-right lg:block">
-            <span className="block text-11 xs:text-sm font-medium text-white ">
-              {session?.user ? session?.user.name : null}
-            </span>
-            <span className="block text-11 xs:text-sm text-white ">
-              {session?.user?.role || null}
+            <span className="block text-11 xs:text-sm text-white">
+              {role === "SUPERADMIN" ? "Shiraz" : role?.toLowerCase() || ""}
             </span>
           </span>
         </div>
-        <div className=" flex items-center gap-1 xs:gap-3">
-          <div className="h-6 xs:h-12 w-6 xs:w-12 rounded-full overflow-hidden">
+        <div className="flex items-center gap-1 xs:gap-3">
+          <div className="h-6 xs:h-24 w-6 xs:w-24 rounded-full overflow-hidden relative">
             <Image
-              src={
-                session && session?.user?.image
-                  ? session.user.image
-                  : "/assets/images/dummy-avatar.jpg"
-              }
-              width={55}
-              height={55}
-              alt={session?.user?.name || "User"}
+              src="/assets/images/dummy-avatar.jpg"
+              fill
+              alt="Admin"
             />
           </div>
           <MdKeyboardArrowDown className="text-white" />
         </div>
       </div>
+
       <div
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-1 flex flex-col rounded-sm border border-stroke bg-white w-fit shadow-default dark:border-strokedark dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-blue-50 ${
-          dropdownOpen === true ? "block" : "hidden"
+        className={`absolute right-0 mt-1 flex flex-col rounded-sm border border-stroke bg-white w-fit shadow-default dark:bg-black dark:text-white dark:border-blue-50 ${
+          dropdownOpen ? "block" : "hidden"
         }`}
       >
-        <ul className="flex flex-col w-44 space-y-6 border-b border-stroke px-6 py-3 dark:border-strokedark">
+        <ul className="flex flex-col w-44 space-y-6 border-b border-stroke px-6 py-3">
           <li>
             <Link
               href="/dashboard/settings"
@@ -105,8 +91,8 @@ const DropdownUser = () => {
           </li>
         </ul>
         <button
-          className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-black dark:text-white "
-          onClick={logoutHhandler}
+          className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-black dark:text-white cursor-pointer"
+          onClick={handleLogout}
         >
           <RiLogoutBoxLine size={20} />
           Log Out
@@ -116,4 +102,4 @@ const DropdownUser = () => {
   );
 };
 
-export default DropdownUser;
+export default DropdownAdmin;

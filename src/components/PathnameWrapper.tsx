@@ -1,8 +1,7 @@
 "use client";
 import { ReactNode } from "react";
 import { ApolloProvider } from "@apollo/client";
-import ApoloClient from "@utils/AppoloClient";
-import { SessionProvider } from "next-auth/react";
+import ApolloCustomClient from "@utils/apollo-client";
 import { usePathname } from "next/navigation";
 import Header from "./Layout/Header/Header";
 import Footer from "./footer/Footer";
@@ -12,8 +11,7 @@ const PathnameWrapper = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   const withoutHeaderPages = ["/superAdminlogin", "/dashboard"];
   return (
-    <SessionProvider>
-      <ApolloProvider client={ApoloClient}>
+      <ApolloProvider client={ApolloCustomClient}>
         {withoutHeaderPages.includes(pathname) ||
         pathname.split("/").includes("dashboard") ? null : (
           <>
@@ -28,7 +26,6 @@ const PathnameWrapper = ({ children }: { children: ReactNode }) => {
           <Footer />
         )}
       </ApolloProvider>
-    </SessionProvider>
   );
 };
 

@@ -9,8 +9,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { GrCodeSandbox, GrUserAdmin } from "react-icons/gr";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { TbGardenCartOff } from "react-icons/tb";
-import { useSession } from "next-auth/react";
-// import { useSession } from 'next-auth/react';
+import { useAuth } from "@context/UserContext";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -19,12 +18,9 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const { data: loggedInUser } = useSession();
-
-  const superAdmin = loggedInUser && loggedInUser.user.role !== "Admin";
-
   const pathname = usePathname();
-
+const { role } = useAuth();
+  const isSuperAdmin = role === "SUPER_ADMIN";
   const trigger = useRef<HTMLButtonElement>(null);
   const sidebar = useRef<HTMLDivElement>(null);
 
@@ -487,8 +483,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
-
-              {superAdmin ? (
+              {isSuperAdmin ? (
                 <li>
                   <Link
                     href="/dashboard/super-admin"

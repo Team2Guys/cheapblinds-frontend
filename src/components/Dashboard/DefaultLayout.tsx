@@ -1,10 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "@components/Dashboard/Sidebar";
 import Header from "@components/Dashboard/Header";
+import { useAuth } from "@context/UserContext";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { isAdminAuthenticated, isLoading } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname(); // current route
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (!isAdminAuthenticated) {
+        router.push("/dashboard/Admin-login");
+      } else {
+        router.push(pathname); // push current route
+      }
+    }
+  }, [isAdminAuthenticated, isLoading, pathname, router]);
 
   return (
     <div className="flex h-screen overflow-hidden relative bg-white dark:bg-black">

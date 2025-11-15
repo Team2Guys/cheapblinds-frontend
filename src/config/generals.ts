@@ -16,12 +16,12 @@ import {
 } from "@graphql/queries";
 import { fetchAllblogs, GET_ALL_BLOGS } from "@graphql/blogs";
 import { GET_ALL_JOB_APPLICATIONS, GET_ALL_JOBS, GET_SINGLE_JOB } from "@graphql/JobsModule";
-import ApoloClient from "@utils/AppoloClient";
+import ApolloCustomClient from "@utils/apollo-client";
 import { DocumentNode } from "@apollo/client";
 
 export const fetchRedirectUrls = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT ? FIND_QUICK_VIEW_PRODUCT : GET_Redirecturls,
 
       fetchPolicy: "no-cache",
@@ -38,7 +38,7 @@ export const fetchRedirectUrls = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) 
 
 export const fetchReview = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT ? FIND_QUICK_VIEW_PRODUCT : GET_REVIEWS,
 
       fetchPolicy: "no-cache",
@@ -60,7 +60,7 @@ export const fetchPaginatedEcommerce = async (
   subcategory?: string,
 ) => {
   try {
-    const { data } = await ApoloClient.mutate({
+    const { data } = await ApolloCustomClient.mutate({
       mutation: FETCH_ALL_ECOMMERCE_PAGINATED_PRODUCTS,
       variables: {
         PaginatedPrducts: {
@@ -82,7 +82,7 @@ export const fetchPaginatedEcommerce = async (
 
 export const fetchUserOrders = async (email: string) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_ONE_USER_ORDER,
       fetchPolicy: "no-cache",
       variables: {
@@ -106,7 +106,7 @@ export const fetchUserOrders = async (email: string) => {
 
 export const fetchSingleOrder = async (orderId: string) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: ORDER_QUERY,
       fetchPolicy: "no-cache",
       variables: { orderId },
@@ -129,7 +129,7 @@ export const findOneRedirectUrl = async (
   CUSTOM_MUTATION?: DocumentNode,
 ) => {
   try {
-    const { data } = await ApoloClient.mutate({
+    const { data } = await ApolloCustomClient.mutate({
       mutation: CUSTOM_MUTATION ? CUSTOM_MUTATION : FIND_ONE_REDIRECT_URL,
       variables: { url },
       context: {
@@ -156,7 +156,7 @@ export const fetchProductQuestions = async (
   token?: string,
 ) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW
         ? FIND_QUICK_VIEW_PRODUCT_REVIEW
         : GET_ALL_PRODUCT_QUESTIONS,
@@ -178,7 +178,7 @@ export const fetchProductQuestions = async (
 
 export const fetchProductreviews = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : GET_ALL_PROD_REVIEWS,
 
       fetchPolicy: "no-cache",
@@ -195,7 +195,7 @@ export const fetchProductreviews = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: Docum
 
 export const fetchAllBlogs = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : GET_ALL_BLOGS,
 
       fetchPolicy: "no-cache",
@@ -212,7 +212,7 @@ export const fetchAllBlogs = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNod
 
 export const fetchSingleComment = async (FIND_ONE_CUSTOM_BLOG?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_ONE_CUSTOM_BLOG ? FIND_ONE_CUSTOM_BLOG : fetchAllblogs,
       fetchPolicy: "no-cache",
       context: {
@@ -230,7 +230,7 @@ export const fetchSingleComment = async (FIND_ONE_CUSTOM_BLOG?: DocumentNode) =>
 
 export const fetchJobs = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : GET_ALL_JOBS,
 
       fetchPolicy: "no-cache",
@@ -251,7 +251,7 @@ export const fetchSingleJobs = async (
   FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode,
 ) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : GET_SINGLE_JOB,
       variables: { customUrl },
       fetchPolicy: "no-cache",
@@ -268,7 +268,7 @@ export const fetchSingleJobs = async (
 
 export const fetchJobsApplication = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW
         ? FIND_QUICK_VIEW_PRODUCT_REVIEW
         : GET_ALL_JOB_APPLICATIONS,
@@ -290,7 +290,7 @@ export const MONTHLYSTATS_HANDLER = async (
   FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode,
 ) => {
   try {
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : APPOINTMENTS_ORDERS,
 
       fetchPolicy: "no-cache",
@@ -316,7 +316,7 @@ export const WEEEKLYSTATSHANDLER = async (
 ) => {
   try {
     // const token  = await getToken()
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : WEEKLY_STATS,
 
       fetchPolicy: "no-cache",

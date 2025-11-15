@@ -6,7 +6,6 @@ import { MONTHLYSTATS_HANDLER, WEEEKLYSTATSHANDLER } from "@config/generals";
 import { STATUS } from "@/types/general";
 
 async function DashboardMain() {
-  // const token  = await getToken()
   const token = "hello";
 
   const [records, monthlyStats, weeklyStats] = await Promise.all([
@@ -18,9 +17,11 @@ async function DashboardMain() {
   const categories = monthlyStats?.orders?.map(
     (item: { month: string; Revenue: number; Orders: number }) => item.month,
   );
+
   const appointmentsData = monthlyStats?.appointments?.map(
     (item: { Appointments: string; Orders: number }) => item.Appointments || 0,
   );
+
   const ordersData = monthlyStats?.orders?.map(
     (item: { month: string; Revenue: number; Orders: number }) => item.Orders || 0,
   );
@@ -48,6 +49,7 @@ async function DashboardMain() {
     categories: weeklyStats?.map((item: STATUS) => item.day),
     series: defaultArray,
   };
+
   return (
     <DefaultLayout>
       <ECommerce records={records} chartData={charts} weeklyChart={weeklyChart} />

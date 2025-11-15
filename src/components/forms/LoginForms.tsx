@@ -1,44 +1,89 @@
 "use client";
+
 import React from "react";
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import { Input } from "@components/ui/Input";
 import Link from "next/link";
+import { useMutation, ApolloError } from "@apollo/client";
+import { FaSpinner } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { SIGN_IN } from "@graphql/auth";
+import { Toaster, Input } from "@components";
+import { SignIn_validationSchema } from "@data/Validations";
+import { useAuth } from "@context/UserContext";
+
+interface LoginValues {
+  email: string;
+  password: string;
+}
 
 export const LoginForms = () => {
-  // ✅ Validation schema
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email address").required("Email is required"),
-    password: Yup.string().required("Password is required"),
-  });
+  const router = useRouter();
+  const { loginUser } = useAuth();
+  const [signIn, { loading }] = useMutation(SIGN_IN);
 
-  // ✅ Initial values
-  const initialValues = {
+  const initialValues: LoginValues = {
     email: "",
     password: "",
   };
 
-  // ✅ Submit handler
-  const handleSubmit = (values: typeof initialValues) => {
-    console.log("Login Data:", values);
+  const handleSubmit = async (values: LoginValues) => {
+    try {
+      const response = await signIn({
+        variables: {
+          input: {
+            email: values.email.trim(),
+            password: values.password,
+          },
+        },
+      });
+
+      const errors = response.errors || [];
+      if (errors.length > 0) {
+        Toaster("error", errors[0].message);
+        return;
+      }
+
+      const userData = response.data?.signin?.data;
+      if (!userData) {
+        Toaster("error", "Invalid login response from server.");
+        return;
+      }
+
+      loginUser(userData);
+
+      Toaster("success", "Logged in successfully!");
+      router.push("/");
+    } catch (error: unknown) {
+      if (error instanceof ApolloError) {
+        if (error.graphQLErrors.length > 0) {
+          Toaster("error", error.graphQLErrors[0].message);
+          return;
+        }
+        Toaster("error", error.message || "Something went wrong. Please try again.");
+        return;
+      }
+      Toaster("error", "Something went wrong. Please try again.");
+    }
   };
 
   return (
     <div>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={SignIn_validationSchema}
         onSubmit={handleSubmit}
       >
         <Form className="space-y-4">
           <Input name="email" type="email" placeholder="Enter your email" />
           <Input name="password" type="password" placeholder="Enter your password" />
+
           <div className="flex gap-4 items-center">
             <button
               type="submit"
-              className="bg-primary hover:bg-primary/90 font-semibold py-2 rounded-md w-fit px-4 cursor-pointer"
+              disabled={loading}
+              className="flex items-center gap-2 bg-primary hover:bg-primary/90 font-semibold py-2 rounded-md w-fit px-4 disabled:opacity-60 cursor-pointer"
             >
-              Sign In
+              {loading ? <FaSpinner className="animate-spin text-lg" /> : "Sign In"}
             </button>
             <Link href="/forgot-password" className="underline font-semibold">
               Forgot Your Password?

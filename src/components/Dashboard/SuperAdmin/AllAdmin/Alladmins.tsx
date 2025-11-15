@@ -1,128 +1,106 @@
+"use client";
+
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
-import revalidateTag from "@components/ServerActons/ServerAction";
-import { Admin } from "@/types/type";
 import { useMutation } from "@apollo/client";
-import { REMOVE_ADMIN } from "@graphql/mutations";
-import { CustomTable } from "@components";
-interface AlladminsProps {
-  setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
-  setEditAdmin: React.Dispatch<React.SetStateAction<Admin | null>>;
-  AllAdminData: Admin[];
-}
+import revalidateTag from "@components/ServerActons/ServerAction";
+import { formatPermission } from "@utils/helperFunctions";
+import { AlladminsProps } from "@/types/admin";
+import { REMOVE_ADMIN_BY_ID } from "@graphql/Admins";
 
-function Alladmins({ setselecteMenu, setEditAdmin, AllAdminData }: AlladminsProps) {
+const Alladmins = ({ setselecteMenu, AllAdminData }: AlladminsProps) => {
   const [delLoading, setDelLoading] = useState<string | number | undefined>(undefined);
-  const [removeAdmin] = useMutation(REMOVE_ADMIN);
+  const [removeAdmin] = useMutation(REMOVE_ADMIN_BY_ID);
 
-  const handleDelete = async (id?: string | number) => {
-    try {
-      setDelLoading(id);
-      await removeAdmin({ variables: { id: Number(id) } });
-      revalidateTag("Admins");
-    } catch (error) {
-      throw error;
-    } finally {
-      setDelLoading(undefined);
-    }
-  };
+const handleDelete = async (id?: string | number) => {
+  if (!id) return;
 
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "fullname",
-      key: "fullname",
-    },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
-      title: "Can Add Product",
-      dataIndex: "canAddProduct",
-      key: "canAddProduct",
-      render: (record: Admin) => <span>{record.canAddProduct ? "Yes" : "No"}</span>,
-    },
-    {
-      title: "Can Delete Product",
-      dataIndex: "canDeleteProduct",
-      key: "canDeleteProduct",
-      render: (record: Admin) => <span>{record.canDeleteProduct ? "Yes" : "No"}</span>,
-    },
-    {
-      title: "Can Add Category",
-      dataIndex: "canAddCategory",
-      key: "canAddCategory",
-      render: (record: Admin) => <span>{record.canAddCategory ? "Yes" : "No"}</span>,
-    },
-    {
-      title: "Can View Product",
-      dataIndex: "canDeleteCategory",
-      key: "canDeleteCategory",
-      render: (record: Admin) => <span>{record.canDeleteCategory ? "Yes" : "No"}</span>,
-    },
-    {
-      title: "Can view Profit",
-      dataIndex: "canCheckProfit",
-      key: "canCheckProfit",
-      render: (record: Admin) => <span>{record.canCheckProfit ? "Yes" : "No"}</span>,
-    },
-    {
-      title: "Can View Total user",
-      dataIndex: "canViewUsers",
-      key: "canViewUsers",
-      render: (record: Admin) => <span>{record.canViewUsers ? "Yes" : "No"}</span>,
-    },
-
-    {
-      title: "Edit",
-      key: "edit",
-      render: (record: Admin) => (
-        <FaEdit
-          className="cursor-pointer transition duration-300 ease-in-out hover:scale-200 text-black dark:text-white"
-          size={20}
-          onClick={() => {
-            setEditAdmin(record);
-            setselecteMenu("");
-          }}
-        />
-      ),
-    },
-    {
-      title: "Actions",
-      key: "actions",
-      render: (record: Admin) =>
-        delLoading === record.id ? ( // Check if loading state matches current admin ID
-          <p>loading...</p>
-        ) : (
-          <RiDeleteBin6Line
-            className="cursor-pointer text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200"
-            size={20}
-            onClick={() => handleDelete(record?.id)}
-          />
-        ),
-    },
-  ];
+  try {
+    setDelLoading(id);
+    await removeAdmin({
+      variables: {
+        input: { id: String(id) },
+      },
+    });
+    revalidateTag("Admins"); 
+  } catch (error) {
+    console.error("Error deleting admin:", error);
+  } finally {
+    setDelLoading(undefined);
+  }
+};
 
   return (
-    <>
-      <div className="flex justify-between mb-4 items-center text-black dark:text-white ">
-        <p>Admins</p>
-        <div>
-          <button onClick={() => setselecteMenu("Add Admin")} className="dashboard_primary_button">
-            Add new Admin
-          </button>
-        </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-black dark:text-white">Admins</h2>
+        <button
+          onClick={() => setselecteMenu("Add Admin")}
+          className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition"
+        >
+          Add New Admin
+        </button>
       </div>
+
+      {/* Admin Cards */}
       {AllAdminData && AllAdminData.length > 0 ? (
-        <CustomTable<Admin> data={AllAdminData} columns={columns} rowKey="id" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          {AllAdminData.map((admin) => (
+            <div
+              key={admin.id}
+              className="bg-white dark:bg-gray-800 shadow rounded p-4 flex flex-col justify-between"
+            >
+              {/* Header: Name & Role */}
+              <div>
+                <h3 className="text-lg font-bold text-black dark:text-white">
+                  {`${admin.firstName} ${admin.lastName}`}
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{admin.role}</p>
+                <p className="text-sm mt-1 text-gray-600 dark:text-gray-300">{admin.email}</p>
+              </div>
+
+              {/* Permissions */}
+              <div className="mt-3">
+                <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Permissions:</p>
+                <ul className="flex flex-wrap gap-2">
+                  {admin.permissions.map((perm, idx) => (
+                    <li
+                      key={idx}
+                      className="bg-primary px-2 py-1 rounded-full text-white text-xs"
+                    >
+                      {formatPermission(perm)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Actions */}
+              <div className="flex justify-between mt-4">
+                <FaEdit
+                  size={20}
+                  className="cursor-pointer text-blue-500 hover:text-blue-700 transition"
+                  onClick={() => setselecteMenu("")}
+                />
+                {delLoading === admin.id ? (
+                  <span className="text-gray-500">Deleting...</span>
+                ) : (
+                  <RiDeleteBin6Line
+                    size={20}
+                    className="cursor-pointer text-red-500 hover:text-red-700 transition"
+                    onClick={() => handleDelete(admin.id)}
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
-        <div className="flex justify-center"> No Admin found</div>
+        <div className="flex justify-center text-gray-500 dark:text-gray-400">No Admins Found</div>
       )}
-    </>
+    </div>
   );
-}
+};
 
 export default Alladmins;
