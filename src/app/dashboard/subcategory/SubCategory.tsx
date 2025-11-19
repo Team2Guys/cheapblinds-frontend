@@ -1,44 +1,28 @@
 "use client";
 import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@components/Dashboard/DefaultLayout";
-import { useEffect, useState } from "react";
-import { ISUBCATEGORY } from "@/types/cat";
-import dynamic from "next/dynamic";
-import { SubCategoryComponentProps_dashboard } from "@/types/PagesProps";
-const AddSubcategory = dynamic(() => import("@components/Dashboard/cat_subcat/AddSubcategory"));
-const ViewSubcategries = dynamic(() => import("@components/Dashboard/cat_subcat/ViewSubcategries"));
+import { useState } from "react";
+import AddSubcategory from "@components/Dashboard/cat_subcat/AddSubcategory";
+import { Category, Subcategory } from "@/types/category";
+import ViewSubcategories from "@components/Dashboard/cat_subcat/ViewSubcategries";
 
-const SubCategoryComponent = ({
-  subCategories,
-  cetagories,
-}: SubCategoryComponentProps_dashboard) => {
-  const [menuType, setMenuType] = useState<string>("Sub Categories");
-  const [editCategory, seteditCategory] = useState<ISUBCATEGORY | null | undefined>();
-  const [updatedsubCategories, setUpdatedCategories] = useState(subCategories);
+export interface SubCategoryComponentProps_dashboard {
+  subCategories: Subcategory[];
+  categories: Category[];
+}
 
-  useEffect(() => {
-    setUpdatedCategories(subCategories);
-  }, [subCategories, cetagories]);
-
+const SubCategoryComponent = ({categories,subCategories}: SubCategoryComponentProps_dashboard) => {
+  const [menuType, setMenuType] = useState<string>("ViewSubCategory");
+  const [editSubcategory, setEditEditSubcategory] = useState<Subcategory | undefined | null>();
   return (
     <DefaultLayout>
       <Breadcrumb pageName={menuType} />
-      {menuType === "Sub Categories" ? (
+      {menuType === "ViewSubCategory" ? (
         <div className="flex flex-col gap-10">
-          <ViewSubcategries
-            setMenuType={setMenuType}
-            seteditCategory={seteditCategory}
-            editCategory={editCategory}
-            subCategories={updatedsubCategories}
-          />
+          <ViewSubcategories setMenuType={setMenuType} subCategories={subCategories} setEditEditSubcategory={setEditEditSubcategory} />
         </div>
       ) : (
-        <AddSubcategory
-          setMenuType={setMenuType}
-          seteditCategory={seteditCategory}
-          editCategory={editCategory}
-          categoriesList={cetagories}
-        />
+        <AddSubcategory setMenuType={setMenuType} categories={categories} editSubcategory={editSubcategory} />
       )}
     </DefaultLayout>
   );

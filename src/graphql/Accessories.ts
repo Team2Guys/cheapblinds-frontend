@@ -9,13 +9,13 @@ export const FETCH_ALL_ECOMERECE = gql`
       description
       stock
       discountPrice
-      short_description
+      shortDescription
       posterImageUrl
       hoverImageUrl
       productImages
       last_editedBy
-      custom_url
-      breadCrum
+      customUrl
+      breadCrumb
       Banners
       DescriptionBullets
       Additionalinformation
@@ -24,9 +24,9 @@ export const FETCH_ALL_ECOMERECE = gql`
       colors
       sizes
       variant
-      Canonical_Tag
-      Meta_Description
-      Meta_Title
+      canonicalTag
+      metaDescription
+      metaTitle
       createdAt
       updatedAt
       shippingOptions
@@ -34,21 +34,21 @@ export const FETCH_ALL_ECOMERECE = gql`
       category {
         name
         id
-        custom_url
+        customUrl
       }
       subcategory {
         id
         name
-        custom_url
+        customUrl
       }
     }
   }
 `;
 
 export const FIND_ONE_Accessory = gql`
-  query Product($custom_url: String!, $category: String!, $subCategory: String!) {
+  query Product($customUrl: String!, $category: String!, $subCategory: String!) {
     single_product_ecomerece(
-      custom_url: $custom_url
+      customUrl: $customUrl
       category: $category
       subCategory: $subCategory
     ) {
@@ -61,7 +61,7 @@ export const FIND_ONE_Accessory = gql`
       description
       stock
       discountPrice
-      short_description
+      shortDescription
       colors
       sizes
       variant
@@ -90,10 +90,10 @@ export const FIND_ONE_Accessory = gql`
         status
       }
       category {
-        custom_url
+        customUrl
       }
       subcategory {
-        custom_url
+        customUrl
       }
     }
   }

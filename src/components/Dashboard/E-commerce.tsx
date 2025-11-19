@@ -27,14 +27,13 @@ const ECommerce = ({
   weeklyChart: WEEKLYGRAPH;
 }) => {
   const router = useRouter();
-  const { admin, role,isLoading } = useAuth();
+  const { admin, role, isLoading } = useAuth();
 
- useEffect(() => {
-  if (!isLoading && !admin?.accessToken) {
-    router.replace("/dashboard/Admin-login");
-  }
-}, [isLoading, admin, router]);
-
+  useEffect(() => {
+    if (!isLoading && !admin?.accessToken) {
+      router.replace("/dashboard/Admin-login");
+    }
+  }, [isLoading, admin, router]);
 
   const isSuperAdmin = role === "SUPER_ADMIN";
   const isAdmin = role === "ADMIN";
@@ -51,17 +50,63 @@ const ECommerce = ({
   ];
 
   const cardStats = [
-    { title: "Admins", total: records?.totalAdmins ?? "0", icon: <IoMdEye className="fill-black/20 dark:fill-primary text-lg xs:text-xl" /> },
-    { title: "Sub Categories", total: records?.totalSubCategories ?? "0", icon: <BiCategory className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" /> },
-    { title: "Orders", total: records?.totalorders ?? "0", icon: <FiShoppingCart className="fill-black/20 dark:fill-primary text-lg xs:text-xl" /> },
-    { title: "Abandoned Orders", total: records?.Total_abandant_order ?? "0", icon: <GrDocumentPerformance className="fill-black/20 dark:fill-primary text-lg xs:text-xl" /> },
-    { title: "Categories", total: records?.totalCategories ?? "0", icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-lg xs:text-xl" /> },
-    { title: "Product", total: records?.totalProducts ?? "0", icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-lg xs:text-xl" /> },
-    { title: "Users", total: records?.totalUsers ?? "0", icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" /> },
-    { title: "Blogs", total: records?.blogs ?? "0", icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" /> },
-    { title: "Blog Comments", total: records?.blogs_comments ?? "0", icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" /> },
-    { title: "Redirect Urls", total: records?.redirecturls ?? "0", icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" /> },
-    { title: "Appointments", total: records?.appointments ?? "0", icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" /> },
+    {
+      title: "Admins",
+      total: records?.totalAdmins ?? "0",
+      icon: <IoMdEye className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
+    },
+    {
+      title: "Sub Categories",
+      total: records?.totalSubCategories ?? "0",
+      icon: <BiCategory className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+    },
+    {
+      title: "Orders",
+      total: records?.totalorders ?? "0",
+      icon: <FiShoppingCart className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
+    },
+    {
+      title: "Abandoned Orders",
+      total: records?.Total_abandant_order ?? "0",
+      icon: (
+        <GrDocumentPerformance className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />
+      ),
+    },
+    {
+      title: "Categories",
+      total: records?.totalCategories ?? "0",
+      icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
+    },
+    {
+      title: "Product",
+      total: records?.totalProducts ?? "0",
+      icon: <IoBagOutline className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
+    },
+    {
+      title: "Users",
+      total: records?.totalUsers ?? "0",
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-lg xs:text-xl" />,
+    },
+    {
+      title: "Blogs",
+      total: records?.blogs ?? "0",
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+    },
+    {
+      title: "Blog Comments",
+      total: records?.blogs_comments ?? "0",
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+    },
+    {
+      title: "Redirect Urls",
+      total: records?.redirecturls ?? "0",
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+    },
+    {
+      title: "Appointments",
+      total: records?.appointments ?? "0",
+      icon: <PiUsersThreeFill className="fill-black/20 dark:fill-primary text-xl xs:text-2xl" />,
+    },
   ];
 
   const filteredCards = cardStats.filter((card) => {

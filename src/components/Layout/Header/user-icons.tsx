@@ -10,17 +10,13 @@ import { useAuth } from "@context/UserContext";
 import { FaRegCircleUser } from "react-icons/fa6";
 
 const UserIcons = ({ className }: { className?: string }) => {
-  const { user, logoutUser } = useAuth();
+  const { user, logout } = useAuth();
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // ✅ Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setAccountDropdownOpen(false);
       }
     };
@@ -56,7 +52,7 @@ const UserIcons = ({ className }: { className?: string }) => {
                 </Link>
                 <button
                   onClick={() => {
-                    logoutUser();
+                    logout();
                     setAccountDropdownOpen(false);
                   }}
                   className="w-full text-left px-4 py-2 hover:bg-primary rounded-md font-semibold cursor-pointer"

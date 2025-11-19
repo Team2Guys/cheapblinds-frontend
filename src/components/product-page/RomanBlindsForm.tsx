@@ -3,7 +3,7 @@ import { FormProps } from "@/types/type";
 import Image from "next/image";
 import React, { useState } from "react";
 import { FormSelect } from "@components";
-import { Toaster} from "@components";
+import { Toaster } from "@components";
 import { controlOptions, headrailOptions, Lining, StackingStyle } from "@data/detail-page";
 
 export const RomanBlindsForm = ({ values, recessType }: FormProps) => {

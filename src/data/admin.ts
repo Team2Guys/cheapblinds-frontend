@@ -25,5 +25,5 @@ export const PermissionOptions = [
   { display: "Can View Total Products", value: "view-total-products" },
   { display: "Can View Appointments", value: "view-appointments" },
   { display: "Can View Sales", value: "view-sales" },
-  { display: "Can View Users", value: "view-users" }
+  { display: "Can View Users", value: "view-users" },
 ];

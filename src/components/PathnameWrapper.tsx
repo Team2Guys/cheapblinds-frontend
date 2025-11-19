@@ -6,26 +6,34 @@ import { usePathname } from "next/navigation";
 import Header from "./Layout/Header/Header";
 import Footer from "./footer/Footer";
 import { ReviewsSection } from "./common";
+import { AuthProvider } from "@context/UserContext";
 
-const PathnameWrapper = ({ children }: { children: ReactNode }) => {
+interface Props {
+  children: ReactNode;
+}
+
+const PathnameWrapper = ({ children }: Props) => {
   const pathname = usePathname();
   const withoutHeaderPages = ["/superAdminlogin", "/dashboard"];
+
+  const showHeader = !withoutHeaderPages.includes(pathname) && !pathname.startsWith("/dashboard");
+  const showFooter = pathname === "/" || (!withoutHeaderPages.includes(pathname) && !pathname.startsWith("/dashboard"));
+
   return (
+    <AuthProvider>
       <ApolloProvider client={ApolloCustomClient}>
-        {withoutHeaderPages.includes(pathname) ||
-        pathname.split("/").includes("dashboard") ? null : (
+        {showHeader && (
           <>
             <Header />
             <ReviewsSection />
           </>
         )}
+
         {children}
-        {pathname !== "/" &&
-        (withoutHeaderPages.includes(pathname) ||
-          pathname.split("/").includes("dashboard")) ? null : (
-          <Footer />
-        )}
+
+        {showFooter && <Footer />}
       </ApolloProvider>
+    </AuthProvider>
   );
 };
 

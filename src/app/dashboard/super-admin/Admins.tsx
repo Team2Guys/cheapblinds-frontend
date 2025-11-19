@@ -1,23 +1,26 @@
 "use client";
 import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@components/Dashboard/DefaultLayout";
-import Alladmins from "@components/Dashboard/SuperAdmin/AllAdmin/Alladmins";
+import AllAdmins from "@components/Dashboard/SuperAdmin/AllAdmin/Alladmins";
 import React, { useState } from "react";
 import CreateAdmin from "@components/Dashboard/SuperAdmin/CreateAdmin/CreateAdmin";
 import { Admin } from "@/types/admin";
 
-
 const Admins = ({ admins }: { admins: Admin[] }) => {
-  const [selecteMenu, setselecteMenu] = useState<string>("AllAdmin");
-  console.log(admins,"adminsadmins")
+  const [selectMenu, setSelecteMenu] = useState<string>("AllAdmin");
+  const [editAdmin, setEditAdmin] = useState<Admin | null>(null);
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Super Admin" />
       <div className="mt-10">
-        {selecteMenu == "AllAdmin" ? (
-          <Alladmins setselecteMenu={setselecteMenu} AllAdminData={admins || []} />
+        {selectMenu == "AllAdmin" ? (
+          <AllAdmins
+            setSelecteMenu={setSelecteMenu}
+            setEditAdmin={setEditAdmin}
+            AllAdminData={admins || []}
+          />
         ) : (
-          <CreateAdmin setselecteMenu={setselecteMenu} />
+          <CreateAdmin setSelecteMenu={setSelecteMenu} editAdmin={editAdmin} />
         )}
       </div>
     </DefaultLayout>

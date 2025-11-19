@@ -5,7 +5,6 @@ import localFont from "next/font/local";
 import "../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import PathnameWrapper from "@components/PathnameWrapper";
-import { AuthProvider } from "@context/UserContext";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -50,12 +49,10 @@ export default function RootLayout({
         <meta name="robots" content="noindex, nofollow" />
       </head>
       <body className={`${openSans.variable} ${rubik.variable} ${currency.variable} antialiased`}>
-        <AuthProvider>
           <PathnameWrapper>
             <ToastContainer autoClose={1500} />
             {children}
           </PathnameWrapper>
-        </AuthProvider>
       </body>
     </html>
   );

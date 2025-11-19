@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs, FreeMode } from "swiper/modules";
 import type { Swiper as SwiperClass } from "swiper/types";
-import {SideBySideMagnifier} from "@components";
+import { SideBySideMagnifier } from "@components";
 import "../../styles/swiper.css";
 
 interface ImageType {
@@ -79,4 +79,3 @@ export const Thumbnail = ({ images = [] }: { images?: ImageType[] }) => {
     </div>
   );
 };
-

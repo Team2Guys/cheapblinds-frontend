@@ -34,7 +34,7 @@ export interface OptonsFiels {
 
 export interface IJOBS {
   id: number;
-  custom_url: string;
+  customUrl: string;
   title: string;
   location: string;
   jobType: string;
@@ -45,9 +45,9 @@ export interface IJOBS {
   requirements: OptonsFiels[];
   benefits: OptonsFiels[];
   apply: OptonsFiels[];
-  Canonical_Tag?: string;
-  Meta_Description?: string;
-  Meta_Title?: string;
+  canonicalTag?: string;
+  metaDescription?: string;
+  metaTitle?: string;
   createdAt: string;
   updatedAt?: string;
   status?: BlogStatus;

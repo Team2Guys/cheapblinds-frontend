@@ -205,7 +205,7 @@ export interface spacification {
 export interface FormValues {
   name: string;
   description: string;
-  short_description: string;
+  shortDescription: string;
   salePrice: string;
   purchasePrice: string;
   discountPrice: string;
@@ -257,8 +257,7 @@ interface Color {
   colorName?: string;
 }
 
-
-export interface Admin  {
+export interface Admin {
   id?: string | number;
   firstName?: string;
   lastName?: string;

@@ -1,5 +1,5 @@
 import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting, ProductDetail } from "@components";
-import { chooseblinds } from "@data/home";
+import { chooseBlinds } from "@data/home";
 
 const ProductPage = async ({
   params,
@@ -19,7 +19,7 @@ const ProductPage = async ({
           category={resolvedParams.category}
           subCategory={resolvedParams.subCategory}
         />
-        <RelatedProduct titleStart title="RELATED PRODUCTS" data={chooseblinds} />
+        <RelatedProduct titleStart title="RELATED PRODUCTS" data={chooseBlinds} />
         <BlindFitting />
         <OrderSection
           className="mt-10 md:mt-16"

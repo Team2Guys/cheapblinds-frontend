@@ -5,12 +5,12 @@ import { FILE_DELETION_MUTATION, FILE_DELETION_MUTATION_S3 } from "@graphql/File
 import { uploadPhotosToBackend } from "./fileUploadhandlers";
 import { Crop } from "react-image-crop";
 import { centerAspectCrop } from "@/types/product-crop";
-import { Toaster} from "@components";
+import { Toaster } from "@components";
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
   setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
-  finalToken?: string,
+  accessToken?: string,
 ) => {
   try {
     const awsS3Flag = imagePublicId.includes("s3");
@@ -26,7 +26,7 @@ export const ImageRemoveHandler = async (
       {
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${finalToken}`,
+          authorization: accessToken,
         },
         withCredentials: true,
       },
@@ -53,7 +53,6 @@ export const handleImageAltText = (
     return updatedImagesUrl;
   });
 };
-
 
 export function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
@@ -252,7 +251,6 @@ export const onCropComplete = (
   const base64Image = canvas?.toDataURL("image/jpeg");
   setCroppedImage(base64Image);
 };
-
 
 export const formatPermission = (perm: string) => {
   return perm

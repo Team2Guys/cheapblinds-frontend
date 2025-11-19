@@ -4,14 +4,13 @@ import { useMutation } from "@apollo/client";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import { CustomTable } from "@components";
 import { REMOVE_REVIEW } from "@graphql/mutations";
-import { useSession } from "next-auth/react";
 import React, { SetStateAction, useState } from "react";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { RedirectUrls } from "@/types/general";
 import { DateFormatHandler } from "@utils/helperFunctions";
-import { getPermission } from "@utils/permissionHandlers";
 import { ConfirmToast } from "@components/common/ConfirmToast";
+import { useAuth } from "@context/UserContext";
 
 interface IView_RedirectUrls {
   Redirecturls: RedirectUrls[];
@@ -25,13 +24,13 @@ export default function ViewRedirecturl({
   setRedirectUrls,
 }: IView_RedirectUrls) {
   const [RemoveReview] = useMutation(REMOVE_REVIEW);
-  const session = useSession();
-  const finalToken = session.data?.accessToken;
+  const { admin } = useAuth();
+  const accessToken = admin?.accessToken;
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const canAddRedirecturls = getPermission(session.data, "canAddRedirecturls");
-  const canDeleteRedirecturls = getPermission(session.data, "canDeleteRedirecturls");
-  const canEditRedirecturls = getPermission(session.data, "canEditRedirecturls");
+  const canAddRedirecturls = "";
+  const canDeleteRedirecturls = "";
+  const canEditRedirecturls = "";
 
   const filteredRedirectUrls =
     Redirecturls &&
@@ -65,7 +64,7 @@ export default function ViewRedirecturl({
         variables: { id: Number(key) },
         context: {
           headers: {
-            authorization: `Bearer ${finalToken}`,
+            authorization: accessToken,
           },
           credentials: "include",
         },

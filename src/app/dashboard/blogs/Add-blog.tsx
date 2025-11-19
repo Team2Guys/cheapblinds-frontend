@@ -14,11 +14,11 @@ import { CREATE_BLOG, UPDATE_BLOG } from "@graphql/blogs";
 import revalidateTag from "@components/ServerActons/ServerAction";
 import TinyMCEEditor from "@components/Dashboard/tinyMc/MyEditor";
 import { ISUBCATEGORY } from "@/types/cat";
-import { useSession } from "next-auth/react";
 import { AddBlogInitialValues } from "@data/InitialValues";
 import { validationBlogSchema } from "@data/Validations";
 import { ConfirmToast } from "@components/common/ConfirmToast";
-import { Toaster} from "@components";
+import { Toaster } from "@components";
+import { useAuth } from "@context/UserContext";
 
 interface AddBlogProps {
   setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
@@ -30,8 +30,8 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
   const [posterImage, setposterImage] = useState<ProductImage[]>();
   const [createBlogMutation, { loading }] = useMutation(CREATE_BLOG);
   const [updateBlogMutation, { loading: updating }] = useMutation(UPDATE_BLOG);
-  const session = useSession();
-  const finalToken = session.data?.accessToken;
+  const { admin } = useAuth();
+  const accessToken = admin?.accessToken;
   const initialBlogValues: IBlog = editblog || AddBlogInitialValues;
   const formikValuesRef = useRef<IBlog>(initialBlogValues);
 
@@ -52,7 +52,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
         await updateBlogMutation({
           context: {
             headers: {
-              authorization: `Bearer ${finalToken}`,
+              authorization: accessToken,
             },
             credentials: "include",
           },
@@ -68,7 +68,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
         await createBlogMutation({
           context: {
             headers: {
-              authorization: `Bearer ${finalToken}`,
+              authorization: accessToken,
             },
             credentials: "include",
           },
@@ -279,7 +279,7 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                   <label className="primary-label">Custom Url</label>
                   <Field name="title" className="dashboard_input" aria-label="Custom Url" />
                   <ErrorMessage
-                    name="custom_url"
+                    name="customUrl"
                     component="div"
                     className="text-red-500 text-sm"
                   />
@@ -324,9 +324,9 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="primary-label">Canonical Tag</label>
-                    <Field name="Canonical_Tag" className="dashboard_input" />
+                    <Field name="canonicalTag" className="dashboard_input" />
                     <ErrorMessage
-                      name="Canonical_Tag"
+                      name="canonicalTag"
                       component="div"
                       className="text-red-500 text-sm"
                     />
@@ -342,18 +342,18 @@ const AddBlogs = ({ setselecteMenu, editblog, subCategories }: AddBlogProps) => 
                   </div>
                   <div>
                     <label className="primary-label">Meta Title</label>
-                    <Field name="Meta_Title" className="dashboard_input" />
+                    <Field name="metaTitle" className="dashboard_input" />
                     <ErrorMessage
-                      name="Meta_Title"
+                      name="metaTitle"
                       component="div"
                       className="text-red-500 text-sm"
                     />
                   </div>
                   <div>
                     <label className="primary-label">Meta Description</label>
-                    <Field name="Meta_Description" className="dashboard_input" />
+                    <Field name="metaDescription" className="dashboard_input" />
                     <ErrorMessage
-                      name="Meta_Description"
+                      name="metaDescription"
                       component="div"
                       className="text-red-500 text-sm"
                     />

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export const PriceSlider=()=> {
+export const PriceSlider = () => {
   const [range, setRange] = useState<[number, number]>([315, 800]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -97,4 +97,4 @@ export const PriceSlider=()=> {
       </div>
     </div>
   );
-}
+};

@@ -2,9 +2,8 @@ import { fetchCategories, fetchSubCategories } from "@config/fetch";
 import SubCategoryComponent from "./SubCategory";
 
 const AddSubCategory = async () => {
-  const [cetagories, subCategories] = await Promise.all([fetchCategories(), fetchSubCategories()]);
-  console.log(subCategories, "subCategories");
-  return <SubCategoryComponent subCategories={subCategories} cetagories={cetagories} />;
+  const [categories, subCategories] = await Promise.all([fetchCategories(), fetchSubCategories()]);
+  return <SubCategoryComponent subCategories={subCategories} categories={categories} />;
 };
 
 export default AddSubCategory;

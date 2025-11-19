@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useMutation, ApolloError } from "@apollo/client";
 import { FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { SIGN_IN } from "@graphql/auth";
+import { SIGN_IN } from "@graphql";
 import { Toaster, Input } from "@components";
 import { SignIn_validationSchema } from "@data/Validations";
 import { useAuth } from "@context/UserContext";
@@ -14,16 +14,18 @@ import { useAuth } from "@context/UserContext";
 interface LoginValues {
   email: string;
   password: string;
+  role: string;
 }
 
 export const LoginForms = () => {
   const router = useRouter();
-  const { loginUser } = useAuth();
+  const { login } = useAuth();
   const [signIn, { loading }] = useMutation(SIGN_IN);
 
   const initialValues: LoginValues = {
     email: "",
     password: "",
+    role: "USER",
   };
 
   const handleSubmit = async (values: LoginValues) => {
@@ -33,6 +35,7 @@ export const LoginForms = () => {
           input: {
             email: values.email.trim(),
             password: values.password,
+            role: "USER",
           },
         },
       });
@@ -49,7 +52,7 @@ export const LoginForms = () => {
         return;
       }
 
-      loginUser(userData);
+      login(userData);
 
       Toaster("success", "Logged in successfully!");
       router.push("/");

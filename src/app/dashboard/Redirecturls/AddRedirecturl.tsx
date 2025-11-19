@@ -6,11 +6,11 @@ import { useMutation } from "@apollo/client";
 import { ADD_REDIRECTURLS, UPDATE_REDIRECTURLS } from "@graphql/mutations";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import { useSession } from "next-auth/react";
 import { initialRedirctUlrsValues } from "@data/InitialValues";
 import { validationRedirctUlrsSchema } from "@data/Validations";
-import { Toaster} from "@components";
+import { Toaster } from "@components";
 import { ConfirmToast } from "@components/common/ConfirmToast";
+import { useAuth } from "@context/UserContext";
 
 interface IVIEWREDIRECTURLS {
   setRedirectUrls: React.Dispatch<SetStateAction<RedirectUrls | undefined>>;
@@ -25,8 +25,8 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
   const [formDate, setformDate] = useState<initialRedirectUrls>(
     RedirectUrls ? RedirectUrls : initialRedirctUlrsValues,
   );
-  const session = useSession();
-  const finalToken = session.data?.accessToken;
+  const { admin } = useAuth();
+  const accessToken = admin?.accessToken;
   const formikValuesRef = useRef<initialRedirectUrls>(formDate);
   useEffect(() => {
     setformDate(RedirectUrls ? RedirectUrls : initialRedirctUlrsValues);
@@ -39,7 +39,7 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
         await updateReviewMutation({
           context: {
             headers: {
-              authorization: `Bearer ${finalToken}`,
+              authorization: accessToken,
             },
             credentials: "include",
           },
@@ -55,7 +55,7 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
         await AddredirectUrls({
           context: {
             headers: {
-              authorization: `Bearer ${finalToken}`,
+              authorization: accessToken,
             },
             credentials: "include",
           },

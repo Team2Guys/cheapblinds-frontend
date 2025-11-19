@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import DarkModeSwitcher from "./DarkModeSwitcher";
+// import DarkModeSwitcher from "./DarkModeSwitcher";
 import DropdownUser from "./DropdownUser";
 import Image from "next/image";
 import logoimage from "../../../../public/assets/images/dashboard_logo.png";
@@ -61,9 +61,9 @@ const Header = (props: {
         </div>
 
         <div className="flex items-center gap-3">
-          <ul className="flex items-center gap-2  text-black dark:text-white">
+          {/* <ul className="flex items-center gap-2  text-black dark:text-white">
             <DarkModeSwitcher />
-          </ul>
+          </ul> */}
 
           <DropdownUser />
         </div>

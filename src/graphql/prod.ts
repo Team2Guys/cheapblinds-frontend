@@ -7,7 +7,7 @@ export const CREATE_PRODUCT = gql`
     createProduct(createProductInput: $input) {
       id
       name
-      custom_url
+      customUrl
     }
   }
 `;
@@ -20,18 +20,18 @@ export const GET_ALL_PRODUCTS = gql`
       description
       posterImageUrl
       last_editedBy
-      short_description
-      custom_url
+      shortDescription
+      customUrl
       Banners
-      breadCrum
+      breadCrumb
       price
       discountPrice
       stock
       productImages
       hoverImageUrl
-      Meta_Title
-      Meta_Description
-      Canonical_Tag
+      metaTitle
+      metaDescription
+      canonicalTag
       status
       seoSchema
       updatedAt
@@ -39,23 +39,23 @@ export const GET_ALL_PRODUCTS = gql`
       subcategory {
         id
         name
-        custom_url
+        customUrl
       }
       category {
         id
         name
-        custom_url
+        customUrl
       }
     }
   }
 `;
 
 export const GET_PRODUCT_BY_CUSTOM_URL = `
-  query GetProduct($custom_url: Int!) {
-    product(custom_url: $custom_url) {
+  query GetProduct($customUrl: Int!) {
+    product(customUrl: $customUrl) {
       id
       name
-      custom_url
+      customUrl
       price
       description
       # add other fields here
@@ -68,7 +68,7 @@ export const UPDATE_PRODUCT = gql`
     updateProduct(updateProductInput: $input) {
       id
       name
-      custom_url
+      customUrl
     }
   }
 `;

@@ -1,2 +1,2 @@
-export * from "./Filters"
-export * from "./PriceSlider"
+export * from "./Filters";
+export * from "./PriceSlider";

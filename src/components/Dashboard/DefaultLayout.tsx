@@ -7,19 +7,25 @@ import { usePathname, useRouter } from "next/navigation";
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { isAdminAuthenticated, isLoading } = useAuth();
+  const { role,isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-  const pathname = usePathname(); // current route
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!isLoading) {
-      if (!isAdminAuthenticated) {
+      if (role === "USER") {
         router.push("/dashboard/Admin-login");
-      } else {
-        router.push(pathname); // push current route
+        return;
       }
+
+      if (!isAuthenticated) {
+        router.push("/dashboard/Admin-login");
+        return;
+      }
+
+      router.push(pathname);
     }
-  }, [isAdminAuthenticated, isLoading, pathname, router]);
+  }, [role, isAuthenticated, isLoading, pathname, router]);
 
   return (
     <div className="flex h-screen overflow-hidden relative bg-white dark:bg-black">

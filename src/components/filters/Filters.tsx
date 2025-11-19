@@ -248,4 +248,3 @@ export const Filters = () => {
     </div>
   );
 };
-

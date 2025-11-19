@@ -19,7 +19,7 @@ interface SidebarProps {
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const pathname = usePathname();
-const { role } = useAuth();
+  const { role } = useAuth();
   const isSuperAdmin = role === "SUPER_ADMIN";
   const trigger = useRef<HTMLButtonElement>(null);
   const sidebar = useRef<HTMLDivElement>(null);

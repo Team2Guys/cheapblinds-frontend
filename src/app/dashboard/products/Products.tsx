@@ -2,48 +2,31 @@
 import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@components/Dashboard/DefaultLayout";
 import ViewProduct from "@components/Dashboard/dashboard_products/ViewProduct";
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import { IProduct } from "@/types/prod";
-import { DASHBOARD_MAINPAGE_PROPS } from "@/types/PagesProps";
-const AddProd = dynamic(() => import("@components/Dashboard/dashboard_products/AddProd"));
+import AddProd from "@components/Dashboard/dashboard_products/AddProd";
+import { Category, Product, Subcategory } from "@/types/category";
 
-const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
-  const [editProduct, setEditProduct] = useState<IProduct | undefined>(undefined);
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [selecteMenu, setselecteMenu] = useState<string>("Add All Products");
+import { useState } from "react";
 
-  useEffect(() => {
-    setProducts(productsData ?? []);
-  }, [productsData]);
-  const productFlag: boolean = selecteMenu === "Add All Products" ? true : false;
+export interface ProductPageProps {
+  categoryList: Category[];
+  productList?: Product[];
+  subCategoryList?:Subcategory[]
+}
+
+const ProductPage = ({ categoryList, productList, subCategoryList }: ProductPageProps) => {
+  const [selectMenu, setSelecteMenu] = useState<string>("View Products");
+  const [editProduct, setEditProduct] = useState<Product | null>();
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Products" />
-      {productFlag ? (
-        <ViewProduct
-          products={products}
-          setProducts={setProducts}
-          setselecteMenu={setselecteMenu}
-          setEditProduct={setEditProduct}
-        />
+      {selectMenu === "View Products" ? (
+        <ViewProduct productList={productList || []} setSelecteMenu={setSelecteMenu} setEditProduct={setEditProduct} />
       ) : (
-        <AddProd
-          setselecteMenu={setselecteMenu}
-          editProduct={editProduct}
-          setEditProduct={setEditProduct}
-          EditProductValue={
-            editProduct && (editProduct.name !== undefined || editProduct.category !== undefined)
-              ? editProduct
-              : undefined
-          }
-          categoriesList={categories}
-          products={productsData}
-        />
+        <AddProd setSelecteMenu={setSelecteMenu} categoryList={categoryList} subCategoryList={subCategoryList} editProduct={editProduct} />
       )}
     </DefaultLayout>
   );
 };
 
-export default Product;
+export default ProductPage;

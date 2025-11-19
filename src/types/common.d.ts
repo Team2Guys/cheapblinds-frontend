@@ -1,3 +1,5 @@
+import { Product } from "./category";
+
 export interface HerobannerProps {
   desktopImage: string;
   mobileImage?: string;
@@ -26,7 +28,7 @@ export interface RelatedProductItem {
 export interface RelatedProductProps {
   title: string;
   description?: string;
-  data: RelatedProductItem[];
+  data: Product[];
   titleStart?: boolean;
 }
 

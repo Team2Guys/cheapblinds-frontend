@@ -4,8 +4,8 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_COMMENT_STATUS, UPDATE_REPLY_STATUS } from "@graphql/blogs";
 import { IBlogComment } from "@/types/general";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import { useSession } from "next-auth/react";
 import { Toaster } from "@components";
+import { useAuth } from "@context/UserContext";
 
 interface Props {
   AllComment: IBlogComment[];
@@ -15,8 +15,8 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [comments, setComments] = useState<IBlogComment[]>(AllComment);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const session = useSession();
-  const finalToken = session.data?.accessToken;
+  const { user } = useAuth();
+  const accessToken = user?.accessToken;
   const avatarColor = (seed: string) => `hsl(${seed.charCodeAt(0) % 360},70%,60%)`;
 
   const toggleExpand = (id: string) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -77,7 +77,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
         await updateReplyStatus({
           context: {
             headers: {
-              authorization: `Bearer ${finalToken}`,
+              authorization: accessToken,
             },
             credentials: "include",
           },
@@ -97,7 +97,7 @@ const MainPage: React.FC<Props> = ({ AllComment }) => {
         const { data } = await updateCommentStatus({
           context: {
             headers: {
-              authorization: `Bearer ${finalToken}`,
+              authorization: accessToken,
             },
             credentials: "include",
           },

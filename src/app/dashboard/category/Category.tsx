@@ -1,20 +1,17 @@
 "use client";
 
-import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
-const AddCategory = dynamic(() => import("@components/Dashboard/cat_subcat/Addcategory"));
-const DashboardCat = dynamic(() => import("@components/Dashboard/cat_subcat/dashboard_cat"));
-import DefaultLayout from "@components/Dashboard/DefaultLayout";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-import { Category } from "@/types/cat";
+import { useState } from "react";
 
-const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
+import Breadcrumb from "@components/Dashboard/Breadcrumbs/Breadcrumb";
+import DefaultLayout from "@components/Dashboard/DefaultLayout";
+import DashboardCat from "@components/Dashboard/cat_subcat/dashboard_cat";
+import AddCategory from "@components/Dashboard/cat_subcat/Addcategory";
+import { Category } from "@/types/category";
+
+
+const CategoryComponent = ({ categories }: { categories: Category[] }) => {
   const [menuType, setMenuType] = useState<string>("Categories");
-  const [editCategory, seteditCategory] = useState<Category | undefined | null>();
-  const [AllCategories, setAllCategories] = useState<Category[]>([]);
-  useEffect(() => {
-    setAllCategories(cetagories);
-  }, [cetagories]);
+  const [editCategory, setEditCategory] = useState<Category | undefined | null>();
 
   return (
     <DefaultLayout>
@@ -23,14 +20,13 @@ const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
         <div className="flex flex-col gap-10">
           <DashboardCat
             setMenuType={setMenuType}
-            seteditCategory={seteditCategory}
-            cetagories={AllCategories || []}
+            setEditCategory={setEditCategory}
+            categories={categories || []}
           />
         </div>
       ) : (
         <AddCategory
           setMenuType={setMenuType}
-          seteditCategory={seteditCategory}
           editCategory={editCategory}
         />
       )}
@@ -38,4 +34,4 @@ const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
   );
 };
 
-export default CATEGORY;
+export default CategoryComponent;

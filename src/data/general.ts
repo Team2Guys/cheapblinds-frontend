@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 const JobsValidationsSchema = Yup.object({
   // Basic fields
-  custom_url: Yup.string()
+  customUrl: Yup.string()
     .required("Custom URL is required")
     .max(50, "Custom URL must not exceed 255 characters"),
 
@@ -33,14 +33,14 @@ const JobsValidationsSchema = Yup.object({
     .max(5000, "Description must not exceed 5000 characters"),
 
   // SEO fields (optional)
-  Canonical_Tag: Yup.string()
+  canonicalTag: Yup.string()
     .url("Must be a valid URL")
     .max(255, "Canonical Tag must not exceed 255 characters")
     .nullable(),
 
-  Meta_Title: Yup.string().max(100, "Meta Title must not exceed 100 characters").nullable(),
+  metaTitle: Yup.string().max(100, "Meta Title must not exceed 100 characters").nullable(),
 
-  Meta_Description: Yup.string()
+  metaDescription: Yup.string()
     .max(500, "Meta Description must not exceed 500 characters")
     .nullable(),
 });

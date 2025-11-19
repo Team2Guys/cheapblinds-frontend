@@ -12,3 +12,4 @@ export * from "./cart-page";
 export * from "./checkout-page";
 export * from "./product-page";
 export * from "./filters";
+export * from "./userComponent";

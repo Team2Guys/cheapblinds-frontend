@@ -1,112 +1,77 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
-import revalidateTag from "@components/ServerActons/ServerAction";
-import { DASHBOARD_VIEW_SUBCATEGORIES_PROPS } from "@/types/PagesProps";
-import { ISUBCATEGORY } from "@/types/cat";
 import { useMutation } from "@apollo/client";
+
+import revalidateTag from "@components/ServerActons/ServerAction";
+import { CustomTable, Toaster } from "@components";
 import { DateFormatHandler } from "@utils/helperFunctions";
-import { GET_ALL_SUBCATEGORIES, REMOVE_SUBCATEGORY } from "@graphql/categories";
-import { CustomTable } from "@components";
-import { useSession } from "next-auth/react";
-import { getPermission } from "@utils/permissionHandlers";
-import { Toaster} from "@components";
-import { ConfirmToast } from "@components/common/ConfirmToast";
-const ViewSubcategries = ({
+import { Subcategory } from "@/types/category";
+import { REMOVE_SUBCATEGORY_BY_ID } from "@graphql";
+
+export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
+  setMenuType: React.Dispatch<SetStateAction<string>>;
+  setEditEditSubcategory?: React.Dispatch<SetStateAction<Subcategory | undefined | null>>;
+  subCategories?: Subcategory[];
+}
+
+const ViewSubcategories = ({
   setMenuType,
-  seteditCategory,
+  setEditEditSubcategory,
   subCategories,
 }: DASHBOARD_VIEW_SUBCATEGORIES_PROPS) => {
-  const [category, setCategory] = useState<ISUBCATEGORY[] | undefined>(subCategories);
-  const session = useSession();
-  const finalToken = session.data?.accessToken;
+  const [subcategoryState, setSubcategoryState] = useState<Subcategory[] | undefined>();
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
-    setCategory(subCategories);
+    setSubcategoryState(subCategories);
   }, [subCategories]);
 
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const filteredSubCategories = subcategoryState?.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredSubCategories: ISUBCATEGORY[] | undefined = category
-    ?.filter((category) => category.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    .sort((a, b) => {
-      const dateA = a.updatedAt
-        ? new Date(a.updatedAt).getTime()
-        : a.createdAt
-          ? new Date(a.createdAt).getTime()
-          : 0;
-      const dateB = b.updatedAt
-        ? new Date(b.updatedAt).getTime()
-        : b.createdAt
-          ? new Date(b.createdAt).getTime()
-          : 0;
-      return dateB - dateA;
-    });
+  const [removeSubCategory] = useMutation(REMOVE_SUBCATEGORY_BY_ID);
 
-  const [removeCategory] = useMutation(REMOVE_SUBCATEGORY);
-  const canDeleteSubCategory = getPermission(session.data, "canDeleteSubCategory");
-  const canAddSubCategory = getPermission(session.data, "canAddSubCategory");
-  const canEditSubCategory = getPermission(session.data, "canEditSubCategory");
-
-  const confirmDelete = (key: number) => {
-    ConfirmToast({
-      message: "Once deleted, the Sub Category cannot be recovered.",
-      confirmText: "Yes, delete it!",
-      cancelText: "No, keep it",
-      onConfirm: () => handleDelete(key),
-      onCancel: () => {
-        console.log("Deletion cancelled");
-      },
-    });
-  };
-
-  // const finalToken = session?.accessToken
-
-  const handleDelete = async (key: number) => {
+  const handleDelete = async (id?: string) => {
+    if (!id) return;
     try {
-      await removeCategory({
-        variables: { id: Number(key) },
-        refetchQueries: [{ query: GET_ALL_SUBCATEGORIES }],
-        context: {
-          headers: {
-            authorization: `Bearer ${finalToken}`,
-          },
-        },
+      await removeSubCategory({
+        variables: { input: { id } },
       });
-      setCategory((prev: ISUBCATEGORY[] | undefined) =>
-        prev ? prev.filter((item: ISUBCATEGORY) => item.id != key) : [],
-      );
-      revalidateTag("subcategories");
-      Toaster("success", "Category Deleted");
-    } catch (err) {
-      Toaster("error", "Deletion Failed");
-      throw err;
+      Toaster("success", "Subcategory deleted successfully!");
+      revalidateTag("categories");
+    } catch (error) {
+      console.error("Error deleting subcategory:", error);
+      Toaster("error", "Failed to delete subcategory!");
     }
   };
 
-  const handleEdit = (record: ISUBCATEGORY) => {
-    if (seteditCategory) {
-      seteditCategory(record);
+  const handleEdit = (record: Subcategory) => {
+    if (setEditEditSubcategory) {
+      setEditEditSubcategory(record);
       setMenuType("CategoryForm");
     }
   };
 
+
   const columns = [
     {
       title: "Image",
-      dataIndex: "posterImageUrl",
-      key: "posterImageUrl",
-      render: (record: ISUBCATEGORY) =>
-        record.posterImageUrl !== null ? (
+      dataIndex: "thumbnailUrl",
+      key: "thumbnailUrl",
+      render: (record: Subcategory) =>
+        record.thumbnailUrl !== null ? (
           <Image
             src={
-              record?.posterImageUrl?.imageUrl ||
+              record?.thumbnailUrl ||
               "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1740655318/download_krzc9s.jpg"
             }
             alt={`Image of ${record.name}`}
@@ -132,7 +97,7 @@ const ViewSubcategries = ({
       title: "Create At",
       dataIndex: "createdAt",
       key: "date",
-      render: (record: ISUBCATEGORY) => {
+      render: (record: Subcategory) => {
         const createdAt = new Date(record?.createdAt ?? "");
         DateFormatHandler(createdAt);
         return <span>{DateFormatHandler(createdAt)}</span>;
@@ -142,23 +107,23 @@ const ViewSubcategries = ({
       title: "Updated At",
       dataIndex: "createdAt",
       key: "date",
-      render: (record: ISUBCATEGORY) => {
+      render: (record: Subcategory) => {
         const createdAt = new Date(record?.updatedAt ?? "");
         return <span>{DateFormatHandler(createdAt)}</span>;
       },
     },
     {
       title: "Edited By",
-      dataIndex: "last_editedBy",
-      key: "last_editedBy",
+      dataIndex: "lastEditedBy",
+      key: "lastEditedBy",
     },
     {
       title: "Edit",
       key: "Edit",
-      render: (record: ISUBCATEGORY) => (
+      render: (record: Subcategory) => (
         <LiaEdit
           aria-label="Edit Sub Category"
-          className={`cursor-pointer ${canEditSubCategory && "text-black dark:text-white transition duration-300 ease-in-out hover:scale-200"} ${!canEditSubCategory && "cursor-not-allowed text-slate-300"}`}
+          className={`cursor-pointer "text-black dark:text-white transition duration-300 ease-in-out hover:scale-200`}
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -167,18 +132,13 @@ const ViewSubcategries = ({
     {
       title: "Action",
       key: "action",
-      render: (record: ISUBCATEGORY) => (
+      render: (record: Subcategory) => (
         <RiDeleteBin6Line
           aria-label="Delete Sub Category"
-          className={`cursor-pointer ${canDeleteSubCategory && "text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200"} ${
-            !canDeleteSubCategory && "cursor-not-allowed text-slate-300"
-          }`}
-          // className="cursor-pointer text-red-500"
+          className="cursor-pointer text-red-500 dark:text-red-700 transition duration-300 ease-in-out hover:scale-200"
           size={20}
           onClick={() => {
-            if (canDeleteSubCategory) {
-              confirmDelete(Number(record?.id));
-            }
+            handleDelete(record?.id);
           }}
         />
       ),
@@ -197,14 +157,11 @@ const ViewSubcategries = ({
         />
         <div>
           <div
-            className={`${canAddSubCategory && "cursor-pointer"}  p-2 ${
-              canAddSubCategory && "dashboard_primary_button text-white rounded-md  "
-            } flex justify-center ${!canAddSubCategory && "cursor-not-allowed "} hover:bg-black`}
+            className={`  p-2 dashboard_primary_button text-white rounded-md  "
+            } flex justify-center hover:bg-black`}
             onClick={() => {
-              seteditCategory?.(undefined);
-              if (canAddSubCategory) {
-                setMenuType("Add Sub Categories");
-              }
+              setEditEditSubcategory?.(undefined);
+              setMenuType("Add Sub Categories");
             }}
           >
             Add Sub Category
@@ -213,7 +170,7 @@ const ViewSubcategries = ({
       </div>
 
       {filteredSubCategories && filteredSubCategories.length > 0 ? (
-        <CustomTable<ISUBCATEGORY> data={filteredSubCategories} columns={columns} rowKey="id" />
+        <CustomTable<Subcategory> data={filteredSubCategories} columns={columns} rowKey="id" />
       ) : (
         "No Sub Categories found"
       )}
@@ -221,4 +178,4 @@ const ViewSubcategries = ({
   );
 };
 
-export default ViewSubcategries;
+export default ViewSubcategories;

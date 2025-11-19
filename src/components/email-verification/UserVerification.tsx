@@ -1,8 +1,7 @@
 "use client";
-
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CHECK_VERIFICATION_TOKEN, SEND_VERIFICATION_TOKEN } from "@graphql/email";
+import { CHECK_VERIFICATION_TOKEN, SEND_VERIFICATION_TOKEN } from "@graphql";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Toaster } from "@components/ui";
 import { FaSpinner } from "react-icons/fa";
@@ -11,9 +10,9 @@ export const UserVerification = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const verificationToken = searchParams.get("verificationToken");
-  const email = searchParams.get("email"); 
+  const email = searchParams.get("email");
 
-  console.log(email,"emailemail")
+  console.log(email, "emailemail");
 
   const [isExpired, setIsExpired] = useState(false);
 
@@ -46,7 +45,10 @@ export const UserVerification = () => {
       if (data?.sendVerificationToken?.status) {
         Toaster("success", data.sendVerificationToken.message || "New verification email sent!");
       } else {
-        Toaster("error", data?.sendVerificationToken?.message || "Failed to resend verification email.");
+        Toaster(
+          "error",
+          data?.sendVerificationToken?.message || "Failed to resend verification email.",
+        );
       }
     },
     onError: (error: unknown) => {
@@ -71,21 +73,21 @@ export const UserVerification = () => {
       },
     });
   };
-const handleResendClick = async () => {
-  if (!email) {
-    Toaster("error", "Email is required to resend verification link");
-    return;
-  }
-  try {
-    await sendVerificationToken({
-      variables: {
-        input: { email },
-      },
-    });
-  } catch {
-    Toaster("error", "Something went wrong. Please try again.");
-  }
-}
+  const handleResendClick = async () => {
+    if (!email) {
+      Toaster("error", "Email is required to resend verification link");
+      return;
+    }
+    try {
+      await sendVerificationToken({
+        variables: {
+          input: { email },
+        },
+      });
+    } catch {
+      Toaster("error", "Something went wrong. Please try again.");
+    }
+  };
 
   return (
     <div className=" p-10 flex items-center justify-center px-2">

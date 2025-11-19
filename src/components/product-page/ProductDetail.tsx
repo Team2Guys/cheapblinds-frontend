@@ -3,7 +3,13 @@ import React from "react";
 import { productImages } from "@data/bin";
 import { Thumbnail, ProductInfo, ProductTabs } from "@components";
 
-export const ProductDetail = ({ category, subCategory }: { category: string; subCategory: string }) => {
+export const ProductDetail = ({
+  category,
+  subCategory,
+}: {
+  category: string;
+  subCategory: string;
+}) => {
   console.log(subCategory);
   return (
     <div className="mt-10 space-y-3">
@@ -28,4 +34,3 @@ export const ProductDetail = ({ category, subCategory }: { category: string; sub
     </div>
   );
 };
-

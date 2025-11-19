@@ -1,12 +1,12 @@
-import { UpdatePassword } from '@components/forms/UpdatePassword'
-import React, { Suspense } from 'react'
+import { UpdatePassword } from "@components/forms/UpdatePassword";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <UpdatePassword/>
+      <UpdatePassword />
     </Suspense>
-  )
-}
+  );
+};
 
-export default page
+export default page;

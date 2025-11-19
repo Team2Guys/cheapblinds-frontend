@@ -1,27 +1,20 @@
 "use client";
-
 import React, { ChangeEvent, DragEvent, SetStateAction, useRef, useState } from "react";
 import { BsCloudDownload, BsCloudUpload } from "react-icons/bs";
-import { ProductImage } from "@/types/prod";
 import { uploadPhotosToBackend } from "@utils/fileUploadhandlers";
-import { Toaster} from "@components";
+import { Toaster } from "@components";
+import { productImage } from "@/types/category";
 
-export interface ImagesProps {
-  imageUrl: string;
-  public_id: string;
-  resource_type: string;
-  imagesrc: string;
-}
+
 
 interface PROPS {
-  setImagesUrl?: React.Dispatch<SetStateAction<ImagesProps[] | ProductImage[] | undefined>>;
+  setImagesUrl?: React.Dispatch<SetStateAction<productImage[]  | undefined>>;
   video?: boolean;
   multiple?: boolean;
-  s3Flag?: boolean;
   Ispdf?: boolean;
 }
 
-const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) => {
+const ImageUploader = ({ setImagesUrl, video, multiple, Ispdf }: PROPS) => {
   const [isDraggableArea, setIsDraggableArea] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -37,7 +30,7 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
         if (!multiple) {
           SingleFile = e.dataTransfer.files[0];
         }
-        const response = await uploadPhotosToBackend(SingleFile ? SingleFile : file, s3Flag, Ispdf);
+        const response = await uploadPhotosToBackend(SingleFile ? SingleFile : file, Ispdf);
         if (!response) continue;
 
         setImagesUrl?.((prev = []) => (multiple ? [...prev, response] : [response]));
@@ -56,7 +49,7 @@ const ImageUploader = ({ setImagesUrl, video, multiple, s3Flag, Ispdf }: PROPS) 
 
     for (const file of files) {
       try {
-        const response = await uploadPhotosToBackend(file, s3Flag, Ispdf);
+        const response = await uploadPhotosToBackend(file, Ispdf);
         console.log(response, "response");
         if (!response) continue;
         setImagesUrl?.((prev = []) => (multiple ? [...prev, response] : [response]));

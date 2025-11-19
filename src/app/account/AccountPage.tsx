@@ -10,29 +10,28 @@ const AccountPage = () => {
   const { user, isLoading } = useAuth();
   const router = useRouter();
 
-  // ✅ Redirect to /login if user is not authenticated
   useEffect(() => {
     if (!isLoading && !user) {
       router.push("/login");
     }
   }, [user, isLoading, router]);
 
- if (isLoading) {
-  return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <div className="animate-pulse space-y-4">
-        <div className="h-6 bg-gray-200 rounded w-1/3" />
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="h-4 bg-gray-200 rounded w-full"
-            style={{ width: `${80 - i * 10}%` }}
-          />
-        ))}
+  if (isLoading) {
+    return (
+      <div className="p-6 max-w-4xl mx-auto">
+        <div className="animate-pulse space-y-4">
+          <div className="h-6 bg-gray-200 rounded w-1/3" />
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={i}
+              className="h-4 bg-gray-200 rounded w-full"
+              style={{ width: `${80 - i * 10}%` }}
+            />
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
   if (!user) return null;
 

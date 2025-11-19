@@ -9,10 +9,15 @@ import {
   Herobanner,
   BlindFitting,
 } from "@components";
-import { chooseblinds, chooseimage, productData } from "@data/home";
+import { fetchCategories, fetchProducts } from "@config/fetch";
+import { chooseimage } from "@data/home";
+import { GET_CARD_CATEGORY, GET_CARD_PRODUCT } from "@graphql";
 import React from "react";
 
-export default function Home() {
+export default async  function  Home() {
+  const [productList ,categoryList] = await Promise.all([fetchProducts(GET_CARD_PRODUCT), fetchCategories(GET_CARD_CATEGORY)]);
+
+  console.log(categoryList,"categoryList")
   return (
     <>
       <Herobanner
@@ -22,7 +27,7 @@ export default function Home() {
       />
       <InformationSection className="hidden md:grid" />
       <ChildSafety />
-      <ShopBySlider productData={productData} />
+      <ShopBySlider CategoryList={categoryList} />
       <OrderSection
         reverse={false}
         image1="/assets/images/home/blindimg.webp"
@@ -41,7 +46,7 @@ export default function Home() {
           className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
         />
       </div>
-      <RelatedProduct title="Browse Products" data={chooseblinds} />
+      <RelatedProduct  title="Browse Products" data={productList} />
       <OrderSection
         className="mt-10 md:mt-16"
         reverse

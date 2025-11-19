@@ -104,7 +104,7 @@ export const products = [
   {
     category: {
       name: "Roller Blinds",
-      custom_url: "rollar-blinds",
+      customUrl: "rollar-blinds",
     },
     name: "Blackout Roller Blinds",
     custom_Url: "blackout",
@@ -131,7 +131,7 @@ export const products = [
   {
     category: {
       name: "Roller Blinds",
-      custom_url: "rollar-blinds",
+      customUrl: "rollar-blinds",
     },
     name: "Sheer",
     delivery: "Same Day Express Delivery",
@@ -157,7 +157,7 @@ export const products = [
   {
     category: {
       name: "Roller Blinds",
-      custom_url: "rollar-blinds",
+      customUrl: "rollar-blinds",
     },
     name: "Dim-Out",
     delivery: "Same Day Express Delivery",

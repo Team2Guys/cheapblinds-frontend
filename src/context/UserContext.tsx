@@ -1,163 +1,92 @@
 "use client";
 
 import { Toaster } from "@components/ui";
-import { jwtDecode } from "jwt-decode";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
+import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-interface User {
+interface AuthUser {
   id: string;
-  accessToken: string;
-  __typename?: string;
-}
-
-interface Admin {
-  id: string;
-  accessToken: string;
   role: string;
   __typename?: string;
 }
 
 interface AuthContextType {
-  // User
-  user: User | null;
-  loginUser: (_userData: User) => void;
-  logoutUser: () => void;
-  isUserAuthenticated: boolean;
-
-  // Admin
-  admin: Admin | null;
-  loginAdmin: (_adminData: Admin) => void;
-  logoutAdmin: () => void;
-  isAdminAuthenticated: boolean;
-  role: string | null;
-
-  // Shared
+  user: AuthUser | null;
+  login: (_data: AuthUser) => void;
+  logout: () => void;
+  isAuthenticated: boolean;
+  role: AuthUser["role"] | null;
   isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-interface AuthProviderProps {
+interface Props {
   children: ReactNode;
 }
 
-// Utility to check if token is expired
-const isTokenExpired = (token: string) => {
-  try {
-    const decoded: { exp: number } = jwtDecode(token.replace("Bearer ", ""));
-    const currentTime = Date.now() / 1000; // current time in seconds
-    return decoded.exp < currentTime;
-  } catch (err) {
-    console.error("Invalid token:", err);
-    return true; // treat invalid token as expired
-  }
-};
+const GRAPHQL_ENDPOINT = "/graphql";
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [admin, setAdmin] = useState<Admin | null>(null);
+export const AuthProvider = ({ children }: Props) => {
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load tokens from localStorage
   useEffect(() => {
     try {
-      const storedUser = localStorage.getItem("UserToken");
-      const storedAdmin = localStorage.getItem("AdminToken");
-
-      if (storedUser) setUser(JSON.parse(storedUser));
-      if (storedAdmin) setAdmin(JSON.parse(storedAdmin));
-    } catch (err) {
-      console.error("Error loading tokens:", err);
-      localStorage.removeItem("UserToken");
-      localStorage.removeItem("AdminToken");
+      const stored = localStorage.getItem("AuthUser");
+      if (stored) setUser(JSON.parse(stored));
+    } catch {
+      localStorage.removeItem("AuthUser");
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  // Auto logout if JWT expired
-  useEffect(() => {
-    const checkTokenExpiry = () => {
-      if (admin?.accessToken && isTokenExpired(admin.accessToken)) {
-        logoutAdmin();
-        Toaster( "error","Admin session expired. Please login again.");
+  const login = (_data: AuthUser) => {
+    setUser(_data);
+    localStorage.setItem("AuthUser", JSON.stringify(_data));
+  };
+
+  const logout = async () => {
+    try {
+      await fetch(GRAPHQL_ENDPOINT, {
+        method: "POST",
+        credentials: "include", // cookie auth
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: `mutation { signout { status message } }`,
+        }),
+      });
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err);
+        Toaster("error", err.message);
+      } else {
+        console.error("Unknown error", err);
+        Toaster("error", "An unexpected error occurred");
       }
-      if (user?.accessToken && isTokenExpired(user.accessToken)) {
-        logoutUser();
-        Toaster( "error","User session expired. Please login again.");
+    } finally {
+      setUser(null);
+      localStorage.removeItem("AuthUser");
+
+      if (user?.role === "ADMIN" || user?.role === "SUPER_ADMIN") {
+        window.location.href = "/dashboard/Admin-login";
+      } else {
+        window.location.href = "/";
       }
-    };
-
-    // Check immediately and every 30 seconds
-    checkTokenExpiry();
-    const interval = setInterval(checkTokenExpiry, 30000);
-    return () => clearInterval(interval);
-  }, [admin, user]);
-
-  // USER LOGIN
-  const loginUser = (userData: User) => {
-    const tokenWithBearer = {
-      ...userData,
-      accessToken: `Bearer ${userData.accessToken}`,
-    };
-    setUser(tokenWithBearer);
-    localStorage.setItem("UserToken", JSON.stringify(tokenWithBearer));
+    }
   };
 
-  const logoutUser = () => {
-    setUser(null);
-    localStorage.removeItem("UserToken");
-    window.location.href = "/";
-  };
-
-  // ADMIN LOGIN
-  const loginAdmin = (adminData: Admin) => {
-    const tokenWithBearer = {
-      ...adminData,
-      accessToken: `Bearer ${adminData.accessToken}`,
-    };
-    setAdmin(tokenWithBearer);
-    localStorage.setItem("AdminToken", JSON.stringify(tokenWithBearer));
-  };
-
-  const logoutAdmin = () => {
-    setAdmin(null);
-    localStorage.removeItem("AdminToken");
-    window.location.href = "/dashboard/Admin-login";
-  };
-
-  const value: AuthContextType = {
-    // User
-    user,
-    loginUser,
-    logoutUser,
-    isUserAuthenticated: !!user,
-
-    // Admin
-    admin,
-    loginAdmin,
-    logoutAdmin,
-    isAdminAuthenticated: !!admin,
-    role: admin?.role || null,
-
-    // Common
-    isLoading,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{ user, login, logout, isAuthenticated: !!user, role: user?.role || null, isLoading }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-// Hook to use auth
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
+export const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
+  return ctx;
 };

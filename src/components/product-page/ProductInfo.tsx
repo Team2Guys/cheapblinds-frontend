@@ -1,8 +1,15 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import {HelpingModal, RecessSelector, RollerBlindsForm, RomanBlindsForm, CalculationForm, PaymentMethod} from "@components";
+import {
+  HelpingModal,
+  RecessSelector,
+  RollerBlindsForm,
+  RomanBlindsForm,
+  CalculationForm,
+  PaymentMethod,
+} from "@components";
 import DeliveryIcon from "@components/svg/delivery";
-import { Toaster} from "@components";
+import { Toaster } from "@components";
 
 export const ProductInfo = ({ category }: { category: string }) => {
   const [showForm, setShowForm] = useState(false);

@@ -1,29 +1,40 @@
 "use client";
 import CategoryFeatures from "@components/category/CategoryFeatures";
 import { Herobanner, Card, SortDropdown, Filters } from "@components";
-import { categoryFeatures, products } from "@data/data";
+import { categoryFeatures } from "@data/data";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import { Subcategory } from "@/types/category";
 
-const Category = () => {
+interface CategoryPageProps {
+  categoryName: string;
+  categoryUrl: string;
+  description: string;
+  ProductList: Subcategory | Subcategory[];
+}
+
+const CategoryPage = ({
+  categoryName,
+  description,
+  categoryUrl,
+  ProductList,
+}: CategoryPageProps) => {
   const [showFilters, setShowFilters] = useState(false);
-  const fullText = `Elevate your home with the timeless elegance of our Roman blinds, seamlessly blending classic style, practical light control, and effortless functionality. Made from premium fabrics, these blinds showcase soft, graceful folds that exude sophistication whether raised or lowered. With an array of colors, textures, and patterns to choose from, they perfectly complement both traditional and contemporary interiors. Designed for durability and long-lasting beauty, their foldable structure adds a touch of refinement to any window. Plus, Roman blinds are energy-efficient, offering insulation to help regulate room temperature. Redefine your space with Roman blinds that bring charm, practicality, and lasting style to your home.`;
-
-  const [displayText, setDisplayText] = useState(fullText);
+  const [displayText, setDisplayText] = useState(description || "");
   const [isTruncated, setIsTruncated] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        const words = fullText.split(" ");
+        const words = description?.split(" ") || [];
         const truncated = words.slice(0, 38).join(" ");
         setDisplayText(truncated);
         setIsTruncated(true);
       } else {
-        setDisplayText(fullText);
+        setDisplayText(description || "");
         setIsTruncated(false);
       }
     };
@@ -32,12 +43,13 @@ const Category = () => {
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [fullText]);
+  }, [description]);
 
   const handleReadMore = () => {
-    setDisplayText(fullText);
+    setDisplayText(description || "");
     setIsTruncated(false);
   };
+
   return (
     <>
       <Herobanner
@@ -50,7 +62,7 @@ const Category = () => {
         </div>
         <div className="w-full lg:w-[75%]">
           <div className="space-y-3">
-            <h1 className="font-rubik font-semibold text-4xl">Roller Blinds</h1>
+            <h1 className="font-rubik font-semibold text-4xl">{categoryName}</h1>
             <div>
               <p className="leading-7 text-gray-800">
                 {displayText}{" "}
@@ -69,9 +81,7 @@ const Category = () => {
             <CategoryFeatures categoryFeatures={categoryFeatures} />
           </div>
           <div className="flex flex-wrap lg:flex-nowrap md:items-center justify-between bg-white w-full py-2 gap-4 md:gap-2 xl:gap-4 mt-6 pt-6 border-t border-[#0000003D] border-b md:border-b-0">
-            {/* Left Section */}
             <div className="flex items-center flex-wrap md:flex-nowrap gap-2 xl:gap-4 w-full lg:w-auto lg:grow">
-              {/* Measuring Card */}
               <div className="flex border cursor-pointer w-full md:w-1/2">
                 <div className="flex items-center gap-3 px-3 py-2 bg-[#FEE7AC] grow">
                   <Image
@@ -147,13 +157,32 @@ const Category = () => {
               <SortDropdown />
             </div>
           </div>
-          <div className="grid grid-cols-2 xl:grid-cols-3 gap-5 pt-6">
-            {Array(3)
-              .fill(products)
-              .flat()
-              .map((item, index) => (
-                <Card card={item} key={index} />
-              ))}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 pt-6">
+            {Array.isArray(ProductList)
+              ? // Category page: multiple subcategories
+                ProductList.flatMap(
+                  (subCat) =>
+                    subCat.products?.map((product) => ({
+                      ...product,
+                      parentSubcategoryUrl: subCat.customUrl,
+                    })) || [],
+                ).map((product) => (
+                  <Card
+                    key={product.id}
+                    card={product}
+                    categoryUrl={categoryUrl}
+                    subcategoryUrl={product.parentSubcategoryUrl}
+                  />
+                ))
+              : // Subcategory page: single subcategory
+                ProductList?.products?.map((product) => (
+                  <Card
+                    key={product.id}
+                    card={product}
+                    categoryUrl={categoryUrl}
+                    subcategoryUrl={ProductList?.customUrl }
+                  />
+                ))}
           </div>
           <div className="flex justify-center items-center gap-2 pt-6">
             <MdKeyboardArrowLeft className="text-2xl" />
@@ -174,4 +203,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default CategoryPage;

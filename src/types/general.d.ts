@@ -84,12 +84,12 @@ export interface IBlog {
   title: string;
   content: string;
   category: string;
-  custom_url: string;
+  customUrl: string;
   posterImage?: ProductImage;
   last_editedBy?: string;
-  Canonical_Tag?: string;
-  Meta_Description?: string;
-  Meta_Title?: string;
+  canonicalTag?: string;
+  metaDescription?: string;
+  metaTitle?: string;
   redirectionUrl?: string;
   publishedAt?: Date;
   status: BlogStatus;

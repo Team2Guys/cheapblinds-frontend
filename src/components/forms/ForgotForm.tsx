@@ -4,7 +4,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { Toaster, Input } from "@components";
-import { REQUEST_PASSWORD_RESET } from "@graphql/auth";
+import { REQUEST_PASSWORD_RESET } from "@graphql";
 import { ForgotForm_validationSchema } from "@data/Validations";
 import { FaSpinner } from "react-icons/fa";
 

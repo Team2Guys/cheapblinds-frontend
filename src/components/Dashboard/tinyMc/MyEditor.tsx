@@ -107,7 +107,7 @@ const TinyMCEEditor = ({ name, placeholder }: TinyMCEEditorProps) => {
     <Field name={name}>
       {({ field, form }: FieldProps) => (
         <Editor
-          apiKey={process.env.NEXT_PUBLIC_TINY_API}
+          apiKey={process.env.NEXT_TINY_MCE_API_KEY}
           value={field.value}
           onEditorChange={(content) => form.setFieldValue(name, content)}
           init={config}

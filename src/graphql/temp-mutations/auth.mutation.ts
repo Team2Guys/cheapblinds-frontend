@@ -16,8 +16,17 @@ export const SIGN_IN = gql`
       message
       data {
         id
-        accessToken
+        role
       }
+    }
+  }
+`;
+
+export const SIGNOUT_MUTATION = gql`
+  mutation Signout {
+    signout {
+      status
+      message
     }
   }
 `;

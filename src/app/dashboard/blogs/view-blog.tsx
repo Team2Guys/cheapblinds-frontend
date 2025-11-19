@@ -2,16 +2,15 @@
 import { useMutation } from "@apollo/client";
 import { CustomTable } from "@components";
 import { REMOVE_BLOG } from "@graphql/blogs";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { SetStateAction, useEffect, useMemo, useState } from "react";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IBlog } from "@/types/general";
 import { DateFormatHandler } from "@utils/helperFunctions";
-import { getPermission } from "@utils/permissionHandlers";
 import { ConfirmToast } from "@components/common/ConfirmToast";
-import { Toaster} from "@components";
+import { Toaster } from "@components";
+import { useAuth } from "@context/UserContext";
 
 interface ViewBlogProps {
   setselecteMenu: React.Dispatch<SetStateAction<string>>;
@@ -22,16 +21,16 @@ interface ViewBlogProps {
 const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog }) => {
   const [allBlogs, setAllBlogs] = useState<IBlog[]>(blogs);
   const [searchTerm, setSearchTerm] = useState("");
-  const session = useSession();
-  const finalToken = session.data?.accessToken;
+  const { admin } = useAuth();
+  const accessToken = admin?.accessToken;
   const [removeBlog] = useMutation(REMOVE_BLOG);
 
   useEffect(() => {
     setAllBlogs(blogs);
   }, [blogs]);
-  const canAddBlog = getPermission(session.data, "canAddBlog");
-  const canDeleteBlog = getPermission(session.data, "canDeleteBlog");
-  const canEditBlog = getPermission(session.data, "canEditBlog");
+  const canAddBlog = "";
+  const canDeleteBlog = "";
+  const canEditBlog = "";
 
   const confirmDelete = (id: number | string) => {
     ConfirmToast({
@@ -51,7 +50,7 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
         variables: { id: Number(id) },
         context: {
           headers: {
-            authorization: `Bearer ${finalToken}`,
+            authorization: accessToken,
           },
           credentials: "include",
         },
@@ -71,7 +70,7 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
       : allBlogs.filter(
           (blog) =>
             blog.title.toLowerCase().includes(lowerSearch) ||
-            blog.custom_url?.toLowerCase().includes(lowerSearch) ||
+            blog.customUrl?.toLowerCase().includes(lowerSearch) ||
             blog.createdAt?.toLowerCase().includes(lowerSearch) ||
             blog.updatedAt?.toLowerCase().includes(lowerSearch) ||
             blog.category?.toLowerCase().includes(lowerSearch),
@@ -106,8 +105,8 @@ const ViewBlog: React.FC<ViewBlogProps> = ({ setselecteMenu, blogs, setEditblog 
     },
     {
       title: "Custom URL",
-      dataIndex: "custom_url",
-      key: "custom_url",
+      dataIndex: "customUrl",
+      key: "customUrl",
     },
     {
       title: "category",

@@ -5,30 +5,43 @@ import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
 import revalidateTag from "@components/ServerActons/ServerAction";
-import { Category } from "@/types/cat";
 import { useMutation } from "@apollo/client";
-import { REMOVE_CATEGORY } from "@graphql/categories";
 import { CustomTable } from "@components";
 import { DateFormatHandler } from "@utils/helperFunctions";
 import { Toaster } from "@components";
-import { ConfirmToast } from "@components/common/ConfirmToast";
-import { useAuth } from "@context/UserContext";
+import { Category } from "@/types/category";
+import { REMOVE_CATEGORY_BY_ID } from "@graphql";
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
-  seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
-  cetagories?: Category[];
+  setEditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
+  categories?: Category[];
 }
 
-const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProps) => {
-  const [category, setCategory] = useState<Category[] | undefined>(cetagories);
+const DashboardCat = ({ setMenuType, setEditCategory, categories }: CategoryProps) => {
+  const [category, setCategory] = useState<Category[] | undefined>(categories);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [removeCategory] = useMutation(REMOVE_CATEGORY);
-  const { user } = useAuth();
+  const [removeCategory] = useMutation(REMOVE_CATEGORY_BY_ID);
+
   useEffect(() => {
-    setCategory(cetagories);
-  }, [cetagories]);
+    setCategory(categories);
+  }, [categories]);
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleDelete = async (id?: string) => {
+    if (!id) return;
+    try {
+      await removeCategory({
+        variables: {
+          input: { id: id },
+        },
+      });
+      Toaster("success", "Category deleted successfully!");
+      revalidateTag("categories");
+    } catch (error) {
+      console.error("Error deleting admin:", error);
+    }
   };
 
   const filteredCategories: Category[] =
@@ -55,48 +68,9 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
         })) ||
     [];
 
-  const confirmDelete = (key: string | number) => {
-    ConfirmToast({
-      message: "Once deleted, the Category cannot be recovered.",
-      confirmText: "Yes, delete it!",
-      cancelText: "No, keep it",
-      onConfirm: () => handleDelete(key),
-      onCancel: () => {
-        console.log("Category deletion cancelled");
-      },
-    });
-  };
-
-  const handleDelete = async (key: number | string) => {
-    if (!user?.accessToken) {
-      Toaster("error", "Unauthorized: no token found");
-      return;
-    }
-    try {
-      await removeCategory({
-        variables: { id: Number(key) },
-        context: {
-          headers: {
-            authorization: `Bearer ${user.accessToken}`,
-          },
-          credentials: "include",
-        },
-      });
-
-      setCategory((prev: Category[] | undefined) =>
-        prev ? prev.filter((item) => item.id !== key) : [],
-      );
-      revalidateTag("categories");
-      Toaster("success", "Category Deleted");
-    } catch (err) {
-      Toaster("error", "There was an error deleting the category.");
-      return err;
-    }
-  };
-
   const handleEdit = (record: Category) => {
-    if (seteditCategory) {
-      seteditCategory(record);
+    if (setEditCategory) {
+      setEditCategory(record);
       setMenuType("CategoryForm");
     }
   };
@@ -108,9 +82,9 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
       key: "posterImageUrl",
       width: 100,
       render: (record: Category) =>
-        record.posterImageUrl ? (
+        record.thumbnailUrl ? (
           <Image
-            src={record.posterImageUrl.imageUrl || ""}
+            src={record.thumbnailUrl || ""}
             alt={`Image of ${record.name}`}
             loading="lazy"
             width={50}
@@ -153,8 +127,8 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
     },
     {
       title: "Edited By",
-      dataIndex: "last_editedBy",
-      key: "last_editedBy",
+      dataIndex: "lastEditedBy",
+      key: "lastEditedBy",
       width: 150,
     },
     {
@@ -182,7 +156,7 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
           className="text-red-500 cursor-pointer dark:text-red-700 transition duration-300 ease-in-out hover:scale-200"
           size={20}
           onClick={() => {
-            confirmDelete(record.id);
+            handleDelete(record.id);
           }}
         />
       ),
@@ -203,7 +177,7 @@ const DashboardCat = ({ setMenuType, seteditCategory, cetagories }: CategoryProp
           <p
             className="border-0 bg-black cursor-pointer dashboard_primary_button"
             onClick={() => {
-              seteditCategory?.(undefined);
+              setEditCategory?.(undefined);
               setMenuType("Add Category");
             }}
           >

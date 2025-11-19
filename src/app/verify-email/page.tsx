@@ -1,7 +1,7 @@
-import { UserVerification } from "@components/email-verification/UserVerification";
 import React, { Suspense } from "react";
+import { UserVerification } from "@components/email-verification/UserVerification";
 
-const Page = () => {
+const VerifyPage = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <UserVerification />
@@ -9,4 +9,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default VerifyPage;

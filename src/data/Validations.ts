@@ -3,19 +3,19 @@ import * as Yup from "yup";
 export const subcategoryValidationSchema = Yup.object({
   name: Yup.string().required("Add Sub Category Name"),
   category: Yup.string().required("Select Category"),
-  custom_url: Yup.string().required("Custom URL is required"),
+  customUrl: Yup.string().required("Custom URL is required"),
 });
 
 export const categoryValidationSchema = Yup.object({
   name: Yup.string().required("Add  Category Name"),
-  custom_url: Yup.string().required("Custom URL is required"),
-  breadCrum: Yup.string().required("Bread Crum is required"),
+  customUrl: Yup.string().required("Custom URL is required"),
+  breadCrumb: Yup.string().required("Bread Crum is required"),
 });
 
 export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").required("Product Name is Required"),
   description: Yup.string().required("Description is  Required"),
-  custom_url: Yup.string().required("Custom Url is Required"),
+  customUrl: Yup.string().required("Custom Url is Required"),
   // price: Yup.number()
   //   .min(1, 'Minimum sales price must be at least 1')
   //   .required('Required'),
@@ -55,14 +55,13 @@ export const validationSchema = Yup.object({
   address: Yup.string().required("Address is required"),
 });
 
-
 export const validationBlogSchema = Yup.object({
   title: Yup.string().required("Title is required"),
   content: Yup.string().required("Content is required"),
   category: Yup.string().required("Category is required"),
-  Canonical_Tag: Yup.string().nullable(),
-  Meta_Description: Yup.string().nullable(),
-  Meta_Title: Yup.string().nullable(),
+  canonicalTag: Yup.string().nullable(),
+  metaDescription: Yup.string().nullable(),
+  metaTitle: Yup.string().nullable(),
   redirectionUrl: Yup.string().nullable(),
 });
 
@@ -95,7 +94,6 @@ export const SignIn_validationSchema = Yup.object({
 export const ForgotForm_validationSchema = Yup.object({
   email: Yup.string().email("Invalid email address").required("Email address is required"),
 });
-
 
 export const UpdatePasswordSchema = Yup.object().shape({
   password: Yup.string()

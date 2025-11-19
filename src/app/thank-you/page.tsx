@@ -1,7 +1,7 @@
 import { RelatedProduct } from "@components";
 import { Orders } from "@components/thank-you/Orders";
 import { OrderSummary } from "@data/bin";
-import { chooseblinds } from "@data/home";
+import { chooseBlinds } from "@data/home";
 import Link from "next/link";
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -30,7 +30,7 @@ const ThankYou = () => {
       </div>
       <Orders orderItems={OrderSummary} />
 
-      <RelatedProduct title="Browse Products" data={chooseblinds} />
+      <RelatedProduct title="Browse Products" data={chooseBlinds} />
     </div>
   );
 };

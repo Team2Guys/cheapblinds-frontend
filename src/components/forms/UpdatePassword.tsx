@@ -5,7 +5,7 @@ import { Formik, Form, FormikHelpers } from "formik";
 import { Input, Toaster } from "@components/ui";
 import { useMutation } from "@apollo/client";
 import { useSearchParams, useRouter } from "next/navigation";
-import { UPDATE_PASSWORD } from "@graphql/auth";
+import { UPDATE_PASSWORD } from "@graphql";
 import { UpdatePasswordSchema } from "@data/Validations";
 import { FaSpinner } from "react-icons/fa";
 

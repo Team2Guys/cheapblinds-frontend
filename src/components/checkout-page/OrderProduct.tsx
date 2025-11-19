@@ -39,4 +39,3 @@ export const OrderProducts = ({ products }: OrderProductsProps) => {
     </div>
   );
 };
-

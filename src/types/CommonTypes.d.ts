@@ -6,30 +6,30 @@ export interface GlobalCommontypes {
   description?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  posterImageUrl: ProductImage;
-  last_editedBy?: string;
-  short_description?: string;
-  custom_url: string;
+  thunbnailUrl: ProductImage;
+  lastEditedBy?: string;
+  shortDescription?: string;
+  customUrl: string;
   Banners?: ProductImage;
-  breadCrum?: string;
+  breadCrumb?: string;
 
-  Canonical_Tag?: string;
-  Meta_Description?: string;
-  Meta_Title?: string;
+  canonicalTag?: string;
+  metaDescription?: string;
+  metaTitle?: string;
   __typename?: string;
 }
 
 export interface ISEO_TAGS {
   posterImageUrl?: ProductImage;
   posterImage?: ProductImage;
-  custom_url: string;
-  Canonical_Tag?: string;
-  Meta_Description?: string;
-  Meta_Title?: string;
-  category?: { custom_url: string } | string;
+  customUrl: string;
+  canonicalTag?: string;
+  metaDescription?: string;
+  metaTitle?: string;
+  category?: { customUrl: string } | string;
 
   subcategory?: {
-    custom_url: true;
+    customUrl: true;
   };
 }
 

@@ -4,43 +4,56 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { Input, Toaster } from "@components";
-import { CreateAdminProps } from "@/types/admin";
+import { Admin, CreateAdminProps } from "@/types/admin";
 import { PermissionOptions } from "@data/admin";
 import { useMutation } from "@apollo/client";
-import { CREATE_ADMIN } from "@graphql/Admins";
-import { useAuth } from "@context/UserContext";
+import { SIGN_UP, UPDATE_ADMIN_BY_ID } from "@graphql";
+import revalidateTag from "@components/ServerActons/ServerAction";
 
-const CreateAdmin = ({ setselecteMenu }: CreateAdminProps) => {
-  const handleBack = () => setselecteMenu("AllAdmin");
-  const { admin } = useAuth();
-  const [createAdmin, { loading, error }] = useMutation(CREATE_ADMIN, {
-    context: {
-      headers: {
-        authorization: admin?.accessToken,
-      },
-    },
-  });
+const CreateAdmin = ({ setSelecteMenu, editAdmin }: CreateAdminProps) => {
+  const handleBack = () => setSelecteMenu("AllAdmin");
 
-  const handleSubmit = async (values: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    permissions: string[];
-  }) => {
+  const [createAdmin] = useMutation(SIGN_UP);
+  const [updateAdmin] = useMutation(UPDATE_ADMIN_BY_ID);
+
+  const handleSubmit = async (values: Admin) => {
     try {
-      const result = await createAdmin({
-        variables: { input: values },
-      });
-      if (result.data?.createAdmin?.status) {
-        Toaster( "success","Admin created successfully!");
-        setselecteMenu("AllAdmin"); 
+      if (editAdmin) {
+        const result = await updateAdmin({
+          variables: {
+            input: {
+              id: editAdmin.id,
+              firstName: values.firstName,
+              lastName: values.lastName,
+              email: values.email,
+              role: "ADMIN",
+              permissions: values.permissions,
+            },
+          },
+        });
+
+        if (result.data?.updateAdminById?.status) {
+          Toaster("success", "Admin updated successfully!");
+          revalidateTag("Admins");
+          setSelecteMenu("AllAdmin");
+        } else {
+          Toaster("error", result.data?.updateAdminById?.message);
+        }
       } else {
-        Toaster("error",result.data?.createAdmin?.message);
+        const result = await createAdmin({
+          variables: { input: values },
+        });
+
+        if (result.data?.signup?.status === "success") {
+          Toaster("success", "Admin created successfully!");
+          setSelecteMenu("AllAdmin");
+        } else {
+          Toaster("error", result.data?.signup?.message);
+        }
       }
-    } catch (err) {
-      Toaster("error", "There was an error creating the admin.");
-      console.error("Error creating admin:", err);
+    } catch (error) {
+      console.log(error);
+      Toaster("error", "Something went wrong!");
     }
   };
 
@@ -51,24 +64,31 @@ const CreateAdmin = ({ setselecteMenu }: CreateAdminProps) => {
       </button>
 
       <Formik
+        enableReinitialize
         initialValues={{
-          firstName: "",
-          lastName: "",
-          email: "",
+          firstName: editAdmin?.firstName || "",
+          lastName: editAdmin?.lastName || "",
+          email: editAdmin?.email || "",
           password: "",
-          permissions: [] as string[],
+          role: "ADMIN",
+          permissions: editAdmin?.permissions || [],
         }}
         onSubmit={handleSubmit}
       >
         {({ values, setFieldValue }) => (
           <Form className="bg-white p-6 rounded-lg shadow-lg space-y-4">
-            <h2 className="text-2xl font-bold text-center">Create Admin</h2>
+            <h2 className="text-2xl font-bold text-center">
+              {editAdmin ? "Edit Admin" : "Create Admin"}
+            </h2>
 
             <Input label="First Name" name="firstName" />
             <Input label="Last Name" name="lastName" />
             <Input label="Email" name="email" type="email" />
-            <Input label="Password" name="password" type="password" />
 
+            {/* Hide password in edit mode */}
+            {!editAdmin && <Input label="Password" name="password" type="password" />}
+
+            {/* Permissions */}
             <div className="space-y-3">
               <label className="block text-sm font-medium text-gray-700">Permissions</label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-96 overflow-y-auto p-2">
@@ -81,14 +101,13 @@ const CreateAdmin = ({ setselecteMenu }: CreateAdminProps) => {
                       type="checkbox"
                       checked={values.permissions.includes(permission.value)}
                       onChange={() => {
-                        const currentPermissions = values.permissions;
-                        if (currentPermissions.includes(permission.value)) {
+                        if (values.permissions.includes(permission.value)) {
                           setFieldValue(
                             "permissions",
-                            currentPermissions.filter((p) => p !== permission.value),
+                            values.permissions.filter((p) => p !== permission.value),
                           );
                         } else {
-                          setFieldValue("permissions", [...currentPermissions, permission.value]);
+                          setFieldValue("permissions", [...values.permissions, permission.value]);
                         }
                       }}
                       className="w-4 h-4 bg-gray-100 border-gray-300 rounded"
@@ -97,42 +116,13 @@ const CreateAdmin = ({ setselecteMenu }: CreateAdminProps) => {
                   </label>
                 ))}
               </div>
-
-              {values.permissions.length > 0 && (
-                <div className="mt-3 p-3 bg-blue-50 rounded-lg">
-                  <p className="text-sm font-medium text-primary">Selected Permissions:</p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {values.permissions.map((permissionValue) => {
-                      const permission = PermissionOptions.find((p) => p.value === permissionValue);
-                      return (
-                        <span
-                          key={permissionValue}
-                          className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
-                        >
-                          {permission ? permission.display : permissionValue}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
             </div>
-
-            {/* Error Message */}
-            {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-700 text-sm">
-                  Error: {error.message}
-                </p>
-              </div>
-            )}
 
             <button
               type="submit"
-              disabled={loading}
-              className="w-full flex justify-center dashboard_primary_button mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center dashboard_primary_button mt-6"
             >
-              {loading ? "Creating Admin..." : "Add Admin"}
+              {editAdmin ? "Update Admin" : "Add Admin"}
             </button>
           </Form>
         )}

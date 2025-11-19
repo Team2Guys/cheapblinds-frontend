@@ -10,7 +10,7 @@ import { useAuth } from "@context/UserContext";
 
 const DropdownAdmin = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { logoutAdmin, role } = useAuth();
+  const { logout, role } = useAuth();
 
   const trigger = useRef<HTMLDivElement>(null);
   const dropdown = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ const DropdownAdmin = () => {
   });
 
   const handleLogout = () => {
-    logoutAdmin();
+    logout();
   };
 
   return (
@@ -55,17 +55,13 @@ const DropdownAdmin = () => {
         <div>
           <span className="text-right lg:block">
             <span className="block text-11 xs:text-sm text-white">
-              {role === "SUPERADMIN" ? "Shiraz" : role?.toLowerCase() || ""}
+              {role === "SUPER_ADMIN" ? "Shiraz" : role?.toLowerCase() || ""}
             </span>
           </span>
         </div>
         <div className="flex items-center gap-1 xs:gap-3">
           <div className="h-6 xs:h-24 w-6 xs:w-24 rounded-full overflow-hidden relative">
-            <Image
-              src="/assets/images/dummy-avatar.jpg"
-              fill
-              alt="Admin"
-            />
+            <Image src="/assets/images/dummy-avatar.jpg" fill alt="Admin" />
           </div>
           <MdKeyboardArrowDown className="text-white" />
         </div>
