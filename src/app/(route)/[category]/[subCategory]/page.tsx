@@ -11,9 +11,7 @@ const Page = async ({ params }: { params: Promise<{ category: string; subCategor
   if (!SubCategoryList) {
     notFound();
   }
-  
-  const {name,description} = SubCategoryList;
-
+  const {name,description} = SubCategoryList;  
   return (
     <>
       <Breadcrumb slug={category} title={subCategory} />
