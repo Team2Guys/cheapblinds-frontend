@@ -16,7 +16,7 @@ export const RelatedProduct = ({ title, description, data, titleStart }: Related
         {data.map((array) => (
           <SwiperSlide key={array.id} className="mb-5">
             <Link
-              href={`${array.category?.customUrl}/${array.subcategory?.customUrl}/${array.customUrl}`}
+              href={`/${array.category?.customUrl}/${array.subcategory?.customUrl}/${array.customUrl}`}
             >
               <div className="overflow-hidden hover:shadow-md ">
                 <div className="relative w-full h-auto max-h-[350px] aspect-square">
@@ -37,8 +37,8 @@ export const RelatedProduct = ({ title, description, data, titleStart }: Related
                         <>
                           <span className="text-2xl font-currency mb-1"></span>
                           <span>{array.discountPrice}</span>
-                          <span className="line-through text-red-500 text-base ml-2">
-                            <span className="font-currency text-xl"></span>
+                          <span className="line-through text-base ml-2">
+                            <span className="font-currency text-lg"></span>
                             {array.price}
                           </span>
                         </>

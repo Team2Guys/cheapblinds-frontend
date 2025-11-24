@@ -11,6 +11,7 @@ const Page = async ({ params }: { params: Promise<{ category: string; subCategor
   if (!SubCategoryList) {
     notFound();
   }
+  console.log(SubCategoryList,"SubCategoryListSubCategoryList")
   const {name,description} = SubCategoryList;  
   return (
     <>

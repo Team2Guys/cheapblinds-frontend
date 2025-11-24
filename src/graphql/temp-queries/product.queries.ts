@@ -117,3 +117,46 @@ export const GET_CARD_PRODUCT = gql`
     }
   }
 `;
+
+
+export const GET_PRODUCT_BY_URLS = gql`
+  query GetProductByUrls(
+    $categoryCustomUrl: String!
+    $subcategoryCustomUrl: String!
+    $productCustomUrl: String!
+  ) {
+    getProductByUrls(
+      input: {
+        categoryCustomUrl: $categoryCustomUrl
+        subcategoryCustomUrl: $subcategoryCustomUrl
+        productCustomUrl: $productCustomUrl
+      }
+    ) {
+      status
+      message
+      data {
+        id
+        name
+        description
+        shortDescription
+        customUrl
+        categoryId
+        subcategoryId
+        thumbnailUrl
+        productImages
+        price
+        discountPrice
+        stock
+        metaTitle
+        metaDescription
+        canonicalTag
+        breadCrumb
+        seoSchema
+        additionalInfo
+        measuringGuide
+        status
+        lastEditedBy
+      }
+    }
+  }
+`;

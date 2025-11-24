@@ -44,6 +44,7 @@ export interface Product {
   id?: string | number;
   name: string;
   description?: string;
+  Breadcrumb?:string;
   shortDescription?: string;
   customUrl?: string;
   metaTitle?: string;

@@ -10,8 +10,8 @@ import { DocumentNode } from "@apollo/client";
 import { FETCH_ALL_ECOMERECE, FIND_ONE_Accessory } from "@graphql/Accessories";
 import { Category } from "@/types/cat";
 import ApolloCustomClient from "@utils/apollo-client";
-import { GET_ALL_ADMINS, GET_CATEGORY_BY_CUSTOM_URL, GET_CATEGORY_LIST, GET_PRODUCT_LIST, GET_SUBCATEGORY_BY_URLS, GET_SUBCATEGORY_LIST } from "@graphql";
-import { Subcategory } from "@/types/category";
+import { GET_ALL_ADMINS, GET_CATEGORY_BY_CUSTOM_URL, GET_CATEGORY_LIST, GET_PRODUCT_BY_URLS, GET_PRODUCT_LIST, GET_SUBCATEGORY_BY_URLS, GET_SUBCATEGORY_LIST } from "@graphql";
+import { Product, Subcategory } from "@/types/category";
 
 
 
@@ -305,5 +305,32 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode) => {
   } catch (error) {
     return [];
     throw error;
+  }
+};
+
+export const fetchSingleProduct = async (
+  categoryCustomUrl: string,
+  subcategoryCustomUrl: string,
+  productCustomUrl: string,
+  FIND_ONE_CUSTOM_QUERY?: DocumentNode
+): Promise<Product | null> => {
+  try {
+    const { data } = await ApolloCustomClient.query({
+      query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : GET_PRODUCT_BY_URLS,
+      variables: {
+        categoryCustomUrl,
+        subcategoryCustomUrl,
+        productCustomUrl,
+      },
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: { next: { tags: ["products"] } },
+      },
+    });
+
+    return data?.getProductByUrls?.data ?? null;
+  } catch (error: unknown) {
+    console.error("Error fetching product:", error);
+    return null;
   }
 };

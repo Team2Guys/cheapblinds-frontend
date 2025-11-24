@@ -2,34 +2,38 @@
 import React from "react";
 import { productImages } from "@data/bin";
 import { Thumbnail, ProductInfo, ProductTabs } from "@components";
+import { Product } from "@/types/category";
 
 export const ProductDetail = ({
   category,
-  subCategory,
+  productData,
 }: {
   category: string;
-  subCategory: string;
+  productData: Product;
 }) => {
-  console.log(subCategory);
+
+  const {name, price,discountPrice ,shortDescription, description, additionalInfo} = productData;
+   const discountPercentage =
+    price && discountPrice ? Math.round(((price - discountPrice) / price) * 100) : 0;
   return (
     <div className="mt-10 space-y-3">
-      <h1 className="text-heading">Luft Noir Screen Roller Blinds</h1>
+      <h1 className="text-heading">{name}</h1>
       <div className="grid grid-cols-12 gap-3 md:gap-6">
         <div className="col-span-12 md:col-span-6">
           <div className="bg-primary p-2 flex flex-wrap justify-center sm:justify-between items-center md:px-4">
             <h2 className="text-2xl font-medium">
-              DON’T MISS OUT <span className="text-4xl">-30%</span> OFF
+              DON’T MISS OUT <span className="text-4xl">-{discountPercentage}%</span> OFF
             </h2>
             <span className="font-semibold">Ends Soon</span>
           </div>
           <Thumbnail images={productImages} />
         </div>
         <div className="col-span-12 md:col-span-6">
-          <ProductInfo category={category} />
+          <ProductInfo category={category} price={price} discountPrice={discountPrice} shortDescription={shortDescription} />
         </div>
       </div>
       <div className="mt-10 md:mt-16 py-4">
-        <ProductTabs />
+        <ProductTabs description={description} additionalInfo={additionalInfo} />
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
   if (!CategoryList) {
     notFound();
   }
-
+  console.log(CategoryList,"CategoryListCategoryList")
   const { name, customUrl, description, subcategories = [] } = CategoryList;
 
   return (

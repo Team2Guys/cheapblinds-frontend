@@ -11,7 +11,14 @@ import {
 import DeliveryIcon from "@components/svg/delivery";
 import { Toaster } from "@components";
 
-export const ProductInfo = ({ category }: { category: string }) => {
+interface ProductDetailProps {
+  category: string;
+  price?: number | null;
+  discountPrice?: number | null;
+  shortDescription?:string;
+}
+
+export const ProductInfo = ({ category, price, discountPrice, shortDescription }: ProductDetailProps) => {
   const [showForm, setShowForm] = useState(false);
   const [recessType, setRecessType] = useState("outside");
   const topRef = useRef<HTMLDivElement>(null);
@@ -48,14 +55,28 @@ export const ProductInfo = ({ category }: { category: string }) => {
         </>
       )}
 
-      <h2 className="font-medium">
-        From: <span className="font-currency text-2xl md:text-3xl font-normal"></span>
-        <span className="font-semibold text-2xl md:text-3xl">299.25</span>
+      <h2 className="flex items-center gap-2 font-semibold text-2xl md:text-3xl">
+        {discountPrice && discountPrice < (price ?? 0) ? (
+          <>
+            From
+            <span className="font-currency text-2xl md:text-3xl font-normal"></span>
+            <span className="font-semibold text-2xl md:text-3xl">{discountPrice}</span>
+
+            {/* Original Price with strikethrough */}
+            <span className="font-currency text-2xl font-normal line-through"></span>
+            <span className="text-xl font-normal line-through">{price}</span>
+          </>
+        ) : (
+          <>
+            {/* Only Original Price */}
+            <span className="font-currency text-2xl md:text-3xl font-normal"></span>
+            <span className="font-semibold text-2xl md:text-3xl">{price}</span>
+          </>
+        )}
       </h2>
 
       <p>
-        A luxurious medium-weight chenille in a rose pink colourway, which makes Romans hang well
-        and windows look great.
+        {shortDescription}
       </p>
 
       <CalculationForm onValuesChange={setCalcValues} />
