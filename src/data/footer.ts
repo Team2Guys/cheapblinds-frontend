@@ -26,10 +26,9 @@ export const footerSections = [
     items: [
       { label: "Measuring Guides", href: "/measuring-guides" },
       { label: "Fitting Instructions", href: "/fitting-instructions" },
-      { label: "Terms & Conditions", href: "/terms" },
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Cookies", href: "/cookies" },
-      { label: "Delivery", href: "/delivery" },
+      { label: "Terms & Conditions", href: "/terms-conditions" },
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Cookies", href: "/cookie-policy" },
     ],
   },
 ];

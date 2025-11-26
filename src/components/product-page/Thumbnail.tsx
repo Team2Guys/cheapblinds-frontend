@@ -7,12 +7,7 @@ import type { Swiper as SwiperClass } from "swiper/types";
 import { SideBySideMagnifier } from "@components";
 import "../../styles/swiper.css";
 
-interface ImageType {
-  imageUrl: string;
-  altText?: string;
-}
-
-export const Thumbnail = ({ images = [] }: { images?: ImageType[] }) => {
+export const Thumbnail = ({ images = [] }: { images?: string[] }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -30,16 +25,14 @@ export const Thumbnail = ({ images = [] }: { images?: ImageType[] }) => {
         spaceBetween={10}
         slidesPerView={1}
         loop
-        onSlideChange={(swiper) => {
-          setActiveIndex(swiper.realIndex);
-        }}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="main-swiper"
       >
         {images.map((img, index) => (
           <SwiperSlide key={index}>
             <SideBySideMagnifier
-              imageSrc={img.imageUrl}
-              largeImageSrc={img.imageUrl}
+              imageSrc={img}
+              largeImageSrc={img}
               zoomScale={1.5}
               inPlace
               alignTop
@@ -65,8 +58,8 @@ export const Thumbnail = ({ images = [] }: { images?: ImageType[] }) => {
               }`}
             >
               <Image
-                src={img.imageUrl}
-                alt={img.altText || `Thumbnail ${index + 1}`}
+                src={img}
+                alt={`Thumbnail ${index + 1}`}
                 fill
                 priority
                 className="object-cover"

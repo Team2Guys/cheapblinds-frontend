@@ -1,5 +1,3 @@
-import { Thumbnail } from "@components/product-page";
-
 export const infoItems = [
   {
     id: 1,

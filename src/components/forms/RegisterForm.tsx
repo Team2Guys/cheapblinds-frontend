@@ -66,7 +66,6 @@ export const RegisterForm = () => {
 
       resetForm();
     } catch (error: unknown) {
-      // type guard to ensure it's an ApolloError
       if (error instanceof ApolloError) {
         const graphQLError = error.graphQLErrors?.[0]?.message || "";
         const message = graphQLError.toLowerCase();

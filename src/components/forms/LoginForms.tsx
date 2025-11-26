@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { Formik, Form } from "formik";
 import Link from "next/link";
@@ -40,29 +39,21 @@ export const LoginForms = () => {
         },
       });
 
-      const errors = response.errors || [];
-      if (errors.length > 0) {
-        Toaster("error", errors[0].message);
-        return;
-      }
-
-      const userData = response.data?.signin?.data;
+      const userData = response.data?.signin;
       if (!userData) {
         Toaster("error", "Invalid login response from server.");
         return;
       }
 
+      // login context
       login(userData);
 
       Toaster("success", "Logged in successfully!");
       router.push("/");
     } catch (error: unknown) {
       if (error instanceof ApolloError) {
-        if (error.graphQLErrors.length > 0) {
-          Toaster("error", error.graphQLErrors[0].message);
-          return;
-        }
-        Toaster("error", error.message || "Something went wrong. Please try again.");
+        const graphQLError = error.graphQLErrors?.[0]?.message;
+        Toaster("error", graphQLError || error.message || "Something went wrong. Please try again.");
         return;
       }
       Toaster("error", "Something went wrong. Please try again.");

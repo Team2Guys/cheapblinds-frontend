@@ -1,6 +1,6 @@
-import { Category, EDIT_CATEGORY, ISUBCATEGORY } from "./cat";
+import { Category, EDIT_CATEGORY } from "./cat";
 import { ProductReviews } from "./general";
-import { IEcomerece, IProduct } from "./prod";
+import { IProduct } from "./prod";
 
 
 

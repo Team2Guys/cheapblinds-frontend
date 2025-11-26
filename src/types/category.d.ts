@@ -58,8 +58,8 @@ export interface Product {
   price?: number;
   discountPrice?: number;
   stock?: number;
-  additionalInfo?: Array<{ name: string; detail: string }>;
-  measuringGuide?: Array<{ name: string; detail: string }>;
+  additionalInfo?: string;
+  measuringGuide?: string;
   categoryId?: string;
   subcategoryId?: string;
   category?: Category;

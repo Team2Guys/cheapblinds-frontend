@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 export const SIGN_UP = gql`
   mutation Signup($input: SignupInput!) {
     signup(input: $input) {
-      status
       message
     }
   }
@@ -12,20 +11,18 @@ export const SIGN_UP = gql`
 export const SIGN_IN = gql`
   mutation Signin($input: SigninInput!) {
     signin(input: $input) {
-      status
-      message
-      data {
-        id
-        role
-      }
+      id
+      name
+      firstName
+      lastName
+      role
     }
   }
 `;
 
-export const SIGNOUT_MUTATION = gql`
+export const SIGN_OUT = gql`
   mutation Signout {
     signout {
-      status
       message
     }
   }
@@ -34,7 +31,6 @@ export const SIGNOUT_MUTATION = gql`
 export const REQUEST_PASSWORD_RESET = gql`
   mutation RequestPasswordReset($input: PasswordResetRequestInput!) {
     requestPasswordReset(input: $input) {
-      status
       message
     }
   }
@@ -43,7 +39,6 @@ export const REQUEST_PASSWORD_RESET = gql`
 export const UPDATE_PASSWORD = gql`
   mutation UpdatePassword($input: PasswordUpdateInput!) {
     updatePassword(input: $input) {
-      status
       message
     }
   }

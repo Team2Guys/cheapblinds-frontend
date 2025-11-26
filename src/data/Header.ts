@@ -42,14 +42,20 @@ export const menuItems: MenuItem[] = [
         mobileimage: "/assets/images/bin/mobile/blackout.png",
       },
       {
-        name: "Sunscreen Roller Blinds",
-        link: "/roller-blinds/sunscreen",
+        name: "Dimout Roller Blinds",
+        link: "/roller-blinds/dimout",
         desktopimage: "/assets/images/bin/menu2.png",
         mobileimage: "",
       },
       {
-        name: "Double Roller Blinds",
-        link: "/roller-blinds/double",
+        name: "See Through",
+        link: "/roller-blinds/see-through",
+        desktopimage: "/assets/images/bin/menu3.png",
+        mobileimage: "",
+      },
+      {
+        name: "Waterproof",
+        link: "/roller-blinds/waterproof",
         desktopimage: "/assets/images/bin/menu3.png",
         mobileimage: "",
       },
@@ -59,21 +65,42 @@ export const menuItems: MenuItem[] = [
     name: "Roman Blinds",
     link: "/roman-blinds",
     image: "/assets/images/bin/mobile/roman.png",
+    submenu: [
+      {
+        name: "Blackout Roman Blinds",
+        link: "/roman-blinds/blackout",
+        desktopimage: "/assets/images/bin/menu1.png",
+        mobileimage: "/assets/images/bin/mobile/blackout.png",
+      },
+      {
+        name: "Dimout Roman Blinds",
+        link: "/roman-blinds/dimout",
+        desktopimage: "/assets/images/bin/menu2.png",
+        mobileimage: "",
+      },
+      {
+        name: "See Through",
+        link: "/roman-blinds/see-through",
+        desktopimage: "/assets/images/bin/menu3.png",
+        mobileimage: "",
+      },
+  
+    ],
   },
   {
     name: "Zebra Blinds",
     link: "/zebra-blinds",
     image: "/assets/images/bin/mobile/zebra.png",
     submenu: [
-      {
-        name: "Sheer Zebra Blinds",
-        link: "/zebra-blinds/sheer",
-        desktopimage: "/assets/images/bin/menu3.png",
-        mobileimage: "/assets/images/bin/mobile/sheer.png",
+     {
+        name: "Dimout Zebra Blinds",
+        link: "/zebra-blinds/dimout",
+        desktopimage: "/assets/images/bin/menu2.png",
+        mobileimage: "",
       },
       {
-        name: "Translucent Zebra Blinds",
-        link: "/zebra-blinds/translucent",
+        name: "Light Filtering",
+        link: "/zebra-blinds/light-filtering",
         desktopimage: "/assets/images/bin/menu1.png",
         mobileimage: "",
       },
@@ -85,14 +112,14 @@ export const menuItems: MenuItem[] = [
     image: "/assets/images/bin/mobile/vertical.png",
     submenu: [
       {
-        name: "PVC Vertical Blinds",
-        link: "/vertical-blinds/pvc",
+        name: "Blackout Vertical Blinds",
+        link: "/vertical-blinds/blackout",
         desktopimage: "/assets/images/bin/menu2.png",
         mobileimage: "",
       },
       {
-        name: "Fabric Vertical Blinds",
-        link: "/vertical-blinds/fabric",
+        name: "Dimout Vertical Blinds",
+        link: "/vertical-blinds/dimout",
         desktopimage: "/assets/images/bin/menu1.png",
         mobileimage: "",
       },

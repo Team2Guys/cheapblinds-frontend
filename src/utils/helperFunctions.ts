@@ -258,3 +258,10 @@ export const formatPermission = (perm: string) => {
     .map((word) => word[0].toUpperCase() + word.slice(1))
     .join(" ");
 };
+
+
+export const decodeHtml = (html: string) => {
+  const txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  return txt.value;
+};

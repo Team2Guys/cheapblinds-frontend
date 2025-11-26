@@ -4,97 +4,84 @@ import { gql } from "@apollo/client";
 export const GET_CATEGORY_LIST = gql`
   query GetCategoryList {
     getCategoryList {
+      id
+      name
+      description
+      shortDescription
+      breadCrumb
+      seoSchema
       status
-      message
-      data {
-        id
-        name
-        description
-        shortDescription
-        breadCrumb
-        seoSchema
-        status
-        customUrl
-        metaTitle
-        metaDescription
-        canonicalTag
-        thumbnailUrl
-        lastEditedBy
-        createdAt
-        updatedAt
-      }
+      customUrl
+      metaTitle
+      metaDescription
+      canonicalTag
+      thumbnailUrl
+      lastEditedBy
+      createdAt
+      updatedAt
     }
   }
 `;
 
-// Get single category by ID
+
 export const GET_CATEGORY_BY_ID = gql`
-  query GetCategoryById($input: GetCategoryByIdInput!) {
-    getCategoryById(input: $input) {
+  query GetCategoryById($id: ID!) {
+    getCategoryById(id: $id) {
+      id
+      name
+      description
+      shortDescription
+      customUrl
+      metaTitle
+      metaDescription
+      canonicalTag
+      thumbnailUrl
+      createdAt
+      updatedAt
+      seoSchema
+      breadCrumb
       status
-      message
-      data {
-        id
-        name
-        description
-        shortDescription
-        customUrl
-        metaTitle
-        metaDescription
-        canonicalTag
-        thumbnailUrl
-        thumbnailPublicId
-        thumbnailText
-        createdAt
-        updatedAt
-      }
+      lastEditedBy
     }
   }
 `;
+
 
 export const GET_CARD_CATEGORY = gql`
   query GetCategoryList {
     getCategoryList {
+      id
+      name
       status
-      message
-      data {
-        id
-        name
-        status
-        customUrl
-        thumbnailUrl
-      }
+      customUrl
+      thumbnailUrl
     }
   }
 `;
 
 export const GET_CATEGORY_BY_CUSTOM_URL = gql`
   query GetCategoryByCustomUrl($customUrl: String!) {
-    getCategoryByCustomUrl(input: { customUrl: $customUrl }) {
+    getCategoryByUrl(input: { customUrl: $customUrl }) {
+      id
+      name
+      description
+      customUrl
+      metaTitle
+      metaDescription
+      canonicalTag
+      breadCrumb
+      seoSchema
       status
-      message
-      data {
+      subcategories {
         id
         name
-        description
         customUrl
-        metaTitle
-        metaDescription
-        canonicalTag
-        breadCrumb
-        seoSchema
-        status
-        subcategories {
+        products {
           id
           name
           customUrl
-            products {
-              id
-              name
-              customUrl
-              price
-              discountPrice
-            }
+          price
+          discountPrice
         }
       }
     }

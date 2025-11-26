@@ -200,7 +200,7 @@ export const getAllAdmins = async () => {
       },
     });
 
-    return data?.getAdminList?.data || [];
+    return data?.getAdminList || [];
   } catch (error) {
     return []; 
     throw error;
@@ -217,7 +217,7 @@ export const fetchCategories = async ( FETCH_CATEGORY?: DocumentNode) => {
       },
     });
 
-    return data?.getCategoryList?.data || [];
+    return data?.getCategoryList || [];
   } catch (error) {
     return []; 
     throw error;
@@ -237,7 +237,7 @@ export const fetchSingleCategory = async (
         fetchOptions: { next: { tags: ["categories"] } },
       },
     });
-    return data?.getCategoryByCustomUrl?.data ?? null;
+    return data?.getCategoryByUrl ?? null;
   } catch (error: unknown) {
     console.error("Error fetching category:", error);
     return null;
@@ -252,25 +252,25 @@ export const fetchSingleSubCategory = async (
 ): Promise<Subcategory | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : GET_SUBCATEGORY_BY_URLS,
+      query: FIND_ONE_CUSTOM_QUERY ?? GET_SUBCATEGORY_BY_URLS,
       variables: {
-        input: {
-          subcategoryCustomUrl,
-          categoryCustomUrl,
-        },
+        subcategoryCustomUrl,
+        categoryCustomUrl,
       },
       fetchPolicy: "no-cache",
       context: {
-        fetchOptions: { next: { tags: ["categories"] } },
+        fetchOptions: { next: { tags: ["subcategories"] } },
       },
     });
 
-    return data?.getSubcategoryByUrls?.data ?? null;
+    return data?.getSubcategoryByUrls ?? null;
   } catch (error: unknown) {
     console.error("Error fetching subcategory:", error);
     return null;
   }
 };
+
+
 export const fetchSubCategories = async () => {
   try {
     const { data } = await ApolloCustomClient.query({
@@ -281,7 +281,7 @@ export const fetchSubCategories = async () => {
       },
     });
 
-    return data?.getSubcategoryList?.data || [];
+    return data?.getSubcategoryList || [];
   } catch (error) {
     return []; 
     throw error;
@@ -301,7 +301,7 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode) => {
       },
     });
 
-    return data.getProductList?.data || [];
+    return data.getProductList || [];
   } catch (error) {
     return [];
     throw error;
@@ -328,7 +328,7 @@ export const fetchSingleProduct = async (
       },
     });
 
-    return data?.getProductByUrls?.data ?? null;
+    return data?.getProductByUrls ?? null;
   } catch (error: unknown) {
     console.error("Error fetching product:", error);
     return null;

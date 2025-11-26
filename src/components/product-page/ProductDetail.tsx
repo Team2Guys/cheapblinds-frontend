@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { productImages } from "@data/bin";
 import { Thumbnail, ProductInfo, ProductTabs } from "@components";
 import { Product } from "@/types/category";
 
@@ -12,7 +11,7 @@ export const ProductDetail = ({
   productData: Product;
 }) => {
 
-  const {name, price,discountPrice ,shortDescription, description, additionalInfo} = productData;
+  const {name, price,discountPrice ,shortDescription, description, additionalInfo,measuringGuide ,productImages} = productData;
    const discountPercentage =
     price && discountPrice ? Math.round(((price - discountPrice) / price) * 100) : 0;
   return (
@@ -33,7 +32,7 @@ export const ProductDetail = ({
         </div>
       </div>
       <div className="mt-10 md:mt-16 py-4">
-        <ProductTabs description={description} additionalInfo={additionalInfo} />
+        <ProductTabs description={description} additionalInfo={additionalInfo} measuringGuide={measuringGuide} />
       </div>
     </div>
   );

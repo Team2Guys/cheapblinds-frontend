@@ -42,11 +42,11 @@ export const UpdatePassword = () => {
 
       const response = data?.updatePassword;
 
-      if (response?.status.toLowerCase() === "success") {
+      if (response?.message === "Password updated successfully.") {
         Toaster("success", response.message || "Password updated successfully!");
         router.push("/login");
       } else {
-        if (response?.message?.toLowerCase().includes("jwt expired")) {
+        if (response?.message?.includes("jwt expired")) {
           Toaster("error", "Token is expired. Please request a new reset link.");
         } else {
           Toaster("error", response?.message || "Failed to update password");
@@ -54,7 +54,7 @@ export const UpdatePassword = () => {
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
-        if (error.message.toLowerCase().includes("jwt expired")) {
+        if (error.message.includes("jwt expired")) {
           Toaster("error", "Token is expired. Please request a new reset link.");
         } else {
           Toaster("error", error.message);

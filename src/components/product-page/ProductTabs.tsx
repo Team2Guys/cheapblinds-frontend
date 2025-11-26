@@ -2,12 +2,14 @@
 import { useState } from "react";
 import { Testimonial } from "@components";
 import { TestimonialReview } from "@data/detail-page";
+import { decodeHtml } from "@utils/helperFunctions";
 
 interface productTabsProps {
   description?: string;
-  additionalInfo?: Array<{ name: string; detail: string }>;
+  additionalInfo?: string;
+  measuringGuide?: string;
 }
-export const ProductTabs = ({ description, additionalInfo }: productTabsProps) => {
+export const ProductTabs = ({ description, additionalInfo, measuringGuide }: productTabsProps) => {
   const [activeTab, setActiveTab] = useState("description");
 
   const tabs = [
@@ -40,32 +42,22 @@ export const ProductTabs = ({ description, additionalInfo }: productTabsProps) =
       <div className="mt-6 text-xl ">
         {activeTab === "description" && (
           <ul className="space-y-2 lg:max-w-[850px] w-full mx-auto px-2 ">
-            <p>{description}</p>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: decodeHtml(description || ""),
+              }}
+            />
           </ul>
         )}
 
         {activeTab === "additional" && (
           <div className="lg:max-w-[850px] w-full mx-auto px-2">
             {additionalInfo && additionalInfo.length > 0 ? (
-              <table className="w-full border-collapse rounded-lg overflow-hidden shadow-sm">
-                {/* HEADER */}
-                <thead>
-                  <tr className="bg-primary text-left">
-                    <th className="py-3 px-4 font-semibold w-1/3">Name</th>
-                    <th className="py-3 px-4 font-semibold">Detail</th>
-                  </tr>
-                </thead>
-
-                {/* BODY */}
-                <tbody>
-                  {additionalInfo.map((item, index) => (
-                    <tr key={index} className="border-b hover:bg-gray-50 transition-all">
-                      <td className="py-3 px-4 font-medium">{item.name}</td>
-                      <td className="py-3 px-4">{item.detail}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: decodeHtml(additionalInfo),
+                }}
+              />
             ) : (
               <p>No additional information available.</p>
             )}
@@ -76,7 +68,15 @@ export const ProductTabs = ({ description, additionalInfo }: productTabsProps) =
 
         {activeTab === "guide" && (
           <div className="lg:max-w-[850px] w-full mx-auto px-2">
-            <p>Please refer to our measuring guide for detailed instructions.</p>
+            {measuringGuide && measuringGuide.length > 0 ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: decodeHtml(measuringGuide),
+                }}
+              />
+            ) : (
+              <p>No additional information available.</p>
+            )}
           </div>
         )}
       </div>
