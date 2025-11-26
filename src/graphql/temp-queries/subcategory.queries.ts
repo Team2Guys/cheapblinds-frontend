@@ -8,20 +8,21 @@ export const GET_SUBCATEGORY_LIST = gql`
       categoryId
       description
       shortDescription
-      customUrl
+      slug
       metaTitle
       metaDescription
       canonicalTag
-      thumbnailUrl
+      breadcrumb
+      posterImageUrl
       createdAt
       updatedAt
       lastEditedBy
-      breadCrumb
       seoSchema
       status
     }
   }
 `;
+
 
 
 export const GET_SUBCATEGORY_BY_ID = gql`
@@ -32,17 +33,17 @@ export const GET_SUBCATEGORY_BY_ID = gql`
       categoryId
       description
       shortDescription
-      customUrl
+      slug
       metaTitle
       metaDescription
       canonicalTag
-      thumbnailUrl
-      createdAt
-      updatedAt
-      breadCrumb
+      posterImageUrl
+      breadcrumb
       seoSchema
       status
       lastEditedBy
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -50,36 +51,35 @@ export const GET_SUBCATEGORY_BY_ID = gql`
 
 
 export const GET_SUBCATEGORY_BY_URLS = gql`
-  query GetSubcategoryByUrls(
-    $subcategoryCustomUrl: String!
-    $categoryCustomUrl: String!
-  ) {
+  query GetSubcategoryByUrls($subcategorySlug: String!, $categorySlug: String!) {
     getSubcategoryByUrls(
       input: {
-        subcategoryCustomUrl: $subcategoryCustomUrl
-        categoryCustomUrl: $categoryCustomUrl
+        subcategorySlug: $subcategorySlug
+        categorySlug: $categorySlug
       }
     ) {
       id
       name
       description
-      customUrl
+      shortDescription
+      slug
       metaTitle
       metaDescription
       canonicalTag
-      breadCrumb
-      thumbnailUrl
+      breadcrumb
+      posterImageUrl
       lastEditedBy
       seoSchema
       status
       products {
         id
         name
-        customUrl
+        slug
         price
         discountPrice
-        thumbnailUrl
+        posterImageUrl
       }
     }
   }
 `;
+

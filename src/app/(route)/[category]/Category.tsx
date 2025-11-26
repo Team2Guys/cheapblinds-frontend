@@ -9,6 +9,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { Product, Subcategory } from "@/types/category";
+import { decodeHtml } from "@utils/helperFunctions";
 
 interface CategoryPageProps {
   categoryName: string;
@@ -67,7 +68,7 @@ const CategoryPage = ({
     return subcategoryArray.flatMap((subCat) =>
       (subCat.products || []).map((product) => ({
         ...product,
-        parentSubcategoryUrl: subCat.customUrl,
+        parentSubcategoryUrl: subCat.slug,
       })),
     );
   }, [subcategoryArray]);
@@ -120,14 +121,11 @@ const CategoryPage = ({
         <div className="hidden lg:block lg:w-[25%]">
           <Filters />
         </div>
-
-        {/* RIGHT CONTENT */}
         <div className="w-full lg:w-[75%]">
-          {/* TITLE + DESCRIPTION */}
           <div className="space-y-3">
             <h1 className="font-rubik font-semibold text-4xl">{categoryName}</h1>
-            <p className="leading-7 text-gray-800">
-              {displayText}{" "}
+            <div className="leading-7 text-gray-800">
+              <div dangerouslySetInnerHTML={{ __html: decodeHtml(displayText) }} />
               {isTruncated && (
                 <button
                   onClick={handleReadMore}
@@ -136,10 +134,9 @@ const CategoryPage = ({
                   Read More...
                 </button>
               )}
-            </p>
+            </div>
           </div>
 
-          {/* FEATURES */}
           <div className="pt-6">
             <CategoryFeatures categoryFeatures={categoryFeatures} />
           </div>

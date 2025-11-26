@@ -12,12 +12,12 @@ const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
     notFound();
   }
   console.log(CategoryList,"CategoryListCategoryList")
-  const { name, customUrl, description, subcategories = [] } = CategoryList;
+  const { name, slug, description, subcategories = [] } = CategoryList;
 
   return (
     <>
       <Breadcrumb title={category} />
-      <CategoryPage categoryName={name} categoryUrl={customUrl || ""} description={description || ""} ProductList={subcategories || []} />
+      <CategoryPage categoryName={name} categoryUrl={slug || ""} description={description || ""} ProductList={subcategories || []} />
     </>
   );
 };

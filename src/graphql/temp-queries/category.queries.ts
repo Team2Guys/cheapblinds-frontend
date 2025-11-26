@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 
-// Get all categories
 export const GET_CATEGORY_LIST = gql`
   query GetCategoryList {
     getCategoryList {
@@ -8,14 +7,14 @@ export const GET_CATEGORY_LIST = gql`
       name
       description
       shortDescription
-      breadCrumb
+      breadcrumb
       seoSchema
       status
-      customUrl
+      slug
       metaTitle
       metaDescription
       canonicalTag
-      thumbnailUrl
+      posterImageUrl
       lastEditedBy
       createdAt
       updatedAt
@@ -31,15 +30,15 @@ export const GET_CATEGORY_BY_ID = gql`
       name
       description
       shortDescription
-      customUrl
+      slug
       metaTitle
       metaDescription
       canonicalTag
-      thumbnailUrl
+      posterImageUrl
       createdAt
       updatedAt
       seoSchema
-      breadCrumb
+      breadcrumb
       status
       lastEditedBy
     }
@@ -53,33 +52,33 @@ export const GET_CARD_CATEGORY = gql`
       id
       name
       status
-      customUrl
-      thumbnailUrl
+      slug
+      posterImageUrl
     }
   }
 `;
 
 export const GET_CATEGORY_BY_CUSTOM_URL = gql`
-  query GetCategoryByCustomUrl($customUrl: String!) {
-    getCategoryByUrl(input: { customUrl: $customUrl }) {
+  query GetCategoryByCustomUrl($slug: String!) {
+    getCategoryByUrl(input: { slug: $slug }) {
       id
       name
       description
-      customUrl
+      slug
       metaTitle
       metaDescription
       canonicalTag
-      breadCrumb
+      breadcrumb
       seoSchema
       status
       subcategories {
         id
         name
-        customUrl
+        slug
         products {
           id
           name
-          customUrl
+          slug
           price
           discountPrice
         }
@@ -87,3 +86,4 @@ export const GET_CATEGORY_BY_CUSTOM_URL = gql`
     }
   }
 `;
+

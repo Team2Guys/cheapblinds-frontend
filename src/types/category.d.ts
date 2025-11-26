@@ -5,7 +5,7 @@ export interface Category {
   name: string;
   description?: string;
   shortDescription?: string;
-  customUrl?: string;
+  slug?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalTag?: string;
@@ -25,7 +25,7 @@ export interface Subcategory {
   name: string;
   description?: string;
   shortDescription?: string;
-  customUrl?: string;
+  slug?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalTag?: string;
