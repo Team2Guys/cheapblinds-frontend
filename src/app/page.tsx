@@ -17,7 +17,6 @@ import React from "react";
 export default async  function  Home() {
   const [productList ,categoryList] = await Promise.all([fetchProducts(GET_CARD_PRODUCT), fetchCategories(GET_CARD_CATEGORY)]);
 
-  console.log(productList,"productListproductList")
   return (
     <>
       <Herobanner
