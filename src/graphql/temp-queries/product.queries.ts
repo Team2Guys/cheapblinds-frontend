@@ -7,12 +7,12 @@ export const GET_PRODUCT_LIST = gql`
       name
       description
       shortDescription
-      customUrl
+      slug
       metaTitle
       metaDescription
       canonicalTag
-      breadCrumb
-      thumbnailUrl
+      breadcrumb
+      posterImageUrl
       productImages
       lastEditedBy
       seoSchema
@@ -20,17 +20,23 @@ export const GET_PRODUCT_LIST = gql`
       discountPrice
       stock
       status
+      width
+      height
+      weight
+      color
+      pattern
+      composition
       categoryId
       subcategoryId
       category {
         id
         name
-        customUrl
+        slug
       }
       subcategory {
         id
         name
-        customUrl
+        slug
       }
       additionalInfo
       measuringGuide
@@ -40,6 +46,7 @@ export const GET_PRODUCT_LIST = gql`
   }
 `;
 
+
 export const GET_PRODUCT_BY_ID = gql`
   query GetProductById($id: ID!) {
     getProductById(id: $id) {
@@ -47,30 +54,36 @@ export const GET_PRODUCT_BY_ID = gql`
       name
       description
       shortDescription
-      customUrl
+      slug
       metaTitle
       metaDescription
       canonicalTag
-      breadCrumb
-      thumbnailUrl
+      breadcrumb
+      posterImageUrl
       productImages
       lastEditedBy
       seoSchema
       price
       discountPrice
       stock
+      width
+      height
+      weight
+      color
+      pattern
+      composition
       status
       categoryId
       subcategoryId
       category {
         id
         name
-        customUrl
+        slug
       }
       subcategory {
         id
         name
-        customUrl
+        slug
       }
       additionalInfo
       measuringGuide
@@ -85,9 +98,9 @@ export const GET_CARD_PRODUCT = gql`
     getProductList {
       id
       name
-      customUrl
-      breadCrumb
-      thumbnailUrl
+      slug
+      breadcrumb
+      posterImageUrl
       price
       discountPrice
       stock
@@ -95,39 +108,40 @@ export const GET_CARD_PRODUCT = gql`
       category {
         id
         name
-        customUrl
+        slug
       }
       subcategory {
         id
         name
-        customUrl
+        slug
       }
     }
   }
 `;
 
 
+
 export const GET_PRODUCT_BY_URLS = gql`
   query GetProductByUrls(
-    $categoryCustomUrl: String!
-    $subcategoryCustomUrl: String!
-    $productCustomUrl: String!
+    $categorySlug: String!
+    $subcategorySlug: String!
+    $productSlug: String!
   ) {
     getProductByUrls(
       input: {
-        categoryCustomUrl: $categoryCustomUrl
-        subcategoryCustomUrl: $subcategoryCustomUrl
-        productCustomUrl: $productCustomUrl
+        categorySlug: $categorySlug
+        subcategorySlug: $subcategorySlug
+        productSlug: $productSlug
       }
     ) {
       id
       name
       description
       shortDescription
-      customUrl
+      slug
       categoryId
       subcategoryId
-      thumbnailUrl
+      posterImageUrl
       productImages
       price
       discountPrice
@@ -135,12 +149,18 @@ export const GET_PRODUCT_BY_URLS = gql`
       metaTitle
       metaDescription
       canonicalTag
-      breadCrumb
+      breadcrumb
       seoSchema
       additionalInfo
       measuringGuide
       status
       lastEditedBy
+      width
+      height
+      weight
+      color
+      pattern
+      composition
     }
   }
 `;

@@ -310,18 +310,18 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode) => {
 };
 
 export const fetchSingleProduct = async (
-  categoryCustomUrl: string,
-  subcategoryCustomUrl: string,
-  productCustomUrl: string,
+  categorySlug: string,
+  subcategorySlug: string,
+  productSlug: string,
   FIND_ONE_CUSTOM_QUERY?: DocumentNode
 ): Promise<Product | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
       query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : GET_PRODUCT_BY_URLS,
       variables: {
-        categoryCustomUrl,
-        subcategoryCustomUrl,
-        productCustomUrl,
+        categorySlug,
+        subcategorySlug,
+        productSlug,
       },
       fetchPolicy: "no-cache",
       context: {
