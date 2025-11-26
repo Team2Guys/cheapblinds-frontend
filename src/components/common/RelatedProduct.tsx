@@ -16,7 +16,7 @@ export const RelatedProduct = ({ title, description, data, titleStart }: Related
         {data.map((array) => (
           <SwiperSlide key={array.id} className="mb-5">
             <Link
-              href={`/${array.category?.customUrl}/${array.subcategory?.customUrl}/${array.customUrl}`}
+              href={`/${array.category?.slug}/${array.subcategory?.slug}/${array.slug}`}
             >
               <div className="overflow-hidden hover:shadow-md ">
                 <div className="relative w-full h-auto max-h-[350px] aspect-square">

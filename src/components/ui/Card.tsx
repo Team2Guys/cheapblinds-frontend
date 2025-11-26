@@ -8,7 +8,7 @@ import { TfiTrash } from "react-icons/tfi";
 export const Card = ({ card, IsDeleteButton, categoryUrl, subcategoryUrl }: { card: Product; IsDeleteButton?: boolean, categoryUrl?: string, subcategoryUrl?: string }) => {
   return (
     <div className="card-wrapper relative rounded-md pb-2">
-      <Link href={`/${categoryUrl}/${subcategoryUrl}/${card.customUrl}`}>
+      <Link href={`/${categoryUrl}/${subcategoryUrl}/${card.slug}`}>
         <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
           <Image
             src={card.thumbnailUrl || "/assets/images/bin/product1.webp"}
@@ -37,7 +37,7 @@ export const Card = ({ card, IsDeleteButton, categoryUrl, subcategoryUrl }: { ca
       </Link>
       <div className="pt-3 space-y-4 px-2">
         <Link
-          href={`/${categoryUrl}/${subcategoryUrl}/${card.customUrl}`}
+          href={`/${categoryUrl}/${subcategoryUrl}/${card.slug}`}
           className="flex justify-between md:items-center gap-1 md:gap-2"
         >
           <div className="space-y-1">
