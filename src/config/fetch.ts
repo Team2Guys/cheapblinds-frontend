@@ -225,20 +225,21 @@ export const fetchCategories = async ( FETCH_CATEGORY?: DocumentNode) => {
 };
 
 export const fetchSingleCategory = async (
-  customUrl: string,
-  FIND_ONE_CUSTOM_QUERY?: DocumentNode,
+  slug: string,
+  FIND_ONE_CUSTOM_QUERY?: DocumentNode
 ): Promise<Category | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : GET_CATEGORY_BY_CUSTOM_URL,
-      variables: { customUrl },
+      query: FIND_ONE_CUSTOM_QUERY || GET_CATEGORY_BY_CUSTOM_URL,
+      variables: { slug }, // ✅ MUST send slug (not customUrl)
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["categories"] } },
       },
     });
-    return data?.getCategoryByUrl ?? null;
-  } catch (error: unknown) {
+
+    return data?.getCategoryByUrl ?? null; // ✅ Correct return path
+  } catch (error) {
     console.error("Error fetching category:", error);
     return null;
   }
@@ -246,16 +247,16 @@ export const fetchSingleCategory = async (
 
 
 export const fetchSingleSubCategory = async (
-  subcategoryCustomUrl: string,
-  categoryCustomUrl: string,
+  subcategorySlug: string,
+  categorySlug: string,
   FIND_ONE_CUSTOM_QUERY?: DocumentNode,
 ): Promise<Subcategory | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
       query: FIND_ONE_CUSTOM_QUERY ?? GET_SUBCATEGORY_BY_URLS,
       variables: {
-        subcategoryCustomUrl,
-        categoryCustomUrl,
+        subcategorySlug,
+        categorySlug,
       },
       fetchPolicy: "no-cache",
       context: {

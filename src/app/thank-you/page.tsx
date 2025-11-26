@@ -19,7 +19,7 @@ const ThankYou = async () => {
         </p>
         <Link
           href="/"
-          className="bg-primary hover:bg-primary/90 font-semibold rounded-lg text-center p-3 flex justify-center items-center gap-2 w-fit block mx-auto"
+          className="bg-primary hover:bg-primary/90 font-semibold rounded-lg text-center p-3 flex justify-center items-center gap-2 w-fit mx-auto"
         >
           <span className="bg-white rounded-full p-1">
             <FaArrowLeft size={20} />
