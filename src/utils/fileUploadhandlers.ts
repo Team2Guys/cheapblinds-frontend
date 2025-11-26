@@ -1,8 +1,8 @@
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster } from "@components/ui";
 import { FILE_UPLOAD_MUTATION, FILE_UPLOAD_MUTATION_S3 } from "@graphql/Fileupload";
 
 export const uploadPhotosToBackend = async (file: File, s3Flag?: boolean, resumeflag?: boolean) => {
-  if (!file) return showToast("error", `Select a File`);
+  if (!file) return Toaster("error", `Select a File`);
 
   try {
     const isImage = file.type.startsWith("image/");
@@ -11,7 +11,7 @@ export const uploadPhotosToBackend = async (file: File, s3Flag?: boolean, resume
       file.type.startsWith("doc/") || file.type.startsWith("doc/") || file.type.startsWith("pdf/");
 
     if (!isImage && !isVideo && !ispdf && !resumeflag) {
-      showToast("error", `Skipped unsupported file type: ${file.name}`);
+      Toaster("error", `Skipped unsupported file type: ${file.name}`);
       return null;
     }
 
@@ -19,7 +19,7 @@ export const uploadPhotosToBackend = async (file: File, s3Flag?: boolean, resume
     const maxVideoSize = 5 * 1024 * 1024; // 2 MB
 
     if ((isImage && file.size > maxImageSize) || ((isVideo || ispdf) && file.size > maxVideoSize)) {
-      showToast("error", `Skipped large file: ${file.name} Please upload file in less size`);
+      Toaster("error", `Skipped large file: ${file.name} Please upload file in less size`);
       return null;
     }
 

@@ -39,5 +39,3 @@ export const OrderProducts = ({ products }: OrderProductsProps) => {
     </div>
   );
 };
-
-export default OrderProducts;

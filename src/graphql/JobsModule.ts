@@ -4,7 +4,7 @@ export const CREATE_JOBS = gql`
   mutation CreateJob($CreateJobDto: CreateJobDto!) {
     Create_jobs(CreateJobDto: $CreateJobDto) {
       title
-      custom_url
+      customUrl
     }
   }
 `;
@@ -14,7 +14,7 @@ export const GET_ALL_JOBS = gql`
     get_All_jobs {
       id
       title
-      custom_url
+      customUrl
       location
       jobType
       salary
@@ -24,9 +24,9 @@ export const GET_ALL_JOBS = gql`
       requirements
       benefits
       apply
-      Canonical_Tag
-      Meta_Description
-      Meta_Title
+      canonicalTag
+      metaDescription
+      metaTitle
       createdAt
       updatedAt
       status
@@ -38,7 +38,7 @@ export const UPDATE_JOBS = gql`
   mutation UpdateJob($UpdateCreateJobDto: UpdateCreateJobDto!) {
     update_jobs(UpdateCreateJobDto: $UpdateCreateJobDto) {
       title
-      custom_url
+      customUrl
     }
   }
 `;
@@ -48,7 +48,7 @@ export const GET_SINGLE_JOB = gql`
     get_single_job(customUrl: $customUrl) {
       id
       title
-      custom_url
+      customUrl
       location
       jobType
       salary
@@ -65,10 +65,10 @@ export const GET_SINGLE_JOB = gql`
 export const GET_SINGLE_JOB_META_DESCRIPTION = gql`
   query GetSingleJob($customUrl: String!) {
     get_single_job(customUrl: $customUrl) {
-      Canonical_Tag
-      Meta_Description
-      Meta_Title
-      custom_url
+      canonicalTag
+      metaDescription
+      metaTitle
+      customUrl
     }
   }
 `;

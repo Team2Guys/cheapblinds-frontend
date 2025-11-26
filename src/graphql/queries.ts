@@ -11,7 +11,7 @@ export const FETCH_GALLERY_CATEGORIES = gql`
         name
         posterImageUrl
         productImages
-        custom_url
+        customUrl
         status
       }
       subCategories {
@@ -28,13 +28,13 @@ export const FETCH_ALL_CATEGORIES_HEADER = gql`
     categories {
       id
       name
-      custom_url
+      customUrl
       status
       subCategories {
         id
         name
         status
-        custom_url
+        customUrl
         posterImageUrl
       }
     }
@@ -46,7 +46,7 @@ export const FETCH_ALL_CATEGORIES_HOME = gql`
     categories {
       id
       name
-      custom_url
+      customUrl
       status
       posterImageUrl
     }
@@ -73,19 +73,19 @@ export const FETCH_HEADER_CATEGORIES = gql`
     categories {
       id
       name
-      custom_url
+      customUrl
       RecallUrl
       price
       accessories {
         id
         name
-        custom_url
+        customUrl
         posterImageUrl
       }
       subcategories {
         id
         name
-        custom_url
+        customUrl
         posterImageUrl
         price
         sizes
@@ -101,7 +101,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
       recalledSubCats {
         id
         name
-        custom_url
+        customUrl
         posterImageUrl
         sizes
         price
@@ -118,7 +118,7 @@ export const FETCHSUBCAT = gql`
       id
       name
       posterImageUrl
-      custom_url
+      customUrl
       price
       products {
         id
@@ -127,7 +127,7 @@ export const FETCHSUBCAT = gql`
       category {
         id
         name
-        custom_url
+        customUrl
         RecallUrl
       }
     }
@@ -139,11 +139,11 @@ export const FIND_ONE_CATEGORY = gql`
     category(customUrl: $customUrl) {
       id
       name
-      Canonical_Tag
-      Meta_Description
-      Meta_Title
+      canonicalTag
+      metaDescription
+      metaTitle
       posterImageUrl
-      custom_url
+      customUrl
     }
   }
 `;
@@ -154,7 +154,7 @@ export const FIND_ONE_MAIN_CATEGORY = gql`
       id
       name
       posterImageUrl
-      custom_url
+      customUrl
       Banners
       BannerText
       BannerHeading
@@ -181,14 +181,14 @@ export const FIND_ONE_MAIN_CATEGORY = gql`
       subCategories {
         id
         name
-        custom_url
+        customUrl
         posterImageUrl
         status
         products {
           id
           name
           posterImageUrl
-          custom_url
+          customUrl
           status
         }
       }
@@ -202,7 +202,7 @@ export const FIND_FURNITURE_CATEGORY = gql`
       id
       name
       posterImageUrl
-      custom_url
+      customUrl
       Banners
       Bannercounter
       Bannerdiscount
@@ -213,7 +213,7 @@ export const FIND_FURNITURE_CATEGORY = gql`
       subCategories {
         id
         name
-        custom_url
+        customUrl
         posterImageUrl
         Banners
         status
@@ -221,7 +221,7 @@ export const FIND_FURNITURE_CATEGORY = gql`
           id
           name
           posterImageUrl
-          custom_url
+          customUrl
           price
           discountPrice
           status
@@ -240,7 +240,7 @@ export const FETCH_ALL_ECOMMERCE_PAGINATED_PRODUCTS = gql`
         id
         name
         posterImageUrl
-        custom_url
+        customUrl
         price
         discountPrice
         stock
@@ -254,11 +254,11 @@ export const FETCH_ALL_ECOMMERCE_PAGINATED_PRODUCTS = gql`
         createdAt
         category {
           name
-          custom_url
+          customUrl
         }
         subcategory {
           name
-          custom_url
+          customUrl
         }
       }
     }
@@ -269,22 +269,22 @@ export const FIND_ONE_MAIN_CATEGORY_SEO = gql`
   query GetCategory($customUrl: String!) {
     category(customUrl: $customUrl) {
       posterImageUrl
-      custom_url
-      Meta_Title
-      Canonical_Tag
+      customUrl
+      metaTitle
+      canonicalTag
 
-      Meta_Description
+      metaDescription
     }
   }
 `;
 
 export const FIND_ONE_SUB_CATEGORY = gql`
-  query SubCategory($custom_url: String!, $category: String!) {
-    find_one_subcategory(custom_url: $custom_url, category: $category) {
-      Canonical_Tag
-      Meta_Description
-      Meta_Title
-      custom_url
+  query SubCategory($customUrl: String!, $category: String!) {
+    find_one_subcategory(customUrl: $customUrl, category: $category) {
+      canonicalTag
+      metaDescription
+      metaTitle
+      customUrl
       Banners
       BannerText
       BannerHeading
@@ -311,24 +311,24 @@ export const FIND_ONE_SUB_CATEGORY = gql`
       categoryText
       status
       category {
-        custom_url
+        customUrl
       }
       products {
         id
         name
         posterImageUrl
         productImages
-        custom_url
+        customUrl
         status
       }
       InnersubCategories {
         name
-        custom_url
+        customUrl
         catalogue
         products {
           name
           posterImageUrl
-          custom_url
+          customUrl
           productImages
           status
         }
@@ -338,8 +338,8 @@ export const FIND_ONE_SUB_CATEGORY = gql`
 `;
 
 export const FIND_ONE_ECOMMERCE_SUB_CATEGORY = gql`
-  query SubCategory($custom_url: String!, $category: String!) {
-    find_one_subcategory(custom_url: $custom_url, category: $category) {
+  query SubCategory($customUrl: String!, $category: String!) {
+    find_one_subcategory(customUrl: $customUrl, category: $category) {
       Banners
       status
       EcomereceProducts {
@@ -349,12 +349,12 @@ export const FIND_ONE_ECOMMERCE_SUB_CATEGORY = gql`
         description
         stock
         discountPrice
-        short_description
+        shortDescription
         posterImageUrl
         hoverImageUrl
         productImages
-        custom_url
-        breadCrum
+        customUrl
+        breadCrumb
         Banners
         DescriptionBullets
         Additionalinformation
@@ -363,19 +363,19 @@ export const FIND_ONE_ECOMMERCE_SUB_CATEGORY = gql`
         colors
         sizes
         variant
-        Canonical_Tag
-        Meta_Description
-        Meta_Title
+        canonicalTag
+        metaDescription
+        metaTitle
         shippingOptions
         status
         category {
           name
-          custom_url
+          customUrl
           status
         }
         subcategory {
           name
-          custom_url
+          customUrl
           status
         }
       }
@@ -384,22 +384,22 @@ export const FIND_ONE_ECOMMERCE_SUB_CATEGORY = gql`
 `;
 
 export const FIND_ONE_SUB_CATEGORY_SEO = gql`
-  query SubCategory($custom_url: String!, $category: String!) {
-    find_one_subcategory(custom_url: $custom_url, category: $category) {
+  query SubCategory($customUrl: String!, $category: String!) {
+    find_one_subcategory(customUrl: $customUrl, category: $category) {
       id
       name
-      Canonical_Tag
-      Meta_Description
-      Meta_Title
+      canonicalTag
+      metaDescription
+      metaTitle
       posterImageUrl
-      custom_url
+      customUrl
     }
   }
 `;
 
 export const FIND_ONE_PRODUCT_DETAIL = gql`
-  query Product($custom_url: String!, $category: String!, $subCategory: String!) {
-    single_product(custom_url: $custom_url, category: $category, subCategory: $subCategory) {
+  query Product($customUrl: String!, $category: String!, $subCategory: String!) {
+    single_product(customUrl: $customUrl, category: $category, subCategory: $subCategory) {
       id
       name
       price
@@ -407,8 +407,8 @@ export const FIND_ONE_PRODUCT_DETAIL = gql`
       stock
       posterImageUrl
       discountPrice
-      breadCrum
-      custom_url
+      breadCrumb
+      customUrl
       Banners
       BannerText
       BannerHeading
@@ -425,24 +425,24 @@ export const FIND_ONE_PRODUCT_DETAIL = gql`
       bottomText
       status
       category {
-        custom_url
+        customUrl
       }
       subcategory {
-        custom_url
+        customUrl
       }
     }
   }
 `;
 export const FIND_ONE_PRODUCT = gql`
-  query Product($custom_url: String!, $category: String!, $subCategory: String!) {
-    single_product(custom_url: $custom_url, category: $category, subCategory: $subCategory) {
+  query Product($customUrl: String!, $category: String!, $subCategory: String!) {
+    single_product(customUrl: $customUrl, category: $category, subCategory: $subCategory) {
       id
       name
       posterImageUrl
-      Meta_Title
-      Meta_Description
-      Canonical_Tag
-      custom_url
+      metaTitle
+      metaDescription
+      canonicalTag
+      customUrl
       Banners
       BannerText
       BannerHeading
@@ -459,50 +459,50 @@ export const FIND_ONE_PRODUCT = gql`
       productImages
       status
       category {
-        custom_url
+        customUrl
       }
       subcategory {
-        custom_url
+        customUrl
       }
     }
   }
 `;
 
 export const FIND_PRODUCT_META = gql`
-  query Product($custom_url: String!, $category: String!, $subCategory: String!) {
-    single_product(custom_url: $custom_url, category: $category, subCategory: $subCategory) {
-      Meta_Title
-      Meta_Description
-      Canonical_Tag
-      custom_url
+  query Product($customUrl: String!, $category: String!, $subCategory: String!) {
+    single_product(customUrl: $customUrl, category: $category, subCategory: $subCategory) {
+      metaTitle
+      metaDescription
+      canonicalTag
+      customUrl
       posterImageUrl
       category {
-        custom_url
+        customUrl
       }
       subcategory {
-        custom_url
+        customUrl
       }
     }
   }
 `;
 
 export const FIND_ONE_PRODUCT_META = gql`
-  query Product($custom_url: String!, $category: String!, $subCategory: String!) {
+  query Product($customUrl: String!, $category: String!, $subCategory: String!) {
     single_product_ecomerece(
-      custom_url: $custom_url
+      customUrl: $customUrl
       category: $category
       subCategory: $subCategory
     ) {
-      Meta_Title
-      Meta_Description
-      Canonical_Tag
-      custom_url
+      metaTitle
+      metaDescription
+      canonicalTag
+      customUrl
       posterImageUrl
       category {
-        custom_url
+        customUrl
       }
       subcategory {
-        custom_url
+        customUrl
       }
     }
   }
@@ -672,7 +672,7 @@ export const FETCH_ALL_INNER_SUB_CATEGORIES = gql`
   query Innersubcategories {
     Innersubcategories {
       name
-      custom_url
+      customUrl
       subCategoryId
       id
       createdAt
@@ -683,47 +683,6 @@ export const FETCH_ALL_INNER_SUB_CATEGORIES = gql`
         id
         name
       }
-    }
-  }
-`;
-
-// Admins
-export const GET_ALL_ADMINS = gql`
-  query Admins {
-    admins {
-      id
-      fullname
-      email
-      password
-      canAddProduct
-      canEditProduct
-      canDeleteProduct
-      canAddCategory
-      canDeleteCategory
-      canEditCategory
-      canCheckProfit
-      canCheckRevenue
-      canCheckVisitors
-      canViewUsers
-      canViewSales
-      canVeiwAdmins
-      canVeiwTotalproducts
-      canVeiwTotalCategories
-      canAddSubCategory
-      canDeleteSubCategory
-      canEditSubCategory
-      canVeiwTotalSubCategories
-      canAddBlog
-      canDeleteBlog
-      canEditBlog
-      canVeiwTotalBlog
-      canAddRedirecturls
-      canDeleteRedirecturls
-      canEditRedirecturls
-      canVeiwTotalRedirecturls
-      canViewAppointments
-      posterImageUrl
-      role
     }
   }
 `;
@@ -771,3 +730,4 @@ export const FETCH_ALL_ORDERS = gql`
     }
   }
 `;
+

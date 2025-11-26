@@ -1,15 +1,8 @@
-"use server";
-import { Testimonial, AccountTabs } from "@components";
-import { TestimonialReview } from "@data/detail-page";
 import React from "react";
+import AccountPage from "./AccountPage";
 
 const Page = async () => {
-  return (
-    <>
-      <AccountTabs />
-      <Testimonial reviews={TestimonialReview} showPaymentInfo />
-    </>
-  );
+  return <AccountPage />;
 };
 
 export default Page;

@@ -1,6 +1,6 @@
-import { Breadcrumb, RegisterForm, Testimonial } from "@components";
-import { TestimonialReview } from "@data/detail-page";
 import React from "react";
+import { TestimonialReview } from "@data/detail-page";
+import { Breadcrumb, RegisterForm, Testimonial } from "@components";
 
 const page = () => {
   return (

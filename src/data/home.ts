@@ -25,7 +25,7 @@ export const infoItems = [
     text: "Free Next Day Delivery",
   },
 ];
-export const chooseblinds = [
+export const chooseBlinds = [
   {
     title: "Roller Blinds",
     description: "Blackout Roller Blinds",
@@ -66,33 +66,33 @@ export const chooseblinds = [
 
 export const chooseimage = [
   {
-    image: "/assets/images/bin/product1.webp",
-    title: "Roman Blinds",
+    thumbnailUrl: "/assets/images/bin/product1.webp",
+    name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    image: "/assets/images/bin/product2.webp",
-    title: "Roman Blinds",
+    thumbnailUrl: "/assets/images/bin/product2.webp",
+    name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    image: "/assets/images/bin/product3.webp",
-    title: "Roman Blinds",
+    thumbnailUrl: "/assets/images/bin/product3.webp",
+    name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    image: "/assets/images/bin/product1.webp",
-    title: "Roman Blinds",
+    thumbnailUrl: "/assets/images/bin/product1.webp",
+    name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    image: "/assets/images/bin/product2.webp",
-    title: "Roman Blinds",
+    thumbnailUrl: "/assets/images/bin/product2.webp",
+    name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    image: "/assets/images/bin/product3.webp",
-    title: "Roman Blinds",
+    thumbnailUrl: "/assets/images/bin/product3.webp",
+    name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
 ];

@@ -9,3 +9,4 @@ export * from "./modal";
 export * from "./SortDropdown";
 export * from "./swiper-slider";
 export * from "./CustomTable";
+export * from "./Toaster";

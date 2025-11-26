@@ -1,38 +1,22 @@
-import { Admin } from "./type";
-
-export interface adminCheckBox {
-  canAddProduct: boolean;
-  canEditProduct: boolean;
-  canDeleteProduct: boolean;
-  canAddCategory: boolean;
-  canDeleteCategory: boolean;
-  canEditCategory: boolean;
-  canCheckProfit: boolean;
-  canCheckRevenue: boolean;
-  canCheckVisitors: boolean;
-  canViewUsers: boolean;
-  canViewSales: boolean;
-  canVeiwAdmins: boolean;
-  canVeiwTotalproducts: boolean;
-  canVeiwTotalCategories: boolean;
-  canAddSubCategory: boolean;
-  canDeleteSubCategory: boolean;
-  canEditSubCategory: boolean;
-  canVeiwTotalSubCategories: boolean;
-  canAddBlog: boolean;
-  canDeleteBlog: boolean;
-  canEditBlog: boolean;
-  canVeiwTotalBlog: boolean;
-  canAddRedirecturls: boolean;
-  canDeleteRedirecturls: boolean;
-  canEditRedirecturls: boolean;
-  canVeiwTotalRedirecturls: boolean;
-  canViewAppointments: boolean;
+export interface CreateAdminProps {
+  setSelecteMenu: React.Dispatch<React.SetStateAction<string>>;
+  editAdmin?: Admin | null;
 }
 
-export interface CreateAdminProps {
-  setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
-  EditAdminValue?: Admin;
-  EditInitialValues?: Admin | null;
-  setEditProduct: React.Dispatch<React.SetStateAction<Admin | null>>;
+export interface Admin {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password?: string;
+  role?: string;
+  permissions: string[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface AllAdminsProps {
+  setSelecteMenu: React.Dispatch<React.SetStateAction<string>>;
+  setEditAdmin: React.Dispatch<React.SetStateAction<Admin | null>>;
+  AllAdminData: Admin[];
 }

@@ -1,25 +1,34 @@
 import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting, ProductDetail } from "@components";
-import { chooseblinds } from "@data/home";
+import { fetchProducts, fetchSingleProduct } from "@config/fetch";
+import { notFound } from "next/navigation";
+import { GET_CARD_PRODUCT } from "@graphql";
 
 const ProductPage = async ({
   params,
 }: {
   params: Promise<{ category: string; subCategory: string; product: string }>;
 }) => {
-  const resolvedParams = await params;
+  const {category, subCategory , product} = await params;
+    const [productList ,SingleProduct] = await Promise.all([fetchProducts(GET_CARD_PRODUCT), fetchSingleProduct(category,subCategory,product)]);
+  
+    if (!productList && SingleProduct) {
+      notFound();
+    }
+
+    console.log(SingleProduct,"SingleProductSingleProduct")
   return (
     <>
       <Breadcrumb
-        slug={resolvedParams.category}
-        subcategory={resolvedParams.subCategory}
-        title={resolvedParams.product}
+        slug={category}
+        subcategory={subCategory}
+        title={SingleProduct?.Breadcrumb}
       />
       <div className="container mx-auto px-2">
         <ProductDetail
-          category={resolvedParams.category}
-          subCategory={resolvedParams.subCategory}
+          category={category}
+          productData={SingleProduct!}
         />
-        <RelatedProduct titleStart title="RELATED PRODUCTS" data={chooseblinds} />
+        <RelatedProduct titleStart title="RELATED PRODUCTS" data={productList} />
         <BlindFitting />
         <OrderSection
           className="mt-10 md:mt-16"

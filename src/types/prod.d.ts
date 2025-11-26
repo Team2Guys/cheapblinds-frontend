@@ -75,7 +75,7 @@ interface CommonProductsTypes {
   id: number;
   name: string | undefined;
   price: number;
-  short_description?: string;
+  shortDescription?: string;
   description: string;
   stock: number;
   discountPrice?: number;
@@ -84,12 +84,12 @@ interface CommonProductsTypes {
   productImages: ProductImage[];
   createdAt?: Date;
   updatedAt?: Date;
-  Canonical_Tag?: string;
-  Meta_Description?: string;
-  Meta_Title?: string;
+  canonicalTag?: string;
+  metaDescription?: string;
+  metaTitle?: string;
   last_editedBy?: string;
-  custom_url: string;
-  breadCrum?: string;
+  customUrl: string;
+  breadCrumb?: string;
   Banners?: ProductImage;
   //
   seoSchema?: string;

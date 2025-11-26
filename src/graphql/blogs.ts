@@ -15,15 +15,15 @@ export const GET_ALL_BLOGS = gql`
       id
       title
       content
-      custom_url
+      customUrl
       category
       createdAt
       updatedAt
       posterImage
       last_editedBy
-      Canonical_Tag
-      Meta_Description
-      Meta_Title
+      canonicalTag
+      metaDescription
+      metaTitle
       redirectionUrl
       publishedAt
       status

@@ -49,10 +49,10 @@ export default function RootLayout({
         <meta name="robots" content="noindex, nofollow" />
       </head>
       <body className={`${openSans.variable} ${rubik.variable} ${currency.variable} antialiased`}>
-        <PathnameWrapper>
-          <ToastContainer autoClose={1500} />
-          {children}
-        </PathnameWrapper>
+          <PathnameWrapper>
+            <ToastContainer autoClose={1500} />
+            {children}
+          </PathnameWrapper>
       </body>
     </html>
   );

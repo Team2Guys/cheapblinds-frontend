@@ -1,12 +1,14 @@
 import { RelatedProduct } from "@components";
 import { Orders } from "@components/thank-you/Orders";
+import { fetchProducts } from "@config/fetch";
 import { OrderSummary } from "@data/bin";
-import { chooseblinds } from "@data/home";
+import { GET_CARD_PRODUCT } from "@graphql";
 import Link from "next/link";
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 
-const ThankYou = () => {
+const ThankYou = async () => {
+  const productList = await fetchProducts(GET_CARD_PRODUCT)
   return (
     <div className="container mx-auto px-2 my-10 space-y-5">
       <div className="max-w-3xl mx-auto text-center space-y-3">
@@ -30,7 +32,7 @@ const ThankYou = () => {
       </div>
       <Orders orderItems={OrderSummary} />
 
-      <RelatedProduct title="Browse Products" data={chooseblinds} />
+      <RelatedProduct title="Browse Products" data={productList} />
     </div>
   );
 };

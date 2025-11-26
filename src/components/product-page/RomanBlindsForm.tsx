@@ -3,7 +3,7 @@ import { FormProps } from "@/types/type";
 import Image from "next/image";
 import React, { useState } from "react";
 import { FormSelect } from "@components";
-import { showToast } from "@components/Toaster/Toaster";
+import { Toaster } from "@components";
 import { controlOptions, headrailOptions, Lining, StackingStyle } from "@data/detail-page";
 
 export const RomanBlindsForm = ({ values, recessType }: FormProps) => {
@@ -14,7 +14,7 @@ export const RomanBlindsForm = ({ values, recessType }: FormProps) => {
   const [chainSide, setChainSide] = useState("Right");
 
   const handleAddToBasket = () => {
-    showToast(
+    Toaster(
       "success",
       `Added ${headrail} (${stackingStyle}) with ${control} control and chain on ${chainSide} side to basket!`,
     );

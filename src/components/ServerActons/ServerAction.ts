@@ -17,9 +17,7 @@ import {
 } from "@config/fetch";
 import { Metadata } from "next";
 import { ISEO_TAGS, SEARCH_PARAMS } from "@/types/CommonTypes";
-import ApoloClient from "@utils/AppoloClient";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@components/auth/authOptions";
+import ApolloCustomClient from "@utils/apollo-client";
 
 async function revalidateTag(name: string) {
   revalidate(name);
@@ -30,7 +28,7 @@ export default revalidateTag;
 export const getAdminData = async () => {
   try {
     // const token =   await getToken()
-    const { data } = await ApoloClient.query({
+    const { data } = await ApolloCustomClient.query({
       query: GET_ADMIN_DATA,
       // context: {
       //   headers: {
@@ -67,25 +65,25 @@ export const metaObjecthandler = async (category: ISEO_TAGS, search_params?: SEA
   const alt = category?.posterImageUrl?.altText || category?.posterImage?.altText || "Two Guys";
 
   const NewImage = [{ url: ImageUrl, alt: alt }];
-  const title = category?.Meta_Title || "Two Guys";
-  const description = category?.Meta_Description || "Welcome to Two Guys";
+  const title = category?.metaTitle || "Two Guys";
+  const description = category?.metaDescription || "Welcome to Two Guys";
 
   let url = fullUrl; // base: http://localhost:3000/
 
   if (category.category) {
     if (typeof category.category === "string") {
       url += `blogs/${category.category.toLowerCase()}/`;
-    } else if (category.category.custom_url) {
-      url += `${category.category.custom_url}/`;
+    } else if (category.category.customUrl) {
+      url += `${category.category.customUrl}/`;
     }
   }
 
-  if (category.subcategory?.custom_url) {
-    url += `${category.subcategory.custom_url}/`;
+  if (category.subcategory?.customUrl) {
+    url += `${category.subcategory.customUrl}/`;
   }
 
-  if (category?.custom_url) {
-    url += `${category.custom_url}/`;
+  if (category?.customUrl) {
+    url += `${category.customUrl}/`;
   }
 
   const { variant, size } = search_params ?? {};
@@ -116,8 +114,8 @@ export const metaObjecthandler = async (category: ISEO_TAGS, search_params?: SEA
     },
     alternates: {
       canonical:
-        category?.Canonical_Tag && category?.Canonical_Tag !== ""
-          ? `/${category?.Canonical_Tag}/`
+        category?.canonicalTag && category?.canonicalTag !== ""
+          ? `/${category?.canonicalTag}/`
           : fullurl,
     },
   };
@@ -179,11 +177,4 @@ export const SeoTagsHandlerpproduct = async (
   if (!product) return null;
 
   return await metaObjecthandler(product, search_params);
-};
-
-export const getAdminDetails = async () => {
-  const user = await getServerSession(authOptions);
-  // const user = 'hello';
-
-  return user ? user : "this is my user object";
 };

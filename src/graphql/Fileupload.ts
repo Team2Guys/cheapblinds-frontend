@@ -19,13 +19,12 @@ export const FILE_UPLOAD_MUTATION_S3 = `
 `;
 
 export const FILE_DELETION_MUTATION = `
-          mutation DeleteImage($public_id: String!) {
-            DeleteImage(RemoveUImage: { public_id: $public_id })
-          }
-
-        `;
+  mutation DeleteImage($public_id: String!) {
+    DeleteImage(RemoveUImage: { public_id: $public_id })
+  }
+`;
 export const FILE_DELETION_MUTATION_S3 = `
-          mutation DeleteImage($public_id: String!) {
-            Del_S3_file(RemoveUImage: { public_id: $public_id })
-          }
-        `;
+  mutation DeleteImage($public_id: String!) {
+    Del_S3_file(RemoveUImage: { public_id: $public_id })
+  }
+`;

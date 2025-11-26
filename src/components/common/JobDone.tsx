@@ -17,14 +17,14 @@ export const JobDone = ({ title, description, data }: RelatedProductProps) => {
               <div className="relative overflow-hidden group">
                 <div className="relative w-full aspect-square">
                   <Image
-                    src={array.image}
-                    alt={array.title ?? ""}
+                    src={array.thumbnailUrl ?? "/assets/images/bin/product3.webp"}
+                    alt={array.name ?? ""}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-center items-center text-white text-center px-3">
-                  <p className="text-lg font-semibold">{array.title}</p>
+                  <p className="text-lg font-semibold">{array.name}</p>
                   <p>{array.description}</p>
                 </div>
               </div>

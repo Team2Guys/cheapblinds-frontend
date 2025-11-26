@@ -205,9 +205,6 @@ body {
   box-shadow: 0px 0px 6px #4c4c4c59;
 }
 
-.card-wrapper:hover {
-  box-shadow: 0px 0px 6px #4c4c4c59;
-}
 
 .custom-bullet {
   width: 16px;

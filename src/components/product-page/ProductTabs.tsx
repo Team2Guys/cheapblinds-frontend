@@ -2,7 +2,14 @@
 import { useState } from "react";
 import { Testimonial } from "@components";
 import { TestimonialReview } from "@data/detail-page";
-export const ProductTabs = () => {
+import { decodeHtml } from "@utils/helperFunctions";
+
+interface productTabsProps {
+  description?: string;
+  additionalInfo?: string;
+  measuringGuide?: string;
+}
+export const ProductTabs = ({ description, additionalInfo, measuringGuide }: productTabsProps) => {
   const [activeTab, setActiveTab] = useState("description");
 
   const tabs = [
@@ -34,25 +41,43 @@ export const ProductTabs = () => {
 
       <div className="mt-6 text-xl ">
         {activeTab === "description" && (
-          <ul className="list-disc pl-6 space-y-2 lg:max-w-[850px] w-full mx-auto px-2 ">
-            <li>
-              Fully <span className="font-semibold">Made-to-Measure</span>
-            </li>
-            <li>54% Polyester, 46% Cotton</li>
-            <li>Maximum Width 2600mm. Maximum Height 3000mm</li>
-            <li>Minimum Width 300mm, Minimum Height 300mm</li>
-            <li>Available in Classic or Cassette headings</li>
-            <li>High Quality Sewn finish</li>
-            <li>Dry Clean only</li>
+          <ul className="space-y-2 lg:max-w-[850px] w-full mx-auto px-2 ">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: decodeHtml(description || ""),
+              }}
+            />
           </ul>
         )}
 
-        {activeTab === "additional" && <p>No additional information available.</p>}
+        {activeTab === "additional" && (
+          <div className="lg:max-w-[850px] w-full mx-auto px-2">
+            {additionalInfo && additionalInfo.length > 0 ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: decodeHtml(additionalInfo),
+                }}
+              />
+            ) : (
+              <p>No additional information available.</p>
+            )}
+          </div>
+        )}
 
         {activeTab === "reviews" && <Testimonial reviews={TestimonialReview} />}
 
         {activeTab === "guide" && (
-          <p>Please refer to our measuring guide for detailed instructions.</p>
+          <div className="lg:max-w-[850px] w-full mx-auto px-2">
+            {measuringGuide && measuringGuide.length > 0 ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: decodeHtml(measuringGuide),
+                }}
+              />
+            ) : (
+              <p>No additional information available.</p>
+            )}
+          </div>
         )}
       </div>
     </div>
