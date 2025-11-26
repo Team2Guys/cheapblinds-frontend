@@ -46,7 +46,7 @@ export interface Product {
   description?: string;
   Breadcrumb?:string;
   shortDescription?: string;
-  customUrl?: string;
+  slug?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalTag?: string;
@@ -79,7 +79,7 @@ export interface Category_Page {
   id?: string | number;
   name?: string;
   description?: string;
-  customUrl?: string;
+  slug?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalTag?: string;
@@ -92,7 +92,7 @@ export interface Category_Page {
 export interface ISubcategory {
   id?: string | number;
   name?: string;
-  customUrl?: string;
+  slug?: string;
   status?: ContentStatus;
 
 }
@@ -100,7 +100,7 @@ export interface ISubcategory {
 export interface IProduct {
   id?: string | number;
   name?: string;
-  customUrl?: string;
+  slug?: string;
   status?: ContentStatus;
 
 }
