@@ -11,7 +11,7 @@ const ProductPage = async ({
   const {category, subCategory , product} = await params;
     const [productList ,SingleProduct] = await Promise.all([fetchProducts(GET_CARD_PRODUCT), fetchSingleProduct(category,subCategory,product)]);
   
-    if (!productList && SingleProduct) {
+    if (!SingleProduct) {
       notFound();
     }
 
