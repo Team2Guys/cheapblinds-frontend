@@ -15,10 +15,15 @@ interface ProductDetailProps {
   category: string;
   price?: number | null;
   discountPrice?: number | null;
-  shortDescription?:string;
+  shortDescription?: string;
 }
 
-export const ProductInfo = ({ category, price, discountPrice, shortDescription }: ProductDetailProps) => {
+export const ProductInfo = ({
+  category,
+  price,
+  discountPrice,
+  shortDescription,
+}: ProductDetailProps) => {
   const [showForm, setShowForm] = useState(false);
   const [recessType, setRecessType] = useState("outside");
   const topRef = useRef<HTMLDivElement>(null);
@@ -61,7 +66,6 @@ export const ProductInfo = ({ category, price, discountPrice, shortDescription }
             From
             <span className="font-currency text-2xl md:text-3xl font-normal"></span>
             <span className="font-semibold text-2xl md:text-3xl">{discountPrice}</span>
-
             {/* Original Price with strikethrough */}
             <span className="font-currency text-2xl font-normal line-through"></span>
             <span className="text-xl font-normal line-through">{price}</span>
@@ -75,9 +79,7 @@ export const ProductInfo = ({ category, price, discountPrice, shortDescription }
         )}
       </h2>
 
-      <p>
-        {shortDescription}
-      </p>
+      <p>{shortDescription}</p>
 
       <CalculationForm onValuesChange={setCalcValues} />
 

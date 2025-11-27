@@ -22,7 +22,6 @@ export const GET_CATEGORY_LIST = gql`
   }
 `;
 
-
 export const GET_CATEGORY_BY_ID = gql`
   query GetCategoryById($id: ID!) {
     getCategoryById(id: $id) {
@@ -45,7 +44,6 @@ export const GET_CATEGORY_BY_ID = gql`
   }
 `;
 
-
 export const GET_CARD_CATEGORY = gql`
   query GetCategoryList {
     getCategoryList {
@@ -58,32 +56,58 @@ export const GET_CARD_CATEGORY = gql`
   }
 `;
 
-export const GET_CATEGORY_BY_CUSTOM_URL = gql`
-  query GetCategoryByCustomUrl($slug: String!) {
-    getCategoryByUrl(input: { slug: $slug }) {
+export const GET_CATEGORY_BY_SLUG = gql`
+  query GetCategoryBySlug($slug: String!) {
+    getCategoryBySlug(input: { slug: $slug }) {
       id
       name
       description
+      shortDescription
       slug
       metaTitle
       metaDescription
       canonicalTag
       breadcrumb
+      posterImageUrl
+      lastEditedBy
       seoSchema
       status
+      createdAt
+      updatedAt
+
       subcategories {
         id
         name
+        description
+        shortDescription
         slug
+        metaTitle
+        metaDescription
+        canonicalTag
+        breadcrumb
+        posterImageUrl
+        lastEditedBy
+        seoSchema
+        status
+        createdAt
+        updatedAt
+
         products {
           id
           name
           slug
+          posterImageUrl
           price
           discountPrice
+          stock
+          width
+          height
+          weight
+          color
+          pattern
+          composition
         }
       }
     }
   }
 `;
-

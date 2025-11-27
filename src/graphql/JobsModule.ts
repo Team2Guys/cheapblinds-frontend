@@ -4,7 +4,7 @@ export const CREATE_JOBS = gql`
   mutation CreateJob($CreateJobDto: CreateJobDto!) {
     Create_jobs(CreateJobDto: $CreateJobDto) {
       title
-      customUrl
+      slug
     }
   }
 `;
@@ -14,7 +14,7 @@ export const GET_ALL_JOBS = gql`
     get_All_jobs {
       id
       title
-      customUrl
+      slug
       location
       jobType
       salary
@@ -38,17 +38,17 @@ export const UPDATE_JOBS = gql`
   mutation UpdateJob($UpdateCreateJobDto: UpdateCreateJobDto!) {
     update_jobs(UpdateCreateJobDto: $UpdateCreateJobDto) {
       title
-      customUrl
+      slug
     }
   }
 `;
 
 export const GET_SINGLE_JOB = gql`
-  query GetSingleJob($customUrl: String!) {
-    get_single_job(customUrl: $customUrl) {
+  query GetSingleJob($slug: String!) {
+    get_single_job(slug: $slug) {
       id
       title
-      customUrl
+      slug
       location
       jobType
       salary
@@ -63,12 +63,12 @@ export const GET_SINGLE_JOB = gql`
   }
 `;
 export const GET_SINGLE_JOB_META_DESCRIPTION = gql`
-  query GetSingleJob($customUrl: String!) {
-    get_single_job(customUrl: $customUrl) {
+  query GetSingleJob($slug: String!) {
+    get_single_job(slug: $slug) {
       canonicalTag
       metaDescription
       metaTitle
-      customUrl
+      slug
     }
   }
 `;

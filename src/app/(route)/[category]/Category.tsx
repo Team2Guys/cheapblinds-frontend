@@ -1,24 +1,36 @@
 "use client";
 
-import CategoryFeatures from "@components/category/CategoryFeatures";
-import { Herobanner, Card, SortDropdown, Filters } from "@components";
-import { categoryFeatures } from "@data/data";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState, useMemo } from "react";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { RxCross2 } from "react-icons/rx";
-import { Product, Subcategory } from "@/types/category";
-import { decodeHtml } from "@utils/helperFunctions";
+import { Herobanner, Card, Filters } from "@components";
+import React, { useState, useMemo } from "react";
+import { CategoryPageProps, Product } from "@/types/category";
+import CategoryHeader from "@components/category/categoryHeader";
 
-interface CategoryPageProps {
-  categoryName: string;
-  categoryUrl: string;
-  description: string;
-  ProductList: Subcategory | Subcategory[];
-}
+// Helper hook to generate filter options dynamically
+const useFilterOptions = (allProducts: Product[]) => {
+  return useMemo(() => {
+    const typeSet = new Set<string>();
+    const patternSet = new Set<string>();
+    const compositionSet = new Set<string>();
+    const widthSet = new Set<string>();
+    const colourSet = new Set<string>();
 
-const PRODUCTS_PER_PAGE = 9;
+    allProducts.forEach((product) => {
+      if (product.parentSubcategoryUrl) typeSet.add(product.parentSubcategoryUrl);
+      if (product.pattern) patternSet.add(product.pattern);
+      if (product.composition) compositionSet.add(product.composition);
+      if (product.width !== undefined) widthSet.add(`Up To ${product.width}cm Wide`);
+      if (product.color) colourSet.add(product.color);
+    });
+
+    return {
+      typeOptions: Array.from(typeSet),
+      patternOptions: Array.from(patternSet),
+      compositionOptions: Array.from(compositionSet),
+      widthOptions: Array.from(widthSet),
+      colourOptions: Array.from(colourSet).map((color) => ({ name: color, color })), // replace color with code if needed
+    };
+  }, [allProducts]);
+};
 
 const CategoryPage = ({
   categoryName,
@@ -26,44 +38,23 @@ const CategoryPage = ({
   categoryUrl,
   ProductList,
 }: CategoryPageProps) => {
-  const [showFilters, setShowFilters] = useState(false);
-  const [displayText, setDisplayText] = useState(description || "");
-  const [isTruncated, setIsTruncated] = useState(false);
-
-  // Local state for pagination and sorting
-  const [page, setPage] = useState(1);
   const [sort, setSort] = useState<"default" | "low" | "high" | "new">("default");
 
-  // --- HANDLE DESCRIPTION FOR MOBILE ---
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        const words = description?.split(" ") || [];
-        const truncated = words.slice(0, 38).join(" ");
-        setDisplayText(truncated);
-        setIsTruncated(true);
-      } else {
-        setDisplayText(description || "");
-        setIsTruncated(false);
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [description]);
+  // ----- Filter States -----
+  const [selectedType, setSelectedType] = useState<string[]>([]);
+  const [selectedPattern, setSelectedPattern] = useState<string[]>([]);
+  const [selectedComposition, setSelectedComposition] = useState<string[]>([]);
+  const [selectedWidth, setSelectedWidth] = useState<string[]>([]);
+  const [selectedPrice, setSelectedPrice] = useState<[number, number]>([0, 1000]);
+  const [selectedColour, setSelectedColour] = useState<string[]>([]);
 
-  const handleReadMore = () => {
-    setDisplayText(description || "");
-    setIsTruncated(false);
-  };
-
-  // --- FLATTEN SUBCATEGORY PRODUCTS ---
   const subcategoryArray = Array.isArray(ProductList)
     ? ProductList
     : ProductList
       ? [ProductList]
       : [];
 
+  // Flatten all products and add parentSubcategoryUrl
   const allProducts = useMemo(() => {
     return subcategoryArray.flatMap((subCat) =>
       (subCat.products || []).map((product) => ({
@@ -73,41 +64,55 @@ const CategoryPage = ({
     );
   }, [subcategoryArray]);
 
-  // --- SORTING ---
-  const sortedProducts = useMemo(() => {
-    const products = [...allProducts];
+  // Get dynamic filter options
+  const { typeOptions, patternOptions, compositionOptions, widthOptions, colourOptions } =
+    useFilterOptions(allProducts);
 
-    // Sort using discountPrice if exists, otherwise price
+  // ----- Filter Products -----
+  const filteredProducts = useMemo(() => {
+    return allProducts.filter((product) => {
+      const type = product.parentSubcategoryUrl ?? "";
+      const pattern = product.pattern ?? "";
+      const composition = product.composition ?? "";
+      const color = product.color ?? "";
+      const width = product.width ?? 0;
+
+      if (selectedType.length && !selectedType.includes(type)) return false;
+      if (selectedPattern.length && !selectedPattern.includes(pattern)) return false;
+      if (selectedComposition.length && !selectedComposition.includes(composition)) return false;
+      if (selectedWidth.length && !selectedWidth.some((w) => w.includes(String(width))))
+        return false;
+      if (selectedColour.length && !selectedColour.includes(color)) return false;
+
+      const price = product.discountPrice ?? product.price ?? 0;
+      if (price < selectedPrice[0] || price > selectedPrice[1]) return false;
+
+      return true;
+    });
+  }, [
+    allProducts,
+    selectedType,
+    selectedPattern,
+    selectedComposition,
+    selectedWidth,
+    selectedColour,
+    selectedPrice,
+  ]);
+
+  // ----- Sort Products -----
+  const sortedProducts = useMemo(() => {
+    const products = [...filteredProducts];
     const getPrice = (product: Product) => product.discountPrice ?? product.price ?? 0;
 
-    if (sort === "low") {
-      products.sort((a, b) => getPrice(a) - getPrice(b));
-    }
-
-    if (sort === "high") {
-      products.sort((a, b) => getPrice(b) - getPrice(a));
-    }
-
-    if (sort === "new") {
-      products.sort((a, b) => {
-        const dateA = new Date(a.createdAt ?? 0).getTime();
-        const dateB = new Date(b.createdAt ?? 0).getTime();
-        return dateB - dateA;
-      });
-    }
+    if (sort === "low") products.sort((a, b) => getPrice(a) - getPrice(b));
+    if (sort === "high") products.sort((a, b) => getPrice(b) - getPrice(a));
+    if (sort === "new")
+      products.sort(
+        (a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime(),
+      );
 
     return products;
-  }, [allProducts, sort]);
-
-  // --- PAGINATION ---
-  const totalPages = Math.ceil(sortedProducts.length / PRODUCTS_PER_PAGE);
-
-  const visibleProducts = useMemo(() => {
-    const start = (page - 1) * PRODUCTS_PER_PAGE;
-    return sortedProducts.slice(start, start + PRODUCTS_PER_PAGE);
-  }, [sortedProducts, page]);
-
-  const goToPage = (p: number) => setPage(p);
+  }, [filteredProducts, sort]);
 
   return (
     <>
@@ -115,166 +120,58 @@ const CategoryPage = ({
         desktopImage="/assets/images/category/desktop-banner.jpg"
         mobileImage="/assets/images/category/mobile-banner.png"
       />
-
       <div className="container mx-auto px-2 flex gap-6 xl:gap-10 mt-10">
-        {/* LEFT FILTERS */}
+        {/* Filters */}
         <div className="hidden lg:block lg:w-[25%]">
-          <Filters />
+          <Filters
+            typeOptions={typeOptions}
+            patternOptions={patternOptions}
+            compositionOptions={compositionOptions}
+            widthOptions={widthOptions}
+            colourOptions={colourOptions}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
+            selectedPattern={selectedPattern}
+            setSelectedPattern={setSelectedPattern}
+            selectedComposition={selectedComposition}
+            setSelectedComposition={setSelectedComposition}
+            selectedWidth={selectedWidth}
+            setSelectedWidth={setSelectedWidth}
+            selectedColour={selectedColour}
+            setSelectedColour={setSelectedColour}
+            selectedPrice={selectedPrice}
+            setSelectedPrice={setSelectedPrice}
+            showTypeFilter={subcategoryArray.length > 1}
+          />
         </div>
+
+        {/* Product List */}
         <div className="w-full lg:w-[75%]">
-          <div className="space-y-3">
-            <h1 className="font-rubik font-semibold text-4xl">{categoryName}</h1>
-            <div className="leading-7 text-gray-800">
-              <div dangerouslySetInnerHTML={{ __html: decodeHtml(displayText) }} />
-              {isTruncated && (
-                <button
-                  onClick={handleReadMore}
-                  className="text-primary font-medium mt-1 hover:underline"
-                >
-                  Read More...
-                </button>
-              )}
-            </div>
-          </div>
-
-          <div className="pt-6">
-            <CategoryFeatures categoryFeatures={categoryFeatures} />
-          </div>
-
-          {/* BANNER CARDS + SORT/FILTERS */}
-          <div className="flex flex-wrap lg:flex-nowrap md:items-center justify-between bg-white w-full py-2 gap-4 md:gap-2 xl:gap-4 mt-6 pt-6 border-t border-[#0000003D] border-b md:border-b-0">
-            {/* --- BANNER CARDS --- */}
-            <div className="flex items-center flex-wrap md:flex-nowrap gap-2 xl:gap-4 w-full lg:w-auto lg:grow">
-              {/* Measuring */}
-              <div className="flex border cursor-pointer w-full md:w-1/2">
-                <div className="flex items-center gap-3 px-3 py-2 bg-[#FEE7AC] grow">
-                  <Image
-                    src="/assets/images/category/measuring.png"
-                    width={28}
-                    height={28}
-                    alt="measure"
-                  />
-                  <div>
-                    <p className="font-semibold text-sm">How to Measuring</p>
-                    <p className="text-xs">How to Measure</p>
-                  </div>
-                </div>
-                <Link
-                  href="/assets/pdf/how-to-measure.pdf"
-                  download
-                  className="bg-[#FFB800] h-[72px] xl:h-[60px] w-32 flex justify-center items-center font-semibold text-black"
-                >
-                  Download Now
-                </Link>
-              </div>
-
-              {/* Fitting */}
-              <div className="flex border cursor-pointer w-full md:w-1/2">
-                <div className="flex items-center gap-3 px-3 py-2 bg-[#FEE7AC] grow">
-                  <Image
-                    src="/assets/images/category/fetting.png"
-                    width={28}
-                    height={28}
-                    alt="fitting"
-                  />
-                  <div>
-                    <p className="font-semibold text-sm">How to Fitting</p>
-                    <p className="text-xs">How to Measure</p>
-                  </div>
-                </div>
-                <Link
-                  href="/assets/pdf/how-to-measure.pdf"
-                  download
-                  className="bg-[#FFB800] h-[72px] xl:h-[60px] w-32 flex justify-center items-center font-semibold text-black"
-                >
-                  Download Now
-                </Link>
-              </div>
-            </div>
-
-            {/* MOBILE FILTERS */}
-            <div className="flex lg:hidden">
-              <div
-                className="flex items-center gap-2 cursor-pointer"
-                onClick={() => setShowFilters(!showFilters)}
-              >
-                <Image src="/assets/icons/filter.png" alt="filter icon" width={24} height={24} />
-                <p className="font-semibold">Filters</p>
-              </div>
-
-              <div
-                className={`fixed top-0 left-0 ${showFilters ? "left-0 w-full" : "left-[150%] w-0"} bg-white px-4 xs:px-6 pt-10 z-50`}
-              >
-                <div className="overflow-y-auto h-screen">
-                  <Filters />
-                </div>
-                <button
-                  className="text-black absolute top-3 right-3"
-                  onClick={() => setShowFilters(!showFilters)}
-                >
-                  <RxCross2 size={20} />
-                </button>
-              </div>
-            </div>
-
-            {/* SORT DROPDOWN */}
-            <div className="hidden md:block">
-              <SortDropdown
-                value={sort}
-                onChange={(val) => {
-                  setSort(val as "default" | "low" | "high" | "new");
-                  setPage(1); // reset to first page
-                }}
-              />
-            </div>
-          </div>
-
-          {/* --- PRODUCTS GRID --- */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 pt-6">
-            {visibleProducts.map((product) => (
-              <Card
-                key={product.id}
-                card={product}
-                categoryUrl={categoryUrl}
-                subcategoryUrl={product.parentSubcategoryUrl}
-              />
-            ))}
-          </div>
-
-          {/* --- PAGINATION --- */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-2 pt-6">
-              {/* PREVIOUS */}
-              <button disabled={page === 1} onClick={() => goToPage(page - 1)}>
-                <MdKeyboardArrowLeft className="text-2xl" />
-              </button>
-
-              {/* PAGE NUMBERS */}
-              {Array.from({ length: totalPages }).map((_, index) => {
-                const pageNum = index + 1;
-                const isActive = pageNum === page;
-
-                return (
-                  <button
-                    key={index}
-                    onClick={() => goToPage(pageNum)}
-                    className={`${
-                      isActive
-                        ? "w-9 h-9 bg-primary text-white shadow-xl"
-                        : "w-7 h-7 border border-black"
-                    } flex justify-center items-center font-medium text-xl`}
-                  >
-                    {pageNum}
-                  </button>
-                );
-              })}
-
-              {/* NEXT */}
-              <button disabled={page === totalPages} onClick={() => goToPage(page + 1)}>
-                <MdKeyboardArrowRight className="text-2xl" />
-              </button>
-            </div>
-          )}
+          <CategoryHeader
+            categoryName={categoryName}
+            description={description}
+            sort={sort}
+            setSort={setSort}
+            typeOptions={typeOptions}
+            patternOptions={patternOptions}
+            compositionOptions={compositionOptions}
+            widthOptions={widthOptions}
+            colourOptions={colourOptions}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
+            selectedPattern={selectedPattern}
+            setSelectedPattern={setSelectedPattern}
+            selectedComposition={selectedComposition}
+            setSelectedComposition={setSelectedComposition}
+            selectedWidth={selectedWidth}
+            setSelectedWidth={setSelectedWidth}
+            selectedColour={selectedColour}
+            setSelectedColour={setSelectedColour}
+            selectedPrice={selectedPrice}
+            setSelectedPrice={setSelectedPrice}
+            showTypeFilter={subcategoryArray.length > 1}
+          />
+          <Card products={sortedProducts} categoryName={categoryName} categoryUrl={categoryUrl} />
         </div>
       </div>
     </>

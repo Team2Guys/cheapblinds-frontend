@@ -1,10 +1,6 @@
 import { BlogStatus } from "@/types/general";
 import { IProductValues } from "@/types/prod";
 
-
-
-
-
 export const AddproductsinitialValues: IProductValues = {
   name: "",
   price: 0,
@@ -12,7 +8,7 @@ export const AddproductsinitialValues: IProductValues = {
   shortDescription: "",
   stock: 0,
   discountPrice: 0,
-  customUrl: "",
+  slug: "",
   metaTitle: "",
   canonicalTag: "",
   metaDescription: "",
@@ -26,7 +22,7 @@ export const AddproductsinitialValues: IProductValues = {
 export const AddBlogInitialValues = {
   title: "",
   content: "",
-  customUrl: "",
+  slug: "",
   category: "",
   status: "DRAFT" as BlogStatus,
   isPublished: false,

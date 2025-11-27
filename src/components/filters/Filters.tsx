@@ -1,18 +1,54 @@
 "use client";
-import Image from "next/image";
-import { useState, useRef } from "react";
+
 import { FaCheck } from "react-icons/fa";
 import { Accordion, PriceSlider } from "@components";
+import { useRef, useState } from "react";
+import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 
 type SectionKeys = "type" | "colour" | "width" | "pattern" | "composition" | "price";
 
-export const Filters = () => {
-  const [selectedPattern, setSelectedPattern] = useState<string[]>([]);
-  const [selectedComposition, setSelectedComposition] = useState<string[]>([]);
-  const [selectedWidth, setSelectedWidth] = useState<string[]>([]);
-  const [selectedType, setSelectedType] = useState<string[]>([]);
+type FiltersProps = {
+  typeOptions: string[];
+  patternOptions: string[];
+  compositionOptions: string[];
+  widthOptions: string[];
+  colourOptions: { name: string; color: string }[];
+  selectedType: string[];
+  setSelectedType: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedPattern: string[];
+  setSelectedPattern: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedComposition: string[];
+  setSelectedComposition: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedWidth: string[];
+  setSelectedWidth: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedColour: string[];
+  setSelectedColour: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedPrice: [number, number];
+  setSelectedPrice: React.Dispatch<React.SetStateAction<[number, number]>>;
+  showTypeFilter?: boolean;
+};
 
+export const Filters = ({
+  typeOptions,
+  patternOptions,
+  compositionOptions,
+  widthOptions,
+  colourOptions,
+  selectedType,
+  setSelectedType,
+  selectedPattern,
+  setSelectedPattern,
+  selectedComposition,
+  setSelectedComposition,
+  selectedWidth,
+  setSelectedWidth,
+  selectedColour,
+  setSelectedColour,
+  selectedPrice,
+  setSelectedPrice,
+  showTypeFilter,
+}: FiltersProps) => {
   const [openSections, setOpenSections] = useState<Record<SectionKeys, boolean>>({
     type: true,
     colour: true,
@@ -32,35 +68,49 @@ export const Filters = () => {
   };
 
   const toggleSection = (section: SectionKeys) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const toggleSelection = <T,>(
+  function toggleSelection<T>(
     value: T,
     setter: React.Dispatch<React.SetStateAction<T[]>>,
     state: T[],
-  ) => {
+  ) {
     setter(state.includes(value) ? state.filter((i) => i !== value) : [...state, value]);
+  }
+  const activeFilters = [
+    ...selectedType.map((v) => ({ key: "type", label: v })),
+    ...selectedPattern.map((v) => ({ key: "pattern", label: v })),
+    ...selectedComposition.map((v) => ({ key: "composition", label: v })),
+    ...selectedWidth.map((v) => ({ key: "width", label: v })),
+    ...selectedColour.map((v) => ({ key: "colour", label: v })),
+    ...(selectedPrice[0] !== 0 || selectedPrice[1] !== 1000
+      ? [{ key: "price", label: `AED${selectedPrice[0]} - AED${selectedPrice[1]}` }]
+      : []),
+  ];
+
+  const removeFilter = (filter: { key: string; label: string }) => {
+    switch (filter.key) {
+      case "type":
+        setSelectedType(selectedType.filter((v) => v !== filter.label));
+        break;
+      case "pattern":
+        setSelectedPattern(selectedPattern.filter((v) => v !== filter.label));
+        break;
+      case "composition":
+        setSelectedComposition(selectedComposition.filter((v) => v !== filter.label));
+        break;
+      case "width":
+        setSelectedWidth(selectedWidth.filter((v) => v !== filter.label));
+        break;
+      case "colour":
+        setSelectedColour(selectedColour.filter((v) => v !== filter.label));
+        break;
+      case "price":
+        setSelectedPrice([0, 1000]);
+        break;
+    }
   };
-
-  const patternOptions = ["Flowers", "Geometric", "Plains & Textures"];
-  const compositionOptions = ["Polyester", "Polyester Mix"];
-  const widthOptions = [
-    "Up To 200cm Wide (1554)",
-    "Up To 250cm Wide (736)",
-    "Up To 280cm Wide (624)",
-  ];
-  const typeOptions = ["Blackout", "Visible", "Dim-Out"];
-
-  const colourOptions = [
-    { name: "Cream", count: 1554, color: "#FFFDD0" },
-    { name: "Grey", count: 1554, color: "#808080" },
-    { name: "Natural", count: 624, color: "#E0D5C6" },
-    { name: "Yellow", count: 195, color: "#FFFF00" },
-  ];
 
   return (
     <div className="flex flex-col gap-6 pb-8">
@@ -73,57 +123,54 @@ export const Filters = () => {
         />
         <p>Express delivery</p>
       </div>
+
+      {/* Active Filters */}
       <div>
         <p className="font-rubik text-xl font-medium">Active filters</p>
         <div className="flex flex-wrap gap-2 pt-4">
-          <div className="border border-primary rounded-md w-36 h-10 flex justify-center items-center font-semibold relative">
-            Light Filtering
-            <span className="flex justify-center items-center h-4 w-4 bg-primary text-white rounded-full absolute -top-2 -right-2">
-              <RxCross2 size={12} />
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* ---------- Type ---------- */}
-      <Accordion
-        title="Type"
-        sectionKey="type"
-        openSections={openSections}
-        toggleSection={toggleSection}
-        refObj={contentRefs.type}
-      >
-        <div className="flex flex-col gap-4 pt-4">
-          {typeOptions.map((item) => (
-            <button
-              key={item}
-              onClick={() => toggleSelection(item, setSelectedType, selectedType)}
-              className="flex items-center gap-2"
+          {activeFilters.map((filter) => (
+            <div
+              key={`${filter.key}-${filter.label}`}
+              className="border border-primary rounded-md h-10 flex items-center px-3 font-semibold relative capitalize cursor-pointer"
             >
+              {filter.label}
               <span
-                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${
-                  selectedType.includes(item)
-                    ? "border-primary bg-primary text-white"
-                    : "border-black"
-                }`}
+                className="flex justify-center items-center h-4 w-4 bg-primary text-white rounded-full ml-2 cursor-pointer"
+                onClick={() => removeFilter(filter)}
               >
-                {selectedType.includes(item) && <FaCheck />}
+                <RxCross2 size={12} />
               </span>
-
-              <Image
-                src={`/assets/images/category/${item.replace(" ", "")}.png`}
-                alt={item}
-                width={32}
-                height={32}
-              />
-
-              <p>{item}</p>
-            </button>
+            </div>
           ))}
         </div>
-      </Accordion>
+      </div>
+      {showTypeFilter && (
+        <Accordion
+          title="Type"
+          sectionKey="type"
+          openSections={openSections}
+          toggleSection={toggleSection}
+          refObj={contentRefs.type}
+        >
+          <div className="flex flex-col gap-4 pt-4">
+            {typeOptions.map((item) => (
+              <button
+                key={item}
+                onClick={() => toggleSelection(item, setSelectedType, selectedType)}
+                className="flex items-center gap-2 capitalize cursor-pointer"
+              >
+                <span
+                  className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedType.includes(item) ? "border-primary bg-primary text-white" : "border-black"}`}
+                >
+                  {selectedType.includes(item) && <FaCheck />}
+                </span>
+                <p>{item}</p>
+              </button>
+            ))}
+          </div>
+        </Accordion>
+      )}
 
-      {/* ---------- Colour ---------- */}
       <Accordion
         title="Colour"
         sectionKey="colour"
@@ -132,38 +179,48 @@ export const Filters = () => {
         refObj={contentRefs.colour}
       >
         <div className="flex flex-col gap-4 pt-4">
-          {colourOptions.map((item) => (
-            <button key={item.name} className="flex items-center gap-3">
-              <span className="jagged-shape w-8 h-8" style={{ background: item.color }}></span>
-              <p>
-                {item.name} ({item.count})
-              </p>
-            </button>
-          ))}
+          {colourOptions.map((item) => {
+            const isSelected = selectedColour.includes(item.name);
+            return (
+              <button
+                key={item.name}
+                onClick={() => toggleSelection(item.name, setSelectedColour, selectedColour)}
+                className="flex items-center gap-3 capitalize cursor-pointer"
+              >
+                <span
+                  className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${
+                    isSelected ? "border-primary bg-primary text-white" : "border-black"
+                  }`}
+                >
+                  {isSelected && <FaCheck />}
+                </span>
+                <span
+                  className="w-6 h-6 rounded-full border border-black"
+                  style={{ backgroundColor: item.color }}
+                />
+                <p>{item.name}</p>
+              </button>
+            );
+          })}
         </div>
       </Accordion>
 
-      {/* ---------- Width ---------- */}
       <Accordion
-        title="Width Available"
+        title="Width"
         sectionKey="width"
         openSections={openSections}
         toggleSection={toggleSection}
         refObj={contentRefs.width}
       >
-        <div className="flex flex-col gap-4 pt-4">
+        <div className="flex flex-col gap-4 pt-4 ">
           {widthOptions.map((item) => (
             <button
               key={item}
               onClick={() => toggleSelection(item, setSelectedWidth, selectedWidth)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 capitalize cursor-pointer"
             >
               <span
-                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${
-                  selectedWidth.includes(item)
-                    ? "border-primary bg-primary text-white"
-                    : "border-black"
-                }`}
+                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedWidth.includes(item) ? "border-primary bg-primary text-white" : "border-black"}`}
               >
                 {selectedWidth.includes(item) && <FaCheck />}
               </span>
@@ -173,7 +230,6 @@ export const Filters = () => {
         </div>
       </Accordion>
 
-      {/* ---------- Pattern ---------- */}
       <Accordion
         title="Pattern"
         sectionKey="pattern"
@@ -186,14 +242,10 @@ export const Filters = () => {
             <button
               key={item}
               onClick={() => toggleSelection(item, setSelectedPattern, selectedPattern)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 capitalize cursor-pointer"
             >
               <span
-                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${
-                  selectedPattern.includes(item)
-                    ? "border-primary bg-primary text-white"
-                    : "border-black"
-                }`}
+                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedPattern.includes(item) ? "border-primary bg-primary text-white" : "border-black"}`}
               >
                 {selectedPattern.includes(item) && <FaCheck />}
               </span>
@@ -203,7 +255,6 @@ export const Filters = () => {
         </div>
       </Accordion>
 
-      {/* ---------- Composition ---------- */}
       <Accordion
         title="Composition"
         sectionKey="composition"
@@ -216,14 +267,10 @@ export const Filters = () => {
             <button
               key={item}
               onClick={() => toggleSelection(item, setSelectedComposition, selectedComposition)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 capitalize cursor-pointer"
             >
               <span
-                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${
-                  selectedComposition.includes(item)
-                    ? "border-primary bg-primary text-white"
-                    : "border-black"
-                }`}
+                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedComposition.includes(item) ? "border-primary bg-primary text-white" : "border-black"}`}
               >
                 {selectedComposition.includes(item) && <FaCheck />}
               </span>
@@ -233,7 +280,6 @@ export const Filters = () => {
         </div>
       </Accordion>
 
-      {/* ---------- Price ---------- */}
       <Accordion
         title="Price Range"
         sectionKey="price"
@@ -241,8 +287,8 @@ export const Filters = () => {
         toggleSection={toggleSection}
         refObj={contentRefs.price}
       >
-        <div className="pt-4 mx-auto">
-          <PriceSlider />
+        <div className="pt-4 mx-auto px-8">
+          <PriceSlider selectedPrice={selectedPrice} setSelectedPrice={setSelectedPrice} />
         </div>
       </Accordion>
     </div>

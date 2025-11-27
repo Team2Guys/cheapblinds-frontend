@@ -46,7 +46,6 @@ export const GET_PRODUCT_LIST = gql`
   }
 `;
 
-
 export const GET_PRODUCT_BY_ID = gql`
   query GetProductById($id: ID!) {
     getProductById(id: $id) {
@@ -119,15 +118,13 @@ export const GET_CARD_PRODUCT = gql`
   }
 `;
 
-
-
 export const GET_PRODUCT_BY_URLS = gql`
-  query GetProductByUrls(
+  query GetProductBySlugs(
     $categorySlug: String!
     $subcategorySlug: String!
     $productSlug: String!
   ) {
-    getProductByUrls(
+    getProductBySlugs(
       input: {
         categorySlug: $categorySlug
         subcategorySlug: $subcategorySlug

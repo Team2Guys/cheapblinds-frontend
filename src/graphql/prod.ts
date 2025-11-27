@@ -7,7 +7,7 @@ export const CREATE_PRODUCT = gql`
     createProduct(createProductInput: $input) {
       id
       name
-      customUrl
+      slug
     }
   }
 `;
@@ -21,7 +21,7 @@ export const GET_ALL_PRODUCTS = gql`
       posterImageUrl
       last_editedBy
       shortDescription
-      customUrl
+      slug
       Banners
       breadCrumb
       price
@@ -39,23 +39,23 @@ export const GET_ALL_PRODUCTS = gql`
       subcategory {
         id
         name
-        customUrl
+        slug
       }
       category {
         id
         name
-        customUrl
+        slug
       }
     }
   }
 `;
 
 export const GET_PRODUCT_BY_CUSTOM_URL = `
-  query GetProduct($customUrl: Int!) {
-    product(customUrl: $customUrl) {
+  query GetProduct($slug: Int!) {
+    product(slug: $slug) {
       id
       name
-      customUrl
+      slug
       price
       description
       # add other fields here
@@ -68,7 +68,7 @@ export const UPDATE_PRODUCT = gql`
     updateProduct(updateProductInput: $input) {
       id
       name
-      customUrl
+      slug
     }
   }
 `;

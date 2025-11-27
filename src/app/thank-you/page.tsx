@@ -8,7 +8,7 @@ import React from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 
 const ThankYou = async () => {
-  const productList = await fetchProducts(GET_CARD_PRODUCT)
+  const productList = await fetchProducts(GET_CARD_PRODUCT);
   return (
     <div className="container mx-auto px-2 my-10 space-y-5">
       <div className="max-w-3xl mx-auto text-center space-y-3">

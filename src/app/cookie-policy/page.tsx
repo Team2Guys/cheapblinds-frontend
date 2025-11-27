@@ -21,7 +21,7 @@ const CookiePolicy = () => {
           <li>
             Analytics cookies that help us measure, analyse and understand how our customers use the
             Site and to identify ways to improve both its functionality and your shopping
-            experience.    
+            experience.
           </li>
           <li>
             Once you have found an item, select its attributes and click on &apos;ADD TO BASKET:

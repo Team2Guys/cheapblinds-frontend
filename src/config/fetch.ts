@@ -1,199 +1,23 @@
-import {
-  FETCH_ALL_APPOINTMENTS,
-  FETCH_ALL_INNER_SUB_CATEGORIES,
-  FETCH_ALL_ORDERS,
-  FIND_ONE_PRODUCT,
-  FIND_ONE_SUB_CATEGORY,
-  GET_ALL_RECORDS,
-} from "@graphql/queries";
 import { DocumentNode } from "@apollo/client";
-import { FETCH_ALL_ECOMERECE, FIND_ONE_Accessory } from "@graphql/Accessories";
 import { Category } from "@/types/cat";
 import ApolloCustomClient from "@utils/apollo-client";
-import { GET_ALL_ADMINS, GET_CATEGORY_BY_CUSTOM_URL, GET_CATEGORY_LIST, GET_PRODUCT_BY_URLS, GET_PRODUCT_LIST, GET_SUBCATEGORY_BY_URLS, GET_SUBCATEGORY_LIST } from "@graphql";
+import {
+  GET_ALL_ADMINS,
+  GET_CATEGORY_BY_SLUG,
+  GET_CATEGORY_LIST,
+  GET_PRODUCT_BY_URLS,
+  GET_PRODUCT_LIST,
+  GET_SUBCATEGORY_BY_URLS,
+  GET_SUBCATEGORY_LIST,
+} from "@graphql";
 import { Product, Subcategory } from "@/types/category";
 
-
-
-
-
-export const fetchinnerSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: FETCHSUBCAT ? FETCHSUBCAT : FETCH_ALL_INNER_SUB_CATEGORIES,
-      fetchPolicy: "no-cache",
-      context: {
-        fetchOptions: { next: { tags: ["innerSubcategories"] } },
-      },
-    });
-
-    return data?.Innersubcategories || [];
-  } catch (error) {
-    return [];
-    throw error;
-  }
-};
-
-export const fetchAppointments = async (token: string | undefined) => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: FETCH_ALL_APPOINTMENTS,
-      fetchPolicy: "no-cache",
-      context: {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-        fetchOptions: {
-          next: { tags: ["appointments"] },
-        },
-      },
-    });
-    return data?.Get_Appointments || [];
-  } catch (error) {
-    return [];
-    throw error;
-  }
-};
-
-export const get_all_records = async () => {
-  // const token  = await getToken()
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: GET_ALL_RECORDS,
-      fetchPolicy: "no-cache",
-      context: {
-        // headers: {
-        //   authorization: `Bearer ${token}`
-        // },
-        fetchOptions: {
-          next: { tags: ["states_records"] },
-        },
-      },
-    });
-    return data?.GET_ALL_RECORDS;
-  } catch (error) {
-    return [];
-    throw error;
-  }
-};
-
-export const fetchEcomereceProducts = async (CUSTOMISE_ACCESSORIES?: DocumentNode) => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: CUSTOMISE_ACCESSORIES ? CUSTOMISE_ACCESSORIES : FETCH_ALL_ECOMERECE,
-      fetchPolicy: "no-cache",
-      context: {
-        fetchOptions: {
-          credentials: "include",
-          next: { tags: ["Ecomerece"] },
-        },
-      },
-    });
-
-    return data?.eComerece || [];
-  } catch (error) {
-    return [];
-    throw error;
-  }
-};
-
-
-
-export const fetchSingeSubCategory = async (
-  customUrl: string,
-  category: string,
-  FIND_ONE_CUSTOM_QUERY?: DocumentNode,
-) => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : FIND_ONE_SUB_CATEGORY,
-      variables: { customUrl, category },
-      fetchPolicy: "no-cache",
-      context: {
-        fetchOptions: { next: { tags: ["subCategories"] } },
-      },
-    });
-    return data?.find_one_subcategory;
-  } catch (error) {
-    return null;
-    throw error;
-  }
-};
-
-export const fetchSingeProduct = async (
-  customUrl: string,
-  category: string,
-  subCategory: string,
-  FIND_QUICK_VIEW_PRODUCT?: DocumentNode,
-) => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: FIND_QUICK_VIEW_PRODUCT ? FIND_QUICK_VIEW_PRODUCT : FIND_ONE_PRODUCT,
-      variables: { customUrl: customUrl, category, subCategory },
-      fetchPolicy: "no-cache",
-      context: {
-        fetchOptions: { next: { tags: ["products", "Ecomerece"] } },
-      },
-    });
-    return data?.single_product;
-  } catch (error) {
-    return null;
-    throw error;
-  }
-};
-export const fetchSingeEComProduct = async (
-  customUrl: string,
-  category: string,
-  subCategory: string,
-  FIND_QUICK_VIEW_PRODUCT?: DocumentNode,
-) => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: FIND_QUICK_VIEW_PRODUCT ? FIND_QUICK_VIEW_PRODUCT : FIND_ONE_Accessory,
-      variables: { customUrl: customUrl, category, subCategory },
-      fetchPolicy: "no-cache",
-      context: {
-        fetchOptions: { next: { tags: ["Ecomerece"] } },
-      },
-    });
-    return data?.single_product_ecomerece;
-  } catch (error) {
-    return [];
-    throw error;
-  }
-};
-
-export const fetchOrders = async (FETCH_ORDERS?: DocumentNode) => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: FETCH_ORDERS ? FETCH_ORDERS : FETCH_ALL_ORDERS,
-      fetchPolicy: "no-cache",
-      context: {
-        // headers: {
-        //   authorization: `Bearer ${token}`
-        // },
-        fetchOptions: {
-          next: { tags: ["orders"] },
-        },
-      },
-    });
-    return data?.AllOrders || [];
-  } catch (error) {
-    return [];
-    throw error;
-  }
-};
-
-
-
 // _____________________ NEW Mutation ----------------------------
-
-
 
 export const getAllAdmins = async () => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query:GET_ALL_ADMINS,
+      query: GET_ALL_ADMINS,
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["Admins"] } },
@@ -202,12 +26,12 @@ export const getAllAdmins = async () => {
 
     return data?.getAdminList || [];
   } catch (error) {
-    return []; 
+    return [];
     throw error;
   }
 };
 
-export const fetchCategories = async ( FETCH_CATEGORY?: DocumentNode) => {
+export const fetchCategories = async (FETCH_CATEGORY?: DocumentNode) => {
   try {
     const { data } = await ApolloCustomClient.query({
       query: FETCH_CATEGORY ? FETCH_CATEGORY : GET_CATEGORY_LIST,
@@ -219,32 +43,31 @@ export const fetchCategories = async ( FETCH_CATEGORY?: DocumentNode) => {
 
     return data?.getCategoryList || [];
   } catch (error) {
-    return []; 
+    return [];
     throw error;
   }
 };
 
 export const fetchSingleCategory = async (
   slug: string,
-  FIND_ONE_CUSTOM_QUERY?: DocumentNode
+  FIND_ONE_CUSTOM_QUERY?: DocumentNode,
 ): Promise<Category | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: FIND_ONE_CUSTOM_QUERY || GET_CATEGORY_BY_CUSTOM_URL,
-      variables: { slug }, // ✅ MUST send slug (not customUrl)
+      query: FIND_ONE_CUSTOM_QUERY || GET_CATEGORY_BY_SLUG,
+      variables: { slug },
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["categories"] } },
       },
     });
 
-    return data?.getCategoryByUrl ?? null; // ✅ Correct return path
+    return data?.getCategoryBySlug ?? null;
   } catch (error) {
     console.error("Error fetching category:", error);
     return null;
   }
 };
-
 
 export const fetchSingleSubCategory = async (
   subcategorySlug: string,
@@ -264,18 +87,17 @@ export const fetchSingleSubCategory = async (
       },
     });
 
-    return data?.getSubcategoryByUrls ?? null;
+    return data?.getSubcategoryBySlugs ?? null;
   } catch (error: unknown) {
     console.error("Error fetching subcategory:", error);
     return null;
   }
 };
 
-
 export const fetchSubCategories = async () => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query:GET_SUBCATEGORY_LIST,
+      query: GET_SUBCATEGORY_LIST,
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["subcategories"] } },
@@ -284,11 +106,10 @@ export const fetchSubCategories = async () => {
 
     return data?.getSubcategoryList || [];
   } catch (error) {
-    return []; 
+    return [];
     throw error;
   }
 };
-
 
 export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode) => {
   try {
@@ -313,7 +134,7 @@ export const fetchSingleProduct = async (
   categorySlug: string,
   subcategorySlug: string,
   productSlug: string,
-  FIND_ONE_CUSTOM_QUERY?: DocumentNode
+  FIND_ONE_CUSTOM_QUERY?: DocumentNode,
 ): Promise<Product | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
@@ -329,7 +150,7 @@ export const fetchSingleProduct = async (
       },
     });
 
-    return data?.getProductByUrls ?? null;
+    return data?.getProductBySlugs ?? null;
   } catch (error: unknown) {
     console.error("Error fetching product:", error);
     return null;

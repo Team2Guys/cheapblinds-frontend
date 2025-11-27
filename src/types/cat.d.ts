@@ -59,7 +59,7 @@ export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
   posterImageUrl?: ProductImage;
   createdAt?: Date;
   updatedAt?: Date;
-  customUrl?: string;
+  slug?: string;
   QualityImages?: ProductImage[];
 }
 

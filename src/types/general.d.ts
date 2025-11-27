@@ -84,7 +84,7 @@ export interface IBlog {
   title: string;
   content: string;
   category: string;
-  customUrl: string;
+  slug: string;
   posterImage?: ProductImage;
   last_editedBy?: string;
   canonicalTag?: string;

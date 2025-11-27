@@ -104,10 +104,10 @@ export const products = [
   {
     category: {
       name: "Roller Blinds",
-      customUrl: "roller-blinds",
+      slug: "roller-blinds",
     },
     name: "Blackout Roller Blinds",
-    customUrl: "blackout",
+    slug: "blackout",
     delivery: "Same Day Express Delivery",
     order_by: "3pm",
     deliveryImageUrl: {
@@ -115,7 +115,7 @@ export const products = [
       public_id: "ydsgigas",
       altText: "delivery image",
     },
-    price: 299.25,        // number instead of string
+    price: 299.25, // number instead of string
     discountPrice: undefined, // or 0 if you prefer
     posterImageUrl: {
       imageUrl: "/assets/images/product/blackout.png",
@@ -133,10 +133,10 @@ export const products = [
   {
     category: {
       name: "Roller Blinds",
-      customUrl: "roller-blinds",
+      slug: "roller-blinds",
     },
     name: "Sheer",
-    customUrl: "sheer",
+    slug: "sheer",
     delivery: "Same Day Express Delivery",
     order_by: "3pm",
     deliveryImageUrl: {
@@ -162,10 +162,10 @@ export const products = [
   {
     category: {
       name: "Roller Blinds",
-      customUrl: "roller-blinds",
+      slug: "roller-blinds",
     },
     name: "Dim-Out",
-    customUrl: "dim-out",
+    slug: "dim-out",
     delivery: "Same Day Express Delivery",
     order_by: "3pm",
     deliveryImageUrl: {
@@ -189,4 +189,3 @@ export const products = [
     },
   },
 ];
-

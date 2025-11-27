@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 const JobsValidationsSchema = Yup.object({
   // Basic fields
-  customUrl: Yup.string()
+  slug: Yup.string()
     .required("Custom URL is required")
     .max(50, "Custom URL must not exceed 255 characters"),
 

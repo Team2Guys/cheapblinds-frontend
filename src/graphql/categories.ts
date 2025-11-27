@@ -11,19 +11,17 @@ export const CREATE_CATEGORY = gql`
       metaDescription
       metaTitle
       last_editedBy
-      customUrl
+      slug
     }
   }
 `;
 
-
-
 export const GET_CATEGORY_BY_CUSTOM_URL = `
-  query FindOneCategory($customUrl: String!) {
-    category(customUrl: $customUrl) {
+  query FindOneCategory($slug: String!) {
+    category(slug: $slug) {
       id
       name
-      customUrl
+      slug
       # add other fields here
     }
   }
@@ -40,7 +38,7 @@ export const UPDATE_CATEGORY = gql`
       metaDescription
       metaTitle
       last_editedBy
-      customUrl
+      slug
     }
   }
 `;
@@ -53,7 +51,6 @@ export const REMOVE_CATEGORY = gql`
   }
 `;
 
-
 export const GET_ALL_SUBCATEGORIES = gql`
   query SubCategories {
     subCategories {
@@ -63,7 +60,7 @@ export const GET_ALL_SUBCATEGORIES = gql`
       posterImageUrl
       last_editedBy
       shortDescription
-      customUrl
+      slug
       Banners
       breadCrumb
       metaTitle
@@ -82,11 +79,11 @@ export const GET_ALL_SUBCATEGORIES = gql`
 `;
 
 export const GET_SUBCATEGORY_BY_CUSTOM_URL = `
-  query GetSubCategory($customUrl: String!) {
-    SubCategory(customUrl: $customUrl) {
+  query GetSubCategory($slug: String!) {
+    SubCategory(slug: $slug) {
       id
       name
-      customUrl
+      slug
       # add other fields here
     }
   }

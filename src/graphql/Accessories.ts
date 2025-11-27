@@ -14,7 +14,7 @@ export const FETCH_ALL_ECOMERECE = gql`
       hoverImageUrl
       productImages
       last_editedBy
-      customUrl
+      slug
       breadCrumb
       Banners
       DescriptionBullets
@@ -34,24 +34,20 @@ export const FETCH_ALL_ECOMERECE = gql`
       category {
         name
         id
-        customUrl
+        slug
       }
       subcategory {
         id
         name
-        customUrl
+        slug
       }
     }
   }
 `;
 
 export const FIND_ONE_Accessory = gql`
-  query Product($customUrl: String!, $category: String!, $subCategory: String!) {
-    single_product_ecomerece(
-      customUrl: $customUrl
-      category: $category
-      subCategory: $subCategory
-    ) {
+  query Product($slug: String!, $category: String!, $subCategory: String!) {
+    single_product_ecomerece(slug: $slug, category: $category, subCategory: $subCategory) {
       id
       name
       posterImageUrl
@@ -90,10 +86,10 @@ export const FIND_ONE_Accessory = gql`
         status
       }
       category {
-        customUrl
+        slug
       }
       subcategory {
-        customUrl
+        slug
       }
     }
   }

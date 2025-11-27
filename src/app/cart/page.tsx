@@ -5,7 +5,7 @@ import { GET_CARD_PRODUCT } from "@graphql";
 import React from "react";
 
 const Cart = async () => {
-  const productList = await fetchProducts(GET_CARD_PRODUCT)
+  const productList = await fetchProducts(GET_CARD_PRODUCT);
   return (
     <>
       <CartPage />

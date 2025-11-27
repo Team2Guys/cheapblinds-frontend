@@ -84,7 +84,6 @@ export const menuItems: MenuItem[] = [
         desktopimage: "/assets/images/bin/menu3.png",
         mobileimage: "",
       },
-  
     ],
   },
   {
@@ -92,7 +91,7 @@ export const menuItems: MenuItem[] = [
     link: "/zebra-blinds",
     image: "/assets/images/bin/mobile/zebra.png",
     submenu: [
-     {
+      {
         name: "Dimout Zebra Blinds",
         link: "/zebra-blinds/dimout",
         desktopimage: "/assets/images/bin/menu2.png",

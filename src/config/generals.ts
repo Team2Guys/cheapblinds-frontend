@@ -247,13 +247,13 @@ export const fetchJobs = async (FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode) =
 
 //single job
 export const fetchSingleJobs = async (
-  customUrl: string,
+  slug: string,
   FIND_QUICK_VIEW_PRODUCT_REVIEW?: DocumentNode,
 ) => {
   try {
     const { data } = await ApolloCustomClient.query({
       query: FIND_QUICK_VIEW_PRODUCT_REVIEW ? FIND_QUICK_VIEW_PRODUCT_REVIEW : GET_SINGLE_JOB,
-      variables: { customUrl },
+      variables: { slug },
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["Jobs"] } },

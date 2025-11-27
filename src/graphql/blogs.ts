@@ -15,7 +15,7 @@ export const GET_ALL_BLOGS = gql`
       id
       title
       content
-      customUrl
+      slug
       category
       createdAt
       updatedAt

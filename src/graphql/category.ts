@@ -10,7 +10,7 @@ export const CREATE_CATEGORY = gql`
         name
         description
         shortDescription
-        customUrl
+        slug
         metaTitle
         metaDescription
         canonicalTag
@@ -35,7 +35,7 @@ export const UPDATE_CATEGORY_BY_ID = gql`
         name
         description
         shortDescription
-        customUrl
+        slug
         metaTitle
         metaDescription
         canonicalTag
@@ -70,7 +70,7 @@ export const GET_CATEGORIES = gql`
         name
         description
         shortDescription
-        customUrl
+        slug
         metaTitle
         metaDescription
         canonicalTag
@@ -95,7 +95,7 @@ export const GET_CATEGORY_BY_ID = gql`
         name
         description
         shortDescription
-        customUrl
+        slug
         metaTitle
         metaDescription
         canonicalTag

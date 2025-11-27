@@ -7,7 +7,7 @@ import Link from "next/link";
 export const ShopBySlider = ({
   CategoryList,
 }: {
-  CategoryList: { thumbnailUrl: string; name: string;customUrl: string }[];
+  CategoryList: { thumbnailUrl: string; name: string; slug: string }[];
 }) => {
   const [activeIndex, setActiveIndex] = useState(2);
   const [isVisible, setIsVisible] = useState(false);
@@ -22,8 +22,8 @@ export const ShopBySlider = ({
   const extendedCategoryList = useMemo(() => {
     return [
       ...CategoryList.slice(-3), // Last 3 items
-      ...CategoryList,           // All original items
-      ...CategoryList.slice(0, 3) // First 3 items
+      ...CategoryList, // All original items
+      ...CategoryList.slice(0, 3), // First 3 items
     ];
   }, [CategoryList]);
 
@@ -123,9 +123,11 @@ export const ShopBySlider = ({
       extendedCategoryList.map((item, index) => {
         // Calculate the original index for click handling
         const originalIndex = (index - centerOffset + totalSlides) % totalSlides;
-        
+
         return (
-          <Link href={`/${item.customUrl}`} key={index}
+          <Link
+            href={`/${item.slug}`}
+            key={index}
             className={`absolute transition-all duration-500 ease-in-out cursor-pointer ${getPositionClass(
               index,
             )}`}

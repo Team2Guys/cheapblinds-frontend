@@ -38,28 +38,25 @@ export const UserVerification = () => {
           Toaster("error", message);
         }
       },
-    }
+    },
   );
 
   // ✅ Resend Verification Token Mutation
-  const [sendVerificationToken, { loading: resendLoading }] = useMutation(
-    SEND_VERIFICATION_TOKEN,
-    {
-      onCompleted: (data) => {
-        const message = data?.sendVerificationToken?.message;
-        if (message) {
-          Toaster("success", message);
-        } else {
-          Toaster("error", "Failed to resend verification email.");
-        }
-      },
-      onError: (error: unknown) => {
-        const message =
-          error instanceof Error ? error.message : "Failed to resend verification link.";
-        Toaster("error", message);
-      },
-    }
-  );
+  const [sendVerificationToken, { loading: resendLoading }] = useMutation(SEND_VERIFICATION_TOKEN, {
+    onCompleted: (data) => {
+      const message = data?.sendVerificationToken?.message;
+      if (message) {
+        Toaster("success", message);
+      } else {
+        Toaster("error", "Failed to resend verification email.");
+      }
+    },
+    onError: (error: unknown) => {
+      const message =
+        error instanceof Error ? error.message : "Failed to resend verification link.";
+      Toaster("error", message);
+    },
+  });
 
   // ✅ Handle Verify Button Click
   const handleVerifyClick = () => {

@@ -17,7 +17,9 @@ const PathnameWrapper = ({ children }: Props) => {
   const withoutHeaderPages = ["/superAdminlogin", "/dashboard"];
 
   const showHeader = !withoutHeaderPages.includes(pathname) && !pathname.startsWith("/dashboard");
-  const showFooter = pathname === "/" || (!withoutHeaderPages.includes(pathname) && !pathname.startsWith("/dashboard"));
+  const showFooter =
+    pathname === "/" ||
+    (!withoutHeaderPages.includes(pathname) && !pathname.startsWith("/dashboard"));
 
   return (
     <AuthProvider>

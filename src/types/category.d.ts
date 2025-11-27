@@ -44,7 +44,7 @@ export interface Product {
   id?: string | number;
   name: string;
   description?: string;
-  Breadcrumb?:string;
+  Breadcrumb?: string;
   shortDescription?: string;
   slug?: string;
   metaTitle?: string;
@@ -66,11 +66,17 @@ export interface Product {
   subcategory?: Subcategory;
   status?: ContentStatus;
   createdAt?: string | Date;
-  updatedAt?: string | Date; 
+  updatedAt?: string | Date;
+  parentSubcategoryUrl?: string;
+  pattern?: string;
+  composition?: string;
+  color?: string;
+  width?: string;
+  height?: string;
 }
 
 export interface productImage {
-  imagesrc: string
+  imagesrc: string;
   altText: string;
   publicId: string;
 }
@@ -94,7 +100,6 @@ export interface ISubcategory {
   name?: string;
   slug?: string;
   status?: ContentStatus;
-
 }
 
 export interface IProduct {
@@ -102,5 +107,11 @@ export interface IProduct {
   name?: string;
   slug?: string;
   status?: ContentStatus;
+}
 
+export interface CategoryPageProps {
+  categoryName: string;
+  categoryUrl: string;
+  description: string;
+  ProductList: Subcategory | Subcategory[];
 }

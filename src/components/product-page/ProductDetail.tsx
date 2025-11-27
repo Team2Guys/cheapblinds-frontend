@@ -10,9 +10,17 @@ export const ProductDetail = ({
   category: string;
   productData: Product;
 }) => {
-
-  const {name, price,discountPrice ,shortDescription, description, additionalInfo,measuringGuide ,productImages} = productData;
-   const discountPercentage =
+  const {
+    name,
+    price,
+    discountPrice,
+    shortDescription,
+    description,
+    additionalInfo,
+    measuringGuide,
+    productImages,
+  } = productData;
+  const discountPercentage =
     price && discountPrice ? Math.round(((price - discountPrice) / price) * 100) : 0;
   return (
     <div className="mt-10 space-y-3">
@@ -28,11 +36,20 @@ export const ProductDetail = ({
           <Thumbnail images={productImages} />
         </div>
         <div className="col-span-12 md:col-span-6">
-          <ProductInfo category={category} price={price} discountPrice={discountPrice} shortDescription={shortDescription} />
+          <ProductInfo
+            category={category}
+            price={price}
+            discountPrice={discountPrice}
+            shortDescription={shortDescription}
+          />
         </div>
       </div>
       <div className="mt-10 md:mt-16 py-4">
-        <ProductTabs description={description} additionalInfo={additionalInfo} measuringGuide={measuringGuide} />
+        <ProductTabs
+          description={description}
+          additionalInfo={additionalInfo}
+          measuringGuide={measuringGuide}
+        />
       </div>
     </div>
   );
