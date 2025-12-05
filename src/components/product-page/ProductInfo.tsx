@@ -10,12 +10,15 @@ import {
 } from "@components";
 import DeliveryIcon from "@components/svg/delivery";
 import { Toaster } from "@components";
+import { Product } from "@/types/category";
+import { useIndexedDb } from "@lib/useIndexedDb";
 
 interface ProductDetailProps {
   category: string;
   price?: number | null;
   discountPrice?: number | null;
   shortDescription?: string;
+  product: Product;
 }
 
 export const ProductInfo = ({
@@ -23,6 +26,7 @@ export const ProductInfo = ({
   price,
   discountPrice,
   shortDescription,
+  product,
 }: ProductDetailProps) => {
   const [showForm, setShowForm] = useState(false);
   const [recessType, setRecessType] = useState("outside");
@@ -32,7 +36,7 @@ export const ProductInfo = ({
     height: "",
     unit: "cm",
   });
-
+  const { addFreeSampleItem } = useIndexedDb();
   useEffect(() => {
     if (showForm && topRef.current) {
       topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -45,6 +49,15 @@ export const ProductInfo = ({
       return;
     }
     setShowForm(true);
+  };
+
+  const handleFreeSample = async (product: Product) => {
+    try {
+      await addFreeSampleItem(product, category || "");
+    } catch (err) {
+      console.error(err);
+      Toaster("error", "Failed to add Free Sample!");
+    }
   };
 
   return (
@@ -98,7 +111,10 @@ export const ProductInfo = ({
           <h3 className="font-semibold">Not sure? Order a free sample</h3>
           <p>Dispatched the same day by first class post</p>
         </div>
-        <button className="flex items-center gap-2 bg-white font-semibold px-6 py-2 rounded-md shadow hover:bg-gray-100 cursor-pointer whitespace-nowrap">
+        <button
+          className="flex items-center gap-2 bg-white font-semibold px-6 py-2 rounded-md shadow hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+          onClick={() => handleFreeSample(product)}
+        >
           <span className="bg-primary text-white h-6 w-6 flex items-center justify-center rounded-md">
             +
           </span>

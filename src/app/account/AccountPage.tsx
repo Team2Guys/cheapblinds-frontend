@@ -2,9 +2,10 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Testimonial, AccountTabs } from "@components";
+import { Testimonial, MyAccount } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
+import { AccountSidebar } from "@components/accounts/AccountSidebar";
 
 const AccountPage = () => {
   const { user, isLoading } = useAuth();
@@ -37,7 +38,13 @@ const AccountPage = () => {
 
   return (
     <div>
-      <AccountTabs />
+      {/* <AccountTabs /> */}
+      <div className="container mx-auto px-2 flex flex-wrap md:flex-nowrap gap-4 my-10">
+        <AccountSidebar />
+        <div className="flex-1">
+          <MyAccount />
+        </div>
+      </div>
       <Testimonial reviews={TestimonialReview} showPaymentInfo />
     </div>
   );

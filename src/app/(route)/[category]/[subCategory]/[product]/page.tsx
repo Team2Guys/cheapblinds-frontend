@@ -17,11 +17,11 @@ const ProductPage = async ({
   if (!SingleProduct) {
     notFound();
   }
-
   console.log(SingleProduct, "SingleProductSingleProduct");
+
   return (
     <>
-      <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.Breadcrumb} />
+      <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
       <div className="container mx-auto px-2">
         <ProductDetail category={category} productData={SingleProduct!} />
         <RelatedProduct titleStart title="RELATED PRODUCTS" data={productList} />

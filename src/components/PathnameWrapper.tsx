@@ -7,6 +7,7 @@ import Header from "./Layout/Header/Header";
 import Footer from "./footer/Footer";
 import { ReviewsSection } from "./common";
 import { AuthProvider } from "@context/UserContext";
+import { IndexedDbProvider } from "@lib/useIndexedDb";
 
 interface Props {
   children: ReactNode;
@@ -23,18 +24,20 @@ const PathnameWrapper = ({ children }: Props) => {
 
   return (
     <AuthProvider>
-      <ApolloProvider client={ApolloCustomClient}>
-        {showHeader && (
-          <>
-            <Header />
-            <ReviewsSection />
-          </>
-        )}
+      <IndexedDbProvider>
+        <ApolloProvider client={ApolloCustomClient}>
+          {showHeader && (
+            <>
+              <Header />
+              <ReviewsSection />
+            </>
+          )}
 
-        {children}
+          {children}
 
-        {showFooter && <Footer />}
-      </ApolloProvider>
+          {showFooter && <Footer />}
+        </ApolloProvider>
+      </IndexedDbProvider>
     </AuthProvider>
   );
 };

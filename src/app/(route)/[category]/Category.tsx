@@ -1,11 +1,11 @@
 "use client";
 
-import { Herobanner, Card, Filters } from "@components";
+import { Herobanner, Card, Filters, Toaster } from "@components";
 import React, { useState, useMemo } from "react";
 import { CategoryPageProps, Product } from "@/types/category";
 import CategoryHeader from "@components/category/categoryHeader";
+import { useIndexedDb } from "@lib/useIndexedDb";
 
-// Helper hook to generate filter options dynamically
 const useFilterOptions = (allProducts: Product[]) => {
   return useMemo(() => {
     const typeSet = new Set<string>();
@@ -27,7 +27,7 @@ const useFilterOptions = (allProducts: Product[]) => {
       patternOptions: Array.from(patternSet),
       compositionOptions: Array.from(compositionSet),
       widthOptions: Array.from(widthSet),
-      colourOptions: Array.from(colourSet).map((color) => ({ name: color, color })), // replace color with code if needed
+      colourOptions: Array.from(colourSet).map((color) => ({ name: color, color })),
     };
   }, [allProducts]);
 };
@@ -40,21 +40,20 @@ const CategoryPage = ({
 }: CategoryPageProps) => {
   const [sort, setSort] = useState<"default" | "low" | "high" | "new">("default");
 
-  // ----- Filter States -----
   const [selectedType, setSelectedType] = useState<string[]>([]);
   const [selectedPattern, setSelectedPattern] = useState<string[]>([]);
   const [selectedComposition, setSelectedComposition] = useState<string[]>([]);
   const [selectedWidth, setSelectedWidth] = useState<string[]>([]);
   const [selectedPrice, setSelectedPrice] = useState<[number, number]>([0, 1000]);
   const [selectedColour, setSelectedColour] = useState<string[]>([]);
-
+  const [selectedMotorized, setSelectedMotorized] = useState<boolean>(false);
+  const { addFreeSampleItem } = useIndexedDb();
   const subcategoryArray = Array.isArray(ProductList)
     ? ProductList
     : ProductList
       ? [ProductList]
       : [];
 
-  // Flatten all products and add parentSubcategoryUrl
   const allProducts = useMemo(() => {
     return subcategoryArray.flatMap((subCat) =>
       (subCat.products || []).map((product) => ({
@@ -64,28 +63,27 @@ const CategoryPage = ({
     );
   }, [subcategoryArray]);
 
-  // Get dynamic filter options
   const { typeOptions, patternOptions, compositionOptions, widthOptions, colourOptions } =
     useFilterOptions(allProducts);
-
-  // ----- Filter Products -----
   const filteredProducts = useMemo(() => {
     return allProducts.filter((product) => {
+      if (selectedMotorized && !product.isMotorized) return false;
+
       const type = product.parentSubcategoryUrl ?? "";
       const pattern = product.pattern ?? "";
       const composition = product.composition ?? "";
       const color = product.color ?? "";
       const width = product.width ?? 0;
-
       if (selectedType.length && !selectedType.includes(type)) return false;
       if (selectedPattern.length && !selectedPattern.includes(pattern)) return false;
       if (selectedComposition.length && !selectedComposition.includes(composition)) return false;
       if (selectedWidth.length && !selectedWidth.some((w) => w.includes(String(width))))
         return false;
       if (selectedColour.length && !selectedColour.includes(color)) return false;
+      const basePrice = product.discountPrice ?? product.price ?? 0;
+      const finalPrice = selectedMotorized ? basePrice + (product.motorPrice ?? 0) : basePrice;
 
-      const price = product.discountPrice ?? product.price ?? 0;
-      if (price < selectedPrice[0] || price > selectedPrice[1]) return false;
+      if (finalPrice < selectedPrice[0] || finalPrice > selectedPrice[1]) return false;
 
       return true;
     });
@@ -97,12 +95,15 @@ const CategoryPage = ({
     selectedWidth,
     selectedColour,
     selectedPrice,
+    selectedMotorized,
   ]);
-
-  // ----- Sort Products -----
   const sortedProducts = useMemo(() => {
     const products = [...filteredProducts];
-    const getPrice = (product: Product) => product.discountPrice ?? product.price ?? 0;
+
+    const getPrice = (product: Product) => {
+      const base = product.discountPrice ?? product.price ?? 0;
+      return selectedMotorized ? base + (product.motorPrice ?? 0) : base;
+    };
 
     if (sort === "low") products.sort((a, b) => getPrice(a) - getPrice(b));
     if (sort === "high") products.sort((a, b) => getPrice(b) - getPrice(a));
@@ -112,7 +113,16 @@ const CategoryPage = ({
       );
 
     return products;
-  }, [filteredProducts, sort]);
+  }, [filteredProducts, sort, selectedMotorized]);
+
+  const handleFreeSample = async (product: Product) => {
+    try {
+      await addFreeSampleItem(product, categoryUrl || "");
+    } catch (err) {
+      console.error(err);
+      Toaster("error", "Failed to add Free Sample!");
+    }
+  };
 
   return (
     <>
@@ -121,7 +131,6 @@ const CategoryPage = ({
         mobileImage="/assets/images/category/mobile-banner.png"
       />
       <div className="container mx-auto px-2 flex gap-6 xl:gap-10 mt-10">
-        {/* Filters */}
         <div className="hidden lg:block lg:w-[25%]">
           <Filters
             typeOptions={typeOptions}
@@ -142,10 +151,11 @@ const CategoryPage = ({
             selectedPrice={selectedPrice}
             setSelectedPrice={setSelectedPrice}
             showTypeFilter={subcategoryArray.length > 1}
+            selectedMotorized={selectedMotorized}
+            setSelectedMotorized={setSelectedMotorized}
           />
         </div>
 
-        {/* Product List */}
         <div className="w-full lg:w-[75%]">
           <CategoryHeader
             categoryName={categoryName}
@@ -170,8 +180,16 @@ const CategoryPage = ({
             selectedPrice={selectedPrice}
             setSelectedPrice={setSelectedPrice}
             showTypeFilter={subcategoryArray.length > 1}
+            selectedMotorized={selectedMotorized}
+            setSelectedMotorized={setSelectedMotorized}
           />
-          <Card products={sortedProducts} categoryName={categoryName} categoryUrl={categoryUrl} />
+          <Card
+            products={sortedProducts}
+            categoryName={categoryName}
+            categoryUrl={categoryUrl}
+            selectedMotorized={selectedMotorized}
+            onFreeSample={handleFreeSample}
+          />
         </div>
       </div>
     </>

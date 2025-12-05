@@ -1,6 +1,5 @@
 export * from "./BlindFitting";
 export * from "./Breadcrumb";
-export * from "./ConfirmToast";
 export * from "./Instructions";
 export * from "./Herobanner";
 export * from "./JobDone";

@@ -25,15 +25,15 @@ export const RelatedProduct = ({ title, description, data, titleStart }: Related
               <div className="overflow-hidden hover:shadow-md ">
                 <div className="relative w-full h-auto max-h-[350px] aspect-square">
                   <Image
-                    src={array.thumbnailUrl ?? "/assets/images/bin/product3.webp"}
+                    src={array.posterImageUrl ?? "/assets/images/bin/product3.webp"}
                     alt={array.name ?? ""}
                     fill
                     className="h-auto"
                   />
                 </div>
                 <div className="py-3 space-y-1 px-2">
-                  <h3>{array.name}</h3>
-                  <p className="text-medium underline">{array.description}</p>
+                  <h3>{array.category?.name}</h3>
+                  <p className="text-medium underline">{array.name}</p>
 
                   {array.price && (
                     <p className="text-2xl font-rubik font-semibold flex items-center gap-2">

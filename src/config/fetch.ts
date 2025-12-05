@@ -5,12 +5,14 @@ import {
   GET_ALL_ADMINS,
   GET_CATEGORY_BY_SLUG,
   GET_CATEGORY_LIST,
-  GET_PRODUCT_BY_URLS,
+  GET_ORDER_LIST,
+  GET_ORDERS_BY_USER_ID,
+  GET_PRODUCT_BY_SLUG,
   GET_PRODUCT_LIST,
   GET_SUBCATEGORY_BY_URLS,
   GET_SUBCATEGORY_LIST,
 } from "@graphql";
-import { Product, Subcategory } from "@/types/category";
+import { Orders, Product, Subcategory } from "@/types/category";
 
 // _____________________ NEW Mutation ----------------------------
 
@@ -24,7 +26,7 @@ export const getAllAdmins = async () => {
       },
     });
 
-    return data?.getAdminList || [];
+    return data?.adminList || [];
   } catch (error) {
     return [];
     throw error;
@@ -41,7 +43,7 @@ export const fetchCategories = async (FETCH_CATEGORY?: DocumentNode) => {
       },
     });
 
-    return data?.getCategoryList || [];
+    return data?.categoryList || [];
   } catch (error) {
     return [];
     throw error;
@@ -62,7 +64,7 @@ export const fetchSingleCategory = async (
       },
     });
 
-    return data?.getCategoryBySlug ?? null;
+    return data?.categoryBySlug ?? null;
   } catch (error) {
     console.error("Error fetching category:", error);
     return null;
@@ -87,7 +89,7 @@ export const fetchSingleSubCategory = async (
       },
     });
 
-    return data?.getSubcategoryBySlugs ?? null;
+    return data?.subcategoryBySlugs ?? null;
   } catch (error: unknown) {
     console.error("Error fetching subcategory:", error);
     return null;
@@ -104,7 +106,7 @@ export const fetchSubCategories = async () => {
       },
     });
 
-    return data?.getSubcategoryList || [];
+    return data?.subcategoryList || [];
   } catch (error) {
     return [];
     throw error;
@@ -123,7 +125,7 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode) => {
       },
     });
 
-    return data.getProductList || [];
+    return data.productList || [];
   } catch (error) {
     return [];
     throw error;
@@ -138,7 +140,7 @@ export const fetchSingleProduct = async (
 ): Promise<Product | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : GET_PRODUCT_BY_URLS,
+      query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : GET_PRODUCT_BY_SLUG,
       variables: {
         categorySlug,
         subcategorySlug,
@@ -150,9 +152,43 @@ export const fetchSingleProduct = async (
       },
     });
 
-    return data?.getProductBySlugs ?? null;
+    return data?.productBySlugs ?? null;
   } catch (error: unknown) {
     console.error("Error fetching product:", error);
+    return null;
+  }
+};
+
+export const fetchOrderList = async (CUSTOM_QUERY?: DocumentNode): Promise<Orders[] | null> => {
+  try {
+    const { data } = await ApolloCustomClient.query({
+      query: CUSTOM_QUERY || GET_ORDER_LIST,
+      fetchPolicy: "no-cache",
+      context: { fetchOptions: { next: { tags: ["orders"] } } },
+    });
+
+    return data?.orderList ?? null;
+  } catch (error) {
+    console.error("Error fetching order list:", error);
+    return null;
+  }
+};
+
+export const fetchOrdersByUserId = async (
+  id: string,
+  CUSTOM_QUERY?: DocumentNode,
+): Promise<Orders[] | null> => {
+  try {
+    const { data } = await ApolloCustomClient.query({
+      query: CUSTOM_QUERY || GET_ORDERS_BY_USER_ID,
+      variables: { id: id },
+      fetchPolicy: "no-cache",
+      context: { fetchOptions: { next: { tags: ["orders"] } } },
+    });
+
+    return data?.orderListByUserId ?? null;
+  } catch (error) {
+    console.error("Error fetching orders by user ID:", error);
     return null;
   }
 };

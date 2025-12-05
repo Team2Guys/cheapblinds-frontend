@@ -1,11 +1,14 @@
 "use client";
 import React from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { Input } from "../ui/Input";
+import { useMutation } from "@apollo/client";
+import { Toaster } from "@components/ui";
+import { CREATE_INQUIRY } from "@graphql";
 
 interface FormData {
-  contactType: string;
+  inquiryType: string;
   name: string;
   email: string;
   phone: string;
@@ -13,12 +16,47 @@ interface FormData {
 }
 
 const FormContact = () => {
+  const [createInquiry, { loading }] = useMutation(CREATE_INQUIRY);
+
   const initialValues: FormData = {
-    contactType: "Email",
+    inquiryType: "",
     name: "",
     email: "",
     phone: "",
     message: "",
+  };
+
+  const validationSchema = Yup.object({
+    inquiryType: Yup.string().required("Please select a contact type"),
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    phone: Yup.string()
+      .matches(/^[0-9]+$/, "Phone must contain only digits")
+      .min(10, "Phone must be at least 10 digits")
+      .required("Phone is required"),
+    message: Yup.string().max(500, "Message too long (max 500 chars)"),
+  });
+
+  const handleSubmit = async (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
+    try {
+      await createInquiry({
+        variables: {
+          input: {
+            ...values,
+            inquiryType: values.inquiryType.toUpperCase(),
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/graphql-response+json",
+          },
+        },
+      });
+      Toaster("success", "Form submitted successfully!");
+      resetForm();
+    } catch (error) {
+      console.error("Form submission error:", error);
+      Toaster("error", "Something went wrong while submitting the form.");
+    }
   };
 
   return (
@@ -28,47 +66,28 @@ const FormContact = () => {
 
       <Formik
         initialValues={initialValues}
-        validationSchema={Yup.object({
-          contactType: Yup.string().required("Please select a contact type"),
-          name: Yup.string().required("Name is required"),
-          email: Yup.string().email("Invalid email").required("Email is required"),
-          phone: Yup.string()
-            .matches(/^[0-9]+$/, "Phone must contain only digits")
-            .min(10, "Phone must be at least 10 digits")
-            .required("Phone is required"),
-          message: Yup.string().max(500, "Message too long (max 500 chars)"),
-        })}
-        onSubmit={(values, { resetForm }) => {
-          try {
-            const storedData = JSON.parse(localStorage.getItem("contactFormData") || "[]");
-            const updatedData = [...storedData, values];
-            localStorage.setItem("contactFormData", JSON.stringify(updatedData));
-            alert("Form submitted successfully! (stored locally)");
-            resetForm();
-          } catch (error) {
-            console.error("Error saving form data locally:", error);
-            alert("Something went wrong while saving data locally.");
-          }
-        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
       >
         {() => (
           <Form className="space-y-4">
             <Input
               label="Contact Type"
-              name="contactType"
+              name="inquiryType"
               as="select"
-              options={["Email", "Call", "WhatsApp"]}
+              options={["Email", "Phone", "WhatsApp", "Other"]}
             />
-            <Input label="Your name" name="name" />
-            <Input label="Your email" name="email" type="email" />
+            <Input label="Your Name" name="name" />
+            <Input label="Your Email" name="email" type="email" />
             <Input label="Mobile Number" name="phone" type="tel" />
-            <Input label="Your message (optional)" name="message" rows={5} as="textarea" />
+            <Input label="Your Message (optional)" name="message" rows={5} as="textarea" />
 
             <button
               type="submit"
-              className="bg-black text-white w-full lg:w-[20%] py-2 rounded-md hover:bg-gray-800 cursor-pointer text-[16px] font-semibold"
+              className="bg-black text-white w-fit py-2 px-6 rounded-md hover:bg-black/80 font-semibold disabled:opacity-70"
+              disabled={loading}
             >
-              Submit
+              {loading ? "Submitting..." : "Submit"}
             </button>
           </Form>
         )}

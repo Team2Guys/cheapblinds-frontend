@@ -39,6 +39,10 @@ export const RegisterForm = () => {
             password: values.password,
             isNewsletterSubscribed: values.isNewsletterSubscribed,
           },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/graphql-response+json",
+          },
         },
       });
 

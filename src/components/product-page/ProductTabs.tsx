@@ -27,7 +27,7 @@ export const ProductTabs = ({ description, additionalInfo, measuringGuide }: pro
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`pb-2 px-2 font-medium text-xl font-rubik tracking-wide transition-colors duration-200 ${
+              className={`pb-2 px-2 font-medium text-xl font-rubik tracking-wide transition-colors cursor-pointer duration-200 ${
                 activeTab === tab.id
                   ? "border-b-2 border-black text-black"
                   : "border-b-2 border-transparent hover:border-black"

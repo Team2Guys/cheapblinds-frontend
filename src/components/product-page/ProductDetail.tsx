@@ -41,6 +41,7 @@ export const ProductDetail = ({
             price={price}
             discountPrice={discountPrice}
             shortDescription={shortDescription}
+            product={productData}
           />
         </div>
       </div>

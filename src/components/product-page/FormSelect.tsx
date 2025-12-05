@@ -10,7 +10,7 @@ interface FormSelectProps {
   selected: string;
   onChange: (_id: string) => void;
   helpContent?: React.ReactNode;
-  isChainSelector?: boolean; // ✅ when true, render left/right style
+  isChainSelector?: boolean;
 }
 
 export const FormSelect = ({

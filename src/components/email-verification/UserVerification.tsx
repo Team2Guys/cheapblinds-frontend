@@ -66,7 +66,13 @@ export const UserVerification = () => {
     }
 
     checkVerificationToken({
-      variables: { input: { verificationToken } },
+      variables: {
+        input: { verificationToken },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/graphql-response+json",
+        },
+      },
     });
   };
 
@@ -77,7 +83,13 @@ export const UserVerification = () => {
     }
 
     sendVerificationToken({
-      variables: { input: { email } },
+      variables: {
+        input: { email },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/graphql-response+json",
+        },
+      },
     });
   };
 

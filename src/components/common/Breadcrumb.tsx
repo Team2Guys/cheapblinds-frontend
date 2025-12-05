@@ -16,7 +16,7 @@ export const Breadcrumb = ({
   );
   return (
     <div className={`z-20 w-full p-2 max-md:bg-secondary ${className}`}>
-      <div className="flex items-center gap-2 sm:gap-4 container mx-auto">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-4 container mx-auto">
         <Link href="/" className="capitalize text-[#00000099]">
           Home
         </Link>

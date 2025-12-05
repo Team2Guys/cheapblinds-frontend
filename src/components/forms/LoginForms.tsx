@@ -36,6 +36,10 @@ export const LoginForms = () => {
             password: values.password,
             role: "USER",
           },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/graphql-response+json",
+          },
         },
       });
 

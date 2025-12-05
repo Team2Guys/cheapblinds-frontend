@@ -5,8 +5,9 @@ import { Accordion, PriceSlider } from "@components";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
+import { ColorImage } from "@data/filter-colors";
 
-type SectionKeys = "type" | "colour" | "width" | "pattern" | "composition" | "price";
+type SectionKeys = "type" | "colour" | "width" | "pattern" | "composition" | "price" | "motorized";
 
 type FiltersProps = {
   typeOptions: string[];
@@ -27,6 +28,8 @@ type FiltersProps = {
   selectedPrice: [number, number];
   setSelectedPrice: React.Dispatch<React.SetStateAction<[number, number]>>;
   showTypeFilter?: boolean;
+  selectedMotorized: boolean;
+  setSelectedMotorized: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const Filters = ({
@@ -48,6 +51,8 @@ export const Filters = ({
   selectedPrice,
   setSelectedPrice,
   showTypeFilter,
+  selectedMotorized,
+  setSelectedMotorized,
 }: FiltersProps) => {
   const [openSections, setOpenSections] = useState<Record<SectionKeys, boolean>>({
     type: true,
@@ -56,6 +61,7 @@ export const Filters = ({
     pattern: true,
     composition: true,
     price: true,
+    motorized: true,
   });
 
   const contentRefs = {
@@ -65,6 +71,7 @@ export const Filters = ({
     pattern: useRef(null),
     composition: useRef(null),
     price: useRef(null),
+    motorized: useRef(null),
   };
 
   const toggleSection = (section: SectionKeys) => {
@@ -84,6 +91,7 @@ export const Filters = ({
     ...selectedComposition.map((v) => ({ key: "composition", label: v })),
     ...selectedWidth.map((v) => ({ key: "width", label: v })),
     ...selectedColour.map((v) => ({ key: "colour", label: v })),
+    ...(selectedMotorized ? [{ key: "motorized", label: "Motorized" }] : []),
     ...(selectedPrice[0] !== 0 || selectedPrice[1] !== 1000
       ? [{ key: "price", label: `AED${selectedPrice[0]} - AED${selectedPrice[1]}` }]
       : []),
@@ -106,10 +114,18 @@ export const Filters = ({
       case "colour":
         setSelectedColour(selectedColour.filter((v) => v !== filter.label));
         break;
+      case "motorized":
+        setSelectedMotorized(false);
+        break;
       case "price":
         setSelectedPrice([0, 1000]);
         break;
     }
+  };
+
+  const getColorImage = (color: string) => {
+    const found = ColorImage.find((c) => c.color.toLowerCase() === color.toLowerCase());
+    return found ? found.image : "/assets/images/colors/white.png";
   };
 
   return (
@@ -135,7 +151,7 @@ export const Filters = ({
             >
               {filter.label}
               <span
-                className="flex justify-center items-center h-4 w-4 bg-primary text-white rounded-full ml-2 cursor-pointer"
+                className="flex justify-center items-center h-4 w-4 bg-primary text-white rounded-full ml-2 cursor-pointer absolute -top-2 -right-2"
                 onClick={() => removeFilter(filter)}
               >
                 <RxCross2 size={12} />
@@ -144,6 +160,29 @@ export const Filters = ({
           ))}
         </div>
       </div>
+      <Accordion
+        title="Motorised"
+        sectionKey="motorized"
+        openSections={openSections}
+        toggleSection={toggleSection}
+        refObj={contentRefs.motorized}
+      >
+        <div className="flex flex-col gap-4 pt-4">
+          <button
+            onClick={() => setSelectedMotorized(!selectedMotorized)}
+            className="flex items-center gap-2 capitalize cursor-pointer"
+          >
+            <span
+              className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${
+                selectedMotorized ? "border-primary bg-primary text-white" : "border-black"
+              }`}
+            >
+              {selectedMotorized && <FaCheck />}
+            </span>
+            <p>Motorised Products</p>
+          </button>
+        </div>
+      </Accordion>
       {showTypeFilter && (
         <Accordion
           title="Type"
@@ -194,9 +233,12 @@ export const Filters = ({
                 >
                   {isSelected && <FaCheck />}
                 </span>
-                <span
-                  className="w-6 h-6 rounded-full border border-black"
-                  style={{ backgroundColor: item.color }}
+                <Image
+                  src={getColorImage(item.name)}
+                  alt={item.name}
+                  width={30}
+                  height={30}
+                  className=" object-cover"
                 />
                 <p>{item.name}</p>
               </button>

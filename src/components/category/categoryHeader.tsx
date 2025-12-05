@@ -35,6 +35,8 @@ type CategoryHeaderProps = {
   selectedPrice: [number, number];
   setSelectedPrice: React.Dispatch<React.SetStateAction<[number, number]>>;
   showTypeFilter?: boolean;
+  selectedMotorized: boolean;
+  setSelectedMotorized: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CategoryHeader = ({
@@ -60,6 +62,8 @@ const CategoryHeader = ({
   selectedPrice,
   setSelectedPrice,
   showTypeFilter,
+  selectedMotorized,
+  setSelectedMotorized,
 }: CategoryHeaderProps) => {
   const [displayText, setDisplayText] = useState(description || "");
   const [isTruncated, setIsTruncated] = useState(false);
@@ -190,6 +194,8 @@ const CategoryHeader = ({
                 selectedPrice={selectedPrice}
                 setSelectedPrice={setSelectedPrice}
                 showTypeFilter={showTypeFilter}
+                selectedMotorized={selectedMotorized}
+                setSelectedMotorized={setSelectedMotorized}
               />
 
               <button className="absolute top-4 right-4" onClick={() => setShowFilters(false)}>

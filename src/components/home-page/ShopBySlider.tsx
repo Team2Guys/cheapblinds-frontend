@@ -7,7 +7,7 @@ import Link from "next/link";
 export const ShopBySlider = ({
   CategoryList,
 }: {
-  CategoryList: { thumbnailUrl: string; name: string; slug: string }[];
+  CategoryList: { posterImageUrl: string; name: string; slug: string }[];
 }) => {
   const [activeIndex, setActiveIndex] = useState(2);
   const [isVisible, setIsVisible] = useState(false);
@@ -138,7 +138,7 @@ export const ShopBySlider = ({
           >
             <div className="relative 2xl:w-[350px] 2xl:h-[420px] sm:w-[290px] sm:h-[370px] w-[150px] h-[220px] overflow-hidden shadow-lg bg-white">
               <Image
-                src={item.thumbnailUrl || "/assets/images/bin/product3.webp"}
+                src={item.posterImageUrl || "/assets/images/bin/product3.webp"}
                 alt={item.name}
                 fill
                 priority={index === activeIndex}

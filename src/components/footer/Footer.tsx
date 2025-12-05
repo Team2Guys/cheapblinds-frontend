@@ -67,8 +67,8 @@ const Footer: React.FC = () => {
                 </ul>
               </div>
             ))}
-            <div className="grid grid-cols-1 lg:grid-cols-2 sm:col-span-3 gap-6 lg:gap-0">
-              <div className="lg:mt-10 flex flex-col gap-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 sm:col-span-3 gap-6 lg:gap-1">
+              <div className="lg:mt-10 flex flex-wrap flex-col gap-2">
                 <p>Choose Your Payment Method</p>
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">

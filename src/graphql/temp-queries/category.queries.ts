@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_CATEGORY_LIST = gql`
   query GetCategoryList {
-    getCategoryList {
+    categoryList {
       id
       name
       description
@@ -24,7 +24,7 @@ export const GET_CATEGORY_LIST = gql`
 
 export const GET_CATEGORY_BY_ID = gql`
   query GetCategoryById($id: ID!) {
-    getCategoryById(id: $id) {
+    categoryById(id: $id) {
       id
       name
       description
@@ -46,7 +46,7 @@ export const GET_CATEGORY_BY_ID = gql`
 
 export const GET_CARD_CATEGORY = gql`
   query GetCategoryList {
-    getCategoryList {
+    categoryList {
       id
       name
       status
@@ -58,7 +58,7 @@ export const GET_CARD_CATEGORY = gql`
 
 export const GET_CATEGORY_BY_SLUG = gql`
   query GetCategoryBySlug($slug: String!) {
-    getCategoryBySlug(input: { slug: $slug }) {
+    categoryBySlug(input: { slug: $slug }) {
       id
       name
       description
@@ -102,10 +102,11 @@ export const GET_CATEGORY_BY_SLUG = gql`
           stock
           width
           height
-          weight
           color
           pattern
           composition
+          isMotorized
+          motorPrice
         }
       }
     }

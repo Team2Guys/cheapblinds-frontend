@@ -5,3 +5,5 @@ export * from "./subcategory.mutations";
 export * from "./auth.mutation";
 export * from "./email.mutations";
 export * from "./fileUpload.mutations";
+export * from "./order.mutations";
+export * from "./inquiry.mutations";

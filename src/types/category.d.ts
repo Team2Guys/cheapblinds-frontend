@@ -10,7 +10,7 @@ export interface Category {
   metaDescription?: string;
   canonicalTag?: string;
   breadCrumb?: string;
-  thumbnailUrl?: string;
+  posterImageUrl?: string;
   seoSchema?: string;
   status?: ContentStatus;
   lastEditedBy?: string;
@@ -30,7 +30,7 @@ export interface Subcategory {
   metaDescription?: string;
   canonicalTag?: string;
   breadCrumb?: string;
-  thumbnailUrl?: string;
+  posterImageUrl?: string;
   lastEditedBy?: string;
   seoSchema?: string;
   categoryId?: string;
@@ -44,14 +44,13 @@ export interface Product {
   id?: string | number;
   name: string;
   description?: string;
-  Breadcrumb?: string;
   shortDescription?: string;
   slug?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalTag?: string;
-  breadCrumb?: string;
-  thumbnailUrl?: string;
+  breadcrumb?: string;
+  posterImageUrl?: string;
   productImages?: string[];
   lastEditedBy?: string | null;
   seoSchema?: string;
@@ -73,6 +72,11 @@ export interface Product {
   color?: string;
   width?: string;
   height?: string;
+  isMotorized?: boolean;
+  motorPrice?: number;
+  url?: string;
+  categoryUrl?: string;
+  subcategoryUrl?: string;
 }
 
 export interface productImage {
@@ -114,4 +118,25 @@ export interface CategoryPageProps {
   categoryUrl: string;
   description: string;
   ProductList: Subcategory | Subcategory[];
+}
+
+export interface Orders {
+  id?: string;
+  userId: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  country?: string;
+  state?: string | null;
+  city?: string;
+  address?: string;
+  totalAmount: number;
+  shippingCost: number;
+  notes?: string;
+  items: Product[];
+  lastEditedBy?: string;
+  paymentStatus?: string;
+  orderStatus?: string;
+  createdAt?: string;
 }
