@@ -1,91 +1,161 @@
+"use client";
+
 import { Product } from "@/types/category";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { TfiTrash } from "react-icons/tfi";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { ColorImage } from "@data/filter-colors";
+import { useIndexedDb } from "@lib/useIndexedDb";
 
-export const Card = ({ card, IsDeleteButton, categoryUrl, subcategoryUrl }: { card: Product; IsDeleteButton?: boolean, categoryUrl?: string, subcategoryUrl?: string }) => {
+interface CardProps {
+  products: Product[];
+  categoryUrl?: string;
+  categoryName?: string;
+  IsDeleteButton?: boolean;
+  productsPerPage?: number;
+  selectedMotorized?: boolean;
+  onDelete?: (_id: string) => void;
+  onFreeSample?: (_product: Product) => void;
+}
+
+export const Card = ({
+  products,
+  categoryUrl,
+  categoryName,
+  IsDeleteButton,
+  productsPerPage = 9,
+  selectedMotorized = false,
+  onDelete,
+  onFreeSample,
+}: CardProps) => {
+  const [page, setPage] = useState(1);
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  const { addToWishlist } = useIndexedDb();
+
+  const visibleProducts = useMemo(() => {
+    const start = (page - 1) * productsPerPage;
+    return products.slice(start, start + productsPerPage);
+  }, [products, page, productsPerPage]);
+
+  const getColorImage = (color: string) => {
+    const found = ColorImage.find((c) => c.color.toLowerCase() === color.toLowerCase());
+    return found ? found.image : "/assets/images/colors/white.png";
+  };
+
   return (
-    <div className="card-wrapper relative rounded-md pb-2">
-      <Link href={`/${categoryUrl}/${subcategoryUrl}/${card.slug}`}>
-        <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
-          <Image
-            src={card.thumbnailUrl || "/assets/images/bin/product1.webp"}
-            alt={card.name}
-            fill
-          />
-          <div className="absolute bottom-2 left-2">
-            <div className="relative h-9 md:h-16 w-7 md:w-14">
-              <Image
-                src="/assets/images/category/filter-lighting.png"
-                alt="image"
-                fill
-                className="ms-1 md:ms-2"
-              />
+    <>
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 pt-6">
+        {visibleProducts.map((card) => {
+          const basePrice = card.discountPrice ?? card.price ?? 0;
+          const original = card.price ?? 0;
+          const motor = card.motorPrice ?? 0;
+          const finalPrice = selectedMotorized ? basePrice + motor : basePrice;
+          const originalPrice = selectedMotorized ? original + motor : original;
+
+          return (
+            <div key={card.id} className="relative rounded-md pb-2">
+              <Link href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}>
+                <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
+                  <Image
+                    src={card.posterImageUrl || "/assets/images/bin/product1.webp"}
+                    alt={card.name}
+                    fill
+                  />
+                </div>
+              </Link>
+
+              <div className="pt-3 md:space-y-4 px-2">
+                <Link
+                  href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}
+                >
+                  <p className="text-xs md:text-base">{categoryName}</p>
+                  <h2 className="font-medium text-base md:text-xl font-rubik md:underline md:h-10">
+                    {card.name}
+                  </h2>
+                </Link>
+
+                <div className="flex justify-between items-center">
+                  <button
+                    className="rounded-md p-2 px-4 font-semibold bg-primary cursor-pointer"
+                    onClick={() => onFreeSample && onFreeSample(card)}
+                  >
+                    Free Sample
+                  </button>
+
+                  <Image
+                    src={getColorImage(card.color || "")}
+                    alt={card.color || "color"}
+                    width={40}
+                    height={30}
+                  />
+                </div>
+
+                <div className="flex justify-between items-center pt-2">
+                  <p className="flex items-center gap-1 text-xs md:text-base">
+                    From:
+                    <span className="font-currency text-lg md:text-3xl"></span>
+                    <span className="font-semibold text-sm md:text-2xl">{finalPrice}</span>
+                    {card.discountPrice && (
+                      <>
+                        <span className="font-currency text-lg md:text-xl"></span>
+                        <span className="line-through text-sm lg:text-base">{originalPrice}</span>
+                      </>
+                    )}
+                  </p>
+
+                  {IsDeleteButton && onDelete ? (
+                    <button
+                      className="w-6 md:w-10 h-6 md:h-10 border rounded-md bg-primary-light flex justify-center items-center cursor-pointer"
+                      onClick={() => card.id && onDelete(String(card.id))}
+                    >
+                      <TfiTrash className="text-xs md:text-xl" />
+                    </button>
+                  ) : (
+                    <button
+                      className="w-6 md:w-10 h-6 md:h-10 border rounded-md flex justify-center items-center cursor-pointer border-black"
+                      onClick={() =>
+                        card.id && addToWishlist(card, categoryUrl || "", categoryName || "")
+                      }
+                    >
+                      <FaRegHeart className="text-xs md:text-xl" />
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
-            <p className="text-[9px] md:text-base font-semibold text-primary [text-shadow:_-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
-              Order by{" "}
-              <span className="text-sm md:text-2xl text-primary font-semibold [text-shadow:_-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
-                3pm
-              </span>
-              <br />
-              Same Day Express Delivery
-            </p>
-          </div>
-        </div>
-      </Link>
-      <div className="pt-3 space-y-4 px-2">
-        <Link
-          href={`/${categoryUrl}/${subcategoryUrl}/${card.slug}`}
-          className="flex justify-between md:items-center gap-1 md:gap-2"
-        >
-          <div className="space-y-1">
-            <p className="text-xs md:text-base">{card.name}</p>
-            <h2 className="font-medium text-base md:text-xl font-rubik md:underline h-10 xs:h-auto">
-              {card.name}
-            </h2>
-          </div>
-          <div className="relative w-6 md:w-10 h-6 md:h-10">
-            <Image src="/assets/images/product/blackour-window.png" alt="image" fill />
-          </div>
-        </Link>
-        <div className="flex justify-between items-center gap-1 md:gap-2">
-          <button className="bg-primary w-28 md:w-44 h-6 md:h-10 text-[10px] md:text-base flex justify-center items-center rounded-md font-semibold cursor-pointer">
-            Free Sample
-          </button>
-          <span
-            className="jagged-shape w-6 md:w-10 h-6 md:h-10"
-            style={{ background: `#E0D5C6` }}
-          />
-        </div>
-        <div className="flex justify-between items-center gap-1 md:gap-2">
-          <p className="flex items-center gap-1 text-xs md:text-base">
-            From:
-            {card.discountPrice ? (
-              <><span className="font-currency text-base md:text-[22px] font-normal"></span>
-                <span className="font-semibold  text-sm md:text-2xl">{card.discountPrice}</span>
-                <span className="font-currency text-base md:text-[22px] font-normal"></span>
-                <span className="font-semibold line-through">{card.price}</span>
-              </>
-            ) : (
-              <>
-                <span className="font-currency text-base md:text-[22px] font-normal"></span>
-                <span className="font-semibold">{card.price}</span>
-              </>
-            )}
-          </p>
-          {IsDeleteButton ? (
-            <button className="w-6 md:w-10 h-6 md:h-10 border rounded-md border-secondary flex justify-center items-center cursor-pointer bg-primary-light">
-              <TfiTrash size={25} />
-            </button>
-          ) : (
-            <button className="w-6 md:w-10 h-6 md:h-10 border rounded-md border-black flex justify-center items-center cursor-pointer ">
-              <FaRegHeart className="text-xs md:text-xl" />
-            </button>
-          )}
-        </div>
+          );
+        })}
       </div>
-    </div>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-2 pt-6">
+          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+            <MdKeyboardArrowLeft className="text-2xl" />
+          </button>
+
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`${
+                i + 1 === page
+                  ? "w-9 h-9 bg-primary text-white shadow-xl"
+                  : "w-7 h-7 border border-black"
+              } flex justify-center items-center font-medium text-xl`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+            <MdKeyboardArrowRight className="text-2xl" />
+          </button>
+        </div>
+      )}
+    </>
   );
 };

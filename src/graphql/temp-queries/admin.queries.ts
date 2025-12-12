@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_ALL_ADMINS = gql`
   query GetAdminList {
-    getAdminList {
+    adminList {
       status
       message
       data {
@@ -22,7 +22,7 @@ export const GET_ALL_ADMINS = gql`
 
 export const GET_ADMIN_BY_ID = gql`
   query GetAdminById($input: GetAdminByIdInput!) {
-    getAdminById(input: $input) {
+    adminById(input: $input) {
       status
       message
       data {

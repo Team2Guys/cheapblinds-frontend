@@ -1,19 +1,33 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+
+import React, { useEffect, useState, useRef } from "react";
 import { LuHeart, LuUser } from "react-icons/lu";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import FreeSample from "@components/svg/free-sample";
-import DropdownPanel from "./Dropdownpanel";
-import { cartItems, wishlistItems } from "@data/Header";
-import Link from "next/link";
+import FreeSampleIcon from "@components/svg/free-sample";
 import { useAuth } from "@context/UserContext";
+import Link from "next/link";
 import { FaRegCircleUser } from "react-icons/fa6";
+import DropdownPanel from "./Dropdownpanel";
+import { useIndexedDb } from "@lib/useIndexedDb";
+import { usePathname } from "next/navigation";
 
 const UserIcons = ({ className }: { className?: string }) => {
   const { user, logout } = useAuth();
+  const pathname = usePathname();
+
+  const {
+    wishlist,
+    freeSamples,
+    removeFromWishlist,
+    removeFreeSampleItem,
+    openWishlist,
+    openFreeSample,
+    setOpenWishlist,
+    setOpenFreeSample,
+  } = useIndexedDb();
+
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -21,17 +35,22 @@ const UserIcons = ({ className }: { className?: string }) => {
       }
     };
 
-    if (accountDropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [accountDropdownOpen]);
+  useEffect(() => {
+    if (pathname === "/wishlist") {
+      setOpenWishlist(false);
+    }
+    if (pathname === "/free-sample") {
+      setOpenFreeSample(false);
+    }
+  }, [pathname, setOpenWishlist, setOpenFreeSample]);
 
   return (
     <div className={`flex items-center ${className}`}>
+      {/* Account */}
       <div className="relative border-r lg:pr-1.5" ref={dropdownRef}>
         {user ? (
           <>
@@ -45,7 +64,7 @@ const UserIcons = ({ className }: { className?: string }) => {
               <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md z-50 p-1">
                 <Link
                   href="/account"
-                  className="block px-4 py-2 hover:bg-primary font-semibold rounded-md "
+                  className="block px-4 py-2 hover:bg-primary font-semibold rounded-md"
                   onClick={() => setAccountDropdownOpen(false)}
                 >
                   Profile
@@ -69,32 +88,41 @@ const UserIcons = ({ className }: { className?: string }) => {
         )}
       </div>
 
+      {/* Wishlist */}
       <div className="border-r lg:pr-1.5">
         <DropdownPanel
           icon={<LuHeart size={25} />}
           title="Wishlist"
-          badgeCount={wishlistItems.length}
-          items={wishlistItems}
+          badgeCount={wishlist.length}
+          items={wishlist}
           viewLink="/wishlist"
           emptyMessage="Your wishlist is empty."
+          removeItem={removeFromWishlist}
+          forceOpen={pathname !== "/wishlist" && openWishlist} // ✅ only auto-open on other pages
         />
       </div>
+
+      {/* Free Samples */}
       <div className="border-r lg:pr-1.5">
         <DropdownPanel
-          icon={<FreeSample />}
+          icon={<FreeSampleIcon />}
           title="Free Samples"
-          badgeCount={0}
-          items={[]}
-          viewLink="/freesample"
+          badgeCount={freeSamples.length}
+          items={freeSamples}
+          viewLink="/free-sample"
           emptyMessage="No free samples found."
+          removeItem={removeFreeSampleItem}
+          forceOpen={pathname !== "/free-sample" && openFreeSample}
         />
       </div>
+
+      {/* Cart */}
       <div className="lg:pr-1.5">
         <DropdownPanel
           icon={<MdOutlineShoppingCart size={25} />}
           title="Cart"
-          badgeCount={cartItems.length}
-          items={cartItems}
+          badgeCount={0}
+          items={[]}
           viewLink="/cart"
           emptyMessage="Your cart is empty."
         />

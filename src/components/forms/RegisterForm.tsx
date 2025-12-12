@@ -5,7 +5,7 @@ import { Formik, Form, Field, FormikHelpers } from "formik";
 import { ApolloError, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
-import { SIGN_UP } from "@graphql";
+import { SIGN_UP, CREATE_NEWSLETTER_SUBSCRIBER } from "@graphql";
 import { toast } from "react-toastify";
 import { signUp_validationSchema } from "@data/Validations";
 import { FaSpinner } from "react-icons/fa";
@@ -15,20 +15,23 @@ interface RegisterFormValues {
   lastName: string;
   email: string;
   password: string;
-  role: string;
   confirmPassword: string;
+  role: string;
   isNewsletterSubscribed: boolean;
 }
 
 export const RegisterForm = () => {
   const router = useRouter();
+
   const [signup, { loading }] = useMutation(SIGN_UP);
+  const [createSubscriber] = useMutation(CREATE_NEWSLETTER_SUBSCRIBER);
 
   const handleSubmit = async (
     values: RegisterFormValues,
-    { resetForm }: FormikHelpers<RegisterFormValues>,
+    { resetForm }: FormikHelpers<RegisterFormValues>
   ) => {
     try {
+      // 1️⃣ Create User Account
       await signup({
         variables: {
           input: {
@@ -37,48 +40,59 @@ export const RegisterForm = () => {
             email: values.email,
             role: "USER",
             password: values.password,
-            isNewsletterSubscribed: values.isNewsletterSubscribed,
           },
         },
       });
 
+      // 2️⃣ Create Newsletter Entry (true/false)
+      await createSubscriber({
+        variables: {
+          input: {
+            email: values.email,
+            isActive: values.isNewsletterSubscribed ? true : false,
+          },
+        },
+      });
+
+      // 3️⃣ Success Popup
       toast.success(
         <div className="text-center space-y-2 p-2">
-          <h3 className="font-bold text-lg text-black">Account Created Successfully 🎉</h3>
+          <h3 className="font-bold text-lg text-black">
+            Account Created Successfully 🎉
+          </h3>
           <p className="text-sm">
             Please verify your account. We’ve sent a confirmation email to{" "}
             <span className="font-semibold">{values.email}</span>.
           </p>
-          <p className="text-sm text-gray-500">Go to Gmail and check your inbox.</p>
+          <p className="text-sm text-gray-500">
+            Open your inbox to activate your account.
+          </p>
         </div>,
         {
           position: "top-center",
           autoClose: false,
-          closeOnClick: true,
-          draggable: false,
           hideProgressBar: true,
-          className: "rounded-lg shadow-xl bg-white text-black p-6 flex flex-col items-center",
-          onClose: () => {
-            router.push("/login");
-          },
-        },
+          className: "rounded-lg shadow-xl bg-white text-black p-6",
+          onClose: () => router.push("/login"),
+        }
       );
 
       resetForm();
     } catch (error: unknown) {
       if (error instanceof ApolloError) {
-        const graphQLError = error.graphQLErrors?.[0]?.message || "";
-        const message = graphQLError.toLowerCase();
+        const gqlMessage =
+          error.graphQLErrors?.[0]?.message?.toLowerCase() || "";
 
-        if (message.includes("user already exists") || message.includes("email already exists")) {
+        if (
+          gqlMessage.includes("user already exists") ||
+          gqlMessage.includes("email already exists")
+        ) {
           toast.error("Account already exists. Please log in instead.");
         } else {
-          toast.error("Something went wrong while creating your account. Please try again later.");
+          toast.error("Something went wrong. Please try again later.");
         }
-      } else if (error instanceof Error) {
-        toast.error(error.message || "Something went wrong. Please try again.");
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error("Unexpected error occurred.");
       }
     }
   };
@@ -93,8 +107,8 @@ export const RegisterForm = () => {
           lastName: "",
           email: "",
           password: "",
-          role: "USER",
           confirmPassword: "",
+          role: "USER",
           isNewsletterSubscribed: false,
         }}
         validationSchema={signUp_validationSchema}
@@ -107,6 +121,7 @@ export const RegisterForm = () => {
               <Input name="lastName" placeholder="Last name*" />
             </div>
 
+            {/* Newsletter Checkbox */}
             <div className="flex items-center space-x-2">
               <Field
                 type="checkbox"
@@ -124,14 +139,22 @@ export const RegisterForm = () => {
 
             <Input name="email" type="email" placeholder="Email address*" />
             <Input name="password" type="password" placeholder="Password*" />
-            <Input name="confirmPassword" type="password" placeholder="Confirm Password*" />
+            <Input
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm Password*"
+            />
 
             <button
               type="submit"
               disabled={loading}
               className="w-fit bg-primary font-semibold py-2 px-4 rounded-md mx-auto disabled:opacity-50 cursor-pointer flex items-center gap-2"
             >
-              {loading ? <FaSpinner className="animate-spin text-lg" /> : "Create an Account"}
+              {loading ? (
+                <FaSpinner className="animate-spin text-lg" />
+              ) : (
+                "Create an Account"
+              )}
             </button>
           </Form>
         )}

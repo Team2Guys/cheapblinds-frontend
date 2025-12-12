@@ -13,8 +13,7 @@ export const SIGN_IN = gql`
     signin(input: $input) {
       id
       name
-      firstName
-      lastName
+      email
       role
     }
   }

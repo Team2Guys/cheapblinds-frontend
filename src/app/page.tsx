@@ -14,8 +14,11 @@ import { chooseimage } from "@data/home";
 import { GET_CARD_CATEGORY, GET_CARD_PRODUCT } from "@graphql";
 import React from "react";
 
-export default async  function  Home() {
-  const [productList ,categoryList] = await Promise.all([fetchProducts(GET_CARD_PRODUCT), fetchCategories(GET_CARD_CATEGORY)]);
+export default async function Home() {
+  const [productList, categoryList] = await Promise.all([
+    fetchProducts(GET_CARD_PRODUCT),
+    fetchCategories(GET_CARD_CATEGORY),
+  ]);
 
   return (
     <>
@@ -45,7 +48,7 @@ export default async  function  Home() {
           className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
         />
       </div>
-      <RelatedProduct  title="Browse Products" data={productList} />
+      <RelatedProduct title="Browse Products" data={productList} />
       <OrderSection
         className="mt-10 md:mt-16"
         reverse

@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_SUBCATEGORY_LIST = gql`
   query GetSubcategoryList {
-    getSubcategoryList {
+    subcategoryList {
       id
       name
       categoryId
@@ -22,12 +22,10 @@ export const GET_SUBCATEGORY_LIST = gql`
     }
   }
 `;
-
-
 
 export const GET_SUBCATEGORY_BY_ID = gql`
   query GetSubcategoryById($id: ID!) {
-    getSubcategoryById(id: $id) {
+    subcategoryById(id: $id) {
       id
       name
       categoryId
@@ -48,15 +46,10 @@ export const GET_SUBCATEGORY_BY_ID = gql`
   }
 `;
 
-
-
 export const GET_SUBCATEGORY_BY_URLS = gql`
-  query GetSubcategoryByUrls($subcategorySlug: String!, $categorySlug: String!) {
-    getSubcategoryByUrls(
-      input: {
-        subcategorySlug: $subcategorySlug
-        categorySlug: $categorySlug
-      }
+  query GetSubcategoryBySlugs($subcategorySlug: String!, $categorySlug: String!) {
+    subcategoryBySlugs(
+      input: { subcategorySlug: $subcategorySlug, categorySlug: $categorySlug }
     ) {
       id
       name
@@ -78,8 +71,13 @@ export const GET_SUBCATEGORY_BY_URLS = gql`
         price
         discountPrice
         posterImageUrl
+        width
+        color
+        pattern
+        composition
+        isMotorized
+        motorPrice
       }
     }
   }
 `;
-

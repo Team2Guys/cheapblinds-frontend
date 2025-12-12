@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "react-image-crop/dist/ReactCrop.css";
 @import "react-toastify/dist/ReactToastify.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -204,7 +203,6 @@ body {
 .boxShadow {
   box-shadow: 0px 0px 6px #4c4c4c59;
 }
-
 
 .custom-bullet {
   width: 16px;

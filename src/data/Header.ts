@@ -6,7 +6,10 @@ export const wishlistItems = [
   { name: "Modern Lamp", image: "/assets/images/bin/product.png", price: "AED 199" },
   { name: "Luxury Sofa", image: "/assets/images/bin/product.png", price: "AED 899" },
 ];
-
+export const freeItems = [
+  { name: "Modern Lamp", image: "/assets/images/bin/product.png", price: "free" },
+  { name: "Luxury Sofa", image: "/assets/images/bin/product.png", price: "free" },
+];
 export const cartItems = [
   {
     name: "Velvet Chair",
@@ -84,7 +87,6 @@ export const menuItems: MenuItem[] = [
         desktopimage: "/assets/images/bin/menu3.png",
         mobileimage: "",
       },
-  
     ],
   },
   {
@@ -92,7 +94,7 @@ export const menuItems: MenuItem[] = [
     link: "/zebra-blinds",
     image: "/assets/images/bin/mobile/zebra.png",
     submenu: [
-     {
+      {
         name: "Dimout Zebra Blinds",
         link: "/zebra-blinds/dimout",
         desktopimage: "/assets/images/bin/menu2.png",

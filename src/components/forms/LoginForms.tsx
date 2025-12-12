@@ -36,6 +36,10 @@ export const LoginForms = () => {
             password: values.password,
             role: "USER",
           },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/graphql-response+json",
+          },
         },
       });
 
@@ -53,7 +57,10 @@ export const LoginForms = () => {
     } catch (error: unknown) {
       if (error instanceof ApolloError) {
         const graphQLError = error.graphQLErrors?.[0]?.message;
-        Toaster("error", graphQLError || error.message || "Something went wrong. Please try again.");
+        Toaster(
+          "error",
+          graphQLError || error.message || "Something went wrong. Please try again.",
+        );
         return;
       }
       Toaster("error", "Something went wrong. Please try again.");

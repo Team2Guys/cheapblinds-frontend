@@ -383,7 +383,7 @@ export type BlindsGridProps = {
 };
 
 export interface FormData {
-  contactType: string;
+  inquiryType: string;
   name: string;
   email: string;
   phone: string;

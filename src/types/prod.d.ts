@@ -88,7 +88,7 @@ interface CommonProductsTypes {
   metaDescription?: string;
   metaTitle?: string;
   last_editedBy?: string;
-  customUrl: string;
+  slug: string;
   breadCrumb?: string;
   Banners?: ProductImage;
   //

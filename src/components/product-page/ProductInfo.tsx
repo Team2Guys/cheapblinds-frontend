@@ -10,15 +10,24 @@ import {
 } from "@components";
 import DeliveryIcon from "@components/svg/delivery";
 import { Toaster } from "@components";
+import { Product } from "@/types/category";
+import { useIndexedDb } from "@lib/useIndexedDb";
 
 interface ProductDetailProps {
   category: string;
   price?: number | null;
   discountPrice?: number | null;
-  shortDescription?:string;
+  shortDescription?: string;
+  product: Product;
 }
 
-export const ProductInfo = ({ category, price, discountPrice, shortDescription }: ProductDetailProps) => {
+export const ProductInfo = ({
+  category,
+  price,
+  discountPrice,
+  shortDescription,
+  product,
+}: ProductDetailProps) => {
   const [showForm, setShowForm] = useState(false);
   const [recessType, setRecessType] = useState("outside");
   const topRef = useRef<HTMLDivElement>(null);
@@ -27,7 +36,7 @@ export const ProductInfo = ({ category, price, discountPrice, shortDescription }
     height: "",
     unit: "cm",
   });
-
+  const { addFreeSampleItem } = useIndexedDb();
   useEffect(() => {
     if (showForm && topRef.current) {
       topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -40,6 +49,15 @@ export const ProductInfo = ({ category, price, discountPrice, shortDescription }
       return;
     }
     setShowForm(true);
+  };
+
+  const handleFreeSample = async (product: Product) => {
+    try {
+      await addFreeSampleItem(product, category || "");
+    } catch (err) {
+      console.error(err);
+      Toaster("error", "Failed to add Free Sample!");
+    }
   };
 
   return (
@@ -61,7 +79,6 @@ export const ProductInfo = ({ category, price, discountPrice, shortDescription }
             From
             <span className="font-currency text-2xl md:text-3xl font-normal"></span>
             <span className="font-semibold text-2xl md:text-3xl">{discountPrice}</span>
-
             {/* Original Price with strikethrough */}
             <span className="font-currency text-2xl font-normal line-through"></span>
             <span className="text-xl font-normal line-through">{price}</span>
@@ -75,9 +92,7 @@ export const ProductInfo = ({ category, price, discountPrice, shortDescription }
         )}
       </h2>
 
-      <p>
-        {shortDescription}
-      </p>
+      <p>{shortDescription}</p>
 
       <CalculationForm onValuesChange={setCalcValues} />
 
@@ -96,7 +111,10 @@ export const ProductInfo = ({ category, price, discountPrice, shortDescription }
           <h3 className="font-semibold">Not sure? Order a free sample</h3>
           <p>Dispatched the same day by first class post</p>
         </div>
-        <button className="flex items-center gap-2 bg-white font-semibold px-6 py-2 rounded-md shadow hover:bg-gray-100 cursor-pointer whitespace-nowrap">
+        <button
+          className="flex items-center gap-2 bg-white font-semibold px-6 py-2 rounded-md shadow hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+          onClick={() => handleFreeSample(product)}
+        >
           <span className="bg-primary text-white h-6 w-6 flex items-center justify-center rounded-md">
             +
           </span>

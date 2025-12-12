@@ -2,14 +2,20 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import React from "react";
+import { useMutation } from "@apollo/client";
+import { CREATE_INQUIRY } from "@graphql";
+import { Toaster } from "@components/ui";
 
-const ContactForm: React.FC = () => {
+const ContactForm = () => {
+  const [createInquiry, { loading }] = useMutation(CREATE_INQUIRY);
+
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       phone: "",
       message: "",
+      inquiryType: "PHONE",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
@@ -18,9 +24,22 @@ const ContactForm: React.FC = () => {
       message: Yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log("Submitted values:", values);
-      alert("Form submitted successfully!");
-      resetForm();
+      try {
+        createInquiry({
+          variables: {
+            input: values,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/graphql-response+json",
+            },
+          },
+        });
+        Toaster("success", "Form submitted successfully!");
+        resetForm();
+      } catch (error) {
+        console.error("Submission error:", error);
+        Toaster("error", "Failed to submit the form. Please try again.");
+      }
     },
   });
 
@@ -98,7 +117,7 @@ const ContactForm: React.FC = () => {
         type="submit"
         className="bg-yellow-400 hover:bg-yellow-500 text-white font-medium rounded-full px-6 py-2"
       >
-        Submit
+        {loading ? "Submitting..." : "Submit"}
       </button>
     </form>
   );

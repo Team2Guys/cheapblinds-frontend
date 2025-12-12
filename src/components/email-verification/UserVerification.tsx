@@ -38,28 +38,25 @@ export const UserVerification = () => {
           Toaster("error", message);
         }
       },
-    }
+    },
   );
 
   // ✅ Resend Verification Token Mutation
-  const [sendVerificationToken, { loading: resendLoading }] = useMutation(
-    SEND_VERIFICATION_TOKEN,
-    {
-      onCompleted: (data) => {
-        const message = data?.sendVerificationToken?.message;
-        if (message) {
-          Toaster("success", message);
-        } else {
-          Toaster("error", "Failed to resend verification email.");
-        }
-      },
-      onError: (error: unknown) => {
-        const message =
-          error instanceof Error ? error.message : "Failed to resend verification link.";
-        Toaster("error", message);
-      },
-    }
-  );
+  const [sendVerificationToken, { loading: resendLoading }] = useMutation(SEND_VERIFICATION_TOKEN, {
+    onCompleted: (data) => {
+      const message = data?.sendVerificationToken?.message;
+      if (message) {
+        Toaster("success", message);
+      } else {
+        Toaster("error", "Failed to resend verification email.");
+      }
+    },
+    onError: (error: unknown) => {
+      const message =
+        error instanceof Error ? error.message : "Failed to resend verification link.";
+      Toaster("error", message);
+    },
+  });
 
   // ✅ Handle Verify Button Click
   const handleVerifyClick = () => {
@@ -69,7 +66,13 @@ export const UserVerification = () => {
     }
 
     checkVerificationToken({
-      variables: { input: { verificationToken } },
+      variables: {
+        input: { verificationToken },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/graphql-response+json",
+        },
+      },
     });
   };
 
@@ -80,7 +83,13 @@ export const UserVerification = () => {
     }
 
     sendVerificationToken({
-      variables: { input: { email } },
+      variables: {
+        input: { email },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/graphql-response+json",
+        },
+      },
     });
   };
 

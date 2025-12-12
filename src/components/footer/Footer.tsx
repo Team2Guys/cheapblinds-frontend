@@ -3,8 +3,9 @@ import Link from "next/link";
 import React from "react";
 import SocialLink from "@components/Layout/Header/social";
 import { footerSections } from "@data/footer";
+import { Newsletter } from "./Newsletter";
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <footer className="bg-primary text-black mt-10">
       <div className="container mx-auto px-2 pt-10 pb-6 relative">
@@ -67,8 +68,8 @@ const Footer: React.FC = () => {
                 </ul>
               </div>
             ))}
-            <div className="grid grid-cols-1 lg:grid-cols-2 sm:col-span-3 gap-6 lg:gap-0">
-              <div className="lg:mt-10 flex flex-col gap-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 sm:col-span-3 gap-6 lg:gap-1">
+              <div className="lg:mt-10 flex flex-wrap flex-col gap-2">
                 <p>Choose Your Payment Method</p>
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
@@ -101,19 +102,7 @@ const Footer: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col justify-end lg:items-end gap-2">
-                <h3>For the latest offers and inspiration sign up below</h3>
-                <div className="flex w-full lg:w-[330px] xl:w-[370px] h-14">
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="flex-grow px-4 py-2 rounded-l-md border-none bg-white focus:outline-none"
-                  />
-                  <button className="bg-black text-primary px-4 rounded-r-md font-semibold">
-                    Sign up
-                  </button>
-                </div>
-              </div>
+              <Newsletter/>
             </div>
           </div>
         </div>
@@ -121,10 +110,10 @@ const Footer: React.FC = () => {
       <div className="bg-black text-white text-sm">
         <div className="container mx-auto grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-0 px-2 py-4 space-y-3 lg:space-y-0">
           <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-center xl:justify-start">
-            <Link href="/account/sign-in">Sign In</Link>
-            <Link href="/account/forgot-password">Forgot Password</Link>
-            <Link href="/account/orders">Your Orders</Link>
-            <Link href="/account/order-tracking">Order Tracking</Link>
+            <Link href="/login">Sign In</Link>
+            <Link href="/forgot-password">Forgot Password</Link>
+            <Link href="/my-orders">Your Orders</Link>
+            <Link href="/order-tracking">Order Tracking</Link>
           </div>
 
           <p className="text-center hidden md:block">

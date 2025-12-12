@@ -1,65 +1,72 @@
+import Link from "next/link";
 import React from "react";
 
 const CookiePolicy = () => {
   return (
     <div className="container mx-auto px-2 space-y-5 my-10">
-      <h1 className="text-heading">Cookie Policy</h1>
+      <h1 className="text-heading">Cookie Policy – Cheap Blinds</h1>
       <p>
-        CheapBlinds and our partners use cookies to manage performance, advertising and customer
-        experience. By continuing, you agree to our use of cookies. Please review our Privacy Policy
-        to learn about managing cookies.
-      </p>
-      <p>
-        We use cookies when you visit our Site to analyse traffic, optimize performance and content
-        and to provide an integrated and more personalized shopping experience for customers.
+        At Cheap Blinds, we use cookies on our website{" "}
+        <Link className="text-primary underline " href="/">
+          cheapblinds.ae
+        </Link>{" "}
+        to enhance your browsing and shopping experience. Cookies are small files stored on your
+        device that help us improve website functionality and provide personalised services.
       </p>
       <div className="space-y-3">
-        <h2 className="text-medium">Cookies Used By Us</h2>
-        <p>We generally use the following types of cookies:</p>
-        <ul className="list-disc px-6">
-          <li>Functionality cookies that help provide a seamless online shopping experience</li>
+        <h2 className="font-rubik text-xl font-semibold">Types of Cookies We Use</h2>
+        <ul className="list-decimal px-6 space-y-2">
           <li>
-            Analytics cookies that help us measure, analyse and understand how our customers use the
-            Site and to identify ways to improve both its functionality and your shopping
-            experience.    
+            <div>
+              <h3 className="font-semibold">Functionality Cookies</h3>
+              <p>
+                These cookies remember your preferences, such as language or saved products, to make
+                your experience smoother.
+              </p>
+            </div>
           </li>
           <li>
-            Once you have found an item, select its attributes and click on &apos;ADD TO BASKET:
+            <div>
+              <h3 className="font-semibold">Analytics Cookies</h3>
+              <p>
+                These cookies help us understand how visitors use our website, which pages are most
+                popular, and how we can improve our services.
+              </p>
+            </div>
           </li>
           <li>
-            Click on your basket to review the products selected. Items can be removed from the
-            basket by clicking the cross next to them. Or you can change the quantity by typing the
-            correct quantity and clicking &apos;update basket. To continue shopping just click on
-            &apos;continue shopping&apos;.
+            <div>
+              <h3 className="font-semibold">Preference Cookies</h3>
+              <p>
+                Preference cookies store your choices to personalise your shopping experience, such
+                as recommended products or previously viewed items.
+              </p>
+            </div>
           </li>
-          <li>Click on &apos;Proceed to Checkout to proceed with your order and pay.</li>
+          <li>
+            <div>
+              <h3 className="font-semibold">Advertising/Targeting Cookies</h3>
+              <p>
+                These cookies help us show you relevant ads and promotions and measure the
+                effectiveness of our marketing campaigns.
+              </p>
+            </div>
+          </li>
         </ul>
       </div>
       <div className="space-y-3">
-        <h2 className="text-medium">Placing an order online</h2>
-        <p>
-          Browse our website and place your order using the following easy-to-follow instructions:
-        </p>
+        <h2 className="font-rubik text-xl font-semibold">Managing Cookies</h2>
+        <p>You can manage or disable cookies through your browser settings:</p>
         <ul className="list-disc px-6">
-          <li>
-            Whatever device you are using, our site has been optimized to give you the best possible
-            experience.
-          </li>
-          <li>
-            Use our handy navigation links to browse by product category, or if you know exactly
-            what you&apos;re after search using the search box.
-          </li>
-          <li>
-            Once you have found an item, select its attributes and click on &apos;ADD TO BASKET:
-          </li>
-          <li>
-            Click on your basket to review the products selected. Items can be removed from the
-            basket by clicking the cross next to them. Or you can change the quantity by typing the
-            correct quantity and clicking &apos;update basket. To continue shopping just click on
-            &apos;continue shopping&apos;.
-          </li>
-          <li>Click on &apos;Proceed to Checkout to proceed with your order and pay.</li>
+          <li>Block new cookies</li>
+          <li>Delete existing cookies</li>
+          <li>Receive notifications when a new cookie is set</li>
         </ul>
+        <p>
+          <strong>Note:</strong> Disabling cookies may affect certain website features, like saving
+          items in your cart, personalised recommendations, or login sessions. By continuing to use
+          our website, you consent to our use of cookies in accordance with this policy.
+        </p>
       </div>
     </div>
   );

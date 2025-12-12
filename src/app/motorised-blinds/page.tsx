@@ -1,14 +1,11 @@
-import {
-  Breadcrumb,
-  MotorisedBanner,
-  ControlCard,
-  ImageGrid,
-  CompatibleProducts,
-} from "@components";
+import { Breadcrumb, MotorisedBanner, ControlCard, ImageGrid, RelatedProduct } from "@components";
+import { fetchCategories } from "@config/fetch";
 import { controlOptions, controlOptions1 } from "@data/motorised";
+import { GET_CARD_CATEGORY } from "@graphql";
 import React from "react";
 
-const page = () => {
+const page = async () => {
+  const categoryList = await fetchCategories(GET_CARD_CATEGORY);
   return (
     <>
       <Breadcrumb title="Motorised Blinds" />
@@ -23,7 +20,7 @@ const page = () => {
         leftImage="/assets/images/motorised/zebraimg.webp"
         rightImage="/assets/images/motorised/rightimage.webp"
       />
-      <CompatibleProducts />
+      <RelatedProduct title="Browse Products" data={categoryList} />
     </>
   );
 };

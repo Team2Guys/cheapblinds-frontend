@@ -9,7 +9,7 @@ export interface GlobalCommontypes {
   thunbnailUrl: ProductImage;
   lastEditedBy?: string;
   shortDescription?: string;
-  customUrl: string;
+  slug: string;
   Banners?: ProductImage;
   breadCrumb?: string;
 
@@ -22,14 +22,14 @@ export interface GlobalCommontypes {
 export interface ISEO_TAGS {
   posterImageUrl?: ProductImage;
   posterImage?: ProductImage;
-  customUrl: string;
+  slug: string;
   canonicalTag?: string;
   metaDescription?: string;
   metaTitle?: string;
-  category?: { customUrl: string } | string;
+  category?: { slug: string } | string;
 
   subcategory?: {
-    customUrl: true;
+    slug: true;
   };
 }
 

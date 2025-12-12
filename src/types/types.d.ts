@@ -16,13 +16,13 @@ export interface MenuItemProps {
   scrolling?: boolean;
   products?: {
     name: string;
-    customUrl: string;
+    slug: string;
     posterImageUrl?: { imageUrl: string; altText?: string };
   }[];
 }
 export interface HeaderAccessoriesProps {
   name: string;
-  customUrl: string; // Add this property
+  slug: string; // Add this property
   posterImageUrl: {
     imageUrl: string;
     altText?: string;

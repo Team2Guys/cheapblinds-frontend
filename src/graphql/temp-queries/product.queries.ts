@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_PRODUCT_LIST = gql`
   query GetProductList {
-    getProductList {
+    productList {
       id
       name
       description
@@ -22,7 +22,6 @@ export const GET_PRODUCT_LIST = gql`
       status
       width
       height
-      weight
       color
       pattern
       composition
@@ -46,10 +45,9 @@ export const GET_PRODUCT_LIST = gql`
   }
 `;
 
-
 export const GET_PRODUCT_BY_ID = gql`
   query GetProductById($id: ID!) {
-    getProductById(id: $id) {
+    productById(id: $id) {
       id
       name
       description
@@ -68,7 +66,6 @@ export const GET_PRODUCT_BY_ID = gql`
       stock
       width
       height
-      weight
       color
       pattern
       composition
@@ -95,7 +92,7 @@ export const GET_PRODUCT_BY_ID = gql`
 
 export const GET_CARD_PRODUCT = gql`
   query GetProductList {
-    getProductList {
+    productList {
       id
       name
       slug
@@ -119,15 +116,13 @@ export const GET_CARD_PRODUCT = gql`
   }
 `;
 
-
-
-export const GET_PRODUCT_BY_URLS = gql`
-  query GetProductByUrls(
+export const GET_PRODUCT_BY_SLUG = gql`
+  query GetProductBySlugs(
     $categorySlug: String!
     $subcategorySlug: String!
     $productSlug: String!
   ) {
-    getProductByUrls(
+    productBySlugs(
       input: {
         categorySlug: $categorySlug
         subcategorySlug: $subcategorySlug
@@ -157,7 +152,6 @@ export const GET_PRODUCT_BY_URLS = gql`
       lastEditedBy
       width
       height
-      weight
       color
       pattern
       composition

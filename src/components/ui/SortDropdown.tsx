@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 interface SortDropdownProps {
-  value: "default" | "low" | "high" | "new"; // <-- include "default"
+  value: "default" | "low" | "high" | "new";
   onChange: (_value: "default" | "low" | "high" | "new") => void;
 }
 

@@ -2,10 +2,6 @@ import { Category, EDIT_CATEGORY } from "./cat";
 import { ProductReviews } from "./general";
 import { IProduct } from "./prod";
 
-
-
-
-
 export interface DASHBOARD_ADD_SUBCATEGORIES_PROPS extends DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
   categoriesList: Category[];
 }
@@ -15,12 +11,6 @@ export interface ReviewProps {
   editReview?: ProductReviews;
   setEditReview?: React.Dispatch<React.SetStateAction<ProductReviews | undefined>>;
 }
-
-
-
-
-
-
 
 export interface BreadcrumbProps {
   title?: string;

@@ -17,7 +17,7 @@ export const JobDone = ({ title, description, data }: RelatedProductProps) => {
               <div className="relative overflow-hidden group">
                 <div className="relative w-full aspect-square">
                   <Image
-                    src={array.thumbnailUrl ?? "/assets/images/bin/product3.webp"}
+                    src={array.posterImageUrl ?? "/assets/images/bin/product3.webp"}
                     alt={array.name ?? ""}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"

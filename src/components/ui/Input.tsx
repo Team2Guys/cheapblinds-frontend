@@ -48,7 +48,7 @@ export const Input = ({
         >
           <option value="">Select an option</option>
           {options.map((opt) => (
-            <option key={opt} value={opt}>
+            <option key={opt} value={opt.toUpperCase()}>
               {opt}
             </option>
           ))}

@@ -34,7 +34,7 @@ export interface OptonsFiels {
 
 export interface IJOBS {
   id: number;
-  customUrl: string;
+  slug: string;
   title: string;
   location: string;
   jobType: string;

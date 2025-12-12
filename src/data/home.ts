@@ -25,89 +25,38 @@ export const infoItems = [
     text: "Free Next Day Delivery",
   },
 ];
-export const chooseBlinds = [
-  {
-    title: "Roller Blinds",
-    description: "Blackout Roller Blinds",
-    price: "299.25",
-    image: "/assets/images/bin/product1.webp",
-  },
-  {
-    title: "Roman Blinds",
-    description: "Blackout Roman Blinds",
-    price: "299.25",
-    image: "/assets/images/bin/product2.webp",
-  },
-  {
-    title: "Roller Blinds",
-    description: "Blackout Roller Blinds",
-    price: "299.25",
-    image: "/assets/images/bin/product3.webp",
-  },
-  {
-    title: "Roman Blinds",
-    description: "Blackout Roman Blinds",
-    price: "299.25",
-    image: "/assets/images/bin/product1.webp",
-  },
-  {
-    title: "Roller Blinds",
-    description: "Blackout Roller Blinds",
-    price: "299.25",
-    image: "/assets/images/bin/product2.webp",
-  },
-  {
-    title: "Roman Blinds",
-    description: "Blackout Roman Blinds",
-    price: "299.25",
-    image: "/assets/images/bin/product3.webp",
-  },
-];
 
 export const chooseimage = [
   {
-    thumbnailUrl: "/assets/images/bin/product1.webp",
+    posterImageUrl: "/assets/images/bin/product1.webp",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    thumbnailUrl: "/assets/images/bin/product2.webp",
+    posterImageUrl: "/assets/images/bin/product2.webp",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    thumbnailUrl: "/assets/images/bin/product3.webp",
+    posterImageUrl: "/assets/images/bin/product3.webp",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    thumbnailUrl: "/assets/images/bin/product1.webp",
+    posterImageUrl: "/assets/images/bin/product1.webp",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    thumbnailUrl: "/assets/images/bin/product2.webp",
+    posterImageUrl: "/assets/images/bin/product2.webp",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    thumbnailUrl: "/assets/images/bin/product3.webp",
+    posterImageUrl: "/assets/images/bin/product3.webp",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
-];
-
-export const productData = [
-  { name: "Inari Ebony", image: "/assets/images/bin/slide1.webp" },
-  { name: "Aurora Spa", image: "/assets/images/bin/slide2.png" },
-  { name: "Bast Dove", image: "/assets/images/bin/slide3.png" },
-  { name: "Lunda White", image: "/assets/images/bin/slide4.png" },
-  { name: "Dorian Beige", image: "/assets/images/bin/slide5.png" },
-  { name: "Dorian Cyan", image: "/assets/images/bin/slide6.png" },
-  { name: "Velora Sand", image: "/assets/images/bin/slide7.png" },
-  { name: "Arden Mist", image: "/assets/images/bin/slide1.webp" },
-  { name: "Savona Slate", image: "/assets/images/bin/slide2.png" },
-  { name: "Mistral Stone", image: "/assets/images/bin/slide3.png" },
 ];
 
 export const fittingTypes = [

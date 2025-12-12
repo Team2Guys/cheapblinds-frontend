@@ -1,28 +1,56 @@
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
 const PrivacyPolicy = () => {
   return (
     <div className="container mx-auto px-2 space-y-5 my-10">
-      <h1 className="text-heading">Privacy Policy</h1>
-      <p>Your privacy is important to us. This Privacy Policy (“Privacy Policy”) is our way of letting you know how we collect your information, why we need it, and how we use it.</p>
+      <h1 className="text-heading">Privacy Policy – Cheap Blinds</h1>
       <div className="space-y-3">
-        <h2 className="text-medium">Introduction</h2>
-        <p>Richmond Building Materials Trading LLC owns and operates cheapblinds.ae and respect your privacy. We are committed to safeguarding the privacy of the sensitive personal data or information that we collect, possess, use, process, record, store, transfer, disclose, deal, handle and receive, by and on behalf of our customers including the sensitive personal data or information while rendering services to our customers including the sensitive personal data or information while rendering services to our customers in connection with our business. Accordingly, following is our Privacy Policy setting out how we intend to safeguard such personal data or information received and used by us as aforesaid.</p>
-        <p>Any changes we make to our Privacy Notice in the future will be posted on this page and, where appropriate, notified to you by e-mail. Please check back frequently to see any updates or changes to it.</p>
-      </div>
-      <div className="space-y-3">
-        <h2 className="text-medium">Placing an order online</h2>
-        <p>Browse our website and place your order using the following easy-to-follow instructions:</p>
+        <h2 className="font-rubik font-semibold text-xl">Introduction</h2>
+        <p>
+          At Cheap Blinds, we respect your privacy and are committed to protecting your personal
+          information. This Privacy Policy explains how we collect, use, and secure your data when
+          you visit{" "}
+          <Link className="text-primary underline " href="/">
+            cheapblinds.ae
+          </Link>{" "}
+          or use our services. By using our website, you agree to the practices described in this
+          policy. We may update this policy occasionally, and any changes will be posted on our
+          website.
+        </p>
+        <h3 className="font-semibold">Information We Collect</h3>
         <ul className="list-disc px-6">
-            <li>Whatever device you are using, our site has been optimized to give you the best possible experience.</li>
-            <li>Use our handy navigation links to browse by product category, or if you know exactly what you&apos;re after search using the search box.</li>
-            <li>Once you have found an item, select its attributes and click on &apos;ADD TO BASKET:</li>
-            <li>Click on your basket to review the products selected. Items can be removed from the basket by clicking the cross next to them. Or you can change the quantity by typing the correct quantity and clicking &apos;update basket. To continue shopping just click on &apos;continue shopping&apos;.</li>
-            <li>Click on &apos;Proceed to Checkout to proceed with your order and pay.</li>
+          <li><strong>Information you provide:</strong> Name, email, phone number, address, account details, payment info, messages, reviews, or survey responses. This helps us process orders, communicate updates, and personalise your experience.</li>
+          <li><strong>Information we collect automatically:</strong> IP address, device type, pages visited, products viewed or saved, and browsing history. This helps improve our website, provide relevant recommendations, and ensure security.</li>
+          <li><strong>Information from third parties:</strong> If you log in with Google, Facebook, or Instagram, we may collect public profile info to complete your account and personalise your experience.</li>
         </ul>
-      </div>
-    </div>
-  )
-}
 
-export default PrivacyPolicy
+        <h2 className="font-rubik font-semibold text-xl">How We Use Your Information</h2>
+        <p>We use your information to provide and improve our services. This includes processing your orders and payments, delivering products, sending updates about your orders or account, personalising your experience on the website, recommending products, improving website functionality, and preventing fraud. We may also use your information to communicate about promotions, surveys, or contests, but only with your consent.</p>
+      </div>
+      <h2 className="font-rubik font-semibold text-xl">Sharing of Information</h2>
+      <p>Your personal information is treated with the highest level of privacy. We do not sell, rent, or lease your personal information to third parties for marketing purposes. We may share your information with trusted partners only to fulfil orders, process payments, or comply with legal obligations.</p>
+      <h2 className="font-rubik font-semibold text-xl">Security Measures</h2>
+      <p>We use technical and organisational measures to protect your data from unauthorised access, misuse, or disclosure. It is also important that you keep your account credentials secure, log out of shared devices, and avoid sharing sensitive information.</p>
+
+      <h2 className="font-rubik font-semibold text-xl">User Rights</h2>
+      <p>You have the right to access, update, or delete the personal information we hold about you. You can also manage your communication preferences and opt out of marketing emails. Additionally, you can control your browser&apos;s cookie settings to enhance privacy while using our website.</p>
+
+      <h2 className="font-rubik font-semibold text-xl">Cookies</h2>
+      <p>Our website uses cookies to provide you with a smooth and personalised experience. Cookies help us remember your preferences, track website performance, analyse usage, and show relevant advertisements. For more details, please see our Cookie Policy.</p>
+
+      <h2 className="font-rubik font-semibold text-xl">Contact Information</h2>
+      <p>If you have any questions or concerns about your privacy or this policy, you can reach our Customer Service team at</p>
+      <ul className="list-disc px-6">
+        <li><strong>Email:</strong> <Link className="text-primary underline " href="mailto:help@cheapblinds.ae">help@cheapblinds.ae</Link></li>
+        <li><strong>Phone:</strong> <Link className="text-primary underline " href="tel:+971505974531">+971 50 597 4531</Link></li>
+        <li><strong>Hours:</strong> 7 days a week: 9 AM – 9 PM (live chat only)</li>
+      </ul>
+
+      <h2 className="font-rubik font-semibold text-xl">Changes to This Privacy Policy</h2>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. Please review this page regularly to stay informed about how we protect your information.</p>
+    </div>
+  );
+};
+
+export default PrivacyPolicy;

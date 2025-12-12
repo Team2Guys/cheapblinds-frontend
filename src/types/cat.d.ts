@@ -33,7 +33,7 @@ export interface Category extends GlobalCommontypes {
 
 export interface EDIT_CATEGORY extends Category {
   id?: number | string;
-  thumbnailUrl?: string;
+  posterImageUrl?: string;
   subcategory?: ISUBCATEGORY_EDIT;
   status?: BlogStatus;
   Products?: IProduct[];
@@ -59,7 +59,7 @@ export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
   posterImageUrl?: ProductImage;
   createdAt?: Date;
   updatedAt?: Date;
-  customUrl?: string;
+  slug?: string;
   QualityImages?: ProductImage[];
 }
 

@@ -28,6 +28,10 @@ export const ForgotForm = () => {
                 input: {
                   email: values.email,
                 },
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/graphql-response+json",
+                },
               },
             });
 

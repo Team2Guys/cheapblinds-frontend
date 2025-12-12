@@ -14,9 +14,9 @@ const Header = () => {
   const onClose = () => setOpen(false);
   return (
     <div className="sticky top-0 z-50 bg-white">
-      <div className="flex md:hidden justify-between items-center py-2 border-b border-[#0000001F] px-2 container mx-auto">
+      <div className="flex lg:hidden justify-between items-center py-2 border-b border-[#0000001F] px-2 container mx-auto">
         <SocialLink />
-        <UserIcons />
+        <UserIcons className="flex md:hidden" />
       </div>
       <div className="container mx-auto flex items-center justify-between w-full py-2 px-2">
         <div>
@@ -63,7 +63,7 @@ const Header = () => {
           <div className="mx-auto">
             <Navbar />
           </div>
-          <SocialLink />
+          <SocialLink className="hidden lg:flex" />
         </div>
       </div>
     </div>

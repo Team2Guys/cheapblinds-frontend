@@ -50,7 +50,7 @@ export const PaymentMethod = ({ showheading, installments, isCheckout }: Payment
                 className="text-black font-medium 2xl:font-semibold pb-1 text-center "
               >
                 <p className="text-nowrap">
-                  <span className="font-currency font-normal text-xs 2xl:text-xl"></span>{" "}
+                  <span className="font-currency font-normal text-xs xl:text-xl"></span>{" "}
                   {formatAED(installments)}
                 </p>
                 <p className="text-xs text-[#8D8D8D]">{label}</p>
@@ -61,7 +61,7 @@ export const PaymentMethod = ({ showheading, installments, isCheckout }: Payment
         <div
           className={`relative ${isCheckout ? "sm:w-full" : "sm:w-1/2"} w-full border-4 border-[#D47C84] px-1 py-4 xl:px-2 shadow`}
         >
-          <span className="absolute -top-4 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1 rounded-md">
+          <span className="absolute -top-4 left-2 bg-linear-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1 rounded-md">
             tamara
           </span>
           <p className="font-semibold">
@@ -78,7 +78,7 @@ export const PaymentMethod = ({ showheading, installments, isCheckout }: Payment
             {paymentLabels.map((label, index) => (
               <div key={index} className="text-black pb-1 text-center ">
                 <p className="text-nowrap font-semibold">
-                  <span className="font-currency font-normal text-xs 2xl:text-xl"></span>{" "}
+                  <span className="font-currency font-normal text-xs xl:text-xl"></span>{" "}
                   {formatAED(installments)}
                 </p>
                 <p className="text-xs text-[#8D8D8D]">{label}</p>
@@ -139,8 +139,8 @@ export const PaymentMethod = ({ showheading, installments, isCheckout }: Payment
             <Image height={130} width={130} src={tamaraLogo} alt="logo" className="mx-auto" />
           </div>
           <h2 className="text-center font-bold text-2xl mt-5">Pay easier with Tamara</h2>
-          <div className="px-4 py-2 bg-gradient-to-r from-orange-300 via-blue-300 to-pink-300 mt-4 rounded-[70px]">
-            <div className="bg-gradient-to-r from-orange-100 via-blue-100 to-pink-100 pb-6 pt-1 px-8 rounded-[70px] flex flex-col gap-2">
+          <div className="px-4 py-2 bg-linear-to-r from-orange-300 via-blue-300 to-pink-300 mt-4 rounded-[70px]">
+            <div className="bg-linear-to-r from-orange-100 via-blue-100 to-pink-100 pb-6 pt-1 px-8 rounded-[70px] flex flex-col gap-2">
               <div className="w-10/12 mx-auto">
                 {tamarafeature.map((item) => (
                   <div className="flex justify-baseline items-center py-2" key={item.id}>

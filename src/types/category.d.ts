@@ -10,7 +10,7 @@ export interface Category {
   metaDescription?: string;
   canonicalTag?: string;
   breadCrumb?: string;
-  thumbnailUrl?: string;
+  posterImageUrl?: string;
   seoSchema?: string;
   status?: ContentStatus;
   lastEditedBy?: string;
@@ -30,7 +30,7 @@ export interface Subcategory {
   metaDescription?: string;
   canonicalTag?: string;
   breadCrumb?: string;
-  thumbnailUrl?: string;
+  posterImageUrl?: string;
   lastEditedBy?: string;
   seoSchema?: string;
   categoryId?: string;
@@ -44,14 +44,13 @@ export interface Product {
   id?: string | number;
   name: string;
   description?: string;
-  Breadcrumb?:string;
   shortDescription?: string;
   slug?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalTag?: string;
-  breadCrumb?: string;
-  thumbnailUrl?: string;
+  breadcrumb?: string;
+  posterImageUrl?: string;
   productImages?: string[];
   lastEditedBy?: string | null;
   seoSchema?: string;
@@ -66,11 +65,22 @@ export interface Product {
   subcategory?: Subcategory;
   status?: ContentStatus;
   createdAt?: string | Date;
-  updatedAt?: string | Date; 
+  updatedAt?: string | Date;
+  parentSubcategoryUrl?: string;
+  pattern?: string;
+  composition?: string;
+  color?: string;
+  width?: string;
+  height?: string;
+  isMotorized?: boolean;
+  motorPrice?: number;
+  url?: string;
+  categoryUrl?: string;
+  subcategoryUrl?: string;
 }
 
 export interface productImage {
-  imagesrc: string
+  imagesrc: string;
   altText: string;
   publicId: string;
 }
@@ -94,7 +104,6 @@ export interface ISubcategory {
   name?: string;
   slug?: string;
   status?: ContentStatus;
-
 }
 
 export interface IProduct {
@@ -102,5 +111,71 @@ export interface IProduct {
   name?: string;
   slug?: string;
   status?: ContentStatus;
+}
 
+export interface CategoryPageProps {
+  categoryName: string;
+  categoryUrl: string;
+  description: string;
+  ProductList: Subcategory | Subcategory[];
+}
+
+export interface Orders {
+  id?: string;
+  userId: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  country?: string;
+  state?: string | null;
+  city?: string;
+  address?: string;
+  totalAmount: number;
+  shippingCost: number;
+  notes?: string;
+  items: Product[];
+  lastEditedBy?: string;
+  paymentStatus?: string;
+  orderStatus?: string;
+  createdAt?: string;
+}
+
+export interface addressProps {
+  id?: string;
+  userId: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  country?: string;
+  state?: string | null;
+  city?: string;
+  address?: string;
+  addressType?: string;
+  orderStatus?: string;
+  createdAt?: string;
+}
+
+export interface NewsletterProps {
+  id: string;
+  email: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __typename?: string;
+}
+
+export interface UserProps {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  isEmailVerified: boolean;
+  role: string;
+  defaultShippingAddressId?: string | null;
+  defaultBillingAddressId?: string | null;
+  addresses?: addressProps[];
+  createdAt: string;
+  updatedAt: string;
 }
