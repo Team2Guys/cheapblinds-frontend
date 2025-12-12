@@ -6,6 +6,7 @@ import "../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import PathnameWrapper from "@components/PathnameWrapper";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -53,6 +54,7 @@ export default function RootLayout({
         <PathnameWrapper>
           <ToastContainer autoClose={1500} />
           <Analytics/>
+          <SpeedInsights />
           {children}
         </PathnameWrapper>
       </body>
