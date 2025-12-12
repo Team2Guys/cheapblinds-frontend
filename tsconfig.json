@@ -1,8 +1,15 @@
 {
   "compilerOptions": {
-    "types": ["vitest", "node"],
+    "types": [
+      "vitest",
+      "node"
+    ],
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -12,21 +19,35 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
-        "name": "next" 
+        "name": "next"
       }
     ],
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@types/*": ["./src/types/*"],
-      "@*": ["./src/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@data/*": ["./src/data/*"],
-      "@config/*": ["./src/config/*"],
-      "@graphql/*": ["./src/graphql/*"],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@types/*": [
+        "./src/types/*"
+      ],
+      "@*": [
+        "./src/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@data/*": [
+        "./src/data/*"
+      ],
+      "@config/*": [
+        "./src/config/*"
+      ],
+      "@graphql/*": [
+        "./src/graphql/*"
+      ]
     }
   },
   "include": [
@@ -38,6 +59,9 @@
     "vitest.config.mts",
     "next-env.d.ts",
     "global.d.ts",
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
