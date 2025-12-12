@@ -18,7 +18,6 @@ import {
 } from "@graphql";
 import { addressProps, NewsletterProps, Orders, Product, Subcategory, UserProps } from "@/types/category";
 
-// _____________________ NEW Mutation ----------------------------
 
 export const getAllAdmins = async () => {
   try {
