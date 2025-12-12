@@ -1,50 +1,63 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Testimonial, AddressBook } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
+import { addressProps, UserProps } from "@/types/category";
+import { fetchAddressListByUser, fetchUserById } from "@config/fetch";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
+import { GET_USER_FOR_ADDRESS } from "@graphql";
 
 const AddressBookPage = () => {
   const { user, isLoading } = useAuth();
+  const [addressList, setAddresses] = useState<addressProps[]>([]);
+  const [userList, setUser] = useState<UserProps | null>(null);
   const router = useRouter();
 
+  // Redirect if not logged in
   useEffect(() => {
     if (!isLoading && !user) {
       router.push("/login");
     }
   }, [user, isLoading, router]);
 
-  if (isLoading) {
-    return (
-      <div className="p-6 max-w-4xl mx-auto">
-        <div className="animate-pulse space-y-4">
-          <div className="h-6 bg-gray-200 rounded w-1/3" />
-          {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              className="h-4 bg-gray-200 rounded w-full"
-              style={{ width: `${80 - i * 10}%` }}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  }
+ useEffect(() => {
+    if (!user) return;
+
+    const loadData = async () => {
+      try {
+        const [addressesResponse, userResponse] = await Promise.all([
+          fetchAddressListByUser(user.id),
+          fetchUserById(user.id, GET_USER_FOR_ADDRESS),
+        ]);
+
+        setAddresses(addressesResponse || []);
+        setUser(userResponse || null);
+      } catch (error) {
+        console.error("Failed to fetch addresses or user data:", error);
+      }
+    };
+
+    loadData();
+  }, [user]);
 
   if (!user) return null;
-
+  
   return (
     <div>
-      {/* <AccountTabs /> */}
       <div className="container mx-auto px-2 flex flex-wrap md:flex-nowrap gap-4 my-10">
         <AccountSidebar />
         <div className="flex-1">
-          <AddressBook />
+          <AddressBook
+            userId={user.id}
+            addressList={addressList}   
+            userList={userList}  
+          />
         </div>
       </div>
+
       <Testimonial reviews={TestimonialReview} showPaymentInfo />
     </div>
   );

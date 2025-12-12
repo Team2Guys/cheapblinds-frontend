@@ -1,10 +1,9 @@
 import { RelatedProduct } from "@components";
-import { Orders } from "@components/thank-you/Orders";
+import { AllOrders } from "@components/thank-you/Orders";
 import { fetchProducts } from "@config/fetch";
-import { OrderSummary } from "@data/bin";
 import { GET_CARD_PRODUCT } from "@graphql";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 
 const ThankYou = async () => {
@@ -30,8 +29,9 @@ const ThankYou = async () => {
           Read about our return policy.
         </Link>
       </div>
-      <Orders orderItems={OrderSummary} />
-
+      <Suspense fallback={<div>Loading order details...</div>}>
+        <AllOrders />
+      </Suspense>
       <RelatedProduct title="Browse Products" data={productList} />
     </div>
   );

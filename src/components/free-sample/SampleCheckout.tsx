@@ -58,7 +58,7 @@ export const SampleCheckout = ({ freeSamplesList }: { freeSamplesList: Product[]
   };
   const handleSubmit = async (values: Orders, { resetForm }: FormikHelpers<Orders>) => {
     try {
-      await createOrder({
+     const response = await createOrder({
         variables: {
           input: {
             ...values,
@@ -69,9 +69,10 @@ export const SampleCheckout = ({ freeSamplesList }: { freeSamplesList: Product[]
           },
         },
       });
+      const orderId = response.data.createOrder.id;
       await clearFreeSamples();
       resetForm();
-      router.push("/thank-you");
+      router.push(`/thank-you?id=${orderId}`);
       Toaster("success", "Order placed successfully!");
     } catch (error) {
       console.error("Order error:", error);

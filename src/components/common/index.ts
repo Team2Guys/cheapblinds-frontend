@@ -7,3 +7,4 @@ export * from "./PaymentMethod";
 export * from "./RelatedProduct";
 export * from "./ReviewsSection";
 export * from "./Testimonial";
+export * from "./AddressForm";

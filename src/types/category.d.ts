@@ -140,3 +140,42 @@ export interface Orders {
   orderStatus?: string;
   createdAt?: string;
 }
+
+export interface addressProps {
+  id?: string;
+  userId: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  country?: string;
+  state?: string | null;
+  city?: string;
+  address?: string;
+  addressType?: string;
+  orderStatus?: string;
+  createdAt?: string;
+}
+
+export interface NewsletterProps {
+  id: string;
+  email: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __typename?: string;
+}
+
+export interface UserProps {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  isEmailVerified: boolean;
+  role: string;
+  defaultShippingAddressId?: string | null;
+  defaultBillingAddressId?: string | null;
+  addresses?: addressProps[];
+  createdAt: string;
+  updatedAt: string;
+}

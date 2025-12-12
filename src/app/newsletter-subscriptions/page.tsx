@@ -1,7 +1,7 @@
 import React from "react";
 import NewsletterPage from "./NewsletterPage";
 
-const page = () => {
+const page = async () => {
   return <NewsletterPage />;
 };
 

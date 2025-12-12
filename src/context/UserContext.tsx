@@ -6,6 +6,7 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 interface AuthUser {
   id: string;
   name: string;
+  email: string;
   role: string;
   __typename?: string;
 }
