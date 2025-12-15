@@ -1,3 +1,4 @@
+import React from "react";
 import {
   InformationSection,
   ChildSafety,
@@ -11,13 +12,11 @@ import {
 } from "@components";
 import { fetchCategories, fetchProducts } from "@config/fetch";
 import { chooseimage } from "@data/home";
-import { GET_CARD_CATEGORY, GET_CARD_PRODUCT } from "@graphql";
-import React from "react";
 
-export default async function Home() {
+const Home = async () => {
   const [productList, categoryList] = await Promise.all([
-    fetchProducts(GET_CARD_PRODUCT),
-    fetchCategories(GET_CARD_CATEGORY),
+    fetchProducts(),
+    fetchCategories(),
   ]);
 
   return (
@@ -29,7 +28,7 @@ export default async function Home() {
       />
       <InformationSection className="hidden md:grid" />
       <ChildSafety />
-      <ShopBySlider CategoryList={categoryList} />
+      <ShopBySlider CategoryList={categoryList || []} />
       <OrderSection
         reverse={false}
         image1="/assets/images/home/blindimg.webp"
@@ -48,7 +47,7 @@ export default async function Home() {
           className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
         />
       </div>
-      <RelatedProduct title="Browse Products" data={productList} />
+      <RelatedProduct title="Browse Products" data={productList || []} />
       <OrderSection
         className="mt-10 md:mt-16"
         reverse
@@ -67,4 +66,6 @@ export default async function Home() {
       />
     </>
   );
-}
+};
+
+export default Home;

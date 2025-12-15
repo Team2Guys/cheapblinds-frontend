@@ -48,7 +48,6 @@ export const fetchCategories = async (FETCH_CATEGORY?: DocumentNode) => {
 
     return data?.categoryList || [];
   } catch (error) {
-    return [];
     throw error;
   }
 };
@@ -111,12 +110,11 @@ export const fetchSubCategories = async () => {
 
     return data?.subcategoryList || [];
   } catch (error) {
-    return [];
     throw error;
   }
 };
 
-export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode) => {
+export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode):Promise<Product[] | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
       query: FETCH_PRODUCT ? FETCH_PRODUCT : GET_PRODUCT_LIST,
@@ -130,7 +128,6 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode) => {
 
     return data.productList || [];
   } catch (error) {
-    return [];
     throw error;
   }
 };

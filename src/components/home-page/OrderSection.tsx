@@ -25,7 +25,6 @@ export const OrderSection = ({
           alt="order section main"
           width={1000}
           height={1000}
-          quality={100}
         />
       </div>
       <div className="flex flex-col justify-center items-center bg-primary space-y-5 lg:space-y-10 w-full h-[329px] lg:h-[616px]">
@@ -35,7 +34,6 @@ export const OrderSection = ({
           alt="order section secondary"
           width={1000}
           height={1000}
-          quality={100}
         />
 
         <Link

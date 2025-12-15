@@ -7,7 +7,7 @@ import Link from "next/link";
 export const ShopBySlider = ({
   CategoryList,
 }: {
-  CategoryList: { posterImageUrl: string; name: string; slug: string }[];
+  CategoryList: { posterImageUrl: string | null ; name: string; slug: string }[];
 }) => {
   const [activeIndex, setActiveIndex] = useState(2);
   const [isVisible, setIsVisible] = useState(false);
