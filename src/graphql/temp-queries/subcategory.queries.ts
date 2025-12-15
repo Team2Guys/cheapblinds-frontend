@@ -77,6 +77,7 @@ export const GET_SUBCATEGORY_BY_URLS = gql`
         composition
         isMotorized
         motorPrice
+        status
       }
     }
   }
