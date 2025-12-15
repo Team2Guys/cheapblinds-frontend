@@ -136,16 +136,16 @@ const CategoryHeader = ({
                 alt="measure"
               />
               <div>
-                <p className="font-semibold text-sm">How to Measuring</p>
+                <p className="font-semibold text-sm">Measuring Instructions</p>
                 <p className="text-xs">How to Measure</p>
               </div>
             </div>
             <Link
               href="/assets/pdf/how-to-measure.pdf"
               download
-              className="bg-[#FFB800] h-[72px] w-32 flex justify-center items-center font-semibold"
+              className="bg-[#FFB800] h-[72px] w-28 flex justify-center items-center font-semibold text-center"
             >
-              Download
+              Download Now
             </Link>
           </div>
 
@@ -159,16 +159,16 @@ const CategoryHeader = ({
                 alt="fitting"
               />
               <div>
-                <p className="font-semibold text-sm">How to Fitting</p>
+                <p className="font-semibold text-sm">Fitting Instructions</p>
                 <p className="text-xs">How to Measure</p>
               </div>
             </div>
             <Link
               href="/assets/pdf/how-to-measure.pdf"
               download
-              className="bg-[#FFB800] h-[72px] w-32 flex justify-center items-center font-semibold"
+              className="bg-[#FFB800] h-[72px] w-28 flex justify-center items-center font-semibold text-center"
             >
-              Download
+              Download Now
             </Link>
           </div>
         </div>
