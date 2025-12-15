@@ -25,7 +25,7 @@ export const RelatedProduct = ({ title, description, data, titleStart }: Related
               <div className="overflow-hidden hover:shadow-md ">
                 <div className="relative w-full h-auto max-h-[350px] aspect-square">
                   <Image
-                    src={array.posterImageUrl ?? "/assets/images/bin/product3.webp"}
+                    src={array.posterImageUrl ?? ""}
                     alt={array.name ?? ""}
                     fill
                     className="h-auto"

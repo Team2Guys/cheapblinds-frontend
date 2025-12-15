@@ -1,3 +1,4 @@
+import React from "react";
 import {
   InformationSection,
   ChildSafety,
@@ -11,15 +12,9 @@ import {
 } from "@components";
 import { fetchCategories, fetchProducts } from "@config/fetch";
 import { chooseimage } from "@data/home";
-import { GET_CARD_CATEGORY, GET_CARD_PRODUCT } from "@graphql";
-import React from "react";
 
-export default async function Home() {
-  const [productList, categoryList] = await Promise.all([
-    fetchProducts(GET_CARD_PRODUCT),
-    fetchCategories(GET_CARD_CATEGORY),
-  ]);
-
+const Home = async () => {
+  const [productList, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
   return (
     <>
       <Herobanner
@@ -67,4 +62,6 @@ export default async function Home() {
       />
     </>
   );
-}
+};
+
+export default Home;
