@@ -48,7 +48,7 @@ export const Card = ({
 
   return (
     <>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 pt-6">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 pt-6">
         {visibleProducts.map((card) => {
           const basePrice = card.discountPrice ?? card.price ?? 0;
           const original = card.price ?? 0;
@@ -57,7 +57,7 @@ export const Card = ({
           const originalPrice = selectedMotorized ? original + motor : original;
 
           return (
-            <div key={card.id} className="relative rounded-md pb-2">
+            <div key={card.id} className="relative p-2 hover:shadow-md">
               <Link href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}>
                 <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
                   <Image
@@ -86,16 +86,24 @@ export const Card = ({
                 </div>
               </Link>
 
-              <div className="pt-3 md:space-y-4 px-2">
-                <Link
-                  href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}
-                >
-                  <p className="text-xs md:text-base">{categoryName}</p>
-                  <h2 className="font-medium text-base md:text-xl font-rubik md:underline md:h-10">
-                    {card.name}
-                  </h2>
-                </Link>
-
+              <div className="pt-3 sm:space-y-1 px-2">
+                <div className="flex justify-between items-center">
+                  <Link
+                    href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}
+                  >
+                    <p className="text-xs md:text-base">{categoryName}</p>
+                    <h2 className="font-medium text-sm md:text-xl font-rubik md:underline md:h-10">
+                      {card.name}
+                    </h2>
+                  </Link>
+                  <Image
+                    src="/assets/images/blinds-icon.png"
+                    alt="icon-image"
+                    className="w-6 h-6 md:w-10 md:h-10"
+                    width={50}
+                    height={50}
+                  />
+                </div>
                 <div className="flex justify-between items-center">
                   <button
                     className="rounded-md p-1 sm:p-2 px-4 font-semibold bg-primary cursor-pointer max-sm:text-[10px]"
@@ -107,7 +115,7 @@ export const Card = ({
                   <Image
                     src={getColorImage(card.color || "")}
                     alt={card.color || "color"}
-                    className="w-6 h-6 sm:w-10 sm:h-10"
+                    className="w-6 h-6 md:w-10 md:h-10"
                     width={30}
                     height={30}
                   />
@@ -117,10 +125,10 @@ export const Card = ({
                 <div className="flex justify-between items-center sm:pt-2">
                   <p className="flex flex-wrap items-center gap-1 text-xs md:text-base">
                     <p className="hidden sm:block">From:</p>
-                   
-                      <span className="font-currency text-lg md:text-3xl"></span>
-                      <span className="font-semibold text-sm md:text-2xl">{finalPrice}</span>
-                    
+
+                    <span className="font-currency text-lg md:text-3xl"></span>
+                    <span className="font-semibold text-sm md:text-2xl">{finalPrice}</span>
+
                     {card.discountPrice && (
                       <>
                         <span className="font-currency text-lg md:text-2xl"></span>
