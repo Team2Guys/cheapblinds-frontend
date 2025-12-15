@@ -7,7 +7,7 @@ export const footerSections = [
       { label: "Roman Blinds", href: "/roman-blinds" },
       { label: "Zebra Blinds", href: "/zebra-blinds" },
       { label: "Vertical Blinds", href: "/vertical-blinds" },
-      { label: "Motorisation", href: "/motorisation" },
+      { label: "Motorisation", href: "/motorised-blinds" },
     ],
   },
   {

@@ -34,7 +34,7 @@ const Home = async () => {
         image1="/assets/images/home/blindimg.webp"
         image2="/assets/images/home/zebraimg.webp"
         btnText="Explore More"
-        btnLink="/category"
+        btnLink="/roller-blinds"
       />
       <div className="px-2">
         <Herobanner
@@ -54,7 +54,7 @@ const Home = async () => {
         image1="/assets/images/home/cheap.webp"
         image2="/assets/images/home/sample.webp"
         btnText="Order Free Samples"
-        btnLink="/sample"
+        btnLink="/roller-blinds"
         samplesection
       />
       <BlindFitting />

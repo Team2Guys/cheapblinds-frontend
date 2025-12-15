@@ -24,6 +24,7 @@ export const BlindFitting = () => {
   };
 
   const currentItems = fittingTypes.slice(currentIndex, currentIndex + itemsPerSlide);
+  const currentSlide = Math.floor(currentIndex / itemsPerSlide);
 
   return (
     <div className="px-2">
@@ -39,7 +40,7 @@ export const BlindFitting = () => {
             />
           </div>
           <h2 className="text-center text-2xl md:text-4xl lg:text-6xl font-bold text-black mb-2">
-            Blinds Fitting Instructions
+            {currentSlide === 0 ? "Blinds Fitting Instructions" : "Blinds Measuring Instructions"}
           </h2>
           <div className="w-20 h-20 relative">
             <Image

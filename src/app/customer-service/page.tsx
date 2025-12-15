@@ -5,18 +5,22 @@ import React from "react";
 const CustomerService = () => {
   const supportItems = [
     {
+      id: "Order",
       title: "Order Queries",
       icon: "/assets/images/customer-service/order.png",
     },
     {
+      id: "Delivery",
       title: "Delivery",
       icon: "/assets/images/customer-service/delivery.png",
     },
     {
+      id: "Account",
       title: "My Account",
       icon: "/assets/images/customer-service/account.png",
     },
     {
+      id: "Returns",
       title: "Returns and Refunds",
       icon: "/assets/images/customer-service/refund.png",
     },
@@ -46,20 +50,21 @@ const CustomerService = () => {
 
       <div className="bg-primary-light py-10 w-full">
         <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-6">
-          {supportItems.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white w-[150px] h-[150px] shadow-sm rounded-lg flex flex-col items-center justify-center gap-3 cursor-pointer hover:shadow-md transition"
-            >
-              <Image src={item.icon} alt={item.title} width={50} height={50} />
-              <p className="text-center font-semibold">{item.title}</p>
-            </div>
+          {supportItems.map((item) => (
+            <Link key={item.id} href={`#${item.id}`} scroll>
+              <div className="bg-white w-[150px] h-[150px] shadow-sm rounded-lg flex flex-col items-center justify-center gap-3 cursor-pointer hover:shadow-md transition">
+                <Image src={item.icon} alt={item.title} width={50} height={50} />
+                <p className="text-center font-semibold">{item.title}</p>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
-      <h3 className="font-rubik font-semibold text-xl">Order Queries</h3>
+      <h3 className="font-rubik font-semibold text-xl" id="Order">Order Queries</h3>
       <div className="border-l border-secondary px-2 space-y-4">
-        <h4 className="font-semibold">Placing an order</h4>
+        <h4 className="font-semibold">
+          Placing an order
+        </h4>
         <p>
           If you’re not sure about the colours, you can even order free samples to be delivered to
           you. This will give you a much better idea of the colours, textures that might be harder
@@ -73,28 +78,73 @@ const CustomerService = () => {
           important details such as your order number, the items you have purchased, and the total
           price. You will receive email updates on the progress of your order as well.
         </p>
-        <h4 className="font-semibold">Ways to pay</h4>
+        <h4 className="font-semibold" id="Delivery">Ways to pay</h4>
         <ul className="list-decimal px-6">
-          <li><strong>VISA</strong> (Debit/Credit card)</li>
-          <li><strong>Mastercard</strong> (Debit/Credit card)</li>
-          <li><strong>Apple Pay</strong> (Digital Wallet)</li>
-          <li><strong>G Pay</strong> (Google Pay) (Digital Wallet)</li>
-          <li><strong>Tabby</strong> (Buy Now, Pay Later service)</li>
-          <li><strong>Tamara</strong> (Buy Now, Pay Later service)</li>
+          <li>
+            <strong>VISA</strong> (Debit/Credit card)
+          </li>
+          <li>
+            <strong>Mastercard</strong> (Debit/Credit card)
+          </li>
+          <li>
+            <strong>Apple Pay</strong> (Digital Wallet)
+          </li>
+          <li>
+            <strong>G Pay</strong> (Google Pay) (Digital Wallet)
+          </li>
+          <li>
+            <strong>Tabby</strong> (Buy Now, Pay Later service)
+          </li>
+          <li>
+            <strong>Tamara</strong> (Buy Now, Pay Later service)
+          </li>
         </ul>
-        <h3 className="font-rubik font-semibold text-xl">Delivery</h3>
-        <p>If you have placed the order for your customised products online, you will receive them within 1-4 working days.</p>
-        <p>Your free sample (up to 5 samples) will be delivered to you within 24 hours after placing the order.</p>
-        <p>To find out more about delivery services, please <Link className="text-primary underline" href="/delivery-information">click here</Link></p>
+        <h3 className="font-rubik font-semibold text-xl" id="Account">
+          Delivery
+        </h3>
+        <p>
+          If you have placed the order for your customised products online, you will receive them
+          within 1-4 working days.
+        </p>
+        <p>
+          Your free sample (up to 5 samples) will be delivered to you within 24 hours after placing
+          the order.
+        </p>
+        <p>
+          To find out more about delivery services, please{" "}
+          <Link className="text-primary underline" href="/delivery-information">
+            click here
+          </Link>
+        </p>
 
-        <h3 className="font-rubik font-semibold text-xl">My Account</h3>
+        <h3 className="font-rubik font-semibold text-xl" id="Returns">
+          My Account
+        </h3>
         <h4 className="font-semibold">Where can I log in to my account?</h4>
-        <p>You can click the account button at the top of the page or you can click this <Link className="text-primary underline" href="/account">link</Link>.</p>
+        <p>
+          You can click the account button at the top of the page or you can click this{" "}
+          <Link className="text-primary underline" href="/account">
+            link
+          </Link>
+          .
+        </p>
         <h4 className="font-semibold">How can I reset my password?</h4>
-        <p><Link className="text-primary underline" href="/forgot-password">Click here</Link> to reset your password.</p>
+        <p>
+          <Link className="text-primary underline" href="/forgot-password">
+            Click here
+          </Link>{" "}
+          to reset your password.
+        </p>
 
-        <h3 className="font-rubik font-semibold text-xl">Returns & Refunds</h3>
-        <p><Link className="text-primary underline" href="/returns-refunds">Click here</Link> to find out more about our returns and refunds policy.</p>
+        <h3 className="font-rubik font-semibold text-xl" >
+          Returns & Refunds
+        </h3>
+        <p>
+          <Link className="text-primary underline" href="/returns-refunds">
+            Click here
+          </Link>{" "}
+          to find out more about our returns and refunds policy.
+        </p>
       </div>
     </div>
   );

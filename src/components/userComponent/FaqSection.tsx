@@ -37,10 +37,10 @@ export const FaqSection = () => {
                 onClick={() => handleScroll(category.id)}
                 className="flex flex-col items-center gap-2 text-sm font-medium hover:text-white transition-all cursor-pointer"
               >
-                <div className="p-4 rounded-full hover:bg-primary-light  transition-all">
+                <div className="p-4 rounded-full hover:bg-primary-light transition-all">
                   <Icon className="w-8 h-8 text-black" />
                 </div>
-                <span className="font-sans text-[16px] font-semibold bg-primary px-6 py-2 rounded-lg">
+                <span className="font-sans text-[16px] font-semibold bg-primary px-6 py-2 rounded-lg cursor-pointer">
                   {category.title}
                 </span>
               </button>
