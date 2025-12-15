@@ -65,6 +65,24 @@ export const Card = ({
                     alt={card.name}
                     fill
                   />
+                  <div className="absolute bottom-2 left-2">
+                    <div className="relative h-9 md:h-16 w-8 md:w-16">
+                      <Image
+                        src="/assets/images/van.png"
+                        alt="image"
+                        fill
+                        className="ms-1 md:ms-2"
+                      />
+                    </div>
+                    <p className="text-[9px] md:text-base font-semibold text-primary [text-shadow:_-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
+                      Order by{" "}
+                      <span className="text-sm md:text-2xl text-primary font-semibold [text-shadow:_-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
+                        3pm
+                      </span>
+                      <br />
+                      Same Day Express Delivery
+                    </p>
+                  </div>
                 </div>
               </Link>
 
@@ -80,7 +98,7 @@ export const Card = ({
 
                 <div className="flex justify-between items-center">
                   <button
-                    className="rounded-md p-2 px-4 font-semibold bg-primary cursor-pointer"
+                    className="rounded-md p-1 sm:p-2 px-4 font-semibold bg-primary cursor-pointer max-sm:text-[10px]"
                     onClick={() => onFreeSample && onFreeSample(card)}
                   >
                     Free Sample
@@ -89,20 +107,24 @@ export const Card = ({
                   <Image
                     src={getColorImage(card.color || "")}
                     alt={card.color || "color"}
-                    width={40}
+                    className="w-6 h-6 sm:w-10 sm:h-10"
+                    width={30}
                     height={30}
                   />
                 </div>
 
-                <div className="flex justify-between items-center pt-2">
-                  <p className="flex items-center gap-1 text-xs md:text-base">
-                    From:
-                    <span className="font-currency text-lg md:text-3xl"></span>
-                    <span className="font-semibold text-sm md:text-2xl">{finalPrice}</span>
+                <p className="block sm:hidden text-xs md:text-base pt-2">From:</p>
+                <div className="flex justify-between items-center sm:pt-2">
+                  <p className="flex flex-wrap items-center gap-1 text-xs md:text-base">
+                    <p className="hidden sm:block">From:</p>
+                   
+                      <span className="font-currency text-lg md:text-3xl"></span>
+                      <span className="font-semibold text-sm md:text-2xl">{finalPrice}</span>
+                    
                     {card.discountPrice && (
                       <>
-                        <span className="font-currency text-lg md:text-xl"></span>
-                        <span className="line-through text-sm lg:text-base">{originalPrice}</span>
+                        <span className="font-currency text-lg md:text-2xl"></span>
+                        <span className="line-through text-sm md:text-base">{originalPrice}</span>
                       </>
                     )}
                   </p>
