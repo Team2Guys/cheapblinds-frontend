@@ -9,19 +9,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
 import { Filters } from "@components/filters";
+type FilterOption = {
+  name: string;
+  count: number;
+};
 
+type ColorFilterOption = {
+  name: string;
+  color: string;
+  count: number;
+};
 type CategoryHeaderProps = {
   description: string;
   categoryName: string;
   sort: "default" | "low" | "high" | "new";
   setSort: (_value: "default" | "low" | "high" | "new") => void;
 
-  // Filter props
-  typeOptions: string[];
-  patternOptions: string[];
-  compositionOptions: string[];
-  widthOptions: string[];
-  colourOptions: { name: string; color: string }[];
+  typeOptions: FilterOption[];
+  patternOptions: FilterOption[];
+  compositionOptions: FilterOption[];
+  widthOptions: FilterOption[];
+  colourOptions: ColorFilterOption[];
   selectedType: string[];
   setSelectedType: React.Dispatch<React.SetStateAction<string[]>>;
   selectedPattern: string[];
@@ -37,6 +45,7 @@ type CategoryHeaderProps = {
   showTypeFilter?: boolean;
   selectedMotorized: boolean;
   setSelectedMotorized: React.Dispatch<React.SetStateAction<boolean>>;
+  motorizedCount?: number;
 };
 
 const CategoryHeader = ({
@@ -64,6 +73,7 @@ const CategoryHeader = ({
   showTypeFilter,
   selectedMotorized,
   setSelectedMotorized,
+  motorizedCount = 0,
 }: CategoryHeaderProps) => {
   const [displayText, setDisplayText] = useState(description || "");
   const [isTruncated, setIsTruncated] = useState(false);
@@ -196,6 +206,7 @@ const CategoryHeader = ({
                 showTypeFilter={showTypeFilter}
                 selectedMotorized={selectedMotorized}
                 setSelectedMotorized={setSelectedMotorized}
+                motorizedCount={motorizedCount}
               />
 
               <button className="absolute top-4 right-4" onClick={() => setShowFilters(false)}>

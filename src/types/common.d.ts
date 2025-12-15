@@ -15,6 +15,7 @@ export interface OrderSectionProps {
   btnText: string;
   btnLink: string;
   className?: string;
+  buttonCenter?: boolean;
   samplesection?: boolean;
 }
 
