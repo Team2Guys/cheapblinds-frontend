@@ -7,7 +7,7 @@ import ContactForm from "./contact-form";
 export const ContactBanner = () => {
   return (
     <div className="container mx-auto mt-10 md:mt-16">
-      <div className="flex flex-col sm:flex-row justify-between text-black bg-primary-light bg-no-repeat sm:gap-4 sm:bg-bottom bg-fill sm:bg-[url('/assets/images/phnperson.webp')] w-full px-5 pt-10 sm:pb-3">
+      <div className="flex flex-col sm:flex-row justify-between text-black bg-primary-light bg-no-repeat sm:gap-4 sm:bg-bottom bg-fill sm:bg-[url('/assets/images/phnperson.webp')] w-full px-5 md:py-20 pt-3">
         {/* left section */}
         <div className="flex flex-col w-full sm:w-[50%] lg:w-[78%] lg:p-10 mb-5">
           <p className="text-primary text-[51px] lg:text-[57px] font-rubik font-semibold leading-[0.7]">

@@ -9,12 +9,24 @@ import { ColorImage } from "@data/filter-colors";
 
 type SectionKeys = "type" | "colour" | "width" | "pattern" | "composition" | "price" | "motorized";
 
+// Define the shape of options with counts
+type FilterOption = {
+  name: string;
+  count: number;
+};
+
+type ColorFilterOption = {
+  name: string;
+  color: string;
+  count: number;
+};
+
 type FiltersProps = {
-  typeOptions: string[];
-  patternOptions: string[];
-  compositionOptions: string[];
-  widthOptions: string[];
-  colourOptions: { name: string; color: string }[];
+  typeOptions: FilterOption[];
+  patternOptions: FilterOption[];
+  compositionOptions: FilterOption[];
+  widthOptions: FilterOption[];
+  colourOptions: ColorFilterOption[];
   selectedType: string[];
   setSelectedType: React.Dispatch<React.SetStateAction<string[]>>;
   selectedPattern: string[];
@@ -30,6 +42,7 @@ type FiltersProps = {
   showTypeFilter?: boolean;
   selectedMotorized: boolean;
   setSelectedMotorized: React.Dispatch<React.SetStateAction<boolean>>;
+  motorizedCount?: number; // Added prop
 };
 
 export const Filters = ({
@@ -53,6 +66,7 @@ export const Filters = ({
   showTypeFilter,
   selectedMotorized,
   setSelectedMotorized,
+  motorizedCount = 0,
 }: FiltersProps) => {
   const [openSections, setOpenSections] = useState<Record<SectionKeys, boolean>>({
     type: true,
@@ -85,6 +99,7 @@ export const Filters = ({
   ) {
     setter(state.includes(value) ? state.filter((i) => i !== value) : [...state, value]);
   }
+
   const activeFilters = [
     ...selectedType.map((v) => ({ key: "type", label: v })),
     ...selectedPattern.map((v) => ({ key: "pattern", label: v })),
@@ -160,6 +175,7 @@ export const Filters = ({
           ))}
         </div>
       </div>
+      
       <Accordion
         title="Motorised"
         sectionKey="motorized"
@@ -179,10 +195,11 @@ export const Filters = ({
             >
               {selectedMotorized && <FaCheck />}
             </span>
-            <p>Motorised Products</p>
+            <p>Motorised Products ({motorizedCount})</p>
           </button>
         </div>
       </Accordion>
+
       {showTypeFilter && (
         <Accordion
           title="Type"
@@ -194,16 +211,16 @@ export const Filters = ({
           <div className="flex flex-col gap-4 pt-4">
             {typeOptions.map((item) => (
               <button
-                key={item}
-                onClick={() => toggleSelection(item, setSelectedType, selectedType)}
+                key={item.name}
+                onClick={() => toggleSelection(item.name, setSelectedType, selectedType)}
                 className="flex items-center gap-2 capitalize cursor-pointer"
               >
                 <span
-                  className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedType.includes(item) ? "border-primary bg-primary text-white" : "border-black"}`}
+                  className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedType.includes(item.name) ? "border-primary bg-primary text-white" : "border-black"}`}
                 >
-                  {selectedType.includes(item) && <FaCheck />}
+                  {selectedType.includes(item.name) && <FaCheck />}
                 </span>
-                <p>{item}</p>
+                <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
               </button>
             ))}
           </div>
@@ -238,9 +255,9 @@ export const Filters = ({
                   alt={item.name}
                   width={30}
                   height={30}
-                  className=" object-cover"
+                  className="object-cover"
                 />
-                <p>{item.name}</p>
+                <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
               </button>
             );
           })}
@@ -257,16 +274,16 @@ export const Filters = ({
         <div className="flex flex-col gap-4 pt-4 ">
           {widthOptions.map((item) => (
             <button
-              key={item}
-              onClick={() => toggleSelection(item, setSelectedWidth, selectedWidth)}
+              key={item.name}
+              onClick={() => toggleSelection(item.name, setSelectedWidth, selectedWidth)}
               className="flex items-center gap-2 capitalize cursor-pointer"
             >
               <span
-                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedWidth.includes(item) ? "border-primary bg-primary text-white" : "border-black"}`}
+                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedWidth.includes(item.name) ? "border-primary bg-primary text-white" : "border-black"}`}
               >
-                {selectedWidth.includes(item) && <FaCheck />}
+                {selectedWidth.includes(item.name) && <FaCheck />}
               </span>
-              <p>{item}</p>
+              <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
             </button>
           ))}
         </div>
@@ -282,16 +299,16 @@ export const Filters = ({
         <div className="flex flex-col gap-4 pt-4">
           {patternOptions.map((item) => (
             <button
-              key={item}
-              onClick={() => toggleSelection(item, setSelectedPattern, selectedPattern)}
+              key={item.name}
+              onClick={() => toggleSelection(item.name, setSelectedPattern, selectedPattern)}
               className="flex items-center gap-2 capitalize cursor-pointer"
             >
               <span
-                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedPattern.includes(item) ? "border-primary bg-primary text-white" : "border-black"}`}
+                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedPattern.includes(item.name) ? "border-primary bg-primary text-white" : "border-black"}`}
               >
-                {selectedPattern.includes(item) && <FaCheck />}
+                {selectedPattern.includes(item.name) && <FaCheck />}
               </span>
-              <p>{item}</p>
+              <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
             </button>
           ))}
         </div>
@@ -307,16 +324,16 @@ export const Filters = ({
         <div className="flex flex-col gap-4 pt-4">
           {compositionOptions.map((item) => (
             <button
-              key={item}
-              onClick={() => toggleSelection(item, setSelectedComposition, selectedComposition)}
+              key={item.name}
+              onClick={() => toggleSelection(item.name, setSelectedComposition, selectedComposition)}
               className="flex items-center gap-2 capitalize cursor-pointer"
             >
               <span
-                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedComposition.includes(item) ? "border-primary bg-primary text-white" : "border-black"}`}
+                className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedComposition.includes(item.name) ? "border-primary bg-primary text-white" : "border-black"}`}
               >
-                {selectedComposition.includes(item) && <FaCheck />}
+                {selectedComposition.includes(item.name) && <FaCheck />}
               </span>
-              <p>{item}</p>
+              <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
             </button>
           ))}
         </div>

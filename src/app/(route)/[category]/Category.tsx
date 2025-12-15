@@ -6,28 +6,68 @@ import { CategoryPageProps, Product } from "@/types/category";
 import CategoryHeader from "@components/category/categoryHeader";
 import { useIndexedDb } from "@lib/useIndexedDb";
 
+// --- HELPER TYPES FOR FILTERS ---
+export type FilterOption = {
+  name: string;
+  count: number;
+};
+
+export type ColorFilterOption = {
+  name: string;
+  color: string;
+  count: number;
+};
+
+// --- UPDATED HOOK TO CALCULATE COUNTS ---
 const useFilterOptions = (allProducts: Product[]) => {
   return useMemo(() => {
-    const typeSet = new Set<string>();
-    const patternSet = new Set<string>();
-    const compositionSet = new Set<string>();
-    const widthSet = new Set<string>();
-    const colourSet = new Set<string>();
+    const counts = {
+      type: {} as Record<string, number>,
+      pattern: {} as Record<string, number>,
+      composition: {} as Record<string, number>,
+      width: {} as Record<string, number>,
+      colour: {} as Record<string, number>,
+      motorized: 0,
+    };
 
     allProducts.forEach((product) => {
-      if (product.parentSubcategoryUrl) typeSet.add(product.parentSubcategoryUrl);
-      if (product.pattern) patternSet.add(product.pattern);
-      if (product.composition) compositionSet.add(product.composition);
-      if (product.width !== undefined) widthSet.add(`Up To ${product.width}cm Wide`);
-      if (product.color) colourSet.add(product.color);
+      // Helper to increment counts
+      const increment = (obj: Record<string, number>, key: string | undefined | null) => {
+        if (!key) return;
+        obj[key] = (obj[key] || 0) + 1;
+      };
+
+      increment(counts.type, product.parentSubcategoryUrl);
+      increment(counts.pattern, product.pattern);
+      increment(counts.composition, product.composition);
+      
+      if (product.width !== undefined) {
+        increment(counts.width, `Up To ${product.width}cm Wide`);
+      }
+      
+      increment(counts.colour, product.color);
+      
+      if (product.isMotorized) {
+        counts.motorized += 1;
+      }
     });
 
+    // Helper to convert map to array
+    const toOptionArray = (obj: Record<string, number>): FilterOption[] => {
+      return Object.entries(obj).map(([name, count]) => ({ name, count }));
+    };
+
     return {
-      typeOptions: Array.from(typeSet),
-      patternOptions: Array.from(patternSet),
-      compositionOptions: Array.from(compositionSet),
-      widthOptions: Array.from(widthSet),
-      colourOptions: Array.from(colourSet).map((color) => ({ name: color, color })),
+      typeOptions: toOptionArray(counts.type),
+      patternOptions: toOptionArray(counts.pattern),
+      compositionOptions: toOptionArray(counts.composition),
+      widthOptions: toOptionArray(counts.width),
+      colourOptions: Object.entries(counts.colour).map(([name, count]) => ({
+        name,
+        color: name, // Assuming color code/name matches, or you can look it up
+        count,
+      })),
+      motorizedCount: counts.motorized,
     };
   }, [allProducts]);
 };
@@ -48,23 +88,34 @@ const CategoryPage = ({
   const [selectedColour, setSelectedColour] = useState<string[]>([]);
   const [selectedMotorized, setSelectedMotorized] = useState<boolean>(false);
   const { addFreeSampleItem } = useIndexedDb();
-const subcategoryArray = Array.isArray(ProductList)
-  ? ProductList.filter((sub) => sub.status === "PUBLISHED")
-  : ProductList && ProductList.status === "PUBLISHED"
+
+  const subcategoryArray = Array.isArray(ProductList)
+    ? ProductList.filter((sub) => sub.status === "PUBLISHED")
+    : ProductList && ProductList.status === "PUBLISHED"
     ? [ProductList]
     : [];
-const allProducts = useMemo(() => {
-  return subcategoryArray.flatMap((subCat) =>
-    (subCat.products || [])
-      .filter((product) => product.status === "PUBLISHED")
-      .map((product) => ({
-        ...product,
-        parentSubcategoryUrl: subCat.slug,
-      })),
-  );
-}, [subcategoryArray]);
-  const { typeOptions, patternOptions, compositionOptions, widthOptions, colourOptions } =
-    useFilterOptions(allProducts);
+
+  const allProducts = useMemo(() => {
+    return subcategoryArray.flatMap((subCat) =>
+      (subCat.products || [])
+        .filter((product) => product.status === "PUBLISHED")
+        .map((product) => ({
+          ...product,
+          parentSubcategoryUrl: subCat.slug,
+        })),
+    );
+  }, [subcategoryArray]);
+
+  // Destructure the new options with counts
+  const { 
+    typeOptions, 
+    patternOptions, 
+    compositionOptions, 
+    widthOptions, 
+    colourOptions,
+    motorizedCount 
+  } = useFilterOptions(allProducts);
+
   const filteredProducts = useMemo(() => {
     return allProducts.filter((product) => {
       if (selectedMotorized && !product.isMotorized) return false;
@@ -74,12 +125,14 @@ const allProducts = useMemo(() => {
       const composition = product.composition ?? "";
       const color = product.color ?? "";
       const width = product.width ?? 0;
+
       if (selectedType.length && !selectedType.includes(type)) return false;
       if (selectedPattern.length && !selectedPattern.includes(pattern)) return false;
       if (selectedComposition.length && !selectedComposition.includes(composition)) return false;
       if (selectedWidth.length && !selectedWidth.some((w) => w.includes(String(width))))
         return false;
       if (selectedColour.length && !selectedColour.includes(color)) return false;
+
       const basePrice = product.discountPrice ?? product.price ?? 0;
       const finalPrice = selectedMotorized ? basePrice + (product.motorPrice ?? 0) : basePrice;
 
@@ -97,6 +150,7 @@ const allProducts = useMemo(() => {
     selectedPrice,
     selectedMotorized,
   ]);
+
   const sortedProducts = useMemo(() => {
     const products = [...filteredProducts];
 
@@ -138,6 +192,7 @@ const allProducts = useMemo(() => {
             compositionOptions={compositionOptions}
             widthOptions={widthOptions}
             colourOptions={colourOptions}
+            motorizedCount={motorizedCount} // Pass motorized count
             selectedType={selectedType}
             setSelectedType={setSelectedType}
             selectedPattern={selectedPattern}
@@ -153,6 +208,7 @@ const allProducts = useMemo(() => {
             showTypeFilter={subcategoryArray.length > 1}
             selectedMotorized={selectedMotorized}
             setSelectedMotorized={setSelectedMotorized}
+            
           />
         </div>
 
@@ -162,11 +218,14 @@ const allProducts = useMemo(() => {
             description={description}
             sort={sort}
             setSort={setSort}
-            typeOptions={typeOptions}
+            // Note: If CategoryHeader uses these props, you need to update its types as well, 
+            // otherwise pass the raw strings like: typeOptions.map(t => t.name)
+            typeOptions={typeOptions} 
             patternOptions={patternOptions}
             compositionOptions={compositionOptions}
             widthOptions={widthOptions}
             colourOptions={colourOptions}
+            motorizedCount={motorizedCount}
             selectedType={selectedType}
             setSelectedType={setSelectedType}
             selectedPattern={selectedPattern}

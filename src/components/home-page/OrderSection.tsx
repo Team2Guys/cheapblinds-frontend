@@ -10,6 +10,7 @@ export const OrderSection = ({
   btnText,
   btnLink,
   samplesection,
+  buttonCenter,
   className,
 }: OrderSectionProps) => {
   return (
@@ -27,7 +28,7 @@ export const OrderSection = ({
           height={1000}
         />
       </div>
-      <div className="flex flex-col justify-center items-center bg-primary space-y-5 lg:space-y-10 w-full h-[329px] lg:h-[616px]">
+      <div className={`flex flex-col justify-center ${buttonCenter ? "items-center": "items-start"} bg-primary space-y-5 lg:space-y-10 w-full h-[329px] lg:h-[616px]`}>
         <Image
           className="h-[200px] lg:h-[402px] w-full object-contain"
           src={image2}
@@ -40,7 +41,7 @@ export const OrderSection = ({
           href={btnLink}
           className={`${
             samplesection ? "bg-white text-black" : "bg-black text-white"
-          } text-[21px] font-bold px-8 py-2 rounded-xl xl:py-4 xl:px-12`}
+          } text-[21px] font-bold px-8 py-2 rounded-xl xl:py-4 xl:px-12 ${buttonCenter ? "": "items-start ml-10"} `}
         >
           {btnText}
         </Link>
