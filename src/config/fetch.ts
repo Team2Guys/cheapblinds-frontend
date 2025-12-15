@@ -23,12 +23,13 @@ export const fetchCategories = async (FETCH_CATEGORY?: DocumentNode) => {
       query: FETCH_CATEGORY ? FETCH_CATEGORY : GET_CATEGORY_LIST,
       fetchPolicy: "no-cache",
       context: {
-        fetchOptions: { next: { tags: ["categories"] } },
+        fetchOptions: { next: { tags: ["categoryList"] } },
       },
     });
 
     return data?.categoryList || [];
   } catch (error) {
+    return [];
     throw error;
   }
 };
@@ -86,13 +87,14 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode):Promise<Produc
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: {
-          next: { tags: ["products"] },
+          next: { tags: ["productsList"] },
         },
       },
     });
 
     return data.productList || [];
   } catch (error) {
+    return [];
     throw error;
   }
 };
