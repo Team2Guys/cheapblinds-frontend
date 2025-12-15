@@ -28,32 +28,32 @@ export const infoItems = [
 
 export const chooseimage = [
   {
-    posterImageUrl: "/assets/images/bin/product1.webp",
+    posterImageUrl: "/assets/images/bin/slide2.png",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    posterImageUrl: "/assets/images/bin/product2.webp",
+    posterImageUrl: "/assets/images/bin/slide3.png",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    posterImageUrl: "/assets/images/bin/product3.webp",
+    posterImageUrl: "/assets/images/bin/slide4.png",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    posterImageUrl: "/assets/images/bin/product1.webp",
+    posterImageUrl: "/assets/images/bin/slide5.png",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    posterImageUrl: "/assets/images/bin/product2.webp",
+    posterImageUrl: "/assets/images/bin/slide6.png",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },
   {
-    posterImageUrl: "/assets/images/bin/product3.webp",
+    posterImageUrl: "/assets/images/bin/slide7.png",
     name: "Roman Blinds",
     description: "Blackout Roman Blinds",
   },

@@ -78,6 +78,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--);
   font-family: var(--font-open-sans);
