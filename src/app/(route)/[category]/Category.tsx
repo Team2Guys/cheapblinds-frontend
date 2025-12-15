@@ -105,8 +105,6 @@ const CategoryPage = ({
         })),
     );
   }, [subcategoryArray]);
-
-  // Destructure the new options with counts
   const { 
     typeOptions, 
     patternOptions, 

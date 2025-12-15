@@ -29,6 +29,7 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
   const touchEndX = useRef<number | null>(null);
   const minSwipeDistance = 50;
 
+  // We need a buffer of 3 items on each side for the loop to look infinite
   const BUFFER_SIZE = 3;
 
   const extendedCategoryList = useMemo(() => {
@@ -38,9 +39,9 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
       ...safeCategoryList.slice(0, BUFFER_SIZE),
     ];
   }, [safeCategoryList]);
+
   const centerOffset = BUFFER_SIZE;
 
-  // Observer for animation start
   useEffect(() => {
     if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
       setIsVisible(true);
@@ -56,7 +57,6 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
     };
   }, []);
 
-  // Autoplay Logic
   useEffect(() => {
     if (!isVisible || isHovered) return;
     const interval = setInterval(() => {
@@ -101,37 +101,52 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
       return newIndex;
     });
   }, [totalSlides, centerOffset]);
-
   const getPositionClass = useCallback(
-    (index: number) => {
-      const diff = index - activeIndex;
-      if (diff === 0) {
-        return "z-40 scale-100 translate-x-0 opacity-100 blur-0 grayscale-0";
-      }
-      if (Math.abs(diff) === 1) {
-        const isRight = diff > 0;
-        const tx = isRight
-          ? "translate-x-[55%] md:translate-x-[60%]"
-          : "-translate-x-[55%] md:-translate-x-[60%]";
-        return `z-30 scale-[0.80] md:scale-[0.85] ${tx} opacity-100 blur-[0.5px] grayscale-[10%]`;
-      }
-      if (Math.abs(diff) === 2) {
-        const isRight = diff > 0;
-        return `z-20 md:scale-[0.70] md:opacity-90 md:blur-[1px] md:grayscale-[30%] md:${isRight ? "translate-x-[120%]" : "-translate-x-[120%]"} opacity-0 scale-0 pointer-events-none md:pointer-events-auto`;
-      }
-      if (Math.abs(diff) === 3) {
-        const isRight = diff > 0;
-        return `z-10 md:scale-[0.55] md:opacity-80 md:blur-[2px] md:grayscale-[50%] md:${isRight ? "translate-x-[180%]" : "-translate-x-[180%]"} opacity-0 scale-0 pointer-events-none`;
-      }
-      return "opacity-0 z-0 scale-0 pointer-events-none";
-    },
-    [activeIndex],
-  );
+  (index: number) => {
+    const diff = index - activeIndex;
+
+    if (diff === 0) {
+      return "z-40 scale-100 translate-x-0 opacity-100 blur-0 grayscale-0";
+    }
+
+    if (Math.abs(diff) === 1) {
+      const isRight = diff > 0;
+      const tx = isRight
+        ? "translate-x-[65%] md:translate-x-[60%]"
+        : "-translate-x-[65%] md:-translate-x-[60%]";
+
+      return `z-30 scale-[0.85] ${tx} opacity-100 blur-[0.5px] grayscale-[10%]`;
+    }
+
+    if (Math.abs(diff) === 2) {
+      const isRight = diff > 0;
+      const tx = isRight
+        ? "translate-x-[120%] md:translate-x-[120%]"
+        : "-translate-x-[120%] md:-translate-x-[120%]";
+
+      return `z-20 scale-[0.70] ${tx} opacity-90 blur-[1px] grayscale-[30%]`;
+    }
+
+    if (Math.abs(diff) === 3) {
+      const isRight = diff > 0;
+      const tx = isRight
+        ? "translate-x-[170%] md:translate-x-[180%]"
+        : "-translate-x-[170%] md:-translate-x-[180%]";
+
+      return `z-10 scale-[0.55] ${tx} opacity-0 md:opacity-80 blur-[2px] grayscale-[50%]`;
+    }
+
+    return "opacity-0 z-0 scale-0 pointer-events-none";
+  },
+  [activeIndex],
+);
+
 
   const slideElements = useMemo(
     () =>
       extendedCategoryList.map((item, index) => {
         const isActive = index === activeIndex;
+
         return (
           <div
             key={`${item.slug}-${index}`}
@@ -147,18 +162,17 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
               className="relative block w-full group cursor-pointer"
               onClick={() => setActiveIndex(index)}
             >
-              {/* IMAGE CARD */}
               <div
                 className={`
                    relative mx-auto overflow-hidden bg-white 
                    ${isActive ? "shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-white" : "shadow-lg border-gray-100"}
-                   border-[4px]
+                   border-4
                    transition-all duration-500
                    2xl:h-[450px] 2xl:w-[380px] 
                    xl:h-[400px] xl:w-[320px] 
                    lg:h-[350px] lg:w-[280px] 
-                   md:h-[300px] md:w-[240px] 
-                   h-[320px] w-[240px] 
+                   md:h-[300px] md:w-60 
+                   h-[280px] w-[220px]
                 `}
               >
                 <Image
@@ -170,15 +184,12 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
                   className="object-cover"
                 />
 
-                {/* Optional: subtle glass effect on non-active items */}
                 {!isActive && <div className="absolute inset-0 bg-white/10" />}
               </div>
-
-              {/* TEXT LABEL - Placed below, scaling with the parent div */}
               <div className="mt-4 text-center">
                 <p
                   className={`
-                        font-bold text-gray-900 leading-tight
+                        font-bold leading-tight
                         transition-colors duration-300
                         ${isActive ? "text-2xl" : "text-xl"}
                     `}
@@ -200,27 +211,22 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* HEADER & NAV ARROWS ROW */}
       <div className="container mx-auto px-4 mb-10 ">
+        {/* Left Arrow */}
         <div className="flex-1 text-center">
           <h2 className="text-heading">Shop By Type</h2>
         </div>
-        {/* Left Arrow - Visible on Mobile now */}
         <div className="flex items-center justify-between relative">
           <button
             onClick={handlePrev}
-            className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer transition-all z-10"
+            className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer transition-all z-10"
             aria-label="Previous"
           >
             <HiArrowSmallLeft size={24} />
           </button>
-
-          {/* Title */}
-
-          {/* Right Arrow - Visible on Mobile now */}
           <button
             onClick={handleNext}
-            className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer transition-all z-10"
+            className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer transition-all z-10"
             aria-label="Next"
           >
             <HiArrowSmallRight size={24} />
@@ -228,15 +234,14 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
         </div>
       </div>
 
-      {/* SLIDER CONTAINER */}
       <div
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        // Height must be large enough to hold the scaled versions + shadows + text
-        className="relative flex items-center justify-center h-[420px] md:h-[550px] max-w-[100vw] overflow-visible perspective-1000"
+        className="relative flex items-center justify-center h-[380px] md:h-[550px] max-w-[100vw] overflow-visible perspective-1000"
       >
         {slideElements}
       </div>
+
     </div>
   );
 };
