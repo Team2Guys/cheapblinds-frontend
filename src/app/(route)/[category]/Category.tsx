@@ -48,21 +48,21 @@ const CategoryPage = ({
   const [selectedColour, setSelectedColour] = useState<string[]>([]);
   const [selectedMotorized, setSelectedMotorized] = useState<boolean>(false);
   const { addFreeSampleItem } = useIndexedDb();
-  const subcategoryArray = Array.isArray(ProductList)
-    ? ProductList
-    : ProductList
-      ? [ProductList]
-      : [];
-
-  const allProducts = useMemo(() => {
-    return subcategoryArray.flatMap((subCat) =>
-      (subCat.products || []).map((product) => ({
+const subcategoryArray = Array.isArray(ProductList)
+  ? ProductList.filter((sub) => sub.status === "PUBLISHED")
+  : ProductList && ProductList.status === "PUBLISHED"
+    ? [ProductList]
+    : [];
+const allProducts = useMemo(() => {
+  return subcategoryArray.flatMap((subCat) =>
+    (subCat.products || [])
+      .filter((product) => product.status === "PUBLISHED")
+      .map((product) => ({
         ...product,
         parentSubcategoryUrl: subCat.slug,
       })),
-    );
-  }, [subcategoryArray]);
-
+  );
+}, [subcategoryArray]);
   const { typeOptions, patternOptions, compositionOptions, widthOptions, colourOptions } =
     useFilterOptions(allProducts);
   const filteredProducts = useMemo(() => {

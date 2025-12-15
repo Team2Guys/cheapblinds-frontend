@@ -3,38 +3,19 @@ import { Category } from "@/types/cat";
 import ApolloCustomClient from "@utils/apollo-client";
 import {
   ADDRESS_LIST_BY_USER,
-  GET_ALL_ADMINS,
   GET_CATEGORY_BY_SLUG,
   GET_CATEGORY_LIST,
   GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL,
   GET_ORDER_BY_ID,
-  GET_ORDER_LIST,
   GET_ORDERS_BY_USER_ID,
   GET_PRODUCT_BY_SLUG,
   GET_PRODUCT_LIST,
   GET_SUBCATEGORY_BY_URLS,
-  GET_SUBCATEGORY_LIST,
   GET_USER_BY_ID,
 } from "@graphql";
 import { addressProps, NewsletterProps, Orders, Product, Subcategory, UserProps } from "@/types/category";
 
 
-export const getAllAdmins = async () => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: GET_ALL_ADMINS,
-      fetchPolicy: "no-cache",
-      context: {
-        fetchOptions: { next: { tags: ["Admins"] } },
-      },
-    });
-
-    return data?.adminList || [];
-  } catch (error) {
-    return [];
-    throw error;
-  }
-};
 
 export const fetchCategories = async (FETCH_CATEGORY?: DocumentNode) => {
   try {
@@ -98,22 +79,6 @@ export const fetchSingleSubCategory = async (
   }
 };
 
-export const fetchSubCategories = async () => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: GET_SUBCATEGORY_LIST,
-      fetchPolicy: "no-cache",
-      context: {
-        fetchOptions: { next: { tags: ["subcategories"] } },
-      },
-    });
-
-    return data?.subcategoryList || [];
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode):Promise<Product[] | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
@@ -159,20 +124,6 @@ export const fetchSingleProduct = async (
   }
 };
 
-export const fetchOrderList = async (CUSTOM_QUERY?: DocumentNode): Promise<Orders[] | null> => {
-  try {
-    const { data } = await ApolloCustomClient.query({
-      query: CUSTOM_QUERY || GET_ORDER_LIST,
-      fetchPolicy: "no-cache",
-      context: { fetchOptions: { next: { tags: ["orders"] } } },
-    });
-
-    return data?.orderList ?? null;
-  } catch (error) {
-    console.error("Error fetching order list:", error);
-    return null;
-  }
-};
 
 export const fetchOrdersByUserId = async (
   id: string,
