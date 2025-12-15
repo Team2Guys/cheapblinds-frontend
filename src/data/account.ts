@@ -30,26 +30,3 @@ export const MyOrderData: Order[] = [
   },
 ];
 
-export const MySampleData: Order[] = [
-  {
-    id: "#ORD-1001",
-    shipTo: "John Doe, Dubai",
-    items: [
-      { name: "Modern Lamp", qty: 1, price: "120.00" },
-      { name: "Wall Art", qty: 2, price: "110.00" },
-    ],
-  },
-  {
-    id: "#ORD-1002",
-    shipTo: "Sarah Ali, Sharjah",
-    items: [{ name: "Wooden Chair", qty: 1, price: "180.50" }],
-  },
-  {
-    id: "#ORD-1003",
-    shipTo: "Muhammad Khan, Abu Dhabi",
-    items: [
-      { name: "Sofa Cushion Set", qty: 1, price: "200.00" },
-      { name: "Curtain", qty: 2, price: "99.99" },
-    ],
-  },
-];

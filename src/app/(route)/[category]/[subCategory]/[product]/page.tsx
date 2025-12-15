@@ -2,6 +2,7 @@ import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting, ProductDetail }
 import { fetchProducts, fetchSingleProduct } from "@config/fetch";
 import { notFound } from "next/navigation";
 import { GET_CARD_PRODUCT } from "@graphql";
+import { Product } from "@/types/category";
 
 const ProductPage = async ({
   params,
@@ -17,6 +18,10 @@ const ProductPage = async ({
   if (!SingleProduct) {
     notFound();
   }
+  if (SingleProduct.status !== "PUBLISHED") {
+    notFound();
+  }
+  const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
   console.log(SingleProduct, "SingleProductSingleProduct");
 
   return (
@@ -24,7 +29,7 @@ const ProductPage = async ({
       <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
       <div className="container mx-auto px-2">
         <ProductDetail category={category} productData={SingleProduct!} />
-        <RelatedProduct titleStart title="RELATED PRODUCTS" data={productList || []} />
+        <RelatedProduct titleStart title="RELATED PRODUCTS" data={publishedProduct || []} />
         <BlindFitting />
         <OrderSection
           className="mt-10 md:mt-16"

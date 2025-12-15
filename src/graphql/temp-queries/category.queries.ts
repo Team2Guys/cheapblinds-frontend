@@ -107,6 +107,7 @@ export const GET_CATEGORY_BY_SLUG = gql`
           composition
           isMotorized
           motorPrice
+          status
         }
       }
     }

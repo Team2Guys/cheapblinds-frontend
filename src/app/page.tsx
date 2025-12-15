@@ -12,12 +12,12 @@ import {
 } from "@components";
 import { fetchCategories, fetchProducts } from "@config/fetch";
 import { chooseimage } from "@data/home";
+import { Product } from "@/types/category";
 
 const Home = async () => {
-  const [productList, categoryList] = await Promise.all([
-    fetchProducts(),
-    fetchCategories(),
-  ]);
+  const [productList, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
+  const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
+  const publishedCategory = categoryList?.filter((item: Product) => item?.status === "PUBLISHED");
 
   return (
     <>
@@ -28,7 +28,7 @@ const Home = async () => {
       />
       <InformationSection className="hidden md:grid" />
       <ChildSafety />
-      <ShopBySlider CategoryList={categoryList || []} />
+      <ShopBySlider CategoryList={publishedCategory || []} />
       <OrderSection
         reverse={false}
         image1="/assets/images/home/blindimg.webp"
@@ -47,7 +47,7 @@ const Home = async () => {
           className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
         />
       </div>
-      <RelatedProduct title="Browse Products" data={productList || []} />
+      <RelatedProduct title="Browse Products" data={publishedProduct || []} />
       <OrderSection
         className="mt-10 md:mt-16"
         reverse

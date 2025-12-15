@@ -2,10 +2,12 @@ import { Breadcrumb, MotorisedBanner, ControlCard, ImageGrid, RelatedProduct } f
 import { fetchCategories } from "@config/fetch";
 import { controlOptions, controlOptions1 } from "@data/motorised";
 import { GET_CARD_CATEGORY } from "@graphql";
+import { Category } from "@/types/category";
 import React from "react";
 
 const page = async () => {
   const categoryList = await fetchCategories(GET_CARD_CATEGORY);
+  const publishedCategory = categoryList?.filter((item: Category) => item?.status === "PUBLISHED");
   return (
     <>
       <Breadcrumb title="Motorised Blinds" />
@@ -20,7 +22,7 @@ const page = async () => {
         leftImage="/assets/images/motorised/zebraimg.webp"
         rightImage="/assets/images/motorised/rightimage.webp"
       />
-      <RelatedProduct title="Browse Products" data={categoryList} />
+      <RelatedProduct title="Browse Products" data={publishedCategory || []} />
     </>
   );
 };
