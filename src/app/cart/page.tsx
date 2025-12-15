@@ -9,7 +9,7 @@ const Cart = async () => {
   return (
     <>
       <CartPage />
-      <RelatedProduct title="View More Products" data={productList} />
+      <RelatedProduct title="View More Products" data={productList || []} />
       <Testimonial reviews={TestimonialReview} showPaymentInfo />
     </>
   );

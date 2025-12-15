@@ -114,7 +114,7 @@ export const fetchSubCategories = async () => {
   }
 };
 
-export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode) => {
+export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode):Promise<Product[] | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
       query: FETCH_PRODUCT ? FETCH_PRODUCT : GET_PRODUCT_LIST,

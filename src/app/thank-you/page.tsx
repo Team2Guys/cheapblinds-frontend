@@ -32,7 +32,7 @@ const ThankYou = async () => {
       <Suspense fallback={<div>Loading order details...</div>}>
         <AllOrders />
       </Suspense>
-      <RelatedProduct title="Browse Products" data={productList} />
+      <RelatedProduct title="Browse Products" data={productList || []} />
     </div>
   );
 };

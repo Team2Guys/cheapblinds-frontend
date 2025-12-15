@@ -24,7 +24,7 @@ const ProductPage = async ({
       <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
       <div className="container mx-auto px-2">
         <ProductDetail category={category} productData={SingleProduct!} />
-        <RelatedProduct titleStart title="RELATED PRODUCTS" data={productList} />
+        <RelatedProduct titleStart title="RELATED PRODUCTS" data={productList || []} />
         <BlindFitting />
         <OrderSection
           className="mt-10 md:mt-16"
