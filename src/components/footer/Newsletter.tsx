@@ -4,11 +4,11 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ApolloError, useMutation } from "@apollo/client";
-import { CREATE_NEWSLETTER_SUBSCRIBER } from "@graphql";
+import { CREATE_NEWSLETTER_SUBSCRIBER_MUTATION } from "@graphql";
 import { Toaster } from "@components/ui";
 
 export const Newsletter = () => {
-  const [createNewsletterSubscriber, { loading }] = useMutation(CREATE_NEWSLETTER_SUBSCRIBER);
+  const [createNewsletterSubscriber, { loading }] = useMutation(CREATE_NEWSLETTER_SUBSCRIBER_MUTATION);
 
   const formik = useFormik({
     initialValues: {

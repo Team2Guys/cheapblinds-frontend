@@ -5,7 +5,7 @@ import { Formik, Form, Field, FormikHelpers } from "formik";
 import { ApolloError, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
-import { SIGN_UP, CREATE_NEWSLETTER_SUBSCRIBER } from "@graphql";
+import { SIGN_UP_MUTATION, CREATE_NEWSLETTER_SUBSCRIBER_MUTATION } from "@graphql";
 import { toast } from "react-toastify";
 import { signUp_validationSchema } from "@data/Validations";
 import { FaSpinner } from "react-icons/fa";
@@ -23,8 +23,8 @@ interface RegisterFormValues {
 export const RegisterForm = () => {
   const router = useRouter();
 
-  const [signup, { loading }] = useMutation(SIGN_UP);
-  const [createSubscriber] = useMutation(CREATE_NEWSLETTER_SUBSCRIBER);
+  const [signup, { loading }] = useMutation(SIGN_UP_MUTATION);
+  const [createSubscriber] = useMutation(CREATE_NEWSLETTER_SUBSCRIBER_MUTATION);
 
   const handleSubmit = async (
     values: RegisterFormValues,

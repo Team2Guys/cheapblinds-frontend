@@ -3,7 +3,7 @@ import { fetchProducts } from "@config/fetch";
 import Link from "next/link"; 
 import React, { useEffect, useState, useMemo } from "react";
 import { IoSearch, IoClose } from "react-icons/io5";
-import { GET_PRODUCT_BY_SEARCH } from "@graphql";
+import { GET_PRODUCT_BY_SEARCH_QUERY } from "@graphql";
 import { Product } from "@/types/category";
 import Image from "next/image";
 
@@ -16,7 +16,7 @@ const SearchBar = ({ className }: { className?: string }) => {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const response = await fetchProducts(GET_PRODUCT_BY_SEARCH);
+        const response = await fetchProducts(GET_PRODUCT_BY_SEARCH_QUERY);
         setProducts(response);
       } catch (error) {
         console.error("Failed to fetch products:", error);

@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import React from "react";
 import { Orders, Product } from "@/types/category";
 import { useAuth } from "@context/UserContext";
-import { CREATE_ORDER } from "@graphql";
+import { CREATE_ORDER_MUTATION } from "@graphql";
 import { useMutation } from "@apollo/client";
 import { Toaster } from "@components/ui";
 import { useIndexedDb } from "@lib/useIndexedDb";
@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 export const SampleCheckout = ({ freeSamplesList }: { freeSamplesList: Product[] }) => {
   const { user } = useAuth();
-  const [createOrder, { loading }] = useMutation(CREATE_ORDER);
+  const [createOrder, { loading }] = useMutation(CREATE_ORDER_MUTATION);
   const { clearFreeSamples } = useIndexedDb();
   const router = useRouter();
   const TotalPrice = freeSamplesList.reduce((total, item) => total + Number(item.price || 0), 0);

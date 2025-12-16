@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CHECK_VERIFICATION_TOKEN, SEND_VERIFICATION_TOKEN } from "@graphql";
+import { CHECK_VERIFICATION_TOKEN_MUTATION, SEND_VERIFICATION_TOKEN_MUTATION } from "@graphql";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Toaster } from "@/components/ui";
 import { FaSpinner } from "react-icons/fa";
@@ -16,7 +16,7 @@ export const UserVerification = () => {
 
   // ✅ Check Verification Token Mutation
   const [checkVerificationToken, { loading: verifyLoading }] = useMutation(
-    CHECK_VERIFICATION_TOKEN,
+    CHECK_VERIFICATION_TOKEN_MUTATION,
     {
       onCompleted: (data) => {
         const message = data?.checkVerificationToken?.message;
@@ -42,7 +42,7 @@ export const UserVerification = () => {
   );
 
   // ✅ Resend Verification Token Mutation
-  const [sendVerificationToken, { loading: resendLoading }] = useMutation(SEND_VERIFICATION_TOKEN, {
+  const [sendVerificationToken, { loading: resendLoading }] = useMutation(SEND_VERIFICATION_TOKEN_MUTATION, {
     onCompleted: (data) => {
       const message = data?.sendVerificationToken?.message;
       if (message) {

@@ -8,7 +8,7 @@ import { useAuth } from "@context/UserContext";
 import { addressProps, UserProps } from "@/types/category";
 import { fetchAddressListByUser, fetchUserById } from "@config/fetch";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
-import { GET_USER_FOR_ADDRESS } from "@graphql";
+import { GET_USER_FOR_ADDRESS_QUERY } from "@graphql";
 
 const AddressBookPage = () => {
   const { user, isLoading } = useAuth();
@@ -30,7 +30,7 @@ const AddressBookPage = () => {
       try {
         const [addressesResponse, userResponse] = await Promise.all([
           fetchAddressListByUser(user.id),
-          fetchUserById(user.id, GET_USER_FOR_ADDRESS),
+          fetchUserById(user.id, GET_USER_FOR_ADDRESS_QUERY),
         ]);
 
         setAddresses(addressesResponse || []);

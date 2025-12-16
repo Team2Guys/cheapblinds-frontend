@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Input } from "../ui/Input";
 import { useMutation } from "@apollo/client";
 import { Toaster } from "@components/ui";
-import { CREATE_INQUIRY } from "@graphql";
+import { CREATE_INQUIRY_MUTATION } from "@graphql";
 
 interface FormData {
   inquiryType: string;
@@ -16,7 +16,7 @@ interface FormData {
 }
 
 const FormContact = () => {
-  const [createInquiry, { loading }] = useMutation(CREATE_INQUIRY);
+  const [createInquiry, { loading }] = useMutation(CREATE_INQUIRY_MUTATION);
 
   const initialValues: FormData = {
     inquiryType: "",

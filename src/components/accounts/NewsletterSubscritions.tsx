@@ -4,11 +4,11 @@ import { useMutation } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import React from "react";
 import { NewsletterProps } from "@/types/category";
-import { UPDATE_NEWSLETTER_SUBSCRIBER } from "@graphql";
+import { UPDATE_NEWSLETTER_SUBSCRIBER_MUTATION } from "@graphql";
 import { Toaster } from "@components/ui";
 
 export const NewsletterSubscriptions = ({ newsletter }: { newsletter: NewsletterProps | null }) => {
-  const [updateNewsletter] = useMutation(UPDATE_NEWSLETTER_SUBSCRIBER);
+  const [updateNewsletter] = useMutation(UPDATE_NEWSLETTER_SUBSCRIBER_MUTATION);
 
   if (!newsletter) return <p>No newsletter data found.</p>;
 

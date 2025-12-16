@@ -7,7 +7,7 @@ import { FaTrash } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { useMutation } from "@apollo/client";
 
-import { REMOVE_ADDRESS_BY_ID, UPDATE_USER_BY_ID } from "@graphql";
+import { REMOVE_ADDRESS_BY_ID_MUTATION, UPDATE_USER_BY_ID_MUTATION } from "@graphql";
 
 interface AddressBookProps {
   userId: string;
@@ -24,8 +24,8 @@ export const AddressBook: React.FC<AddressBookProps> = ({ userId, addressList, u
 
   const [addresses, setAddresses] = useState<addressProps[]>(addressList);
 
-  const [removeAddressById] = useMutation(REMOVE_ADDRESS_BY_ID);
-  const [updateUserById] = useMutation(UPDATE_USER_BY_ID);
+  const [removeAddressById] = useMutation(REMOVE_ADDRESS_BY_ID_MUTATION);
+  const [updateUserById] = useMutation(UPDATE_USER_BY_ID_MUTATION);
 
   useEffect(() => {
     setAddresses(addressList);

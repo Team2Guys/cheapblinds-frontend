@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_SUBCATEGORY_LIST = gql`
+export const GET_SUBCATEGORY_LIST_QUERY = gql`
   query GetSubcategoryList {
     subcategoryList {
       id
@@ -23,7 +23,7 @@ export const GET_SUBCATEGORY_LIST = gql`
   }
 `;
 
-export const GET_SUBCATEGORY_BY_ID = gql`
+export const GET_SUBCATEGORY_BY_ID_QUERY = gql`
   query GetSubcategoryById($id: ID!) {
     subcategoryById(id: $id) {
       id
@@ -46,7 +46,7 @@ export const GET_SUBCATEGORY_BY_ID = gql`
   }
 `;
 
-export const GET_SUBCATEGORY_BY_URLS = gql`
+export const GET_SUBCATEGORY_BY_URLS_QUERY = gql`
   query GetSubcategoryBySlugs($subcategorySlug: String!, $categorySlug: String!) {
     subcategoryBySlugs(
       input: { subcategorySlug: $subcategorySlug, categorySlug: $categorySlug }

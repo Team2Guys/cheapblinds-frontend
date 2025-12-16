@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_NEWSLETTER_SUBSCRIBERS = gql`
+export const GET_NEWSLETTER_SUBSCRIBERS_QUERY = gql`
   query GetNewsletterSubscribers {
     newsletterSubscriberList {
       id
@@ -12,7 +12,7 @@ export const GET_NEWSLETTER_SUBSCRIBERS = gql`
   }
 `;
 
-export const GET_NEWSLETTER_SUBSCRIBER_BY_ID = gql`
+export const GET_NEWSLETTER_SUBSCRIBER_BY_ID_QUERY = gql`
   query GetNewsletterSubscriberById($id: ID!) {
     newsletterSubscriberById(id: $id) {
       id
@@ -24,7 +24,7 @@ export const GET_NEWSLETTER_SUBSCRIBER_BY_ID = gql`
   }
 `;
 
-export const GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL = gql`
+export const GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL_QUERY = gql`
   query GetNewsletterSubscriberByEmail($email: String!) {
     newsletterSubscriberByEmail(email: $email) {
       id
@@ -35,4 +35,5 @@ export const GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL = gql`
     }
   }
 `;
+
 

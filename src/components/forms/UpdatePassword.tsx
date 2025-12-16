@@ -5,7 +5,7 @@ import { Formik, Form, FormikHelpers } from "formik";
 import { Input, Toaster } from "@components/ui";
 import { useMutation } from "@apollo/client";
 import { useSearchParams, useRouter } from "next/navigation";
-import { UPDATE_PASSWORD } from "@graphql";
+import { UPDATE_PASSWORD_MUTATION } from "@graphql";
 import { UpdatePasswordSchema } from "@data/Validations";
 import { FaSpinner } from "react-icons/fa";
 
@@ -19,7 +19,7 @@ export const UpdatePassword = () => {
   const router = useRouter();
   const resetToken = searchParams.get("resetToken");
 
-  const [updatePassword, { loading }] = useMutation(UPDATE_PASSWORD);
+  const [updatePassword, { loading }] = useMutation(UPDATE_PASSWORD_MUTATION);
 
   const initialValues: FormValues = { password: "", confirmPassword: "" };
 

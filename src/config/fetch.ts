@@ -2,16 +2,16 @@ import { DocumentNode } from "@apollo/client";
 import { Category } from "@/types/cat";
 import ApolloCustomClient from "@utils/apollo-client";
 import {
-  ADDRESS_LIST_BY_USER,
-  GET_CATEGORY_BY_SLUG,
-  GET_CATEGORY_LIST,
-  GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL,
-  GET_ORDER_BY_ID,
-  GET_ORDERS_BY_USER_ID,
-  GET_PRODUCT_BY_SLUG,
-  GET_PRODUCT_LIST,
-  GET_SUBCATEGORY_BY_URLS,
-  GET_USER_BY_ID,
+  ADDRESS_LIST_BY_USER_QUERY,
+  GET_CATEGORY_BY_SLUG_QUERY,
+  GET_CATEGORY_LIST_QUERY,
+  GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL_QUERY,
+  GET_ORDER_BY_ID_QUERY,
+  GET_ORDERS_BY_USER_ID_QUERY,
+  GET_PRODUCT_BY_SLUG_QUERY,
+  GET_PRODUCT_LIST_QUERY,
+  GET_SUBCATEGORY_BY_URLS_QUERY,
+  GET_USER_BY_ID_QUERY,
 } from "@graphql";
 import { addressProps, NewsletterProps, Orders, Product, Subcategory, UserProps } from "@/types/category";
 
@@ -20,7 +20,7 @@ import { addressProps, NewsletterProps, Orders, Product, Subcategory, UserProps 
 export const fetchCategories = async (FETCH_CATEGORY?: DocumentNode) => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: FETCH_CATEGORY ? FETCH_CATEGORY : GET_CATEGORY_LIST,
+      query: FETCH_CATEGORY ? FETCH_CATEGORY : GET_CATEGORY_LIST_QUERY,
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["categoryList"] } },
@@ -40,7 +40,7 @@ export const fetchSingleCategory = async (
 ): Promise<Category | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: FIND_ONE_CUSTOM_QUERY || GET_CATEGORY_BY_SLUG,
+      query: FIND_ONE_CUSTOM_QUERY || GET_CATEGORY_BY_SLUG_QUERY,
       variables: { slug },
       fetchPolicy: "no-cache",
       context: {
@@ -62,7 +62,7 @@ export const fetchSingleSubCategory = async (
 ): Promise<Subcategory | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: FIND_ONE_CUSTOM_QUERY ?? GET_SUBCATEGORY_BY_URLS,
+      query: FIND_ONE_CUSTOM_QUERY ?? GET_SUBCATEGORY_BY_URLS_QUERY,
       variables: {
         subcategorySlug,
         categorySlug,
@@ -83,7 +83,7 @@ export const fetchSingleSubCategory = async (
 export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode): Promise<Product[]> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: FETCH_PRODUCT ? FETCH_PRODUCT : GET_PRODUCT_LIST,
+      query: FETCH_PRODUCT ? FETCH_PRODUCT : GET_PRODUCT_LIST_QUERY,
       fetchPolicy: "no-cache", 
       context: {
         fetchOptions: {
@@ -112,7 +112,7 @@ export const fetchSingleProduct = async (
 ): Promise<Product | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : GET_PRODUCT_BY_SLUG,
+      query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : GET_PRODUCT_BY_SLUG_QUERY,
       variables: {
         categorySlug,
         subcategorySlug,
@@ -138,7 +138,7 @@ export const fetchOrdersByUserId = async (
 ): Promise<Orders[] | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: CUSTOM_QUERY || GET_ORDERS_BY_USER_ID,
+      query: CUSTOM_QUERY || GET_ORDERS_BY_USER_ID_QUERY,
       variables: { id: id },
       fetchPolicy: "no-cache",
       context: { fetchOptions: { next: { tags: ["orders"] } } },
@@ -157,7 +157,7 @@ export const fetchSingleOrder = async (
 ): Promise<Orders | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: CUSTOM_QUERY || GET_ORDER_BY_ID,
+      query: CUSTOM_QUERY || GET_ORDER_BY_ID_QUERY,
       variables: { id: id },
       fetchPolicy: "no-cache",
       context: { fetchOptions: { next: { tags: ["orders"] } } },
@@ -176,7 +176,7 @@ export const fetchAddressListByUser = async (
 ): Promise<addressProps[] | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: CUSTOM_QUERY || ADDRESS_LIST_BY_USER,
+      query: CUSTOM_QUERY || ADDRESS_LIST_BY_USER_QUERY,
       variables: { userId },
       fetchPolicy: "no-cache",
       context: { fetchOptions: { next: { tags: ["address-list"] } } },
@@ -195,7 +195,7 @@ export const fetchNewsletterByEmail = async (
 ): Promise<NewsletterProps | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: CUSTOM_QUERY || GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL,
+      query: CUSTOM_QUERY || GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL_QUERY,
       variables: { email },
       fetchPolicy: "no-cache",
       context: { fetchOptions: { next: { tags: ["newsletter"] } } },
@@ -215,7 +215,7 @@ export const fetchUserById = async (
 ): Promise<UserProps | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: CUSTOM_QUERY || GET_USER_BY_ID,
+      query: CUSTOM_QUERY || GET_USER_BY_ID_QUERY,
       variables: { id },
       fetchPolicy: "no-cache",
       context: { fetchOptions: { next: { tags: ["userList"] } } },

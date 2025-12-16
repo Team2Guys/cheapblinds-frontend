@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_ORDER_LIST = gql`
+export const GET_ORDER_LIST_QUERY = gql`
   query GetOrderList {
     orderList {
       id
@@ -23,7 +23,7 @@ export const GET_ORDER_LIST = gql`
   }
 `;
 
-export const GET_ORDER_BY_ID = gql`
+export const GET_ORDER_BY_ID_QUERY = gql`
   query GetOrderById($id: ID!) {
     orderById(id: $id) {
       id
@@ -49,7 +49,7 @@ export const GET_ORDER_BY_ID = gql`
   }
 `;
 
-export const GET_ORDERS_BY_USER_ID = gql`
+export const GET_ORDERS_BY_USER_ID_QUERY = gql`
   query GetOrdersByUserId($id: ID!) {
     orderListByUserId(id: $id) {
       id

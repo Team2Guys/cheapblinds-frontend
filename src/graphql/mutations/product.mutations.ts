@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 // Create a product
-export const CREATE_PRODUCT = gql`
+export const CREATE_PRODUCT_MUTATION = gql`
   mutation CreateProduct($input: CreateProductInput!) {
     createProduct(input: $input) {
       status
@@ -11,7 +11,7 @@ export const CREATE_PRODUCT = gql`
 `;
 
 // Update a product by ID
-export const UPDATE_PRODUCT_BY_ID = gql`
+export const UPDATE_PRODUCT_BY_ID_MUTATION = gql`
   mutation UpdateProductById($input: UpdateProductByIdInput!) {
     updateProductById(input: $input) {
       status
@@ -21,7 +21,7 @@ export const UPDATE_PRODUCT_BY_ID = gql`
 `;
 
 // Remove a product by ID
-export const REMOVE_PRODUCT_BY_ID = gql`
+export const REMOVE_PRODUCT_BY_ID_MUTATION = gql`
   mutation RemoveProductById($input: RemoveProductByIdInput!) {
     removeProductById(input: $input) {
       status

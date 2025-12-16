@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_USER_LIST = gql`
+export const GET_USER_LIST_QUERY = gql`
   query GetUserList {
     userList {
       id
@@ -18,7 +18,7 @@ export const GET_USER_LIST = gql`
   }
 `;
 
-export const GET_USER_BY_ID = gql`
+export const GET_USER_BY_ID_QUERY = gql`
   query GetUserById($id: ID!) {
     userById(id: $id) {
       id
@@ -36,7 +36,7 @@ export const GET_USER_BY_ID = gql`
   }
 `;
 
-export const GET_USER_FOR_ADDRESS = gql`
+export const GET_USER_FOR_ADDRESS_QUERY = gql`
   query GetUserById($id: ID!) {
     userById(id: $id) {
       id

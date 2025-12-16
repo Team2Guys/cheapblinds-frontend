@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Toaster } from "@components";
 import { useMutation } from "@apollo/client";
-import { CREATE_ADDRESS, UPDATE_ADDRESS_BY_ID } from "@graphql";
+import { CREATE_ADDRESS_MUTATION, UPDATE_ADDRESS_BY_ID_MUTATION } from "@graphql";
 import { addressProps } from "@/types/category";
 import { emirateCityMap, emirates } from "@/data/checkout";
 
@@ -31,8 +31,8 @@ export const AddressForm = ({
   onAddressAdded,
   editingAddress = null,
 }: AddressFormProps) => {
-  const [createAddress] = useMutation(CREATE_ADDRESS);
-  const [updateAddressById] = useMutation(UPDATE_ADDRESS_BY_ID);
+  const [createAddress] = useMutation(CREATE_ADDRESS_MUTATION);
+  const [updateAddressById] = useMutation(UPDATE_ADDRESS_BY_ID_MUTATION);
   const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
   const [showOtherInput, setShowOtherInput] = useState(false);
 

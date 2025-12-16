@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 // Get the list of all inquiries
-export const GET_INQUIRY_LIST = gql`
+export const GET_INQUIRY_LIST_QUERY = gql`
   query GetInquiryList {
     inquiryList {
       id
@@ -18,7 +18,7 @@ export const GET_INQUIRY_LIST = gql`
 `;
 
 // Get a single inquiry by ID
-export const GET_INQUIRY_BY_ID = gql`
+export const GET_INQUIRY_BY_ID_QUERY = gql`
   query GetInquiryById($id: ID!) {
     inquiryById(id: $id) {
       id

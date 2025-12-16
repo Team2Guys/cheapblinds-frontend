@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const CREATE_ADDRESS = gql`
+export const CREATE_ADDRESS_MUTATION = gql`
   mutation CreateAddress($input: CreateAddressInput!) {
     createAddress(input: $input) {
       id
@@ -20,7 +20,7 @@ export const CREATE_ADDRESS = gql`
   }
 `;
 
-export const UPDATE_ADDRESS_BY_ID = gql`
+export const UPDATE_ADDRESS_BY_ID_MUTATION = gql`
   mutation UpdateAddressById($id: ID!, $input: UpdateAddressByIdInput!) {
     updateAddressById(id: $id, input: $input) {
       id
@@ -40,7 +40,7 @@ export const UPDATE_ADDRESS_BY_ID = gql`
   }
 `;
 
-export const REMOVE_ADDRESS_BY_ID = gql`
+export const REMOVE_ADDRESS_BY_ID_MUTATION = gql`
   mutation RemoveAddressById($id: ID!) {
     removeAddressById(id: $id) {
       id

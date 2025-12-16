@@ -3,11 +3,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_INQUIRY } from "@graphql";
+import { CREATE_INQUIRY_MUTATION } from "@graphql";
 import { Toaster } from "@components/ui";
 
 const ContactForm = () => {
-  const [createInquiry, { loading }] = useMutation(CREATE_INQUIRY);
+  const [createInquiry, { loading }] = useMutation(CREATE_INQUIRY_MUTATION);
 
   const formik = useFormik({
     initialValues: {

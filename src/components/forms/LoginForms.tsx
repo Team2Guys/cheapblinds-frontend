@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useMutation, ApolloError } from "@apollo/client";
 import { FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { SIGN_IN } from "@graphql";
+import { SIGN_IN_MUTATION } from "@graphql";
 import { Toaster, Input } from "@components";
 import { SignIn_validationSchema } from "@data/Validations";
 import { useAuth } from "@context/UserContext";
@@ -19,7 +19,7 @@ interface LoginValues {
 export const LoginForms = () => {
   const router = useRouter();
   const { login } = useAuth();
-  const [signIn, { loading }] = useMutation(SIGN_IN);
+  const [signIn, { loading }] = useMutation(SIGN_IN_MUTATION);
 
   const initialValues: LoginValues = {
     email: "",

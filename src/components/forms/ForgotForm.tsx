@@ -4,12 +4,12 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import { Toaster, Input } from "@components";
-import { REQUEST_PASSWORD_RESET } from "@graphql";
+import { REQUEST_PASSWORD_RESET_MUTATION } from "@graphql";
 import { ForgotForm_validationSchema } from "@data/Validations";
 import { FaSpinner } from "react-icons/fa";
 
 export const ForgotForm = () => {
-  const [requestPasswordReset, { loading }] = useMutation(REQUEST_PASSWORD_RESET);
+  const [requestPasswordReset, { loading }] = useMutation(REQUEST_PASSWORD_RESET_MUTATION);
 
   return (
     <div className="max-w-md mx-auto mt-10 space-y-5 px-2">

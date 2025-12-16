@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const CREATE_ORDER = gql`
+export const CREATE_ORDER_MUTATION = gql`
   mutation CreateOrder($input: CreateOrderInput!) {
     createOrder(input: $input) {
       id
@@ -26,7 +26,7 @@ export const CREATE_ORDER = gql`
   }
 `;
 
-export const UPDATE_ORDER = gql`
+export const UPDATE_ORDER_MUTATION = gql`
   mutation UpdateOrderById($id: ID!, $input: UpdateOrderByIdInput!) {
     updateOrderById(id: $id, input: $input) {
       id
@@ -51,7 +51,7 @@ export const UPDATE_ORDER = gql`
   }
 `;
 
-export const DELETE_ORDER = gql`
+export const DELETE_ORDER_MUTATION = gql`
   mutation RemoveOrderById($id: ID!) {
     removeOrderById(id: $id) {
       id

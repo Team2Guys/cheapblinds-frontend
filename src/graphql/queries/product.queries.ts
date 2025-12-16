@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_PRODUCT_LIST = gql`
+export const GET_PRODUCT_LIST_QUERY = gql`
   query GetProductList {
     productList {
       id
@@ -45,7 +45,7 @@ export const GET_PRODUCT_LIST = gql`
   }
 `;
 
-export const GET_PRODUCT_BY_ID = gql`
+export const GET_PRODUCT_BY_ID_QUERY = gql`
   query GetProductById($id: ID!) {
     productById(id: $id) {
       id
@@ -90,7 +90,7 @@ export const GET_PRODUCT_BY_ID = gql`
   }
 `;
 
-export const GET_CARD_PRODUCT = gql`
+export const GET_CARD_PRODUCT_QUERY = gql`
   query GetProductList {
     productList {
       id
@@ -116,7 +116,7 @@ export const GET_CARD_PRODUCT = gql`
   }
 `;
 
-export const GET_PRODUCT_BY_SEARCH = gql`
+export const GET_PRODUCT_BY_SEARCH_QUERY = gql`
   query GetProductList {
     productList {
       id
@@ -139,7 +139,7 @@ export const GET_PRODUCT_BY_SEARCH = gql`
   }
 `;
 
-export const GET_PRODUCT_BY_SLUG = gql`
+export const GET_PRODUCT_BY_SLUG_QUERY = gql`
   query GetProductBySlugs(
     $categorySlug: String!
     $subcategorySlug: String!

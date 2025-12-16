@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_CATEGORY_LIST = gql`
+export const GET_CATEGORY_LIST_QUERY = gql`
   query GetCategoryList {
     categoryList {
       id
@@ -22,7 +22,7 @@ export const GET_CATEGORY_LIST = gql`
   }
 `;
 
-export const GET_CATEGORY_BY_ID = gql`
+export const GET_CATEGORY_BY_ID_QUERY = gql`
   query GetCategoryById($id: ID!) {
     categoryById(id: $id) {
       id
@@ -44,7 +44,7 @@ export const GET_CATEGORY_BY_ID = gql`
   }
 `;
 
-export const GET_CARD_CATEGORY = gql`
+export const GET_CARD_CATEGORY_QUERY = gql`
   query GetCategoryList {
     categoryList {
       id
@@ -56,7 +56,7 @@ export const GET_CARD_CATEGORY = gql`
   }
 `;
 
-export const GET_CATEGORY_BY_SLUG = gql`
+export const GET_CATEGORY_BY_SLUG_QUERY = gql`
   query GetCategoryBySlug($slug: String!) {
     categoryBySlug(input: { slug: $slug }) {
       id

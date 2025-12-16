@@ -1,14 +1,14 @@
 import { RelatedProduct } from "@components";
 import { AllOrders } from "@components/thank-you/Orders";
 import { fetchProducts } from "@config/fetch";
-import { GET_CARD_PRODUCT } from "@graphql";
+import { GET_CARD_PRODUCT_QUERY } from "@graphql";
 import { Product } from "@/types/category";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 
 const ThankYou = async () => {
-  const productList = await fetchProducts(GET_CARD_PRODUCT);
+  const productList = await fetchProducts(GET_CARD_PRODUCT_QUERY);
   const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
 
   return (

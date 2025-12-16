@@ -1,7 +1,7 @@
 import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting, ProductDetail } from "@components";
 import { fetchProducts, fetchSingleProduct } from "@config/fetch";
 import { notFound } from "next/navigation";
-import { GET_CARD_PRODUCT } from "@graphql";
+import { GET_CARD_PRODUCT_QUERY } from "@graphql";
 import { Product } from "@/types/category";
 
 const ProductPage = async ({
@@ -11,7 +11,7 @@ const ProductPage = async ({
 }) => {
   const { category, subCategory, product } = await params;
   const [productList, SingleProduct] = await Promise.all([
-    fetchProducts(GET_CARD_PRODUCT),
+    fetchProducts(GET_CARD_PRODUCT_QUERY),
     fetchSingleProduct(category, subCategory, product),
   ]);
 

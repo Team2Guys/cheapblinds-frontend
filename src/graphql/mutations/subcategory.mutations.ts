@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 // Create a subcategory
-export const CREATE_SUBCATEGORY = gql`
+export const CREATE_SUBCATEGORY_MUTATION = gql`
   mutation CreateSubcategory($input: CreateSubcategoryInput!) {
     createSubcategory(input: $input) {
       status
@@ -11,7 +11,7 @@ export const CREATE_SUBCATEGORY = gql`
 `;
 
 // Update a subcategory by ID
-export const UPDATE_SUBCATEGORY_BY_ID = gql`
+export const UPDATE_SUBCATEGORY_BY_ID_MUTATION = gql`
   mutation UpdateSubcategoryById($input: UpdateSubcategoryByIdInput!) {
     updateSubcategoryById(input: $input) {
       status
@@ -21,7 +21,7 @@ export const UPDATE_SUBCATEGORY_BY_ID = gql`
 `;
 
 // Remove a subcategory by ID
-export const REMOVE_SUBCATEGORY_BY_ID = gql`
+export const REMOVE_SUBCATEGORY_BY_ID_MUTATION = gql`
   mutation RemoveSubcategoryById($input: RemoveSubcategoryByIdInput!) {
     removeSubcategoryById(input: $input) {
       status
