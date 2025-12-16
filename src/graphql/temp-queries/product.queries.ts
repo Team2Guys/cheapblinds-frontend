@@ -19,12 +19,12 @@ export const GET_PRODUCT_LIST = gql`
       price
       discountPrice
       stock
-      status
       width
       height
       color
       pattern
       composition
+      status
       categoryId
       subcategoryId
       category {
@@ -100,6 +100,29 @@ export const GET_CARD_PRODUCT = gql`
       posterImageUrl
       price
       discountPrice
+      stock
+      status
+      category {
+        id
+        name
+        slug
+      }
+      subcategory {
+        id
+        name
+        slug
+      }
+    }
+  }
+`;
+
+export const GET_PRODUCT_BY_SEARCH = gql`
+  query GetProductList {
+    productList {
+      id
+      name
+      slug
+      posterImageUrl
       stock
       status
       category {
