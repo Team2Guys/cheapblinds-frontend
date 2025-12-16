@@ -80,11 +80,11 @@ export const fetchSingleSubCategory = async (
   }
 };
 
-export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode):Promise<Product[] | null> => {
+export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode): Promise<Product[]> => {
   try {
     const { data } = await ApolloCustomClient.query({
       query: FETCH_PRODUCT ? FETCH_PRODUCT : GET_PRODUCT_LIST,
-      fetchPolicy: "no-cache",
+      fetchPolicy: "no-cache", 
       context: {
         fetchOptions: {
           next: { tags: ["productsList"] },
@@ -92,12 +92,17 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode):Promise<Produc
       },
     });
 
-    return data.productList || [];
-  } catch (error) {
+    // 1. Verify data exists
+    if (data && data.productList) {
+      return data.productList; // <--- THIS IS THE CRITICAL LINE
+    }
+
     return [];
-    throw error;
-  }
-};
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  } 
+}; 
 
 export const fetchSingleProduct = async (
   categorySlug: string,
