@@ -1,2 +1,2 @@
-export * from "./temp-queries";
-export * from "./temp-mutations";
+export * from "./queries";
+export * from "./mutations";
