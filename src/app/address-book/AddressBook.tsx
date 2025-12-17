@@ -23,7 +23,7 @@ const AddressBookPage = () => {
     }
   }, [user, isLoading, router]);
 
- useEffect(() => {
+  useEffect(() => {
     if (!user) return;
 
     const loadData = async () => {
@@ -44,17 +44,13 @@ const AddressBookPage = () => {
   }, [user]);
 
   if (!user) return null;
-  
+
   return (
     <div>
       <div className="container mx-auto px-2 flex flex-wrap md:flex-nowrap gap-4 my-10">
         <AccountSidebar />
         <div className="flex-1">
-          <AddressBook
-            userId={user.id}
-            addressList={addressList}   
-            userList={userList}  
-          />
+          <AddressBook userId={user.id} addressList={addressList} userList={userList} />
         </div>
       </div>
 

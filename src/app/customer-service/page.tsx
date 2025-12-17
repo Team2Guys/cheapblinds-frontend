@@ -60,11 +60,11 @@ const CustomerService = () => {
           ))}
         </div>
       </div>
-      <h3 className="font-rubik font-semibold text-xl" id="Order">Order Queries</h3>
+      <h3 className="font-rubik font-semibold text-xl" id="Order">
+        Order Queries
+      </h3>
       <div className="border-l border-secondary px-2 space-y-4">
-        <h4 className="font-semibold">
-          Placing an order
-        </h4>
+        <h4 className="font-semibold">Placing an order</h4>
         <p>
           If you’re not sure about the colours, you can even order free samples to be delivered to
           you. This will give you a much better idea of the colours, textures that might be harder
@@ -78,7 +78,9 @@ const CustomerService = () => {
           important details such as your order number, the items you have purchased, and the total
           price. You will receive email updates on the progress of your order as well.
         </p>
-        <h4 className="font-semibold" id="Delivery">Ways to pay</h4>
+        <h4 className="font-semibold" id="Delivery">
+          Ways to pay
+        </h4>
         <ul className="list-decimal px-6">
           <li>
             <strong>VISA</strong> (Debit/Credit card)
@@ -136,9 +138,7 @@ const CustomerService = () => {
           to reset your password.
         </p>
 
-        <h3 className="font-rubik font-semibold text-xl" >
-          Returns & Refunds
-        </h3>
+        <h3 className="font-rubik font-semibold text-xl">Returns & Refunds</h3>
         <p>
           <Link className="text-primary underline" href="/returns-refunds">
             Click here

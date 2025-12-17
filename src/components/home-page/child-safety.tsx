@@ -16,7 +16,10 @@ export const ChildSafety = () => {
         </div>
         <div className="max-md:text-center">
           <h2 className="text-primary text-medium mb-2">Child Safety</h2>
-          <p>All of our blinds are designed with safety in mind, so wherever there are hanging cords or loops, we&apos;ll provide you with all the relevant safety devices and instructions on how to use them. Enjoy your blinds with peace of mind.
+          <p>
+            All of our blinds are designed with safety in mind, so wherever there are hanging cords
+            or loops, we&apos;ll provide you with all the relevant safety devices and instructions
+            on how to use them. Enjoy your blinds with peace of mind.
           </p>
         </div>
       </div>

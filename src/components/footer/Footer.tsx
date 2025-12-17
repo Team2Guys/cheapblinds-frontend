@@ -102,7 +102,7 @@ const Footer = () => {
                   </div>
                 </div>
               </div>
-              <Newsletter/>
+              <Newsletter />
             </div>
           </div>
         </div>

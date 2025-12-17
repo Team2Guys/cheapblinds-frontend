@@ -35,5 +35,3 @@ export const GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL_QUERY = gql`
     }
   }
 `;
-
-

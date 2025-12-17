@@ -58,7 +58,7 @@ export const SampleCheckout = ({ freeSamplesList }: { freeSamplesList: Product[]
   };
   const handleSubmit = async (values: Orders, { resetForm }: FormikHelpers<Orders>) => {
     try {
-     const response = await createOrder({
+      const response = await createOrder({
         variables: {
           input: {
             ...values,

@@ -13,7 +13,7 @@ export const RelatedProduct = ({ title, description, data, titleStart }: Related
       <h2 className={`text-heading pb-5 ${titleStart ? "text-start" : "text-center"}`}>{title}</h2>
       <p className="text-center">{description}</p>
       <SwiperSlider navigation spaceBetween={10} loop breakpoints={RelatedBreakpoints}>
-        {data.map((array) => (
+        {data.slice(0, 12).map((array) => (
           <SwiperSlide key={array.id} className="mb-5">
             <Link
               href={

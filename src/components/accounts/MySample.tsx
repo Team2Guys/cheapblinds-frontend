@@ -17,7 +17,7 @@ export const MySample: React.FC<MySampleProps> = ({ orderList }) => {
     {
       title: "Order ID",
       key: "id",
-      render: (order: Orders) => `#ORD-${(order.id || "" ).slice(0, 8)}`,
+      render: (order: Orders) => `#ORD-${(order.id || "").slice(0, 8)}`,
     },
     {
       title: "Ship To",

@@ -46,4 +46,3 @@ export const GET_USER_FOR_ADDRESS_QUERY = gql`
     }
   }
 `;
-

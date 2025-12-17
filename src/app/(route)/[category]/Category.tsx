@@ -40,13 +40,13 @@ const useFilterOptions = (allProducts: Product[]) => {
       increment(counts.type, product.parentSubcategoryUrl);
       increment(counts.pattern, product.pattern);
       increment(counts.composition, product.composition);
-      
+
       if (product.width !== undefined) {
         increment(counts.width, `Up To ${product.width}cm Wide`);
       }
-      
+
       increment(counts.colour, product.color);
-      
+
       if (product.isMotorized) {
         counts.motorized += 1;
       }
@@ -92,8 +92,8 @@ const CategoryPage = ({
   const subcategoryArray = Array.isArray(ProductList)
     ? ProductList.filter((sub) => sub.status === "PUBLISHED")
     : ProductList && ProductList.status === "PUBLISHED"
-    ? [ProductList]
-    : [];
+      ? [ProductList]
+      : [];
 
   const allProducts = useMemo(() => {
     return subcategoryArray.flatMap((subCat) =>
@@ -105,13 +105,13 @@ const CategoryPage = ({
         })),
     );
   }, [subcategoryArray]);
-  const { 
-    typeOptions, 
-    patternOptions, 
-    compositionOptions, 
-    widthOptions, 
+  const {
+    typeOptions,
+    patternOptions,
+    compositionOptions,
+    widthOptions,
     colourOptions,
-    motorizedCount 
+    motorizedCount,
   } = useFilterOptions(allProducts);
 
   const filteredProducts = useMemo(() => {
@@ -206,7 +206,6 @@ const CategoryPage = ({
             showTypeFilter={subcategoryArray.length > 1}
             selectedMotorized={selectedMotorized}
             setSelectedMotorized={setSelectedMotorized}
-            
           />
         </div>
 
@@ -216,9 +215,9 @@ const CategoryPage = ({
             description={description}
             sort={sort}
             setSort={setSort}
-            // Note: If CategoryHeader uses these props, you need to update its types as well, 
+            // Note: If CategoryHeader uses these props, you need to update its types as well,
             // otherwise pass the raw strings like: typeOptions.map(t => t.name)
-            typeOptions={typeOptions} 
+            typeOptions={typeOptions}
             patternOptions={patternOptions}
             compositionOptions={compositionOptions}
             widthOptions={widthOptions}

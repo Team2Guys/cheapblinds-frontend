@@ -40,23 +40,50 @@ const RefundRefunds = () => {
           measurements were input correctly on your original order form.
         </p>
         <ul className="list-disc px-6">
-          <li>Please note: Selecting &apos;Recess&apos; <Link className="text-primary underline" href="/measuring-guides" >measurement</Link> for blinds will automatically reduce the blind&apos;s width by 10mm. Curtain drop measurements have a standard manufacturing tolerance of 20mm.</li>
+          <li>
+            Please note: Selecting &apos;Recess&apos;{" "}
+            <Link className="text-primary underline" href="/measuring-guides">
+              measurement
+            </Link>{" "}
+            for blinds will automatically reduce the blind&apos;s width by 10mm. Curtain drop
+            measurements have a standard manufacturing tolerance of 20mm.
+          </li>
         </ul>
-        <p>If you believe the product measurements are incorrect, please take a clear image that shows the incorrect measurement with a tape measure clearly in the shot against the product. We require a full image showing the entire product and the measurement. Send this, along with your order number, to our customer service team within 7 days of delivery.</p>
+        <p>
+          If you believe the product measurements are incorrect, please take a clear image that
+          shows the incorrect measurement with a tape measure clearly in the shot against the
+          product. We require a full image showing the entire product and the measurement. Send
+          this, along with your order number, to our customer service team within 7 days of
+          delivery.
+        </p>
       </div>
       <div className="space-y-3">
         <h3 className="text-medium">Defect</h3>
-        <p>If your product has a defect, please take a clear image of the issue and send it to our customer service team within 7 days of delivery.</p>
+        <p>
+          If your product has a defect, please take a clear image of the issue and send it to our
+          customer service team within 7 days of delivery.
+        </p>
       </div>
       <div className="space-y-3">
         <h3 className="text-medium">Refunds</h3>
-        <p>When processing a refund (for an approved return or cancellation), we will refund the same card originally used to pay for the order. Refunds can take 7 to 10 days to process from the day the request has been approved by our online customer care team.</p>
+        <p>
+          When processing a refund (for an approved return or cancellation), we will refund the same
+          card originally used to pay for the order. Refunds can take 7 to 10 days to process from
+          the day the request has been approved by our online customer care team.
+        </p>
       </div>
       <div className="space-y-3">
         <h3 className="text-medium font-semibold">Note</h3>
         <ul className="list-disc px-6">
-          <li>Please note there may be a minor difference in fabric colour between the images displayed online and the actual product. This is typically caused by variations in screen calibrations and resolutions across different monitors.</li>
-          <li>Product colour may slightly vary due to photographic lighting sources or your individual monitor settings.</li>
+          <li>
+            Please note there may be a minor difference in fabric colour between the images
+            displayed online and the actual product. This is typically caused by variations in
+            screen calibrations and resolutions across different monitors.
+          </li>
+          <li>
+            Product colour may slightly vary due to photographic lighting sources or your individual
+            monitor settings.
+          </li>
         </ul>
       </div>
     </div>

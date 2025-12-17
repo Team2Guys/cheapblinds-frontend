@@ -48,9 +48,7 @@ export const GET_SUBCATEGORY_BY_ID_QUERY = gql`
 
 export const GET_SUBCATEGORY_BY_URLS_QUERY = gql`
   query GetSubcategoryBySlugs($subcategorySlug: String!, $categorySlug: String!) {
-    subcategoryBySlugs(
-      input: { subcategorySlug: $subcategorySlug, categorySlug: $categorySlug }
-    ) {
+    subcategoryBySlugs(input: { subcategorySlug: $subcategorySlug, categorySlug: $categorySlug }) {
       id
       name
       description

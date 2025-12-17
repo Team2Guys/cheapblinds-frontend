@@ -175,7 +175,7 @@ export const Filters = ({
           ))}
         </div>
       </div>
-      
+
       <Accordion
         title="Motorised"
         sectionKey="motorized"
@@ -220,7 +220,9 @@ export const Filters = ({
                 >
                   {selectedType.includes(item.name) && <FaCheck />}
                 </span>
-                <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
+                <p>
+                  {item.name} <span className="text-gray-500 text-sm">({item.count})</span>
+                </p>
               </button>
             ))}
           </div>
@@ -257,7 +259,9 @@ export const Filters = ({
                   height={30}
                   className="object-cover"
                 />
-                <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
+                <p>
+                  {item.name} <span className="text-gray-500 text-sm">({item.count})</span>
+                </p>
               </button>
             );
           })}
@@ -283,7 +287,9 @@ export const Filters = ({
               >
                 {selectedWidth.includes(item.name) && <FaCheck />}
               </span>
-              <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
+              <p>
+                {item.name} <span className="text-gray-500 text-sm">({item.count})</span>
+              </p>
             </button>
           ))}
         </div>
@@ -308,7 +314,9 @@ export const Filters = ({
               >
                 {selectedPattern.includes(item.name) && <FaCheck />}
               </span>
-              <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
+              <p>
+                {item.name} <span className="text-gray-500 text-sm">({item.count})</span>
+              </p>
             </button>
           ))}
         </div>
@@ -325,7 +333,9 @@ export const Filters = ({
           {compositionOptions.map((item) => (
             <button
               key={item.name}
-              onClick={() => toggleSelection(item.name, setSelectedComposition, selectedComposition)}
+              onClick={() =>
+                toggleSelection(item.name, setSelectedComposition, selectedComposition)
+              }
               className="flex items-center gap-2 capitalize cursor-pointer"
             >
               <span
@@ -333,7 +343,9 @@ export const Filters = ({
               >
                 {selectedComposition.includes(item.name) && <FaCheck />}
               </span>
-              <p>{item.name} <span className="text-gray-500 text-sm">({item.count})</span></p>
+              <p>
+                {item.name} <span className="text-gray-500 text-sm">({item.count})</span>
+              </p>
             </button>
           ))}
         </div>

@@ -35,7 +35,6 @@ const Home = async () => {
         image2="/assets/images/home/zebraimg.webp"
         btnText="Explore More"
         btnLink="/roller-blinds"
-        
       />
       <div className="px-2">
         <Herobanner

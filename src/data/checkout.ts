@@ -5,7 +5,7 @@ export const emirates = [
   { value: "Ajman", label: "Ajman" },
   { value: "Umm Al-Quwain", label: "Umm Al-Quwain" },
   { value: "Ras Al Khaimah", label: "Ras Al Khaimah" },
-  { value: "Fujairah", label: "Fujairah" }
+  { value: "Fujairah", label: "Fujairah" },
 ];
 
 export const emirateCityMap: Record<string, { value: string; label: string }[]> = {
@@ -67,9 +67,8 @@ export const emirateCityMap: Record<string, { value: string; label: string }[]> 
     { value: "Grand Mosque District", label: "Grand Mosque District" },
     { value: "Shakhbout City", label: "Shakhbout City" },
     { value: "Lulu Island", label: "Lulu Island" },
-
   ],
-  "Dubai": [
+  Dubai: [
     { value: "Downtown", label: "Downtown" },
     { value: "Business Bay", label: "Business Bay" },
     { value: "Dubai Marina", label: "Dubai Marina" },
@@ -133,9 +132,9 @@ export const emirateCityMap: Record<string, { value: string; label: string }[]> 
     { value: "World Islands", label: "World Islands" },
     { value: "Yas Island", label: "Yas Island" },
     { value: "Za'abeel", label: "Za'abeel" },
-    { value: "Zayed City", label: "Zayed City" }
+    { value: "Zayed City", label: "Zayed City" },
   ],
-  "Sharjah": [
+  Sharjah: [
     { value: "Sharjah", label: "Sharjah" },
     { value: "Khor Fakkan", label: "Khor Fakkan" },
     { value: "Kalba", label: "Kalba" },
@@ -148,7 +147,7 @@ export const emirateCityMap: Record<string, { value: string; label: string }[]> 
     { value: "Al Hamriyah", label: "Al Hamriyah" },
     { value: "Wadi Shi", label: "Wadi Shi" },
   ],
-  "Ajman": [
+  Ajman: [
     { value: "Ajman", label: "Ajman" },
     { value: "Masfout", label: "Masfout" },
     { value: "Manama", label: "Manama" },
@@ -171,7 +170,7 @@ export const emirateCityMap: Record<string, { value: string; label: string }[]> 
     { value: "Ghayl", label: "Ghayl" },
     { value: "Al Hamraniyah", label: "Al Hamraniyah" },
   ],
-  "Fujairah": [
+  Fujairah: [
     { value: "Fujairah", label: "Fujairah" },
     { value: "Dibba Al-Fujairah", label: "Dibba Al-Fujairah" },
     { value: "Masafi", label: "Masafi" },

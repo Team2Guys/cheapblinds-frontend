@@ -49,4 +49,3 @@ export const OrderData = [
     image: "/assets/images/bin/product.png",
   },
 ];
-
