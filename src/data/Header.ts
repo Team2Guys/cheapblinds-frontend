@@ -2,7 +2,6 @@ import { FaFacebookF, FaPinterest } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io";
 import { MenuItem, SocialLink } from "@/types/Header";
 
-
 export const cartItems = [
   {
     name: "Velvet Chair",

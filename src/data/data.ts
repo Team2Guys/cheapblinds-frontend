@@ -24,5 +24,3 @@ export const categoryFeatures = [
     name: "Express delivery",
   },
 ];
-
-

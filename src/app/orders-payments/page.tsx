@@ -54,23 +54,50 @@ const OrdersPayments = () => {
       <div className="space-y-3">
         <h2 className="text-medium">Order delays and out of stock orders</h2>
         <p>We work hard to ensure our offered ranges are fully up to date and available.</p>
-        <p>On the rare occasion something is unavailable, we will contact you right away and offer an alternative or refund your payment asap.</p>
+        <p>
+          On the rare occasion something is unavailable, we will contact you right away and offer an
+          alternative or refund your payment asap.
+        </p>
       </div>
 
-      <div className="space-y-3"> 
+      <div className="space-y-3">
         <h2 className="text-medium">Cancelling and amending orders</h2>
-        <p><strong>Cancelling your order:</strong> As everything is custom made to your precise specifications, once an order goes into production, we cannot offer cancellations. However, if you have noticed an error or have a change of mind, please call us immediately as it might be possible to stop the order from starting manufacturing. Our aim is to be as helpful as possible, so where we can, we will definitely be there for you.</p>
-        <p><strong>Changing delivery information:</strong> If for any reason you need to change the delivery address or contact details, just call, whatsapp or drop us an email with the updated details</p>
-        <p><strong>Adding items to your order:</strong> You can either place a new order or contact us to update from our end.</p>
+        <p>
+          <strong>Cancelling your order:</strong> As everything is custom made to your precise
+          specifications, once an order goes into production, we cannot offer cancellations.
+          However, if you have noticed an error or have a change of mind, please call us immediately
+          as it might be possible to stop the order from starting manufacturing. Our aim is to be as
+          helpful as possible, so where we can, we will definitely be there for you.
+        </p>
+        <p>
+          <strong>Changing delivery information:</strong> If for any reason you need to change the
+          delivery address or contact details, just call, whatsapp or drop us an email with the
+          updated details
+        </p>
+        <p>
+          <strong>Adding items to your order:</strong> You can either place a new order or contact
+          us to update from our end.
+        </p>
       </div>
 
       <div className="space-y-3">
         <h2 className="text-medium">Returns and refunds</h2>
-        <p>For full details of our returns and refunds policy please check our <Link className="text-primary underline" href="/returns-refunds">Returns & Refunds Policy.</Link></p>
+        <p>
+          For full details of our returns and refunds policy please check our{" "}
+          <Link className="text-primary underline" href="/returns-refunds">
+            Returns & Refunds Policy.
+          </Link>
+        </p>
       </div>
       <div className="space-y-3">
         <h2 className="text-medium">Order history</h2>
-        <p>Simply log in to your <Link className="text-primary underline" href="/account">online account</Link> to view your order history.</p>
+        <p>
+          Simply log in to your{" "}
+          <Link className="text-primary underline" href="/account">
+            online account
+          </Link>{" "}
+          to view your order history.
+        </p>
       </div>
     </div>
   );

@@ -102,45 +102,44 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
     });
   }, [totalSlides, centerOffset]);
   const getPositionClass = useCallback(
-  (index: number) => {
-    const diff = index - activeIndex;
+    (index: number) => {
+      const diff = index - activeIndex;
 
-    if (diff === 0) {
-      return "z-40 scale-100 translate-x-0 opacity-100 blur-0 grayscale-0";
-    }
+      if (diff === 0) {
+        return "z-40 scale-100 translate-x-0 opacity-100 blur-0 grayscale-0";
+      }
 
-    if (Math.abs(diff) === 1) {
-      const isRight = diff > 0;
-      const tx = isRight
-        ? "translate-x-[65%] md:translate-x-[60%]"
-        : "-translate-x-[65%] md:-translate-x-[60%]";
+      if (Math.abs(diff) === 1) {
+        const isRight = diff > 0;
+        const tx = isRight
+          ? "translate-x-[65%] md:translate-x-[60%]"
+          : "-translate-x-[65%] md:-translate-x-[60%]";
 
-      return `z-30 scale-[0.85] ${tx} opacity-100 blur-[0.5px] grayscale-[10%]`;
-    }
+        return `z-30 scale-[0.85] ${tx} opacity-100 blur-[0.5px] grayscale-[10%]`;
+      }
 
-    if (Math.abs(diff) === 2) {
-      const isRight = diff > 0;
-      const tx = isRight
-        ? "translate-x-[120%] md:translate-x-[120%]"
-        : "-translate-x-[120%] md:-translate-x-[120%]";
+      if (Math.abs(diff) === 2) {
+        const isRight = diff > 0;
+        const tx = isRight
+          ? "translate-x-[120%] md:translate-x-[120%]"
+          : "-translate-x-[120%] md:-translate-x-[120%]";
 
-      return `z-20 scale-[0.70] ${tx} opacity-90 blur-[1px] grayscale-[30%]`;
-    }
+        return `z-20 scale-[0.70] ${tx} opacity-90 blur-[1px] grayscale-[30%]`;
+      }
 
-    if (Math.abs(diff) === 3) {
-      const isRight = diff > 0;
-      const tx = isRight
-        ? "translate-x-[170%] md:translate-x-[180%]"
-        : "-translate-x-[170%] md:-translate-x-[180%]";
+      if (Math.abs(diff) === 3) {
+        const isRight = diff > 0;
+        const tx = isRight
+          ? "translate-x-[170%] md:translate-x-[180%]"
+          : "-translate-x-[170%] md:-translate-x-[180%]";
 
-      return `z-10 scale-[0.55] ${tx} opacity-0 md:opacity-80 blur-[2px] grayscale-[50%]`;
-    }
+        return `z-10 scale-[0.55] ${tx} opacity-0 md:opacity-80 blur-[2px] grayscale-[50%]`;
+      }
 
-    return "opacity-0 z-0 scale-0 pointer-events-none";
-  },
-  [activeIndex],
-);
-
+      return "opacity-0 z-0 scale-0 pointer-events-none";
+    },
+    [activeIndex],
+  );
 
   const slideElements = useMemo(
     () =>
@@ -241,7 +240,6 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
       >
         {slideElements}
       </div>
-
     </div>
   );
 };

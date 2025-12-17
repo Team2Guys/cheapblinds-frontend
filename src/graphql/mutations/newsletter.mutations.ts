@@ -10,13 +10,9 @@ export const CREATE_NEWSLETTER_SUBSCRIBER_MUTATION = gql`
 `;
 
 export const UPDATE_NEWSLETTER_SUBSCRIBER_MUTATION = gql`
-  mutation UpdateNewsletterSubscriberById(
-    $id: ID!
-    $input: UpdateNewsletterSubscriberByIdInput!
-  ) {
+  mutation UpdateNewsletterSubscriberById($id: ID!, $input: UpdateNewsletterSubscriberByIdInput!) {
     updateNewsletterSubscriberById(id: $id, input: $input) {
       isActive
     }
   }
 `;
-

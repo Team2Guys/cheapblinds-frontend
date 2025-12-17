@@ -28,7 +28,7 @@ export const RegisterForm = () => {
 
   const handleSubmit = async (
     values: RegisterFormValues,
-    { resetForm }: FormikHelpers<RegisterFormValues>
+    { resetForm }: FormikHelpers<RegisterFormValues>,
   ) => {
     try {
       // 1️⃣ Create User Account
@@ -57,16 +57,12 @@ export const RegisterForm = () => {
       // 3️⃣ Success Popup
       toast.success(
         <div className="text-center space-y-2 p-2">
-          <h3 className="font-bold text-lg text-black">
-            Account Created Successfully 🎉
-          </h3>
+          <h3 className="font-bold text-lg text-black">Account Created Successfully 🎉</h3>
           <p className="text-sm">
             Please verify your account. We’ve sent a confirmation email to{" "}
             <span className="font-semibold">{values.email}</span>.
           </p>
-          <p className="text-sm text-gray-500">
-            Open your inbox to activate your account.
-          </p>
+          <p className="text-sm text-gray-500">Open your inbox to activate your account.</p>
         </div>,
         {
           position: "top-center",
@@ -74,14 +70,13 @@ export const RegisterForm = () => {
           hideProgressBar: true,
           className: "rounded-lg shadow-xl bg-white text-black p-6",
           onClose: () => router.push("/login"),
-        }
+        },
       );
 
       resetForm();
     } catch (error: unknown) {
       if (error instanceof ApolloError) {
-        const gqlMessage =
-          error.graphQLErrors?.[0]?.message?.toLowerCase() || "";
+        const gqlMessage = error.graphQLErrors?.[0]?.message?.toLowerCase() || "";
 
         if (
           gqlMessage.includes("user already exists") ||
@@ -139,22 +134,14 @@ export const RegisterForm = () => {
 
             <Input name="email" type="email" placeholder="Email address*" />
             <Input name="password" type="password" placeholder="Password*" />
-            <Input
-              name="confirmPassword"
-              type="password"
-              placeholder="Confirm Password*"
-            />
+            <Input name="confirmPassword" type="password" placeholder="Confirm Password*" />
 
             <button
               type="submit"
               disabled={loading}
               className="w-fit bg-primary font-semibold py-2 px-4 rounded-md mx-auto disabled:opacity-50 cursor-pointer flex items-center gap-2"
             >
-              {loading ? (
-                <FaSpinner className="animate-spin text-lg" />
-              ) : (
-                "Create an Account"
-              )}
+              {loading ? <FaSpinner className="animate-spin text-lg" /> : "Create an Account"}
             </button>
           </Form>
         )}

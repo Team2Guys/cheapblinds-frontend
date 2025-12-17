@@ -8,7 +8,9 @@ import { CREATE_NEWSLETTER_SUBSCRIBER_MUTATION } from "@graphql";
 import { Toaster } from "@components/ui";
 
 export const Newsletter = () => {
-  const [createNewsletterSubscriber, { loading }] = useMutation(CREATE_NEWSLETTER_SUBSCRIBER_MUTATION);
+  const [createNewsletterSubscriber, { loading }] = useMutation(
+    CREATE_NEWSLETTER_SUBSCRIBER_MUTATION,
+  );
 
   const formik = useFormik({
     initialValues: {

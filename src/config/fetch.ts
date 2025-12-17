@@ -13,9 +13,14 @@ import {
   GET_SUBCATEGORY_BY_URLS_QUERY,
   GET_USER_BY_ID_QUERY,
 } from "@graphql";
-import { addressProps, NewsletterProps, Orders, Product, Subcategory, UserProps } from "@/types/category";
-
-
+import {
+  addressProps,
+  NewsletterProps,
+  Orders,
+  Product,
+  Subcategory,
+  UserProps,
+} from "@/types/category";
 
 export const fetchCategories = async (FETCH_CATEGORY?: DocumentNode) => {
   try {
@@ -84,7 +89,7 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode): Promise<Produ
   try {
     const { data } = await ApolloCustomClient.query({
       query: FETCH_PRODUCT ? FETCH_PRODUCT : GET_PRODUCT_LIST_QUERY,
-      fetchPolicy: "no-cache", 
+      fetchPolicy: "no-cache",
       context: {
         fetchOptions: {
           next: { tags: ["productsList"] },
@@ -101,8 +106,8 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode): Promise<Produ
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];
-  } 
-}; 
+  }
+};
 
 export const fetchSingleProduct = async (
   categorySlug: string,
@@ -130,7 +135,6 @@ export const fetchSingleProduct = async (
     return null;
   }
 };
-
 
 export const fetchOrdersByUserId = async (
   id: string,
@@ -172,7 +176,7 @@ export const fetchSingleOrder = async (
 
 export const fetchAddressListByUser = async (
   userId: string,
-  CUSTOM_QUERY?: DocumentNode
+  CUSTOM_QUERY?: DocumentNode,
 ): Promise<addressProps[] | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
@@ -191,7 +195,7 @@ export const fetchAddressListByUser = async (
 
 export const fetchNewsletterByEmail = async (
   email: string,
-  CUSTOM_QUERY?: DocumentNode
+  CUSTOM_QUERY?: DocumentNode,
 ): Promise<NewsletterProps | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
@@ -208,10 +212,9 @@ export const fetchNewsletterByEmail = async (
   }
 };
 
-
 export const fetchUserById = async (
   id: string,
-  CUSTOM_QUERY?: DocumentNode
+  CUSTOM_QUERY?: DocumentNode,
 ): Promise<UserProps | null> => {
   try {
     const { data } = await ApolloCustomClient.query({

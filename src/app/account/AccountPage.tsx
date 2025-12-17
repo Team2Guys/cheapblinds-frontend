@@ -13,21 +13,21 @@ const AccountPage = () => {
   const { user, isLoading } = useAuth();
   const [userList, setUser] = useState<UserProps | null>(null);
   const router = useRouter();
-   useEffect(() => {
-      if (!user) return;
-  
-      const loadData = async () => {
-        try {
-          const userResponse = await fetchUserById(user.id);
+  useEffect(() => {
+    if (!user) return;
 
-          setUser(userResponse || null);
-        } catch (error) {
-          console.error("Failed to fetch addresses or user data:", error);
-        }
-      };
-  
-      loadData();
-    }, [user]);
+    const loadData = async () => {
+      try {
+        const userResponse = await fetchUserById(user.id);
+
+        setUser(userResponse || null);
+      } catch (error) {
+        console.error("Failed to fetch addresses or user data:", error);
+      }
+    };
+
+    loadData();
+  }, [user]);
 
   useEffect(() => {
     if (!isLoading && !user) {
