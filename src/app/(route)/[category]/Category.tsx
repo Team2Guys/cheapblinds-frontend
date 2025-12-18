@@ -1,7 +1,7 @@
 "use client";
 
 import { HeroSection, Card, Filters, Toaster } from "@components";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, Suspense } from "react";
 import { CategoryPageProps, Product } from "@/types/category";
 import CategoryHeader from "@components/category/categoryHeader";
 import { useIndexedDb } from "@lib/useIndexedDb";
@@ -230,6 +230,7 @@ const CategoryPage = ({
             selectedMotorized={selectedMotorized}
             setSelectedMotorized={setSelectedMotorized}
           />
+          <Suspense fallback={<div>Loading Product ...</div>}>
           <Card
             products={sortedProducts}
             categoryName={categoryName}
@@ -237,6 +238,7 @@ const CategoryPage = ({
             selectedMotorized={selectedMotorized}
             onFreeSample={handleFreeSample}
           />
+          </Suspense>
         </div>
       </div>
     </>
