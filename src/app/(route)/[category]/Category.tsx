@@ -1,12 +1,10 @@
 "use client";
 
 import { HeroSection, Card, Filters, Toaster } from "@components";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, Suspense } from "react";
 import { CategoryPageProps, Product } from "@/types/category";
 import CategoryHeader from "@components/category/categoryHeader";
 import { useIndexedDb } from "@lib/useIndexedDb";
-
-// --- HELPER TYPES FOR FILTERS ---
 export type FilterOption = {
   name: string;
   count: number;
@@ -17,8 +15,6 @@ export type ColorFilterOption = {
   color: string;
   count: number;
 };
-
-// --- UPDATED HOOK TO CALCULATE COUNTS ---
 const useFilterOptions = (allProducts: Product[]) => {
   return useMemo(() => {
     const counts = {
@@ -51,8 +47,6 @@ const useFilterOptions = (allProducts: Product[]) => {
         counts.motorized += 1;
       }
     });
-
-    // Helper to convert map to array
     const toOptionArray = (obj: Record<string, number>): FilterOption[] => {
       return Object.entries(obj).map(([name, count]) => ({ name, count }));
     };
@@ -64,7 +58,7 @@ const useFilterOptions = (allProducts: Product[]) => {
       widthOptions: toOptionArray(counts.width),
       colorOptions: Object.entries(counts.color).map(([name, count]) => ({
         name,
-        color: name, // Assuming color code/name matches, or you can look it up
+        color: name,
         count,
       })),
       motorizedCount: counts.motorized,
@@ -236,6 +230,7 @@ const CategoryPage = ({
             selectedMotorized={selectedMotorized}
             setSelectedMotorized={setSelectedMotorized}
           />
+          <Suspense fallback={<div>Loading Product ...</div>}>
           <Card
             products={sortedProducts}
             categoryName={categoryName}
@@ -243,6 +238,7 @@ const CategoryPage = ({
             selectedMotorized={selectedMotorized}
             onFreeSample={handleFreeSample}
           />
+          </Suspense>
         </div>
       </div>
     </>

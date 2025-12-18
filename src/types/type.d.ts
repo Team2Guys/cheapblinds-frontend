@@ -11,7 +11,6 @@ export interface FormProps {
   recessType: string;
 }
 
-
 export interface ContactData {
   heading: string;
   paragraph: string;

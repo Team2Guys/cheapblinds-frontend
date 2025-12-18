@@ -3,12 +3,13 @@
 import { Product } from "@/types/category";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useEffect } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { TfiTrash } from "react-icons/tfi";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { ColorImage } from "@data/filter-colors";
 import { useIndexedDb } from "@lib/useIndexedDb";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface CardProps {
   products: Product[];
@@ -31,23 +32,66 @@ export const Card = ({
   onDelete,
   onFreeSample,
 }: CardProps) => {
-  const [page, setPage] = useState(1);
-  const totalPages = Math.ceil(products.length / productsPerPage);
-
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { addToWishlist } = useIndexedDb();
 
+  // 1. Get current page directly from URL Query Params (Default to 1)
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  // 2. Reset to Page 1 if filter (products list) changes
+  useEffect(() => {
+    // Only reset if we are deep in pagination but the new list is shorter
+    // or simply reset to 1 on every filter change for consistency.
+    // Check if "page" param exists and is not 1.
+    if (currentPage > 1 && products.length > 0) {
+      // If the products array changed significantly (filters applied), 
+      // we usually want to go back to page 1.
+      // Note: Be careful with this effect to avoid loops. 
+      // Often strictly resetting URL is safer for UX when filters change.
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", "1");
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [products.length]); // Dependency on length/products ensures we reset on filter change
+
+  // 3. Handle Page Change: Update URL instead of State
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", newPage.toString());
+
+    // Push new URL. 'scroll: false' prevents Next.js from scrolling to top automatically
+    // so your manual scrollTo works.
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+
+    // Your custom scroll position
+    window.scrollTo({ top: 800, behavior: "smooth" });
+  };
+
+  // 4. Derive visible products based on URL page
   const visibleProducts = useMemo(() => {
-    const start = (page - 1) * productsPerPage;
+    const start = (currentPage - 1) * productsPerPage;
     return products.slice(start, start + productsPerPage);
-  }, [products, page, productsPerPage]);
+  }, [products, currentPage, productsPerPage]);
 
   const getColorImage = (color: string) => {
-    const found = ColorImage.find((c) => c.color.toLowerCase() === color.toLowerCase());
+    const found = ColorImage.find(
+      (c) => c.color.toLowerCase() === color.toLowerCase()
+    );
     return found ? found.image : "/assets/images/colors/white.png";
   };
 
   return (
     <>
+      {products.length === 0 && (
+        <div className="col-span-full py-10 text-center text-gray-500">
+          No products match your filters.
+        </div>
+      )}
+
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 pt-6">
         {visibleProducts.map((card) => {
           const basePrice = card.discountPrice ?? card.price ?? 0;
@@ -58,10 +102,18 @@ export const Card = ({
 
           return (
             <div key={card.id} className="relative p-2 hover:shadow-md">
-              <Link href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}>
+              <Link
+                // Ensure specific query params don't get stuck in the product URL unless desired
+                href={
+                  card.url ??
+                  `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`
+                }
+              >
                 <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
                   <Image
-                    src={card.posterImageUrl || "/assets/images/bin/product1.webp"}
+                    src={
+                      card.posterImageUrl || "/assets/images/bin/product1.webp"
+                    }
                     alt={card.name}
                     fill
                   />
@@ -74,9 +126,9 @@ export const Card = ({
                         className="ms-1 md:ms-2"
                       />
                     </div>
-                    <p className="text-[9px] md:text-base font-semibold text-primary [text-shadow:_-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
+                    <p className="text-[9px] md:text-base font-semibold text-primary [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
                       Order by{" "}
-                      <span className="text-sm md:text-2xl text-primary font-semibold [text-shadow:_-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
+                      <span className="text-sm md:text-2xl text-primary font-semibold [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
                         3pm
                       </span>
                       <br />
@@ -89,7 +141,10 @@ export const Card = ({
               <div className="pt-3 sm:space-y-1 px-2">
                 <div className="flex justify-between items-center">
                   <Link
-                    href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}
+                    href={
+                      card.url ??
+                      `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`
+                    }
                   >
                     <p className="text-xs md:text-base">{categoryName}</p>
                     <h2 className="font-medium text-sm md:text-xl font-rubik md:underline md:h-10">
@@ -121,21 +176,31 @@ export const Card = ({
                   />
                 </div>
 
-                <p className="block sm:hidden text-xs md:text-base pt-2">From:</p>
+                <p className="block sm:hidden text-xs md:text-base pt-2">
+                  From:
+                </p>
                 <div className="flex justify-between items-center sm:pt-2">
-                  <p className="flex flex-wrap items-center gap-1 text-xs md:text-base">
+                  <div className="flex flex-wrap items-center gap-1 text-xs md:text-base">
                     <p className="hidden sm:block">From:</p>
 
-                    <span className="font-currency text-lg md:text-3xl"></span>
-                    <span className="font-semibold text-sm md:text-2xl">{finalPrice}</span>
+                    <span className="font-currency text-lg md:text-3xl">
+                      
+                    </span>
+                    <span className="font-semibold text-sm md:text-2xl">
+                      {finalPrice}
+                    </span>
 
                     {card.discountPrice && (
                       <>
-                        <span className="font-currency text-lg md:text-2xl"></span>
-                        <span className="line-through text-sm md:text-base">{originalPrice}</span>
+                        <span className="font-currency text-lg md:text-2xl">
+                          
+                        </span>
+                        <span className="line-through text-sm md:text-base">
+                          {originalPrice}
+                        </span>
                       </>
                     )}
-                  </p>
+                  </div>
 
                   {IsDeleteButton && onDelete ? (
                     <button
@@ -148,7 +213,12 @@ export const Card = ({
                     <button
                       className="w-6 md:w-10 h-6 md:h-10 border rounded-md flex justify-center items-center cursor-pointer border-black"
                       onClick={() =>
-                        card.id && addToWishlist(card, categoryUrl || "", categoryName || "")
+                        card.id &&
+                        addToWishlist(
+                          card,
+                          categoryUrl || "",
+                          categoryName || ""
+                        )
                       }
                     >
                       <FaRegHeart className="text-xs md:text-xl" />
@@ -163,25 +233,33 @@ export const Card = ({
 
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-2 pt-6">
-          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+          <button
+            className="cursor-pointer"
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
             <MdKeyboardArrowLeft className="text-2xl" />
           </button>
 
           {Array.from({ length: totalPages }).map((_, i) => (
             <button
               key={i}
-              onClick={() => setPage(i + 1)}
+              onClick={() => handlePageChange(i + 1)}
               className={`${
-                i + 1 === page
+                i + 1 === currentPage
                   ? "w-9 h-9 bg-primary text-white shadow-xl"
                   : "w-7 h-7 border border-black"
-              } flex justify-center items-center font-medium text-xl`}
+              } flex justify-center items-center font-medium text-xl cursor-pointer`}
             >
               {i + 1}
             </button>
           ))}
 
-          <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+          <button
+            className="cursor-pointer"
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
             <MdKeyboardArrowRight className="text-2xl" />
           </button>
         </div>

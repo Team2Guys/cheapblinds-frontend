@@ -43,7 +43,7 @@ const Home = async () => {
         />
         <HeroSection
           desktopImage="/assets/images/home/payment.jpg"
-          className="container mx-auto h-auto  md:max-h-[500px] mt-10 md:mt-16"
+          className="container mx-auto h-auto  md:max-h-[450px] 2xl:max-h-[550px] mt-10 md:mt-16"
         />
       </div>
       <RelatedProduct title="Browse Products" data={publishedProduct || []} />

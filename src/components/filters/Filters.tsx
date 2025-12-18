@@ -156,25 +156,27 @@ export const Filters = ({
       </div>
 
       {/* Active Filters */}
-      <div>
-        <p className="font-rubik text-xl font-medium">Active filters</p>
-        <div className="flex flex-wrap gap-2 pt-4">
-          {activeFilters.map((filter) => (
-            <div
-              key={`${filter.key}-${filter.label}`}
-              className="border border-primary rounded-md h-10 flex items-center px-3 font-semibold relative capitalize cursor-pointer"
-            >
-              {filter.label}
-              <span
-                className="flex justify-center items-center h-4 w-4 bg-primary text-white rounded-full ml-2 cursor-pointer absolute -top-2 -right-2"
-                onClick={() => removeFilter(filter)}
+      {activeFilters && activeFilters.length > 0 && (
+        <div>
+          <p className="font-rubik text-xl font-medium">Active filters</p>
+          <div className="flex flex-wrap gap-2 pt-4">
+            {activeFilters.map((filter) => (
+              <div
+                key={`${filter.key}-${filter.label}`}
+                className="border border-primary rounded-md h-10 flex items-center px-3 font-semibold relative capitalize cursor-pointer"
               >
-                <RxCross2 size={12} />
-              </span>
-            </div>
-          ))}
+                {filter.label}
+                <span
+                  className="flex justify-center items-center h-4 w-4 bg-primary text-white rounded-full ml-2 cursor-pointer absolute -top-2 -right-2"
+                  onClick={() => removeFilter(filter)}
+                >
+                  <RxCross2 size={12} />
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <Accordion
         title="Motorised"

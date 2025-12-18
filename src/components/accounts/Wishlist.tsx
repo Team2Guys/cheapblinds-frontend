@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { Card } from "@components";
 import { useAuth } from "@context/UserContext";
@@ -55,13 +55,15 @@ export const Wishlist = () => {
             <span>{wishlist.length}</span> Item(s)
           </p>
 
-          <Card
-            products={wishlist}
-            productsPerPage={9}
-            IsDeleteButton
-            onDelete={handleDelete}
-            onFreeSample={handleFreeSample}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Card
+              products={wishlist}
+              productsPerPage={9}
+              IsDeleteButton
+              onDelete={handleDelete}
+              onFreeSample={handleFreeSample}
+            />
+          </Suspense>
         </>
       )}
     </div>
