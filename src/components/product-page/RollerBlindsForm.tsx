@@ -88,7 +88,7 @@ export const RollerBlindsForm = ({ values, recessType }: FormProps) => {
         <div className="p-2 rounded-md border bg-white">
           <Image
             className="h-5 w-auto"
-            src="/assets/images/payment-icons/tamara-logo.webp"
+            src="/assets/images/icon-payment/tamara.webp"
             alt="Tamara"
             width={50}
             height={50}
@@ -97,7 +97,7 @@ export const RollerBlindsForm = ({ values, recessType }: FormProps) => {
         <div className="p-2 rounded-md border bg-white">
           <Image
             className="h-5 w-auto"
-            src="/assets/images/payment-icons/tabby-logo.webp"
+            src="/assets/images/icon-payment/tabby.webp"
             alt="Tabby"
             width={50}
             height={50}
