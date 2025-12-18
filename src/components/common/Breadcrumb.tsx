@@ -1,14 +1,20 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { BreadcrumbProps } from "@/types/PagesProps";
+
+interface BreadcrumbProps {
+  title?: string;
+  slug?: string;
+  subcategory?: string;
+  className?: string;
+}
 
 export const Breadcrumb = ({
   title = "",
   slug = "",
   subcategory = "",
   className = "",
-}: BreadcrumbProps & { className?: string }) => {
+}: BreadcrumbProps) => {
   const arrow = (
     <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 12L6.25 7L0 2L1.25 0L10 7L1.25 14L0 12Z" fill="black" />

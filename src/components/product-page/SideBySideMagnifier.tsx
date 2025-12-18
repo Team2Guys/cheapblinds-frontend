@@ -62,7 +62,7 @@ export const SideBySideMagnifier = ({
             src={imageSrc}
             fill
             alt={altText || "product image"}
-            className="!relative object-fill"
+            className="object-fill relative!"
             priority
             fetchPriority="high"
             decoding="async"

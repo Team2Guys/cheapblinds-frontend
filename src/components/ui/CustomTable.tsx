@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { TableProps } from "@/types/types";
+import { TableProps } from "@/types/type";
 
 export const CustomTable = <T,>({
   data,

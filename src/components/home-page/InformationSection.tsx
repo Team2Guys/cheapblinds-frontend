@@ -1,6 +1,5 @@
 import { infoItems } from "@data/home";
 import Image from "next/image";
-import React from "react";
 
 export const InformationSection = ({ className }: { className?: string }) => {
   return (

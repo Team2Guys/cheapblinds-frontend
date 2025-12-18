@@ -134,7 +134,7 @@ const SearchResults = ({
       {results.map((product) => (
         <li key={product.id}>
           <Link
-            href={`${product.category?.slug}/${product.subcategory?.slug}/${product.slug}`}
+            href={`/${product.category?.slug}/${product.subcategory?.slug}/${product.slug}`}
             onClick={onLinkClick}
             className="flex items-center gap-4 p-3 hover:bg-gray-50 transition-colors cursor-pointer"
           >

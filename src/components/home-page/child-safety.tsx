@@ -4,7 +4,7 @@ export const ChildSafety = () => {
   return (
     <div className="bg-secondary py-5">
       <div className="container mx-auto flex flex-col md:flex-row items-center gap-6">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <div className="w-24 h-24 relative flex items-center justify-center">
             <Image
               src="/assets/images/home/child-safety.png"

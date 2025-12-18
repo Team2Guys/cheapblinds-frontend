@@ -7,7 +7,7 @@ export const MotorisedBanner = () => {
       <div className="container mx-auto px-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="relative aspect-3/2 w-full order-2 sm:order-1">
           <Image
-            src="/assets/images/motorised/zebraimg.webp"
+            src="/assets/images/motorised/zebra-image.webp"
             alt="Motorised Blinds Banner"
             fill
             className="object-cover"

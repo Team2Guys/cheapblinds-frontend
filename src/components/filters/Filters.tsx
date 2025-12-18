@@ -7,7 +7,7 @@ import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import { ColorImage } from "@data/filter-colors";
 
-type SectionKeys = "type" | "colour" | "width" | "pattern" | "composition" | "price" | "motorized";
+type SectionKeys = "type" | "color" | "width" | "pattern" | "composition" | "price" | "motorized";
 
 // Define the shape of options with counts
 type FilterOption = {
@@ -26,7 +26,7 @@ type FiltersProps = {
   patternOptions: FilterOption[];
   compositionOptions: FilterOption[];
   widthOptions: FilterOption[];
-  colourOptions: ColorFilterOption[];
+  colorOptions: ColorFilterOption[];
   selectedType: string[];
   setSelectedType: React.Dispatch<React.SetStateAction<string[]>>;
   selectedPattern: string[];
@@ -35,8 +35,8 @@ type FiltersProps = {
   setSelectedComposition: React.Dispatch<React.SetStateAction<string[]>>;
   selectedWidth: string[];
   setSelectedWidth: React.Dispatch<React.SetStateAction<string[]>>;
-  selectedColour: string[];
-  setSelectedColour: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedColor: string[];
+  setSelectedColor: React.Dispatch<React.SetStateAction<string[]>>;
   selectedPrice: [number, number];
   setSelectedPrice: React.Dispatch<React.SetStateAction<[number, number]>>;
   showTypeFilter?: boolean;
@@ -50,7 +50,7 @@ export const Filters = ({
   patternOptions,
   compositionOptions,
   widthOptions,
-  colourOptions,
+  colorOptions,
   selectedType,
   setSelectedType,
   selectedPattern,
@@ -59,8 +59,8 @@ export const Filters = ({
   setSelectedComposition,
   selectedWidth,
   setSelectedWidth,
-  selectedColour,
-  setSelectedColour,
+  selectedColor,
+  setSelectedColor,
   selectedPrice,
   setSelectedPrice,
   showTypeFilter,
@@ -70,7 +70,7 @@ export const Filters = ({
 }: FiltersProps) => {
   const [openSections, setOpenSections] = useState<Record<SectionKeys, boolean>>({
     type: true,
-    colour: true,
+    color: true,
     width: true,
     pattern: true,
     composition: true,
@@ -80,7 +80,7 @@ export const Filters = ({
 
   const contentRefs = {
     type: useRef(null),
-    colour: useRef(null),
+    color: useRef(null),
     width: useRef(null),
     pattern: useRef(null),
     composition: useRef(null),
@@ -105,7 +105,7 @@ export const Filters = ({
     ...selectedPattern.map((v) => ({ key: "pattern", label: v })),
     ...selectedComposition.map((v) => ({ key: "composition", label: v })),
     ...selectedWidth.map((v) => ({ key: "width", label: v })),
-    ...selectedColour.map((v) => ({ key: "colour", label: v })),
+    ...selectedColor.map((v) => ({ key: "color", label: v })),
     ...(selectedMotorized ? [{ key: "motorized", label: "Motorized" }] : []),
     ...(selectedPrice[0] !== 0 || selectedPrice[1] !== 1000
       ? [{ key: "price", label: `AED${selectedPrice[0]} - AED${selectedPrice[1]}` }]
@@ -126,8 +126,8 @@ export const Filters = ({
       case "width":
         setSelectedWidth(selectedWidth.filter((v) => v !== filter.label));
         break;
-      case "colour":
-        setSelectedColour(selectedColour.filter((v) => v !== filter.label));
+      case "color":
+        setSelectedColor(selectedColor.filter((v) => v !== filter.label));
         break;
       case "motorized":
         setSelectedMotorized(false);
@@ -231,33 +231,26 @@ export const Filters = ({
 
       <Accordion
         title="Colour"
-        sectionKey="colour"
+        sectionKey="color"
         openSections={openSections}
         toggleSection={toggleSection}
-        refObj={contentRefs.colour}
+        refObj={contentRefs.color}
       >
         <div className="flex flex-col gap-4 pt-4">
-          {colourOptions.map((item) => {
-            const isSelected = selectedColour.includes(item.name);
+          {colorOptions.map((item) => {
+            const isSelected = selectedColor.includes(item.name);
             return (
               <button
                 key={item.name}
-                onClick={() => toggleSelection(item.name, setSelectedColour, selectedColour)}
+                onClick={() => toggleSelection(item.name, setSelectedColor, selectedColor)}
                 className="flex items-center gap-3 capitalize cursor-pointer"
               >
-                <span
-                  className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${
-                    isSelected ? "border-primary bg-primary text-white" : "border-black"
-                  }`}
-                >
-                  {isSelected && <FaCheck />}
-                </span>
                 <Image
                   src={getColorImage(item.name)}
                   alt={item.name}
                   width={30}
                   height={30}
-                  className="object-cover"
+                  className={`object-cover ${isSelected ? "border-2 border-primary" : ""}`}
                 />
                 <p>
                   {item.name} <span className="text-gray-500 text-sm">({item.count})</span>
@@ -269,7 +262,7 @@ export const Filters = ({
       </Accordion>
 
       <Accordion
-        title="Width"
+        title="Width Available"
         sectionKey="width"
         openSections={openSections}
         toggleSection={toggleSection}

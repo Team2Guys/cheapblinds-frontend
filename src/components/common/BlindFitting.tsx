@@ -74,7 +74,7 @@ export const BlindFitting = () => {
               download
               className="text-center flex flex-col items-center transition-transform duration-200 hover:scale-105 cursor-pointer"
             >
-              <div className="w-16 h-16 md:w-20 md:h-20 relative">
+              <div className="w-16 h-16 md:w-24 md:h-24 relative">
                 <Image
                   src="/assets/images/home/fitting.png"
                   alt={`${item.name} Icon`}
@@ -83,7 +83,7 @@ export const BlindFitting = () => {
                 />
               </div>
               <h3 className="font-medium font-rubik text-base mt-2">
-                How to <span className="underline">Fit</span>
+                How to <span className="underline">{currentSlide === 0 ? "Fit" : "Measuring"}</span>
               </h3>
               <p className="text-xl font-semibold font-rubik">{item.name}</p>
             </Link>

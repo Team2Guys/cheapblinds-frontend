@@ -236,7 +236,7 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
       <div
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        className="relative flex items-center justify-center h-[380px] md:h-[550px] max-w-[100vw] overflow-visible perspective-1000"
+        className="relative flex items-center justify-center h-[380px] md:h-[550px] container mx-auto px-2 overflow-visible perspective-1000"
       >
         {slideElements}
       </div>

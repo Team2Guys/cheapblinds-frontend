@@ -1,6 +1,5 @@
-import React from "react";
 import { Breadcrumb, BlindFitting, Instructions, ContactBanner } from "@components";
-const FittinInstructions = () => {
+const FittingInstructions = () => {
   return (
     <>
       <Breadcrumb title="Fitting Instructions" />
@@ -13,4 +12,4 @@ const FittinInstructions = () => {
   );
 };
 
-export default FittinInstructions;
+export default FittingInstructions;

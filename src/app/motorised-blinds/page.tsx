@@ -14,13 +14,13 @@ const page = async () => {
       <MotorisedBanner />
       <ControlCard heading="Control Options" CardData={controlOptions} />
       <ImageGrid
-        leftImage="/assets/images/motorised/zebraimg.webp"
-        rightImage="/assets/images/motorised/rightimage.webp"
+        leftImage="/assets/images/motorised/zebra-image.webp"
+        rightImage="/assets/images/motorised/right-image.webp"
       />
       <ControlCard CardData={controlOptions1} />
       <ImageGrid
-        leftImage="/assets/images/motorised/zebraimg.webp"
-        rightImage="/assets/images/motorised/rightimage.webp"
+        leftImage="/assets/images/motorised/zebra-image.webp"
+        rightImage="/assets/images/motorised/right-image.webp"
       />
       <RelatedProduct title="Browse Products" data={publishedCategory || []} />
     </>

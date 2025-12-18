@@ -53,8 +53,7 @@ const FormContact = () => {
       });
       Toaster("success", "Form submitted successfully!");
       resetForm();
-    } catch (error) {
-      console.error("Form submission error:", error);
+    } catch {
       Toaster("error", "Something went wrong while submitting the form.");
     }
   };

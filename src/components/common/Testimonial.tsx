@@ -50,7 +50,7 @@ export const Testimonial = ({ reviews, showPaymentInfo = false }: TestimonialPro
             </p>
             <div className="flex justify-center items-center mt-2">
               <MdStarRate size={25} className="text-primary mr-1" />
-              <span className="font-medium">Trustpilot</span>
+              <span className="font-medium">TrustPilot</span>
             </div>
           </div>
         </div>

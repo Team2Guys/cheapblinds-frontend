@@ -51,7 +51,7 @@ export const PriceSlider = ({ selectedPrice, setSelectedPrice }: PriceSliderProp
       >
         <div className="relative bg-primary text-white px-4 py-1 text-nowrap z-20">
           AED {range[0]}
-          <div className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-primary" />
+          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-primary" />
         </div>
       </div>
 
@@ -62,7 +62,7 @@ export const PriceSlider = ({ selectedPrice, setSelectedPrice }: PriceSliderProp
       >
         <div className="relative bg-primary text-white px-4 py-1 text-nowrap z-20">
           AED {range[1]}
-          <div className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-primary" />
+          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-primary" />
         </div>
       </div>
 

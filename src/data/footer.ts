@@ -29,6 +29,7 @@ export const footerSections = [
       { label: "Terms & Conditions", href: "/terms-conditions" },
       { label: "Privacy Policy", href: "/privacy-policy" },
       { label: "Cookies", href: "/cookie-policy" },
+      { label: "Delivery", href: "/delivery-policy" },
     ],
   },
 ];

@@ -25,8 +25,8 @@ const Header = () => {
               className="h-auto hidden md:block"
               src="/assets/images/navbar/logo.png"
               priority
-              height={100}
-              width={150}
+              height={150}
+              width={200}
               alt="logo"
             />
           </Link>

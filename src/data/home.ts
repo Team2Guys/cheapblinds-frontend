@@ -11,7 +11,7 @@ export const infoItems = [
   },
   {
     id: 3,
-    image: "/assets/images/home/information/freesample.png",
+    image: "/assets/images/home/information/free-sample.png",
     text: "Free Samples",
   },
   {
@@ -26,7 +26,7 @@ export const infoItems = [
   },
 ];
 
-export const chooseimage = [
+export const chooseImage = [
   {
     posterImageUrl: "/assets/images/bin/slide2.png",
     name: "Roman Blinds",
@@ -60,20 +60,20 @@ export const chooseimage = [
 ];
 
 export const fittingTypes = [
-  { name: "Roller Cassette", pdf: "/pdfs/roller-cassette.pdf" },
-  { name: "Roller Classic", pdf: "/pdfs/roller-classic.pdf" },
-  { name: "Roman Cassette", pdf: "/pdfs/roman-cassette.pdf" },
-  { name: "Roman Classic", pdf: "/pdfs/roman-classic.pdf" },
-  { name: "Fifty50 Cassette", pdf: "/pdfs/fifty50-cassette.pdf" },
-  { name: "Fifty50 Classic", pdf: "/pdfs/fifty50-classic.pdf" },
-  { name: "Vertical Cassette", pdf: "/pdfs/vertical-cassette.pdf" },
-  { name: "Vertical Classic", pdf: "/pdfs/vertical-classic.pdf" },
-  { name: "Venetian Cassette", pdf: "/pdfs/venetian-cassette.pdf" },
-  { name: "Venetian Classic", pdf: "/pdfs/venetian-classic.pdf" },
-  { name: "Pleated Cassette", pdf: "/pdfs/pleated-cassette.pdf" },
-  { name: "Pleated Classic", pdf: "/pdfs/pleated-classic.pdf" },
-  { name: "Honeycomb Cassette", pdf: "/pdfs/honeycomb-cassette.pdf" },
-  { name: "Honeycomb Classic", pdf: "/pdfs/honeycomb-classic.pdf" },
-  { name: "Panel Cassette", pdf: "/pdfs/panel-cassette.pdf" },
-  { name: "Panel Classic", pdf: "/pdfs/panel-classic.pdf" },
+  { name: "Roller Cassette", pdf: "/pdf/roller-cassette.pdf" },
+  { name: "Roller Classic", pdf: "/pdf/roller-classic.pdf" },
+  { name: "Roman Cassette", pdf: "/pdf/roman-cassette.pdf" },
+  { name: "Roman Classic", pdf: "/pdf/roman-classic.pdf" },
+  { name: "Fifty50 Cassette", pdf: "/pdf/fifty50-cassette.pdf" },
+  { name: "Fifty50 Classic", pdf: "/pdf/fifty50-classic.pdf" },
+  { name: "Vertical Cassette", pdf: "/pdf/vertical-cassette.pdf" },
+  { name: "Vertical Classic", pdf: "/pdf/vertical-classic.pdf" },
+  { name: "Venetian Cassette", pdf: "/pdf/venetian-cassette.pdf" },
+  { name: "Venetian Classic", pdf: "/pdf/venetian-classic.pdf" },
+  { name: "Pleated Cassette", pdf: "/pdf/pleated-cassette.pdf" },
+  { name: "Pleated Classic", pdf: "/pdf/pleated-classic.pdf" },
+  { name: "Honeycomb Cassette", pdf: "/pdf/honeycomb-cassette.pdf" },
+  { name: "Honeycomb Classic", pdf: "/pdf/honeycomb-classic.pdf" },
+  { name: "Panel Cassette", pdf: "/pdf/panel-cassette.pdf" },
+  { name: "Panel Classic", pdf: "/pdf/panel-classic.pdf" },
 ];

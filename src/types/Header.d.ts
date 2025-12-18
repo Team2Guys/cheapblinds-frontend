@@ -21,8 +21,8 @@ export interface SocialLink {
 export interface SubmenuItem {
   name: string;
   link: string;
-  mobileimage?: string;
-  desktopimage?: string;
+  mobileImage?: string;
+  desktopImage?: string;
 }
 
 export interface MenuItem {

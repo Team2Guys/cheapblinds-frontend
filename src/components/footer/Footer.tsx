@@ -77,7 +77,7 @@ const Footer = () => {
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
                     <Image
-                      src="/assets/icons/applepay.png"
+                      src="/assets/icons/applePay.png"
                       alt="Apple Pay"
                       width={26}
                       height={12}
@@ -95,7 +95,7 @@ const Footer = () => {
                     />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
-                    <Image src="/assets/icons/gpay.png" alt="GPay" width={29} height={12} />
+                    <Image src="/assets/icons/gPay.png" alt="GPay" width={29} height={12} />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
                     <Image src="/assets/icons/tamara.png" alt="Tamara" width={36} height={13} />
