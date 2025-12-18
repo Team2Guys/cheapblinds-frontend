@@ -1,7 +1,7 @@
 import { ITabbyList, ITabbyPayList, ITamaraList } from "@/types/type";
-import masterCard from "./../../public/assets/images/payment-icons/Mastercard-Logo.png";
-import viseCard from "./../../public/assets/images/payment-icons/visaCard-logo.png";
-import gPayCard from "./../../public/assets/images/payment-icons/googlePay-logo.png";
+import masterCard from "./../../public/assets/images/icon-payment/MasterCard.png";
+import viseCard from "./../../public/assets/images/icon-payment/visaCard.png";
+import gPayCard from "./../../public/assets/images/icon-payment/googlePay.png";
 
 export const tabbyFeature: ITabbyList[] = [
   { id: 1, para: "No interest. No fees." },
