@@ -105,7 +105,7 @@ export const ProductInfo = ({
       >
         Get price
       </button>
-      <PaymentMethod installments={200} showheading />
+      <PaymentMethod installments={200} showHeading />
       <div className="bg-primary p-4 rounded-md flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="text-center md:text-left space-y-2">
           <h3 className="font-semibold">Not sure? Order a free sample</h3>

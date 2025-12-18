@@ -51,7 +51,6 @@ const MySamplePage = () => {
   }
 
   if (!user) return null;
-  console.log(orders, "ordersorders");
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import { Product } from "./category";
 
-export interface HerobannerProps {
+export interface HeroProps {
   desktopImage: string;
   mobileImage?: string;
   isHome?: boolean;
@@ -16,7 +16,7 @@ export interface OrderSectionProps {
   btnLink: string;
   className?: string;
   buttonCenter?: boolean;
-  samplesection?: boolean;
+  sampleSection?: boolean;
 }
 
 export interface RelatedProductItem {

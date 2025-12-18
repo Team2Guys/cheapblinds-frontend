@@ -64,9 +64,9 @@ const Navbar = ({ className }: { className?: string }) => {
                         onClick={() => setOpenMenu(null)}
                         className="flex gap-2 text-sm items-center px-4 py-3 hover:bg-primary hover:text-white rounded-sm transition"
                       >
-                        {sub.desktopimage && (
+                        {sub.desktopImage && (
                           <Image
-                            src={sub.desktopimage}
+                            src={sub.desktopImage}
                             alt={sub.name}
                             width={20}
                             height={20}

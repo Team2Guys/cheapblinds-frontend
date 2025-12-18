@@ -6,24 +6,24 @@ import tabbyLogo from "../../../public/assets/images/payment-icons/tabby-logo.we
 import tamaraLogo from "../../../public/assets/images/payment-icons/tamara-logo.webp";
 import { Modal } from "@components";
 import {
-  tabbyfeature,
-  tabbyhowitwork,
-  tabbypayicon,
-  tamarafeature,
-  tamaralist,
-  tamarawhy,
-} from "@data/produuct-detail";
+  tabbyFeature,
+  tabbyHowItWork,
+  tabbyPayIcon,
+  tamaraFeature,
+  tamaraList,
+  tamaraWhy,
+} from "@data/product-detail";
 import { formatAED } from "@utils/helperFunctions";
 import { PaymentMethodProps } from "@/types/prod";
 
-export const PaymentMethod = ({ showheading, installments, isCheckout }: PaymentMethodProps) => {
+export const PaymentMethod = ({ showHeading, installments, isCheckout }: PaymentMethodProps) => {
   const [tabbyOpen, setTabbyOpen] = useState(false);
   const [tamaraOpen, setTamaraOpen] = useState(false);
   const paymentLabels = ["Today", "In 1 month", "In 2 months", "In 3 months"];
 
   return (
     <div className={`rounded-md p-2 ${isCheckout ? "" : "border border-secondary "}`}>
-      {showheading && <p className="font-semibold">Guaranteed Safe Checkout</p>}
+      {showHeading && <p className="font-semibold">Guaranteed Safe Checkout</p>}
       <div
         className={`flex flex-wrap ${isCheckout ? "" : "sm:flex-nowrap md:gap-2 pt-4"} gap-8  font-inter `}
       >
@@ -100,14 +100,14 @@ export const PaymentMethod = ({ showheading, installments, isCheckout }: Payment
             </span>
           </h2>
           <ul className='mt-5 font-bold text-lg xs:text-2xl sm:text-xl md:text-xl list-["–"] list-inside leading-normal md:leading-normal'>
-            {tabbyfeature.map((item) => (
+            {tabbyFeature.map((item) => (
               <li key={item.id}>{item.para}</li>
             ))}
           </ul>
           <div className="mt-5">
             <h3 className="font-bold text-2xl sm:text-3xl">How it works</h3>
             <ul className="font-medium text-lg xs:text-xl mt-3 md:leading-relaxed">
-              {tabbyhowitwork.map((item) => (
+              {tabbyHowItWork.map((item) => (
                 <li className="flex items-center gap-2 space-y-1" key={item.id}>
                   <span className="rounded-full bg-primary-light min-w-8 h-8 flex items-center justify-center">
                     {item.id}
@@ -119,7 +119,7 @@ export const PaymentMethod = ({ showheading, installments, isCheckout }: Payment
           </div>
 
           <div className="flex justify-end gap-2 mt-5 px-6">
-            {tabbypayicon.map((item, index) => (
+            {tabbyPayIcon.map((item, index) => (
               <Image
                 src={item.imageUrl}
                 alt="master"
@@ -142,7 +142,7 @@ export const PaymentMethod = ({ showheading, installments, isCheckout }: Payment
           <div className="px-4 py-2 bg-linear-to-r from-orange-300 via-blue-300 to-pink-300 mt-4 rounded-[70px]">
             <div className="bg-linear-to-r from-orange-100 via-blue-100 to-pink-100 pb-6 pt-1 px-8 rounded-[70px] flex flex-col gap-2">
               <div className="w-10/12 mx-auto">
-                {tamarafeature.map((item) => (
+                {tamaraFeature.map((item) => (
                   <div className="flex justify-baseline items-center py-2" key={item.id}>
                     <div>
                       <h3 className="font-bold text-lg">{item.title}</h3>
@@ -156,7 +156,7 @@ export const PaymentMethod = ({ showheading, installments, isCheckout }: Payment
           <div className="mt-5 px-5 xs:px-10 2xl:px-20">
             <h3 className="font-bold text-2xl">Why Tamara?</h3>
             <div className="flex items-center flex-wrap 2xl:flex-nowrap 2xl:justify-between gap-4 pt-4">
-              {tamarawhy.map((item) => (
+              {tamaraWhy.map((item) => (
                 <div
                   className="w-auto px-2 h-9 rounded-2xl bg-primary text-white flex items-center text-20 font-semibold"
                   key={item.id}
@@ -167,7 +167,7 @@ export const PaymentMethod = ({ showheading, installments, isCheckout }: Payment
             </div>
             <div className="mt-5">
               <ul className="font-20 font-normal">
-                {tamaralist.map((item) => (
+                {tamaraList.map((item) => (
                   <li className="flex items-center gap-2" key={item.id}>
                     <span>({item.id})</span>
                     <span>{item.para}</span>

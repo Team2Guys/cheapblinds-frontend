@@ -69,9 +69,9 @@ export const MobileMenus = ({ onClose }: { onClose: () => void }) => {
                     onClick={onClose}
                     className="flex items-center gap-2 font-open_Sans py-2 text-sm text-gray-700 hover:text-primary transition"
                   >
-                    {sub.mobileimage && (
+                    {sub.mobileImage && (
                       <Image
-                        src={sub.mobileimage}
+                        src={sub.mobileImage}
                         alt={sub.name}
                         width={22}
                         height={22}

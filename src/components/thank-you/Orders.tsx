@@ -30,7 +30,6 @@ export const AllOrders = () => {
     return found ? found.image : "/assets/images/colors/white.png";
   };
 
-  console.log(orders, "ordersorders");
   return (
     <div className="bg-[#fff6e6] p-2 md:p-6 rounded-md space-y-3">
       <p>

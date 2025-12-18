@@ -54,13 +54,13 @@ export const headrailOptions = [
     id: "Classic",
     label: "Classic",
     price: "119.78",
-    imageUrl: "/assets/images/detail-page/formimg.png",
+    imageUrl: "/assets/images/detail-page/form-image.png",
   },
   {
     id: "Cassette",
     label: "Cassette",
     price: "159.70",
-    imageUrl: "/assets/images/detail-page/formimg.png",
+    imageUrl: "/assets/images/detail-page/form-image.png",
   },
   { id: "Cassette Motorised", label: "Cassette Motorised", price: "781.28" },
 ];
@@ -68,43 +68,43 @@ export const StackingStyle = [
   {
     id: "Cascade",
     label: "Cascade",
-    imageUrl: "/assets/images/detail-page/formimg.png",
+    imageUrl: "/assets/images/detail-page/form-image.png",
   },
   {
     id: "Stacked",
     label: "Stacked",
-    imageUrl: "/assets/images/detail-page/formimg.png",
+    imageUrl: "/assets/images/detail-page/form-image.png",
   },
 ];
 export const controlOptions = [
-  { id: "Nickel", label: "Nickel", imageUrl: "/assets/images/detail-page/formimg.png" },
-  { id: "Brass", label: "Brass", imageUrl: "/assets/images/detail-page/formimg.png" },
-  { id: "Black", label: "Black", imageUrl: "/assets/images/detail-page/formimg.png" },
-  { id: "White", label: "White", imageUrl: "/assets/images/detail-page/formimg.png" },
+  { id: "Nickel", label: "Nickel", imageUrl: "/assets/images/detail-page/form-image.png" },
+  { id: "Brass", label: "Brass", imageUrl: "/assets/images/detail-page/form-image.png" },
+  { id: "Black", label: "Black", imageUrl: "/assets/images/detail-page/form-image.png" },
+  { id: "White", label: "White", imageUrl: "/assets/images/detail-page/form-image.png" },
 ];
 
 export const Lining = [
   {
     id: "Polycotton",
     label: "Polycotton",
-    imageUrl: "/assets/images/detail-page/formimg.png",
+    imageUrl: "/assets/images/detail-page/form-image.png",
   },
   {
     id: "Satin",
     label: "Satin",
     price: "49.99",
-    imageUrl: "/assets/images/detail-page/formimg.png",
+    imageUrl: "/assets/images/detail-page/form-image.png",
   },
   {
     id: "Blackout",
     label: "Blackout",
     price: "49.99",
-    imageUrl: "/assets/images/detail-page/formimg.png",
+    imageUrl: "/assets/images/detail-page/form-image.png",
   },
   {
     id: "Bonded",
     label: "Bonded",
     price: "49.99",
-    imageUrl: "/assets/images/detail-page/formimg.png",
+    imageUrl: "/assets/images/detail-page/form-image.png",
   },
 ];

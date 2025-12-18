@@ -22,7 +22,6 @@ const ProductPage = async ({
     notFound();
   }
   const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
-  console.log(SingleProduct, "SingleProductSingleProduct");
 
   return (
     <>
@@ -38,7 +37,7 @@ const ProductPage = async ({
           image2="/assets/images/home/sample.webp"
           btnText="Order Free Samples"
           btnLink="/sample"
-          samplesection
+          sampleSection
         />
       </div>
     </>

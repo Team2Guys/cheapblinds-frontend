@@ -1,6 +1,6 @@
 "use client";
 
-import { Herobanner, Card, Filters, Toaster } from "@components";
+import { HeroSection, Card, Filters, Toaster } from "@components";
 import React, { useState, useMemo } from "react";
 import { CategoryPageProps, Product } from "@/types/category";
 import CategoryHeader from "@components/category/categoryHeader";
@@ -26,7 +26,7 @@ const useFilterOptions = (allProducts: Product[]) => {
       pattern: {} as Record<string, number>,
       composition: {} as Record<string, number>,
       width: {} as Record<string, number>,
-      colour: {} as Record<string, number>,
+      color: {} as Record<string, number>,
       motorized: 0,
     };
 
@@ -45,7 +45,7 @@ const useFilterOptions = (allProducts: Product[]) => {
         increment(counts.width, `Up To ${product.width}cm Wide`);
       }
 
-      increment(counts.colour, product.color);
+      increment(counts.color, product.color);
 
       if (product.isMotorized) {
         counts.motorized += 1;
@@ -62,7 +62,7 @@ const useFilterOptions = (allProducts: Product[]) => {
       patternOptions: toOptionArray(counts.pattern),
       compositionOptions: toOptionArray(counts.composition),
       widthOptions: toOptionArray(counts.width),
-      colourOptions: Object.entries(counts.colour).map(([name, count]) => ({
+      colorOptions: Object.entries(counts.color).map(([name, count]) => ({
         name,
         color: name, // Assuming color code/name matches, or you can look it up
         count,
@@ -85,7 +85,7 @@ const CategoryPage = ({
   const [selectedComposition, setSelectedComposition] = useState<string[]>([]);
   const [selectedWidth, setSelectedWidth] = useState<string[]>([]);
   const [selectedPrice, setSelectedPrice] = useState<[number, number]>([0, 1000]);
-  const [selectedColour, setSelectedColour] = useState<string[]>([]);
+  const [selectedColor, setSelectedColor] = useState<string[]>([]);
   const [selectedMotorized, setSelectedMotorized] = useState<boolean>(false);
   const { addFreeSampleItem } = useIndexedDb();
 
@@ -110,7 +110,7 @@ const CategoryPage = ({
     patternOptions,
     compositionOptions,
     widthOptions,
-    colourOptions,
+    colorOptions,
     motorizedCount,
   } = useFilterOptions(allProducts);
 
@@ -129,7 +129,7 @@ const CategoryPage = ({
       if (selectedComposition.length && !selectedComposition.includes(composition)) return false;
       if (selectedWidth.length && !selectedWidth.some((w) => w.includes(String(width))))
         return false;
-      if (selectedColour.length && !selectedColour.includes(color)) return false;
+      if (selectedColor.length && !selectedColor.includes(color)) return false;
 
       const basePrice = product.discountPrice ?? product.price ?? 0;
       const finalPrice = selectedMotorized ? basePrice + (product.motorPrice ?? 0) : basePrice;
@@ -144,7 +144,7 @@ const CategoryPage = ({
     selectedPattern,
     selectedComposition,
     selectedWidth,
-    selectedColour,
+    selectedColor,
     selectedPrice,
     selectedMotorized,
   ]);
@@ -170,15 +170,14 @@ const CategoryPage = ({
   const handleFreeSample = async (product: Product) => {
     try {
       await addFreeSampleItem(product, categoryUrl || "");
-    } catch (err) {
-      console.error(err);
+    } catch {
       Toaster("error", "Failed to add Free Sample!");
     }
   };
 
   return (
     <>
-      <Herobanner
+      <HeroSection
         desktopImage="/assets/images/category/desktop-banner.jpg"
         mobileImage="/assets/images/category/mobile-banner.png"
       />
@@ -189,7 +188,7 @@ const CategoryPage = ({
             patternOptions={patternOptions}
             compositionOptions={compositionOptions}
             widthOptions={widthOptions}
-            colourOptions={colourOptions}
+            colorOptions={colorOptions}
             motorizedCount={motorizedCount} // Pass motorized count
             selectedType={selectedType}
             setSelectedType={setSelectedType}
@@ -199,8 +198,8 @@ const CategoryPage = ({
             setSelectedComposition={setSelectedComposition}
             selectedWidth={selectedWidth}
             setSelectedWidth={setSelectedWidth}
-            selectedColour={selectedColour}
-            setSelectedColour={setSelectedColour}
+            selectedColor={selectedColor}
+            setSelectedColor={setSelectedColor}
             selectedPrice={selectedPrice}
             setSelectedPrice={setSelectedPrice}
             showTypeFilter={subcategoryArray.length > 1}
@@ -215,13 +214,11 @@ const CategoryPage = ({
             description={description}
             sort={sort}
             setSort={setSort}
-            // Note: If CategoryHeader uses these props, you need to update its types as well,
-            // otherwise pass the raw strings like: typeOptions.map(t => t.name)
             typeOptions={typeOptions}
             patternOptions={patternOptions}
             compositionOptions={compositionOptions}
             widthOptions={widthOptions}
-            colourOptions={colourOptions}
+            colorOptions={colorOptions}
             motorizedCount={motorizedCount}
             selectedType={selectedType}
             setSelectedType={setSelectedType}
@@ -231,8 +228,8 @@ const CategoryPage = ({
             setSelectedComposition={setSelectedComposition}
             selectedWidth={selectedWidth}
             setSelectedWidth={setSelectedWidth}
-            selectedColour={selectedColour}
-            setSelectedColour={setSelectedColour}
+            selectedColor={selectedColor}
+            setSelectedColor={setSelectedColor}
             selectedPrice={selectedPrice}
             setSelectedPrice={setSelectedPrice}
             showTypeFilter={subcategoryArray.length > 1}

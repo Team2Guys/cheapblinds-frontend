@@ -9,7 +9,7 @@ export const OrderSection = ({
   image2,
   btnText,
   btnLink,
-  samplesection,
+  sampleSection,
   buttonCenter,
   className,
 }: OrderSectionProps) => {
@@ -42,7 +42,7 @@ export const OrderSection = ({
         <Link
           href={btnLink}
           className={`${
-            samplesection ? "bg-white text-black" : "bg-black text-white"
+            sampleSection ? "bg-white text-black" : "bg-black text-white"
           } text-[21px] font-bold px-8 py-2 rounded-xl xl:py-4 xl:px-12 ${buttonCenter ? "" : "items-start ml-10"} `}
         >
           {btnText}

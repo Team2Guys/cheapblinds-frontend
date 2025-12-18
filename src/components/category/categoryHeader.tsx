@@ -29,7 +29,7 @@ type CategoryHeaderProps = {
   patternOptions: FilterOption[];
   compositionOptions: FilterOption[];
   widthOptions: FilterOption[];
-  colourOptions: ColorFilterOption[];
+  colorOptions: ColorFilterOption[];
   selectedType: string[];
   setSelectedType: React.Dispatch<React.SetStateAction<string[]>>;
   selectedPattern: string[];
@@ -38,8 +38,8 @@ type CategoryHeaderProps = {
   setSelectedComposition: React.Dispatch<React.SetStateAction<string[]>>;
   selectedWidth: string[];
   setSelectedWidth: React.Dispatch<React.SetStateAction<string[]>>;
-  selectedColour: string[];
-  setSelectedColour: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedColor: string[];
+  setSelectedColor: React.Dispatch<React.SetStateAction<string[]>>;
   selectedPrice: [number, number];
   setSelectedPrice: React.Dispatch<React.SetStateAction<[number, number]>>;
   showTypeFilter?: boolean;
@@ -57,7 +57,7 @@ const CategoryHeader = ({
   patternOptions,
   compositionOptions,
   widthOptions,
-  colourOptions,
+  colorOptions,
   selectedType,
   setSelectedType,
   selectedPattern,
@@ -66,8 +66,8 @@ const CategoryHeader = ({
   setSelectedComposition,
   selectedWidth,
   setSelectedWidth,
-  selectedColour,
-  setSelectedColour,
+  selectedColor,
+  setSelectedColor,
   selectedPrice,
   setSelectedPrice,
   showTypeFilter,
@@ -153,7 +153,7 @@ const CategoryHeader = ({
           <div className="flex border cursor-pointer w-full md:w-1/2">
             <div className="flex items-center gap-3 px-3 py-2 bg-[#FEE7AC] grow">
               <Image
-                src="/assets/images/category/fetting.png"
+                src="/assets/images/category/fitting-image.png"
                 width={28}
                 height={28}
                 alt="fitting"
@@ -190,7 +190,7 @@ const CategoryHeader = ({
                 patternOptions={patternOptions}
                 compositionOptions={compositionOptions}
                 widthOptions={widthOptions}
-                colourOptions={colourOptions}
+                colorOptions={colorOptions}
                 selectedType={selectedType}
                 setSelectedType={setSelectedType}
                 selectedPattern={selectedPattern}
@@ -199,8 +199,8 @@ const CategoryHeader = ({
                 setSelectedComposition={setSelectedComposition}
                 selectedWidth={selectedWidth}
                 setSelectedWidth={setSelectedWidth}
-                selectedColour={selectedColour}
-                setSelectedColour={setSelectedColour}
+                selectedColor={selectedColor}
+                setSelectedColor={setSelectedColor}
                 selectedPrice={selectedPrice}
                 setSelectedPrice={setSelectedPrice}
                 showTypeFilter={showTypeFilter}

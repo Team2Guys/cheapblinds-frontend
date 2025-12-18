@@ -1,14 +1,14 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { AccordionItemProps } from "@/types/types";
 import Chevron from "@components/svg/chevron";
+import { AccordionItemProps } from "@/types/type";
 
-export const AccordionItem: React.FC<AccordionItemProps> = ({
+export const AccordionItem = ({
   question,
   answer,
   isOpen,
   onToggle,
-}) => {
+}:AccordionItemProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState("0px");
 

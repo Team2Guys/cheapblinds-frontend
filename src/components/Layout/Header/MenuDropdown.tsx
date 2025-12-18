@@ -20,7 +20,7 @@ interface DropdownPanelProps {
   forceOpen?: boolean; // NEW
 }
 
-const DropdownPanel = ({
+const MenuDropdown = ({
   icon,
   title,
   badgeCount = 0,
@@ -85,7 +85,7 @@ const DropdownPanel = ({
           ref={panelRef}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="fixed lg:absolute right-2 sm:right-5 lg:right-0 top-10 z-[999] bg-white shadow-lg rounded-lg border border-gray-200 w-[90vw] sm:w-80 p-3"
+          className="fixed lg:absolute right-2 sm:right-5 lg:right-0 top-10 z-999 bg-white shadow-lg rounded-lg border border-gray-200 w-[90vw] sm:w-80 p-3"
         >
           <div className="flex justify-between items-center mb-3">
             <p className="font-semibold text-base">{title}</p>
@@ -174,4 +174,4 @@ const DropdownPanel = ({
   );
 };
 
-export default DropdownPanel;
+export default MenuDropdown;

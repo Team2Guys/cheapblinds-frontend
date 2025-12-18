@@ -7,9 +7,9 @@ import FreeSampleIcon from "@components/svg/free-sample";
 import { useAuth } from "@context/UserContext";
 import Link from "next/link";
 import { FaRegCircleUser } from "react-icons/fa6";
-import DropdownPanel from "./Dropdownpanel";
 import { useIndexedDb } from "@lib/useIndexedDb";
 import { usePathname } from "next/navigation";
+import MenuDropdown from "./MenuDropdown";
 
 const UserIcons = ({ className }: { className?: string }) => {
   const { user, logout } = useAuth();
@@ -90,7 +90,7 @@ const UserIcons = ({ className }: { className?: string }) => {
 
       {/* Wishlist */}
       <div className="border-r lg:pr-1.5">
-        <DropdownPanel
+        <MenuDropdown
           icon={<LuHeart size={25} />}
           title="Wishlist"
           badgeCount={wishlist.length}
@@ -104,7 +104,7 @@ const UserIcons = ({ className }: { className?: string }) => {
 
       {/* Free Samples */}
       <div className="border-r lg:pr-1.5">
-        <DropdownPanel
+        <MenuDropdown
           icon={<FreeSampleIcon />}
           title="Free Samples"
           badgeCount={freeSamples.length}
@@ -118,7 +118,7 @@ const UserIcons = ({ className }: { className?: string }) => {
 
       {/* Cart */}
       <div className="lg:pr-1.5">
-        <DropdownPanel
+        <MenuDropdown
           icon={<MdOutlineShoppingCart size={25} />}
           title="Cart"
           badgeCount={0}

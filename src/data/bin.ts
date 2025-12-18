@@ -13,7 +13,7 @@ export const CartOptions = [
     price: "315",
   },
   {
-    id: "Moterised",
+    id: "Motorised",
     title: "Lindsay White Blackout Roller Blinds",
     features: [
       "41cm Width x 41cm Drop",

@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import Email from "../svg/email";
 import Call from "../svg/call";
 import Calender from "../svg/calender";

@@ -1,5 +1,11 @@
-import { SelectOptionProps } from "@/types/cart";
-import React from "react";
+import { SelectOptionProps } from "@/types/type";
+
+export interface CartOption {
+  id: string;
+  title: string;
+  features: string[];
+  price: string;
+}
 
 export const SelectOption = ({
   selected,
@@ -11,9 +17,9 @@ export const SelectOption = ({
     <div className={`flex gap-1 md:gap-3 ${className}`}>
       {CartOptions.map((option) => (
         <div key={option.id} className="space-y-2 relative overflow-visible h-auto">
-          {option.id === "Moterised" && (
+          {option.id === "Motorised" && ( 
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 border border-black bg-primary text-black font-semibold px-2 py-0.5 rounded-md z-10">
-              Moterised
+              Motorised
             </div>
           )}
           <div

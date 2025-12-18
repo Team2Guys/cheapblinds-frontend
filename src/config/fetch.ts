@@ -1,5 +1,4 @@
 import { DocumentNode } from "@apollo/client";
-import { Category } from "@/types/cat";
 import ApolloCustomClient from "@utils/apollo-client";
 import {
   ADDRESS_LIST_BY_USER_QUERY,
@@ -15,6 +14,7 @@ import {
 } from "@graphql";
 import {
   addressProps,
+  Category,
   NewsletterProps,
   Orders,
   Product,
