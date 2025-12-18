@@ -3,12 +3,13 @@
 import { Product } from "@/types/category";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { TfiTrash } from "react-icons/tfi";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { ColorImage } from "@data/filter-colors";
 import { useIndexedDb } from "@lib/useIndexedDb";
+import { usePathname } from "next/navigation";
 
 interface CardProps {
   products: Product[];
@@ -31,10 +32,43 @@ export const Card = ({
   onDelete,
   onFreeSample,
 }: CardProps) => {
+  const pathname = usePathname();
   const [page, setPage] = useState(1);
-  const totalPages = Math.ceil(products.length / productsPerPage);
+  const isFirstLoad = useRef(true); // 1. Track initial render
 
+  const totalPages = Math.ceil(products.length / productsPerPage);
   const { addToWishlist } = useIndexedDb();
+
+  // 2. Load saved page from storage ONLY on mount
+  useEffect(() => {
+    const storageKey = `pagination-${pathname}`;
+    const savedPage = sessionStorage.getItem(storageKey);
+
+    if (savedPage) {
+      setPage(Number(savedPage));
+    }
+  }, [pathname]);
+
+  // 3. Reset to Page 1 if filters change (products list updates)
+  useEffect(() => {
+    // Skip the reset on the very first render so sessionStorage logic can run
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
+
+    // If products array changes (user filtered or sorted), reset to Page 1
+    setPage(1);
+    const storageKey = `pagination-${pathname}`;
+    sessionStorage.setItem(storageKey, "1");
+  }, [products]); // Dependency on 'products' detects filter changes
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    const storageKey = `pagination-${pathname}`;
+    sessionStorage.setItem(storageKey, String(newPage));
+    window.scrollTo({ top: 800, behavior: "smooth" });
+  };
 
   const visibleProducts = useMemo(() => {
     const start = (page - 1) * productsPerPage;
@@ -48,6 +82,16 @@ export const Card = ({
 
   return (
     <>
+      {/* 
+         If filtering results in 0 products, show a message 
+         (Optional but good user experience)
+      */}
+      {products.length === 0 && (
+        <div className="col-span-full py-10 text-center text-gray-500">
+          No products match your filters.
+        </div>
+      )}
+
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 pt-6">
         {visibleProducts.map((card) => {
           const basePrice = card.discountPrice ?? card.price ?? 0;
@@ -74,9 +118,10 @@ export const Card = ({
                         className="ms-1 md:ms-2"
                       />
                     </div>
-                    <p className="text-[9px] md:text-base font-semibold text-primary [text-shadow:_-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
+                    {/* Using the cleaner text-outline class suggested earlier (add to globals.css), or keep your long string here */}
+                    <p className="text-[9px] md:text-base font-semibold text-primary [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
                       Order by{" "}
-                      <span className="text-sm md:text-2xl text-primary font-semibold [text-shadow:_-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
+                      <span className="text-sm md:text-2xl text-primary font-semibold [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
                         3pm
                       </span>
                       <br />
@@ -163,25 +208,33 @@ export const Card = ({
 
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-2 pt-6">
-          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+          <button
+            className="cursor-pointer"
+            disabled={page === 1}
+            onClick={() => handlePageChange(page - 1)}
+          >
             <MdKeyboardArrowLeft className="text-2xl" />
           </button>
 
           {Array.from({ length: totalPages }).map((_, i) => (
             <button
               key={i}
-              onClick={() => setPage(i + 1)}
+              onClick={() => handlePageChange(i + 1)}
               className={`${
                 i + 1 === page
                   ? "w-9 h-9 bg-primary text-white shadow-xl"
                   : "w-7 h-7 border border-black"
-              } flex justify-center items-center font-medium text-xl`}
+              } flex justify-center items-center font-medium text-xl cursor-pointer`}
             >
               {i + 1}
             </button>
           ))}
 
-          <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+          <button
+            className="cursor-pointer"
+            disabled={page === totalPages}
+            onClick={() => handlePageChange(page + 1)}
+          >
             <MdKeyboardArrowRight className="text-2xl" />
           </button>
         </div>

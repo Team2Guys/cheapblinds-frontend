@@ -17,7 +17,7 @@ export const SelectOption = ({
     <div className={`flex gap-1 md:gap-3 ${className}`}>
       {CartOptions.map((option) => (
         <div key={option.id} className="space-y-2 relative overflow-visible h-auto">
-          {option.id === "Motorised" && ( 
+          {option.id === "Motorised" && (
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 border border-black bg-primary text-black font-semibold px-2 py-0.5 rounded-md z-10">
               Motorised
             </div>
