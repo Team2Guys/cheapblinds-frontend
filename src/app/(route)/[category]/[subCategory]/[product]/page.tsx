@@ -1,7 +1,7 @@
 import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting, ProductDetail } from "@components";
-import { fetchProducts, fetchSingleProduct } from "@config/fetch";
+import { fetchSingleProduct, fetchSingleSubCategory } from "@config/fetch";
 import { notFound } from "next/navigation";
-import { GET_CARD_PRODUCT_QUERY } from "@graphql";
+import { GET_SUBCATEGORY_BY_URLS_QUERY } from "@graphql";
 import { Product } from "@/types/category";
 
 const ProductPage = async ({
@@ -11,7 +11,7 @@ const ProductPage = async ({
 }) => {
   const { category, subCategory, product } = await params;
   const [productList, SingleProduct] = await Promise.all([
-    fetchProducts(GET_CARD_PRODUCT_QUERY),
+    fetchSingleSubCategory(subCategory, category, GET_SUBCATEGORY_BY_URLS_QUERY),
     fetchSingleProduct(category, subCategory, product),
   ]);
 
@@ -21,8 +21,9 @@ const ProductPage = async ({
   if (SingleProduct.status !== "PUBLISHED") {
     notFound();
   }
-  const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
-
+  const publishedProduct = productList?.products?.filter(
+    (item: Product) => item?.status === "PUBLISHED",
+  );
   return (
     <>
       <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
