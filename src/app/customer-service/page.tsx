@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { generateMetadata } from "@utils/seoMetadata";
+import { metaData } from "@data/meta-data";
+export const metadata = generateMetadata(metaData.customer_service);
 
 const CustomerService = () => {
   const supportItems = [

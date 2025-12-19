@@ -1,5 +1,8 @@
 import Link from "next/link";
 import React from "react";
+import { generateMetadata } from "@utils/seoMetadata";
+import { metaData } from "@data/meta-data";
+export const metadata = generateMetadata(metaData.terms_conditions);
 
 const TermsConditions = () => {
   return (

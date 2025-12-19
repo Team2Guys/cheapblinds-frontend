@@ -1,5 +1,9 @@
 import React from "react";
 
+import { generateMetadata } from "@utils/seoMetadata";
+import { metaData } from "@data/meta-data";
+export const metadata = generateMetadata(metaData.measuring_guides);
+
 const MeasuringGuides = () => {
   return (
     <div className="container mx-auto px-2 space-y-5 my-10">

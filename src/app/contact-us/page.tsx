@@ -1,4 +1,7 @@
 import { HeroSection, Breadcrumb, ContactHelp, ContactPage } from "@components";
+import { generateMetadata } from "@utils/seoMetadata";
+import { metaData } from "@data/meta-data";
+export const metadata = generateMetadata(metaData.contact);
 
 const page = () => {
   return (

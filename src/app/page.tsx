@@ -12,6 +12,9 @@ import {
 import { fetchCategories, fetchProducts } from "@config/fetch";
 import { chooseImage } from "@data/home";
 import { Product } from "@/types/category";
+import { generateMetadata } from "@utils/seoMetadata";
+import { metaData } from "@data/meta-data";
+export const metadata = generateMetadata(metaData.home);
 
 const Home = async () => {
   const [productList, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);

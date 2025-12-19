@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Testimonial, NewsletterSubscriptions } from "@components";
+import { Testimonial, NewsletterSubscriptions, Toaster } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
@@ -25,6 +25,7 @@ const NewsletterPage = () => {
         const response = await fetchNewsletterByEmail(user?.email || "");
         setNewsletter(response);
       } catch (error) {
+        Toaster("error", "Failed to fetch newsletter subscriber.");
         console.error("Failed to fetch newsletter subscriber:", error);
       }
     }

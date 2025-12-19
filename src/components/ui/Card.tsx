@@ -39,13 +39,13 @@ export const Card = ({
 
   const currentPage = Number(searchParams.get("page")) || 1;
   const totalPages = Math.ceil(products.length / productsPerPage);
- useEffect(() => {
-  if (currentPage > totalPages && totalPages > 0) {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", "1");
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
-}, [currentPage, totalPages, pathname, router, searchParams]);
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", "1");
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }
+  }, [currentPage, totalPages, pathname, router, searchParams]);
 
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -60,9 +60,7 @@ export const Card = ({
   }, [products, currentPage, productsPerPage]);
 
   const getColorImage = (color: string) => {
-    const found = ColorImage.find(
-      (c) => c.color.toLowerCase() === color.toLowerCase()
-    );
+    const found = ColorImage.find((c) => c.color.toLowerCase() === color.toLowerCase());
     return found ? found.image : "/assets/images/colors/white.png";
   };
 
@@ -84,17 +82,10 @@ export const Card = ({
 
           return (
             <div key={card.id} className="relative p-2 hover:shadow-md">
-              <Link
-                href={
-                  card.url ??
-                  `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`
-                }
-              >
+              <Link href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}>
                 <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
                   <Image
-                    src={
-                      card.posterImageUrl || "/assets/images/bin/product1.webp"
-                    }
+                    src={card.posterImageUrl || "/assets/images/bin/product1.webp"}
                     alt={card.name}
                     fill
                   />
@@ -107,9 +98,9 @@ export const Card = ({
                         className="ms-1 md:ms-2"
                       />
                     </div>
-                    <p className="text-[9px] md:text-base font-semibold text-primary [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
+                    <p className="text-[9px] md:text-base font-semibold text-primary text-border">
                       Order by{" "}
-                      <span className="text-sm md:text-2xl text-primary font-semibold [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_0_#000,2px_0_0_#000,0_-2px_0_#000,-2px_0_0_#000,-2px_1px_0_#000,2px_1px_0_#000,-2px_-1px_0_#000,2px_-1px_0_#000,-1px_2px_0_#000,1px_2px_0_#000,-1px_-2px_0_#000,1px_-2px_0_#000] md:[text-shadow:_-4px_-4px_0_#000,4px_-4px_0_#000,-4px_4px_0_#000,4px_4px_0_#000,0_4px_0_#000,4px_0_0_#000,0_-4px_0_#000,-4px_0_0_#000,-4px_2px_0_#000,4px_2px_0_#000,-4px_-2px_0_#000,4px_-2px_0_#000,-2px_4px_0_#000,2px_4px_0_#000,-2px_-4px_0_#000,2px_-4px_0_#000]">
+                      <span className="text-sm md:text-2xl text-primary font-semibold text-border">
                         3pm
                       </span>
                       <br />
@@ -122,10 +113,7 @@ export const Card = ({
               <div className="pt-3 sm:space-y-1 px-2">
                 <div className="flex justify-between items-center">
                   <Link
-                    href={
-                      card.url ??
-                      `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`
-                    }
+                    href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}
                   >
                     <p className="text-xs md:text-base">{categoryName}</p>
                     <h2 className="font-medium text-sm md:text-xl font-rubik md:underline md:h-10">
@@ -157,28 +145,18 @@ export const Card = ({
                   />
                 </div>
 
-                <p className="block sm:hidden text-xs md:text-base pt-2">
-                  From:
-                </p>
+                <p className="block sm:hidden text-xs md:text-base pt-2">From:</p>
                 <div className="flex justify-between items-center sm:pt-2">
                   <div className="flex flex-wrap items-center gap-1 text-xs md:text-base">
                     <p className="hidden sm:block">From:</p>
 
-                    <span className="font-currency text-lg md:text-3xl">
-                      
-                    </span>
-                    <span className="font-semibold text-sm md:text-2xl">
-                      {finalPrice}
-                    </span>
+                    <span className="font-currency text-lg md:text-3xl"></span>
+                    <span className="font-semibold text-sm md:text-2xl">{finalPrice}</span>
 
                     {card.discountPrice && (
                       <>
-                        <span className="font-currency text-lg md:text-2xl">
-                          
-                        </span>
-                        <span className="line-through text-sm md:text-base">
-                          {originalPrice}
-                        </span>
+                        <span className="font-currency text-lg md:text-2xl"></span>
+                        <span className="line-through text-sm md:text-base">{originalPrice}</span>
                       </>
                     )}
                   </div>
@@ -194,12 +172,7 @@ export const Card = ({
                     <button
                       className="w-6 md:w-10 h-6 md:h-10 border rounded-md flex justify-center items-center cursor-pointer border-black"
                       onClick={() =>
-                        card.id &&
-                        addToWishlist(
-                          card,
-                          categoryUrl || "",
-                          categoryName || ""
-                        )
+                        card.id && addToWishlist(card, categoryUrl || "", categoryName || "")
                       }
                     >
                       <FaRegHeart className="text-xs md:text-xl" />

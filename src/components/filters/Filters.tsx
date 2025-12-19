@@ -353,7 +353,7 @@ export const Filters = ({
         toggleSection={toggleSection}
         refObj={contentRefs.price}
       >
-        <div className="pt-4 mx-auto px-8">
+        <div className="pt-4 mx-auto px-10">
           <PriceSlider selectedPrice={selectedPrice} setSelectedPrice={setSelectedPrice} />
         </div>
       </Accordion>

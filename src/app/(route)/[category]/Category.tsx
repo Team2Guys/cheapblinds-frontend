@@ -231,14 +231,13 @@ const CategoryPage = ({
             setSelectedMotorized={setSelectedMotorized}
           />
           <Suspense fallback={<div>Loading Product ...</div>}>
-          <Card
-            products={sortedProducts}
-            categoryName={categoryName}
-            categoryUrl={categoryUrl}
-            selectedMotorized={selectedMotorized}
-            onFreeSample={handleFreeSample}
-          />
-          
+            <Card
+              products={sortedProducts}
+              categoryName={categoryName}
+              categoryUrl={categoryUrl}
+              selectedMotorized={selectedMotorized}
+              onFreeSample={handleFreeSample}
+            />
           </Suspense>
         </div>
       </div>

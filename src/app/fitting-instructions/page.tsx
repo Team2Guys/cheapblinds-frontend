@@ -1,4 +1,9 @@
 import { Breadcrumb, BlindFitting, Instructions, ContactBanner } from "@components";
+
+import { generateMetadata } from "@utils/seoMetadata";
+import { metaData } from "@data/meta-data";
+export const metadata = generateMetadata(metaData.fitting_instructions);
+
 const FittingInstructions = () => {
   return (
     <>
