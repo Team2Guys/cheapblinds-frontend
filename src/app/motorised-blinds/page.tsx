@@ -5,6 +5,10 @@ import { GET_CARD_CATEGORY_QUERY } from "@graphql";
 import { Category } from "@/types/category";
 import React from "react";
 
+import { generateMetadata } from "@utils/seoMetadata";
+import { metaData } from "@data/meta-data";
+export const metadata = generateMetadata(metaData.motorised_blinds);
+
 const page = async () => {
   const categoryList = await fetchCategories(GET_CARD_CATEGORY_QUERY);
   const publishedCategory = categoryList?.filter((item: Category) => item?.status === "PUBLISHED");

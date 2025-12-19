@@ -3,6 +3,24 @@ import { fetchSingleCategory } from "@config/fetch";
 import CategoryPage from "./Category";
 import { notFound } from "next/navigation";
 import { Category } from "@/types/category";
+import { generateMeta } from "@utils/seoMetadata";
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
+  const { category } = await params;
+  const CategoryList = await fetchSingleCategory(category);
+
+  if (!CategoryList || CategoryList.status !== "PUBLISHED") {
+    notFound();
+  }
+
+  return generateMeta({
+    title: CategoryList.metaTitle,
+    description: CategoryList.metaDescription,
+    canonicalTag: CategoryList.canonicalTag,
+    imageUrl: CategoryList?.posterImageUrl,
+    imageAlt: CategoryList.name,
+    fallbackPath: `/${category}`,
+  });
+}
 
 const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;
@@ -14,7 +32,6 @@ const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
     notFound();
   }
   const { name, slug, description, subcategories = [] } = CategoryList;
-
   return (
     <>
       <Breadcrumb title={category} />

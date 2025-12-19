@@ -49,7 +49,7 @@ export const PriceSlider = ({ selectedPrice, setSelectedPrice }: PriceSliderProp
         className="absolute top-2 left-[calc(var(--left)*1%)] transform -translate-x-1/2"
         style={{ ["--left" as string]: ((range[0] - min) / (max - min)) * 100 }}
       >
-        <div className="relative bg-primary text-white px-4 py-1 text-nowrap z-20">
+        <div className="relative bg-primary text-white px-2 py-1 text-nowrap z-20">
           AED {range[0]}
           <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-primary" />
         </div>
@@ -60,7 +60,7 @@ export const PriceSlider = ({ selectedPrice, setSelectedPrice }: PriceSliderProp
         className="absolute top-2 left-[calc(var(--left)*1%)] transform -translate-x-1/2"
         style={{ ["--left" as string]: ((range[1] - min) / (max - min)) * 100 }}
       >
-        <div className="relative bg-primary text-white px-4 py-1 text-nowrap z-20">
+        <div className="relative bg-primary text-white px-2 py-1 text-nowrap z-20">
           AED {range[1]}
           <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-primary" />
         </div>

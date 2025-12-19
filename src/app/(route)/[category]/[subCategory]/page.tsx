@@ -4,6 +4,29 @@ import { fetchSingleSubCategory } from "@config/fetch";
 import { Subcategory } from "@/types/category";
 import { GET_SUBCATEGORY_BY_URLS_QUERY } from "@graphql";
 import { notFound } from "next/navigation";
+import { generateMeta } from "@utils/seoMetadata";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string; subCategory: string }>;
+}) {
+  const { category, subCategory } = await params;
+  const SubCategoryList = await fetchSingleSubCategory(
+    subCategory,
+    category,
+    GET_SUBCATEGORY_BY_URLS_QUERY,
+  );
+  if (!SubCategoryList || SubCategoryList.status !== "PUBLISHED") notFound();
+  return generateMeta({
+    title: SubCategoryList.metaTitle,
+    description: SubCategoryList.metaDescription,
+    canonicalTag: SubCategoryList.canonicalTag,
+    imageUrl: SubCategoryList?.posterImageUrl,
+    imageAlt: SubCategoryList.name,
+    fallbackPath: `/${category}/${SubCategoryList.slug || subCategory}`,
+  });
+}
 
 const Page = async ({ params }: { params: Promise<{ category: string; subCategory: string }> }) => {
   const { category, subCategory } = await params;

@@ -3,6 +3,25 @@ import { fetchSingleProduct, fetchSingleSubCategory } from "@config/fetch";
 import { notFound } from "next/navigation";
 import { GET_SUBCATEGORY_BY_URLS_QUERY } from "@graphql";
 import { Product } from "@/types/category";
+import { generateMeta } from "@utils/seoMetadata";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string; subCategory: string; product: string }>;
+}) {
+  const { category, subCategory, product } = await params;
+  const ProductList = await fetchSingleProduct(category, subCategory, product);
+  if (!ProductList || ProductList.status !== "PUBLISHED") notFound();
+  return generateMeta({
+    title: ProductList.metaTitle,
+    description: ProductList.metaDescription,
+    canonicalTag: ProductList.canonicalTag,
+    imageUrl: ProductList?.posterImageUrl,
+    imageAlt: ProductList.name,
+    fallbackPath: `/${category}/${subCategory}/${ProductList.slug}`,
+  });
+}
 
 const ProductPage = async ({
   params,
@@ -24,6 +43,7 @@ const ProductPage = async ({
   const publishedProduct = productList?.products?.filter(
     (item: Product) => item?.status === "PUBLISHED",
   );
+
   return (
     <>
       <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
