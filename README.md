@@ -1,1 +1,1 @@
-# CheapBlinds Frontend
+# CheapBlind Frontend
