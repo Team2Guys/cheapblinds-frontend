@@ -13,6 +13,7 @@ const AboutUs = () => {
       <InformationSection />
       <Testimonial reviews={TestimonialReview} showPaymentInfo />
     </div>
+    
   );
 };
 
