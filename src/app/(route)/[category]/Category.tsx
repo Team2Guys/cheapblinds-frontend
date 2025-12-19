@@ -238,7 +238,6 @@ const CategoryPage = ({
             selectedMotorized={selectedMotorized}
             onFreeSample={handleFreeSample}
           />
-          
           </Suspense>
         </div>
       </div>

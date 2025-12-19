@@ -17,6 +17,7 @@ const Home = async () => {
   const [productList, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
   const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
   const publishedCategory = categoryList?.filter((item: Product) => item?.status === "PUBLISHED");
+  
 
   return (
     <>

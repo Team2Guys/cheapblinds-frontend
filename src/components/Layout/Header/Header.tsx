@@ -69,7 +69,6 @@ const Header = () => {
       <Link className="fixed bottom-8 right-4" href="https://wa.me/+971505974531" target="_blank">
         <Image
           src="/assets/images/whatsapp-icon.png"
-          quality={100}
           alt="icon"
           width={60}
           height={60}
