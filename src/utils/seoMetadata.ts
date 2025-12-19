@@ -8,7 +8,7 @@ type MetaInput = {
   canonicalTag?: string | null;
   imageUrl?: string | null;
   imageAlt?: string | null;
-  fallbackPath?: string; // e.g., /roller-blinds/blackout/classic-roller/
+  fallbackPath?: string;
 };
 
 interface MetadataProps {
