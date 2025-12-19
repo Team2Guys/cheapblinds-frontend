@@ -37,41 +37,23 @@ export const Card = ({
   const searchParams = useSearchParams();
   const { addToWishlist } = useIndexedDb();
 
-  // 1. Get current page directly from URL Query Params (Default to 1)
   const currentPage = Number(searchParams.get("page")) || 1;
   const totalPages = Math.ceil(products.length / productsPerPage);
+ useEffect(() => {
+  if (currentPage > totalPages && totalPages > 0) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", "1");
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }
+}, [currentPage, totalPages, pathname, router, searchParams]);
 
-  // 2. Reset to Page 1 if filter (products list) changes
-  useEffect(() => {
-    // Only reset if we are deep in pagination but the new list is shorter
-    // or simply reset to 1 on every filter change for consistency.
-    // Check if "page" param exists and is not 1.
-    if (currentPage > 1 && products.length > 0) {
-      // If the products array changed significantly (filters applied), 
-      // we usually want to go back to page 1.
-      // Note: Be careful with this effect to avoid loops. 
-      // Often strictly resetting URL is safer for UX when filters change.
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("page", "1");
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products.length]); // Dependency on length/products ensures we reset on filter change
-
-  // 3. Handle Page Change: Update URL instead of State
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", newPage.toString());
-
-    // Push new URL. 'scroll: false' prevents Next.js from scrolling to top automatically
-    // so your manual scrollTo works.
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
-
-    // Your custom scroll position
     window.scrollTo({ top: 800, behavior: "smooth" });
   };
 
-  // 4. Derive visible products based on URL page
   const visibleProducts = useMemo(() => {
     const start = (currentPage - 1) * productsPerPage;
     return products.slice(start, start + productsPerPage);
@@ -103,7 +85,6 @@ export const Card = ({
           return (
             <div key={card.id} className="relative p-2 hover:shadow-md">
               <Link
-                // Ensure specific query params don't get stuck in the product URL unless desired
                 href={
                   card.url ??
                   `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`
