@@ -63,6 +63,27 @@ export const Card = ({
     const found = ColorImage.find((c) => c.color.toLowerCase() === color.toLowerCase());
     return found ? found.image : "/assets/images/colors/white.png";
   };
+  const getPaginationRange = () => {
+    const delta = window.innerWidth < 640 ? 1 : 2; // mobile vs desktop
+    const range: (number | string)[] = [];
+
+    const left = Math.max(2, currentPage - delta);
+    const right = Math.min(totalPages - 1, currentPage + delta);
+
+    range.push(1);
+
+    if (left > 2) range.push("...");
+
+    for (let i = left; i <= right; i++) {
+      range.push(i);
+    }
+
+    if (right < totalPages - 1) range.push("...");
+
+    if (totalPages > 1) range.push(totalPages);
+
+    return range;
+  };
 
   return (
     <>
@@ -110,13 +131,13 @@ export const Card = ({
                 </div>
               </Link>
 
-              <div className="pt-3 sm:space-y-1 px-2">
+              <div className="pt-3 sm:space-y-2 px-2">
                 <div className="flex justify-between items-center">
                   <Link
                     href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}
                   >
                     <p className="text-xs md:text-base">{categoryName}</p>
-                    <h2 className="font-medium text-sm md:text-xl font-rubik md:underline md:h-10">
+                    <h2 className="font-medium text-sm md:text-xl font-rubik md:underline ">
                       {card.name}
                     </h2>
                   </Link>
@@ -184,35 +205,43 @@ export const Card = ({
           );
         })}
       </div>
-
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-2 pt-6">
+        <div className="flex justify-center items-center gap-1 sm:gap-2 pt-6 flex-wrap">
+          {/* Previous */}
           <button
-            className="cursor-pointer"
             disabled={currentPage === 1}
             onClick={() => handlePageChange(currentPage - 1)}
+            className="disabled:opacity-40 cursor-pointer"
           >
             <MdKeyboardArrowLeft className="text-2xl" />
           </button>
 
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => handlePageChange(i + 1)}
-              className={`${
-                i + 1 === currentPage
-                  ? "w-9 h-9 bg-primary text-white shadow-xl"
-                  : "w-7 h-7 border border-black"
-              } flex justify-center items-center font-medium text-xl cursor-pointer`}
-            >
-              {i + 1}
-            </button>
-          ))}
+          {/* Pages */}
+          {getPaginationRange().map((item, i) =>
+            item === "..." ? (
+              <span key={`dots-${i}`} className="px-2 text-lg">
+                …
+              </span>
+            ) : (
+              <button
+                key={item}
+                onClick={() => handlePageChange(item as number)}
+                className={`${
+                  item === currentPage
+                    ? "w-9 h-9 bg-primary text-white shadow-xl"
+                    : "w-7 h-7 border border-black"
+                } flex justify-center items-center font-medium text-xl cursor-pointer`}
+              >
+                {item}
+              </button>
+            ),
+          )}
 
+          {/* Next */}
           <button
-            className="cursor-pointer"
             disabled={currentPage === totalPages}
             onClick={() => handlePageChange(currentPage + 1)}
+            className="disabled:opacity-40 cursor-pointer"
           >
             <MdKeyboardArrowRight className="text-2xl" />
           </button>

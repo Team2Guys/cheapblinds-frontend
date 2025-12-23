@@ -173,8 +173,9 @@ export interface UserProps {
   email: string;
   isEmailVerified: boolean;
   role: string;
-  defaultShippingAddressId?: string | null;
-  defaultBillingAddressId?: string | null;
+  addresses?: addressProps[] | null | undefined;
+  defaultBillingAddress?: addressProps | null | undefined;
+  defaultShippingAddress?: addressProps | null | undefined;
   addresses?: addressProps[];
   createdAt: string;
   updatedAt: string;

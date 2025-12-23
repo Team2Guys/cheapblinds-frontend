@@ -8,9 +8,13 @@ export const UPDATE_USER_BY_ID_MUTATION = gql`
       lastName
       email
       isEmailVerified
-      role
-      defaultShippingAddressId
-      defaultBillingAddressId
+      addresses
+      defaultShippingAddress {
+        id
+      }
+      defaultBillingAddress {
+        id
+      }
       createdAt
       updatedAt
     }

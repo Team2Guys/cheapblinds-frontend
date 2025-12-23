@@ -12,6 +12,7 @@ import { UserProps } from "@/types/category";
 const AccountPage = () => {
   const { user, isLoading } = useAuth();
   const [userList, setUser] = useState<UserProps | null>(null);
+  console.log(userList, "userListuserList");
   const router = useRouter();
   useEffect(() => {
     if (!user) return;

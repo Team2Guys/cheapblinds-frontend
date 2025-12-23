@@ -13,7 +13,6 @@ import { useAuth } from "@context/UserContext";
 interface LoginValues {
   email: string;
   password: string;
-  role: string;
 }
 
 export const LoginForms = () => {
@@ -24,7 +23,6 @@ export const LoginForms = () => {
   const initialValues: LoginValues = {
     email: "",
     password: "",
-    role: "USER",
   };
 
   const handleSubmit = async (values: LoginValues) => {
@@ -34,7 +32,6 @@ export const LoginForms = () => {
           input: {
             email: values.email.trim(),
             password: values.password,
-            role: "USER",
           },
           headers: {
             "Content-Type": "application/json",

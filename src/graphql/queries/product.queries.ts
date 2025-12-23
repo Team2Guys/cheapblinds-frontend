@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_PRODUCT_LIST_QUERY = gql`
-  query GetProductList {
+  query ProductList {
     productList {
       id
       name
@@ -91,7 +91,7 @@ export const GET_PRODUCT_BY_ID_QUERY = gql`
 `;
 
 export const GET_CARD_PRODUCT_QUERY = gql`
-  query GetProductList {
+  query ProductList {
     productList {
       id
       name

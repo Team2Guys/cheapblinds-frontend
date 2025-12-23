@@ -21,6 +21,8 @@ const Home = async () => {
   const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
   const publishedCategory = categoryList?.filter((item: Product) => item?.status === "PUBLISHED");
 
+  console.log(productList, "productListproductList");
+
   return (
     <>
       <HeroSection
