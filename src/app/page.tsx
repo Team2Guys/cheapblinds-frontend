@@ -14,10 +14,11 @@ import { chooseImage } from "@data/home";
 import { Product } from "@/types/category";
 import { generateMetadata } from "@utils/seoMetadata";
 import { metaData } from "@data/meta-data";
+import { GET_CARD_PRODUCT_QUERY } from "@graphql";
 export const metadata = generateMetadata(metaData.home);
 
 const Home = async () => {
-  const [productList, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
+  const [productList, categoryList] = await Promise.all([fetchProducts(GET_CARD_PRODUCT_QUERY), fetchCategories()]);
   const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
   const publishedCategory = categoryList?.filter((item: Product) => item?.status === "PUBLISHED");
 

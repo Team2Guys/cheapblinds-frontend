@@ -1,20 +1,40 @@
-import { UserProps, addressProps } from "@/types/category";
-import Link from "next/link";
-import React from "react";
+import { UserProps } from '@/types/category';
+import Link from 'next/link';
+import React from 'react';
 
 interface MyAccountProps {
   userList: UserProps | null;
 }
 
+const AddressDisplay: React.FC<{
+  title: string;
+  address?:
+    | UserProps['defaultBillingAddress']
+    | UserProps['defaultShippingAddress'];
+}> = ({ title, address }) => (
+  <div className="space-y-2">
+    <h3 className="font-semibold">{title}</h3>
+    {address ? (
+      <>
+        <p>
+          {address.firstName} {address.lastName}
+        </p>
+        <p>
+          {address.address}, {address.city}, {address.country}
+        </p>
+        {address.phone && <p>Phone: {address.phone}</p>}
+        <p>Email: {address.email}</p>
+      </>
+    ) : (
+      <p>You have not set a {title.toLowerCase()}</p>
+    )}
+  </div>
+);
+
 export const MyAccount: React.FC<MyAccountProps> = ({ userList }) => {
   if (!userList) return null;
-  const defaultBillingAddress: addressProps | undefined = userList.addresses?.find(
-    (a) => a.id === userList.defaultBillingAddressId,
-  );
 
-  const defaultShippingAddress: addressProps | undefined = userList.addresses?.find(
-    (a) => a.id === userList.defaultShippingAddressId,
-  );
+  const { defaultBillingAddress, defaultShippingAddress } = userList;
 
   return (
     <div className="container mx-auto space-y-5">
@@ -22,8 +42,10 @@ export const MyAccount: React.FC<MyAccountProps> = ({ userList }) => {
 
       {/* Contact Info */}
       <div className="space-y-2">
-        <h2 className="text-xl font-medium font-rubik uppercase">DEFAULT ADDRESSES</h2>
-        <hr className="border-b-2 border-secondary" />
+        <h2 className="text-xl font-medium font-alethia uppercase">
+          DEFAULT ADDRESSES
+        </h2>
+        <hr className="border-b-2 border-black" />
         <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
           <div className="space-y-2">
             <h3 className="font-semibold">Contact Information</h3>
@@ -38,7 +60,7 @@ export const MyAccount: React.FC<MyAccountProps> = ({ userList }) => {
             <p>Edit your e-mail marketing consents</p>
             <Link
               href="/newsletter-subscriptions"
-              className="underline text-primary cursor-pointer"
+              className="underline text-black cursor-pointer"
             >
               Edit
             </Link>
@@ -47,49 +69,23 @@ export const MyAccount: React.FC<MyAccountProps> = ({ userList }) => {
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-medium font-rubik uppercase">Address Book</h2>
-          <Link href="/address-book" className="text-primary cursor-pointer">
+          <h2 className="text-xl font-medium font-alethia uppercase">
+            Address Book
+          </h2>
+          <Link href="/address-book" className="cursor-pointer">
             Manage Addresses
           </Link>
         </div>
-        <hr className="border-b-2 border-secondary" />
+        <hr className="border-b-2 border-black" />
         <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
-          <div className="space-y-2">
-            <h3 className="font-semibold">Default Billing Address</h3>
-            {defaultBillingAddress ? (
-              <>
-                <p>
-                  {defaultBillingAddress.firstName} {defaultBillingAddress.lastName}
-                </p>
-                <p>
-                  {defaultBillingAddress.address}, {defaultBillingAddress.city},{" "}
-                  {defaultBillingAddress.country}
-                </p>
-                {defaultBillingAddress.phone && <p>Phone: {defaultBillingAddress.phone}</p>}
-                <p>Email: {defaultBillingAddress.email}</p>
-              </>
-            ) : (
-              <p>You have not set a default billing address</p>
-            )}
-          </div>
-          <div className="space-y-2">
-            <h3 className="font-semibold">Default Shipping Address</h3>
-            {defaultShippingAddress ? (
-              <>
-                <p>
-                  {defaultShippingAddress.firstName} {defaultShippingAddress.lastName}
-                </p>
-                <p>
-                  {defaultShippingAddress.address}, {defaultShippingAddress.city},{" "}
-                  {defaultShippingAddress.country}
-                </p>
-                {defaultShippingAddress.phone && <p>Phone: {defaultShippingAddress.phone}</p>}
-                <p>Email: {defaultShippingAddress.email}</p>
-              </>
-            ) : (
-              <p>You have not set a default shipping address</p>
-            )}
-          </div>
+          <AddressDisplay
+            title="Default Billing Address"
+            address={defaultBillingAddress}
+          />
+          <AddressDisplay
+            title="Default Shipping Address"
+            address={defaultShippingAddress}
+          />
         </div>
       </div>
     </div>

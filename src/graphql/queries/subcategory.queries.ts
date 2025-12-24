@@ -67,9 +67,11 @@ export const GET_SUBCATEGORY_BY_URLS_QUERY = gql`
         name
         slug
         price
-        discountPrice
         posterImageUrl
-        width
+        minHeight
+        maxHeight
+        minWidth
+        maxWidth
         color
         pattern
         composition

@@ -4,29 +4,35 @@ export const GET_PRODUCT_LIST_QUERY = gql`
   query ProductList {
     productList {
       id
+      categoryId
+      subcategoryId
+      fabricId
+      blindTypeId
+      sku
       name
-      description
-      shortDescription
       slug
+      shortDescription
+      description
+      posterImageUrl
+      productImages
+      price
+      motorPrice
+      minHeight
+      maxHeight
+      minWidth
+      maxWidth
+      color
+      pattern
+      composition
+      isMotorized
+      additionalInfo
+      measuringGuide
       metaTitle
       metaDescription
       canonicalTag
       breadcrumb
-      posterImageUrl
-      productImages
-      lastEditedBy
       seoSchema
-      price
-      discountPrice
-      stock
-      width
-      height
-      color
-      pattern
-      composition
       status
-      categoryId
-      subcategoryId
       category {
         id
         name
@@ -37,58 +43,12 @@ export const GET_PRODUCT_LIST_QUERY = gql`
         name
         slug
       }
-      additionalInfo
-      measuringGuide
       updatedAt
       createdAt
     }
   }
 `;
 
-export const GET_PRODUCT_BY_ID_QUERY = gql`
-  query GetProductById($id: ID!) {
-    productById(id: $id) {
-      id
-      name
-      description
-      shortDescription
-      slug
-      metaTitle
-      metaDescription
-      canonicalTag
-      breadcrumb
-      posterImageUrl
-      productImages
-      lastEditedBy
-      seoSchema
-      price
-      discountPrice
-      stock
-      width
-      height
-      color
-      pattern
-      composition
-      status
-      categoryId
-      subcategoryId
-      category {
-        id
-        name
-        slug
-      }
-      subcategory {
-        id
-        name
-        slug
-      }
-      additionalInfo
-      measuringGuide
-      updatedAt
-      createdAt
-    }
-  }
-`;
 
 export const GET_CARD_PRODUCT_QUERY = gql`
   query ProductList {
@@ -99,8 +59,6 @@ export const GET_CARD_PRODUCT_QUERY = gql`
       breadcrumb
       posterImageUrl
       price
-      discountPrice
-      stock
       status
       category {
         id
@@ -123,7 +81,6 @@ export const GET_PRODUCT_BY_SEARCH_QUERY = gql`
       name
       slug
       posterImageUrl
-      stock
       status
       category {
         id
@@ -162,8 +119,6 @@ export const GET_PRODUCT_BY_SLUG_QUERY = gql`
       posterImageUrl
       productImages
       price
-      discountPrice
-      stock
       metaTitle
       metaDescription
       canonicalTag
@@ -173,8 +128,10 @@ export const GET_PRODUCT_BY_SLUG_QUERY = gql`
       measuringGuide
       status
       lastEditedBy
-      width
-      height
+      minHeight
+      maxHeight
+      minWidth
+      maxWidth
       color
       pattern
       composition
