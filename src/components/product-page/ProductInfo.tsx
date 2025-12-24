@@ -1,17 +1,19 @@
+// ProductInfo.tsx
 "use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import {
   HelpingModal,
   RecessSelector,
-  RollerBlindsForm,
   RomanBlindsForm,
   CalculationForm,
   PaymentMethod,
 } from "@components";
 import DeliveryIcon from "@components/svg/delivery";
 import { Toaster } from "@components";
-import { Product } from "@/types/category";
+import { FabricPrice, Product } from "@/types/category";
 import { useIndexedDb } from "@lib/useIndexedDb";
+import { fetchFabricPrice } from "@config/fetch";
 
 interface ProductDetailProps {
   category: string;
@@ -21,55 +23,94 @@ interface ProductDetailProps {
 }
 
 export const ProductInfo = ({ category, price, shortDescription, product }: ProductDetailProps) => {
+  const topRef = useRef<HTMLDivElement>(null);
+
   const [showForm, setShowForm] = useState(false);
   const [recessType, setRecessType] = useState("outside");
-  const topRef = useRef<HTMLDivElement>(null);
-  const [calcValues, setCalcValues] = useState({
+  const [loadingPrice, setLoadingPrice] = useState(false);
+  const [draftValues, setDraftValues] = useState({
     width: "",
-    height: "",
+    drop: "",
     unit: "cm",
   });
+
+  const [confirmedValues, setConfirmedValues] = useState<{
+    width: string;
+    drop: string;
+    unit: string;
+  } | null>(null);
+
+  const [finalPrice, setFinalPrice] = useState<FabricPrice | null>(null);
+
   const { addFreeSampleItem } = useIndexedDb();
+
   useEffect(() => {
-    if (showForm && topRef.current) {
-      topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (showForm) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [showForm]);
+const toMM = (value: string, unit: string) => {
+  const num = Number(value);
+  if (unit === "cm") return num * 10;
+  if (unit === "Inches") return num * 25.4; 
+  return num;   
+};
+const handleGetPrice = async () => {
+  if (!draftValues.width || !draftValues.drop) {
+    Toaster("error", "Please enter width and drop before getting the price.");
+    return;
+  }
 
-  const handleGetPrice = () => {
-    if (!calcValues.width || !calcValues.height) {
-      Toaster("error", "Please enter width and height before getting the price.");
+  if (!product?.fabricId || !product?.blindTypeId) {
+    Toaster("error", "Invalid product configuration.");
+    return;
+  }
+  setLoadingPrice(true);
+  try {
+    const widthMM = toMM(draftValues.width, draftValues.unit);
+    const dropMM = toMM(draftValues.drop, draftValues.unit);
+
+    const response = await fetchFabricPrice({
+      width: widthMM,
+      drop: dropMM,
+      fabricId: Number(product.fabricId),
+      blindTypeId: Number(product.blindTypeId),
+    });
+
+    if (!response) {
+      Toaster("error", "No price returned");
       return;
     }
+    setFinalPrice(response);
+    setConfirmedValues(draftValues);
     setShowForm(true);
-  };
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (error) {
+    console.error(error);
+    Toaster("error", "Failed to calculate price");
+  } finally {
+    setLoadingPrice(false);
+  }
+};
 
   const handleFreeSample = async (product: Product) => {
     try {
       await addFreeSampleItem(product, category || "");
-    } catch (err) {
-      console.error(err);
+    } catch {
       Toaster("error", "Failed to add Free Sample!");
     }
   };
 
   return (
     <div className="space-y-6" ref={topRef}>
-      {showForm && (
-        <>
-          {category === "roller-blinds" && (
-            <RollerBlindsForm values={calcValues} recessType={recessType} />
-          )}
-          {category === "roman-blinds" && (
-            <RomanBlindsForm values={calcValues} recessType={recessType} />
-          )}
-        </>
+      {showForm && confirmedValues && (
+        <RomanBlindsForm values={confirmedValues} finalPrice={finalPrice} recessType={recessType} />
       )}
 
       <h2 className="flex items-center gap-2 font-semibold text-2xl md:text-3xl">
         From
-        <span className="font-currency text-2xl md:text-3xl font-normal"></span>
-        <span className="font-semibold text-2xl md:text-3xl">{price}</span>
+        <span className="font-currency font-normal"></span>
+        <span>{price}</span>
       </h2>
 
       <p>{shortDescription}</p>
@@ -79,7 +120,7 @@ export const ProductInfo = ({ category, price, shortDescription, product }: Prod
         maxHeight={product.maxHeight}
         minWidth={product.minWidth}
         maxWidth={product.maxWidth}
-        onValuesChange={setCalcValues}
+        onValuesChange={setDraftValues}
       />
 
       <HelpingModal />
@@ -87,18 +128,22 @@ export const ProductInfo = ({ category, price, shortDescription, product }: Prod
 
       <button
         onClick={handleGetPrice}
-        className="bg-primary px-4 py-3 rounded-md w-full font-semibold cursor-pointer hover:bg-primary/80"
+        disabled={loadingPrice}
+        className="bg-primary px-4 py-3 rounded-md w-full font-semibold hover:bg-primary/80 disabled:opacity-60 cursor-pointer"
       >
-        Get price
+        {loadingPrice ? "Calculating..." : "Get price"}
       </button>
+
       <PaymentMethod installments={200} showHeading />
+
       <div className="bg-primary p-4 rounded-md flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-center md:text-left space-y-2">
+        <div className="space-y-2">
           <h3 className="font-semibold">Not sure? Order a free sample</h3>
           <p>Dispatched the same day by first class post</p>
         </div>
+
         <button
-          className="flex items-center gap-2 bg-white font-semibold px-6 py-2 rounded-md shadow hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+          className="flex items-center gap-2 bg-white font-semibold px-6 py-2 rounded-md shadow hover:bg-gray-100"
           onClick={() => handleFreeSample(product)}
         >
           <span className="bg-primary text-white h-6 w-6 flex items-center justify-center rounded-md">
@@ -107,8 +152,9 @@ export const ProductInfo = ({ category, price, shortDescription, product }: Prod
           Free Sample
         </button>
       </div>
+
       <div className="border border-secondary p-4 rounded-md flex gap-4">
-        <div className="relative w-10 h-10">
+        <div className="w-10 h-10">
           <DeliveryIcon />
         </div>
         <div>

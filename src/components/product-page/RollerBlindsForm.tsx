@@ -23,7 +23,7 @@ export const RollerBlindsForm = ({ values, recessType }: FormProps) => {
       {/* ✅ Dimensions */}
       <h3 className="text-lg font-semibold mb-2 text-primary text-center">
         {values.width}
-        {values.unit} width × {values.height}
+        {values.unit} width × {values.drop}
         {values.unit} drop ({recessType})
       </h3>
 

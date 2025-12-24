@@ -183,3 +183,20 @@ export interface UserProps {
   createdAt: string;
   updatedAt: string;
 }
+
+interface GetFabricPriceInput {
+  drop: number;
+  width: number;
+  fabricId: number;
+  blindTypeId: number;
+}
+
+interface FabricPrice {
+  UID: string;
+  FabricID: string;
+  SellPrice: number;
+  Tax_amount: number;
+  TotalSalesAmt: number;
+  TradeType: string;
+  TaxPercentage: number;
+}

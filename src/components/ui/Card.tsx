@@ -64,9 +64,13 @@ export const Card = ({
     return found ? found.image : "/assets/images/colors/white.png";
   };
   const getPaginationRange = () => {
-    const delta = window.innerWidth < 640 ? 1 : 2; // mobile vs desktop
-    const range: (number | string)[] = [];
+    let delta = 2;
 
+    if (typeof window !== "undefined") {
+      delta = window.innerWidth < 640 ? 1 : 2;
+    }
+
+    const range: (number | string)[] = [];
     const left = Math.max(2, currentPage - delta);
     const right = Math.min(totalPages - 1, currentPage + delta);
 
@@ -170,7 +174,7 @@ export const Card = ({
                     <p className="hidden sm:block">From:</p>
 
                     <span className="font-currency text-lg md:text-3xl"></span>
-                    <span className="font-semibold text-sm md:text-2xl">{originalPrice}</span>                 
+                    <span className="font-semibold text-sm md:text-2xl">{originalPrice}</span>
                   </div>
 
                   {IsDeleteButton && onDelete ? (

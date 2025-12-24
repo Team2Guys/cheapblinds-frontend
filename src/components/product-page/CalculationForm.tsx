@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 
 interface CalculationProps {
-  onValuesChange?: (_values: { width: string; height: string; unit: string }) => void;
+  onValuesChange?: (_values: { width: string; drop: string; unit: string }) => void;
   minHeight?: number | undefined;
   maxHeight?: number | undefined;
   minWidth?: number | undefined;
@@ -16,10 +16,10 @@ export const CalculationForm = ({
   minWidth = 0,
   maxWidth = 0,
 }: CalculationProps) => {
-  const [unit, setUnit] = useState<"mm" | "cm" | "Inches">("mm");
+  const [unit, setUnit] = useState<"mm" | "cm" | "Inches">("cm");
   const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
-  const [errors, setErrors] = useState({ width: "", height: "" });
+  const [drop, setDrop] = useState("");
+  const [errors, setErrors] = useState({ width: "", drop: "" });
 
   const unitRanges = {
     mm: { minWidth, maxWidth, minHeight, maxHeight },
@@ -39,16 +39,16 @@ export const CalculationForm = ({
 
   const handleUnitChange = (value: "mm" | "cm" | "Inches") => {
     setUnit(value);
-    setErrors({ width: "", height: "" });
+    setErrors({ width: "", drop: "" });
     setWidth("");
-    setHeight("");
+    setDrop("");
   };
 
   const handleNumericInput = (value: string) => {
     return value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
   };
 
-const validateValue = (field: "width" | "height", value: string) => {
+const validateValue = (field: "width" | "drop", value: string) => {
   const numValue = Number(value);
   const { minWidth, maxWidth, minHeight, maxHeight } = unitRanges[unit];
   const min = field === "width" ? minWidth : minHeight;
@@ -78,8 +78,8 @@ const validateValue = (field: "width" | "height", value: string) => {
 
 
   useEffect(() => {
-    onValuesChange?.({ width, height, unit });
-  }, [width, height, unit, onValuesChange]);
+    onValuesChange?.({ width, drop, unit });
+  }, [width, drop, unit, onValuesChange]);
 
   const currentRange = unitRanges[unit];
 
@@ -134,25 +134,25 @@ const validateValue = (field: "width" | "height", value: string) => {
           <label className="block mb-1">Height ({unit})</label>
           <input
             type="text"
-            value={height}
+            value={drop}
             onChange={(e) => {
               const numericValue = handleNumericInput(e.target.value);
-              setHeight(numericValue);
-              validateValue("height", numericValue);
+              setDrop(numericValue);
+              validateValue("drop", numericValue);
             }}
             className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-1 ${
-              errors.height
+              errors.drop
                 ? "border-red-400 focus:ring-red-400"
                 : "border-secondary focus:ring-primary"
             }`}
-            placeholder={`Enter height in ${unit}`}
+            placeholder={`Enter drop in ${unit}`}
           />
           <p className="mt-1 text-sm text-gray-500">
             Min: {unit === "Inches" ? currentRange.minHeight.toFixed(1) : currentRange.minHeight}{" "}
             {unit} | Max:{" "}
             {unit === "Inches" ? currentRange.maxHeight.toFixed(1) : currentRange.maxHeight} {unit}
           </p>
-          {errors.height && <p className="text-red-500 mt-1">{errors.height}</p>}
+          {errors.drop && <p className="text-red-500 mt-1">{errors.drop}</p>}
         </div>
       </div>
     </>

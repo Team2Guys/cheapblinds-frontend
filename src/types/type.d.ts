@@ -1,3 +1,5 @@
+import { FabricPrice } from "./category";
+
 export interface FormData {
   inquiryType: string;
   name: string;
@@ -7,8 +9,9 @@ export interface FormData {
 }
 
 export interface FormProps {
-  values: { width: string; height: string; unit: string };
+  values: { width: string; drop: string; unit: string };
   recessType: string;
+  finalPrice: FabricPrice | null;
 }
 
 export interface ContactData {

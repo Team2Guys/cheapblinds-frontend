@@ -6,7 +6,7 @@ import { FormSelect } from "@components";
 import { Toaster } from "@components";
 import { controlOptions, headrailOptions, Lining, StackingStyle } from "@data/detail-page";
 
-export const RomanBlindsForm = ({ values, recessType }: FormProps) => {
+export const RomanBlindsForm = ({ values, recessType, finalPrice }: FormProps) => {
   const [headrail, setHeadrail] = useState("Classic");
   const [stackingStyle, setStackingStyle] = useState("Cascade");
   const [lining, setLining] = useState("Polycotton");
@@ -25,10 +25,11 @@ export const RomanBlindsForm = ({ values, recessType }: FormProps) => {
       {/* ✅ Title */}
       <h3 className="text-lg font-semibold mb-2 text-primary text-center">
         {values.width}
-        {values.unit} width × {values.height}
+        {values.unit} width × {values.drop}
         {values.unit} drop ({recessType})
       </h3>
-
+      <p>TotalSalesAmt : {finalPrice?.TotalSalesAmt}</p>
+      
       {/* ✅ Headrail */}
       <FormSelect
         title="Headrail Type / Colour"
