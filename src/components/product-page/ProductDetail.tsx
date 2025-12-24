@@ -13,33 +13,29 @@ export const ProductDetail = ({
   const {
     name,
     price,
-    discountPrice,
     shortDescription,
     description,
     additionalInfo,
     measuringGuide,
     productImages,
   } = productData;
-  const discountPercentage =
-    price && discountPrice ? Math.round(((price - discountPrice) / price) * 100) : 0;
   return (
     <div className="mt-10 space-y-3">
       <h1 className="text-heading">{name}</h1>
       <div className="grid grid-cols-12 gap-3 md:gap-6">
         <div className="col-span-12 md:col-span-6">
-          <div className="bg-primary p-2 flex flex-wrap justify-center sm:justify-between items-center md:px-4">
+          {/* <div className="bg-primary p-2 flex flex-wrap justify-center sm:justify-between items-center md:px-4">
             <h2 className="text-2xl font-medium">
               DON’T MISS OUT <span className="text-4xl">-{discountPercentage}%</span> OFF
             </h2>
             <span className="font-semibold">Ends Soon</span>
-          </div>
+          </div> */}
           <Thumbnail images={productImages} />
         </div>
         <div className="col-span-12 md:col-span-6">
           <ProductInfo
             category={category}
             price={price}
-            discountPrice={discountPrice}
             shortDescription={shortDescription}
             product={productData}
           />

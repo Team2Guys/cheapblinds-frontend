@@ -3,18 +3,38 @@ import React, { useState, useEffect } from "react";
 
 interface CalculationProps {
   onValuesChange?: (_values: { width: string; height: string; unit: string }) => void;
+  minHeight?: number | undefined;
+  maxHeight?: number | undefined;
+  minWidth?: number | undefined;
+  maxWidth?: number | undefined;
 }
 
-export const CalculationForm = ({ onValuesChange }: CalculationProps) => {
-  const [unit, setUnit] = useState<"mm" | "cm" | "Inches">("cm");
+export const CalculationForm = ({
+  onValuesChange,
+  minHeight = 0,
+  maxHeight = 0,
+  minWidth = 0,
+  maxWidth = 0,
+}: CalculationProps) => {
+  const [unit, setUnit] = useState<"mm" | "cm" | "Inches">("mm");
   const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
   const [errors, setErrors] = useState({ width: "", height: "" });
 
   const unitRanges = {
-    mm: { min: 300, maxWidth: 2600, maxHeight: 3000 },
-    cm: { min: 30, maxWidth: 260, maxHeight: 300 },
-    Inches: { min: 11.8, maxWidth: 102.3, maxHeight: 118.1 },
+    mm: { minWidth, maxWidth, minHeight, maxHeight },
+    cm: {
+      minWidth: minWidth / 10,
+      maxWidth: maxWidth / 10,
+      minHeight: minHeight / 10,
+      maxHeight: maxHeight / 10,
+    },
+    Inches: {
+      minWidth: minWidth / 25.4,
+      maxWidth: maxWidth / 25.4,
+      minHeight: minHeight / 25.4,
+      maxHeight: maxHeight / 25.4,
+    },
   };
 
   const handleUnitChange = (value: "mm" | "cm" | "Inches") => {
@@ -28,30 +48,34 @@ export const CalculationForm = ({ onValuesChange }: CalculationProps) => {
     return value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
   };
 
-  const validateValue = (field: "width" | "height", value: string) => {
-    const numValue = Number(value);
-    const { min, maxWidth, maxHeight } = unitRanges[unit];
-    const max = field === "width" ? maxWidth : maxHeight;
+const validateValue = (field: "width" | "height", value: string) => {
+  const numValue = Number(value);
+  const { minWidth, maxWidth, minHeight, maxHeight } = unitRanges[unit];
+  const min = field === "width" ? minWidth : minHeight;
+  const max = field === "width" ? maxWidth : maxHeight;
 
-    if (!value) {
-      setErrors((prev) => ({ ...prev, [field]: "" }));
-      return;
-    }
+  if (!value) {
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+    return;
+  }
 
-    if (numValue < min) {
-      setErrors((prev) => ({
-        ...prev,
-        [field]: `Value must be at least ${min} ${unit}.`,
-      }));
-    } else if (numValue > max) {
-      setErrors((prev) => ({
-        ...prev,
-        [field]: `Value cannot exceed ${max} ${unit}.`,
-      }));
-    } else {
-      setErrors((prev) => ({ ...prev, [field]: "" }));
-    }
-  };
+  const format = (v: number) => (unit === "Inches" ? v.toFixed(1) : v);
+
+  if (numValue < min) {
+    setErrors((prev) => ({
+      ...prev,
+      [field]: `Value must be at least ${format(min)} ${unit}.`,
+    }));
+  } else if (numValue > max) {
+    setErrors((prev) => ({
+      ...prev,
+      [field]: `Value cannot exceed ${format(max)} ${unit}.`,
+    }));
+  } else {
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+  }
+};
+
 
   useEffect(() => {
     onValuesChange?.({ width, height, unit });
@@ -80,7 +104,7 @@ export const CalculationForm = ({ onValuesChange }: CalculationProps) => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
         <div>
           <label className="block mb-1">Width ({unit})</label>
           <input
@@ -99,10 +123,13 @@ export const CalculationForm = ({ onValuesChange }: CalculationProps) => {
             placeholder={`Enter width in ${unit}`}
           />
           <p className="mt-1 text-sm text-gray-500">
-            Min: {currentRange.min} {unit} | Max: {currentRange.maxWidth} {unit}
+            Min: {unit === "Inches" ? currentRange.minWidth.toFixed(1) : currentRange.minWidth}{" "}
+            {unit} | Max:{" "}
+            {unit === "Inches" ? currentRange.maxWidth.toFixed(1) : currentRange.maxWidth} {unit}
           </p>
           {errors.width && <p className="text-red-500 mt-1">{errors.width}</p>}
         </div>
+
         <div>
           <label className="block mb-1">Height ({unit})</label>
           <input
@@ -121,7 +148,9 @@ export const CalculationForm = ({ onValuesChange }: CalculationProps) => {
             placeholder={`Enter height in ${unit}`}
           />
           <p className="mt-1 text-sm text-gray-500">
-            Min: {currentRange.min} {unit} | Max: {currentRange.maxHeight} {unit}
+            Min: {unit === "Inches" ? currentRange.minHeight.toFixed(1) : currentRange.minHeight}{" "}
+            {unit} | Max:{" "}
+            {unit === "Inches" ? currentRange.maxHeight.toFixed(1) : currentRange.maxHeight} {unit}
           </p>
           {errors.height && <p className="text-red-500 mt-1">{errors.height}</p>}
         </div>
