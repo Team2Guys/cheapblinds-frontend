@@ -1,56 +1,50 @@
 "use client";
 
-import { Modal, AddressForm, Toaster } from "@components";
-import { addressProps, UserProps } from "@/types/category";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
 import { FaTrash } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
-import { useMutation } from "@apollo/client";
 
+import { Modal, AddressForm, Toaster } from "@components";
+import { addressProps, UserProps } from "@/types/category";
 import { REMOVE_ADDRESS_BY_ID_MUTATION, UPDATE_USER_BY_ID_MUTATION } from "@graphql";
 
 interface AddressBookProps {
   userId: string;
-  addressList: addressProps[];
-  userList: UserProps | null;
+  userList: UserProps;
+  setUserList?: (_user: UserProps) => void; // optional prop to update parent state
 }
 
-export const AddressBook: React.FC<AddressBookProps> = ({ userId, addressList, userList }) => {
+export const AddressBook: React.FC<AddressBookProps> = ({ userId, userList, setUserList }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<addressProps | null>(null);
-
-  const [billingAddressId, setBillingAddressId] = useState<string | null>(null);
-  const [shippingAddressId, setShippingAddressId] = useState<string | null>(null);
-
-  const [addresses, setAddresses] = useState<addressProps[]>(addressList);
 
   const [removeAddressById] = useMutation(REMOVE_ADDRESS_BY_ID_MUTATION);
   const [updateUserById] = useMutation(UPDATE_USER_BY_ID_MUTATION);
 
-  useEffect(() => {
-    setAddresses(addressList);
-  }, [addressList]);
+  const { addresses } = userList;
+  const [defaultBillingAddress, setDefaultBillingAddress] = useState<
+    addressProps | null | undefined
+  >(userList.defaultBillingAddress);
+  const [defaultShippingAddress, setDefaultShippingAddress] = useState<
+    addressProps | null | undefined
+  >(userList.defaultShippingAddress);
 
-  // Delete address
+  // DELETE ADDRESS
   const handleDelete = (id: string) => async () => {
     try {
       const { data } = await removeAddressById({ variables: { id } });
+
       if (data?.removeAddressById?.id) {
         Toaster("success", "Address removed successfully!");
-
-        setAddresses((prev) => prev.filter((a) => a.id !== id));
-
-        if (billingAddressId === id) setBillingAddressId(null);
-        if (shippingAddressId === id) setShippingAddressId(null);
       }
     } catch (error) {
-      console.error("Failed to remove address:", error);
-      Toaster("error", "Failed to delete address. Please try again.");
+      console.error(error);
+      Toaster("error", "Failed to delete address");
     }
   };
 
-  // UPDATE USER DEFAULT BILLING / SHIPPING
-  const updateUserAddress = async (type: "BILLING" | "SHIPPING", addressId: string | null) => {
+  const updateUserAddress = async (type: "BILLING" | "SHIPPING", addressId: string) => {
     try {
       const input =
         type === "BILLING"
@@ -58,75 +52,71 @@ export const AddressBook: React.FC<AddressBookProps> = ({ userId, addressList, u
           : { defaultShippingAddressId: addressId };
 
       const { data } = await updateUserById({
-        variables: {
-          id: userId,
-          input,
-        },
+        variables: { id: userId, input },
       });
 
       if (data?.updateUserById?.id) {
         Toaster("success", `Default ${type.toLowerCase()} address updated!`);
+        if (type === "BILLING") {
+          const newBilling = addresses?.find((a) => a.id === addressId) ?? null;
+          setDefaultBillingAddress(newBilling);
+          if (setUserList) setUserList({ ...userList, defaultBillingAddress: newBilling });
+        } else {
+          const newShipping = addresses?.find((a) => a.id === addressId) ?? null;
+          setDefaultShippingAddress(newShipping);
+          if (setUserList) setUserList({ ...userList, defaultShippingAddress: newShipping });
+        }
       }
     } catch (error) {
       console.error(error);
     }
   };
-  useEffect(() => {
-    if (userList) {
-      setBillingAddressId(userList.defaultBillingAddressId || null);
-      setShippingAddressId(userList.defaultShippingAddressId || null);
-    }
-  }, [userList]);
-  const defaultBillingAddress = addresses.find((a) => a.id === billingAddressId);
-  const defaultShippingAddress = addresses.find((a) => a.id === shippingAddressId);
 
   return (
     <>
       <div className="container mx-auto space-y-5">
         <h2 className="text-heading">Address Book</h2>
 
-        {/* ACCOUNT INFO */}
         <div className="space-y-2">
           <h2 className="text-xl font-medium font-rubik uppercase">Account Information</h2>
           <hr className="border-b-2 border-secondary" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
             <div className="space-y-2">
               <h3 className="font-semibold">Default Billing Address</h3>
               {defaultBillingAddress ? (
                 <div>
                   <p className="text-primary">
-                    {defaultBillingAddress?.firstName} {defaultBillingAddress?.lastName}
+                    {defaultBillingAddress.firstName} {defaultBillingAddress.lastName}
                   </p>
                   <p className="text-sm">
-                    {defaultBillingAddress?.address}, {defaultBillingAddress?.city},{" "}
-                    {defaultBillingAddress?.country}
+                    {defaultBillingAddress.address}, {defaultBillingAddress.city},{" "}
+                    {defaultBillingAddress.country}
                   </p>
-                  {defaultBillingAddress?.phone && (
-                    <p className="text-sm">Phone: {defaultBillingAddress?.phone}</p>
+                  {defaultBillingAddress.phone && (
+                    <p className="text-sm">Phone: {defaultBillingAddress.phone}</p>
                   )}
-                  <p className="text-sm">Email: {defaultBillingAddress?.email}</p>
+                  <p className="text-sm">Email: {defaultBillingAddress.email}</p>
                 </div>
               ) : (
                 <p className="text-sm text-gray-500">You have not set a default billing address.</p>
               )}
             </div>
-
             <div className="space-y-2">
               <h3 className="font-semibold">Default Shipping Address</h3>
-              {defaultShippingAddress && defaultShippingAddress ? (
+              {defaultShippingAddress ? (
                 <div>
                   <p className="text-primary">
-                    {defaultShippingAddress?.firstName} {defaultShippingAddress?.lastName}
+                    {defaultShippingAddress.firstName} {defaultShippingAddress.lastName}
                   </p>
                   <p className="text-sm">
-                    {defaultShippingAddress?.address}, {defaultShippingAddress?.city},{" "}
-                    {defaultShippingAddress?.country}
+                    {defaultShippingAddress.address}, {defaultShippingAddress.city},{" "}
+                    {defaultShippingAddress.country}
                   </p>
-                  {defaultShippingAddress?.phone && (
-                    <p className="text-sm">Phone: {defaultShippingAddress?.phone}</p>
+                  {defaultShippingAddress.phone && (
+                    <p className="text-sm">Phone: {defaultShippingAddress.phone}</p>
                   )}
-                  <p className="text-sm">Email: {defaultShippingAddress?.email}</p>
+                  <p className="text-sm">Email: {defaultShippingAddress.email}</p>
                 </div>
               ) : (
                 <p className="text-sm text-gray-500">
@@ -136,91 +126,78 @@ export const AddressBook: React.FC<AddressBookProps> = ({ userId, addressList, u
             </div>
           </div>
         </div>
+
         <div className="space-y-2">
-          <h2 className="text-xl font-medium font-rubik uppercase">ADDITIONAL ADDRESS ENTRIES</h2>
+          <h2 className="text-xl font-medium font-rubik uppercase">Additional Address Entries</h2>
           <hr className="border-b-2 border-secondary" />
 
-          {addresses.length === 0 ? (
-            <p className="text-sm text-gray-500">
-              You have no other address entries in your address book
-            </p>
+          {addresses && addresses.length === 0 ? (
+            <p className="text-sm text-gray-500">You have no other address entries.</p>
           ) : (
             <div className="mt-3 max-h-96 overflow-y-auto space-y-2 pr-2">
-              {addresses.map((item) => (
-                <div
-                  key={item.id}
-                  className="relative p-2 border rounded-lg bg-white border-gray-300"
-                >
-                  <button
-                    className="absolute top-2 right-2 text-red-500 hover:text-red-700 cursor-pointer"
-                    onClick={handleDelete(item.id as string)}
-                  >
-                    <FaTrash />
-                  </button>
-                  <button
-                    className="absolute top-2 right-10 text-primary hover:text-primary-dark cursor-pointer"
-                    onClick={() => {
-                      setEditingAddress(item);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <FiEdit />
-                  </button>
-                  <div className="space-y-1">
-                    <p className="font-bold text-primary">
-                      {item.firstName} {item.lastName}
-                    </p>
-                    <p className="text-xs">
-                      {item.address}, {item.city}, {item.country}
-                    </p>
-                    {item.phone && <p className="text-xs">Phone: {item.phone}</p>}
-                    <p className="text-xs">Email: {item.email}</p>
-                  </div>
-
-                  {/* BILLING & SHIPPING BUTTONS */}
-                  <div className="flex gap-2 mt-3">
-                    {/* BILLING */}
+              {addresses &&
+                addresses.map((item) => (
+                  <div key={item.id} className="relative p-3 border rounded-lg bg-white">
                     <button
-                      type="button"
-                      onClick={() => {
-                        const newId = billingAddressId === item.id ? null : item.id;
-                        setBillingAddressId(newId as string);
-                        updateUserAddress("BILLING", newId as string);
-                      }}
-                      className={`px-3 py-1 rounded-md text-xs font-medium border cursor-pointer ${
-                        billingAddressId === item.id
-                          ? "bg-primary text-white border-primary"
-                          : "bg-white border-gray-300 hover:bg-gray-100"
-                      }`}
+                      className="absolute top-2 right-2 text-red-500"
+                      onClick={handleDelete(item.id!)}
                     >
-                      Billing Address
+                      <FaTrash />
                     </button>
 
-                    {/* SHIPPING */}
                     <button
-                      type="button"
+                      className="absolute top-2 right-10 text-primary"
                       onClick={() => {
-                        const newId = shippingAddressId === item.id ? null : item.id;
-                        setShippingAddressId(newId as string);
-                        updateUserAddress("SHIPPING", newId as string);
+                        setEditingAddress(item);
+                        setIsModalOpen(true);
                       }}
-                      className={`px-3 py-1 rounded-md text-xs font-medium border cursor-pointer ${
-                        shippingAddressId === item.id
-                          ? "bg-primary text-white border-primary"
-                          : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                      }`}
                     >
-                      Shipping Address
+                      <FiEdit />
                     </button>
+
+                    <div className="space-y-1">
+                      <p className="font-bold text-primary">
+                        {item.firstName} {item.lastName}
+                      </p>
+                      <p className="text-xs">
+                        {item.address}, {item.city}, {item.country}
+                      </p>
+                      {item.phone && <p className="text-xs">Phone: {item.phone}</p>}
+                      <p className="text-xs">Email: {item.email}</p>
+                    </div>
+
+                    {/* ACTION BUTTONS */}
+                    <div className="flex gap-2 mt-3">
+                      <button
+                        onClick={() => updateUserAddress("BILLING", item.id!)}
+                        className={`px-3 py-1 text-xs rounded border ${
+                          defaultBillingAddress?.id === item.id
+                            ? "bg-primary text-white border-primary"
+                            : "border-gray-300"
+                        }`}
+                      >
+                        Billing Address
+                      </button>
+
+                      <button
+                        onClick={() => updateUserAddress("SHIPPING", item.id!)}
+                        className={`px-3 py-1 text-xs rounded border ${
+                          defaultShippingAddress?.id === item.id
+                            ? "bg-primary text-white border-primary"
+                            : "border-gray-300"
+                        }`}
+                      >
+                        Shipping Address
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           )}
 
-          {/* ADD NEW ADDRESS */}
+          {/* ADD NEW */}
           <button
-            className="bg-primary text-white font-semibold py-2 px-4 rounded-md mt-5 hover:bg-primary/90 cursor-pointer"
+            className="bg-primary text-white py-2 px-4 rounded mt-5"
             onClick={() => {
               setEditingAddress(null);
               setIsModalOpen(true);
@@ -231,7 +208,7 @@ export const AddressBook: React.FC<AddressBookProps> = ({ userId, addressList, u
         </div>
       </div>
 
-      {/* MODAL FOR ADD/EDIT */}
+      {/* ================= MODAL ================= */}
       <Modal
         isOpen={isModalOpen}
         title={editingAddress ? "Edit Address" : "Add Address"}
@@ -244,13 +221,8 @@ export const AddressBook: React.FC<AddressBookProps> = ({ userId, addressList, u
             setIsModalOpen(false);
             setEditingAddress(null);
           }}
-          onAddressAdded={(newAddress) => {
-            setAddresses((prev) => {
-              if (editingAddress) {
-                return prev.map((a) => (a.id === editingAddress.id ? newAddress : a));
-              }
-              return [...prev, newAddress];
-            });
+          onAddressAdded={() => {
+            // Refetch or optimistically update user addresses
           }}
         />
       </Modal>

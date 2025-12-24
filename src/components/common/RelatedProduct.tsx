@@ -7,7 +7,14 @@ import React from "react";
 import { SwiperSlide } from "swiper/react";
 import { RelatedProductProps } from "@/types/common";
 
-export const RelatedProduct = ({ title, description, data, titleStart }: RelatedProductProps) => {
+export const RelatedProduct = ({
+  title,
+  description,
+  data,
+  titleStart,
+  category,
+  subCategory,
+}: RelatedProductProps) => {
   return (
     <div className="container mx-auto px-2 space-y-3 mt-10 md:mt-16 ">
       <h2 className={`text-heading pb-5 ${titleStart ? "text-start" : "text-center"}`}>{title}</h2>
@@ -17,8 +24,8 @@ export const RelatedProduct = ({ title, description, data, titleStart }: Related
           <SwiperSlide key={array.id} className="mb-5">
             <Link
               href={
-                array.category?.slug && array.subcategory?.slug
-                  ? `/${array.category.slug}/${array.subcategory.slug}/${array.slug}`
+                (array.category?.slug || category) && (array.subcategory?.slug || subCategory)
+                  ? `/${array.category?.slug ?? category}/${array.subcategory?.slug ?? subCategory}/${array.slug}`
                   : `/${array.slug}`
               }
             >

@@ -14,7 +14,6 @@ export const SIGN_IN_MUTATION = gql`
       id
       name
       email
-      role
     }
   }
 `;

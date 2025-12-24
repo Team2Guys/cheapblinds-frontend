@@ -92,7 +92,7 @@ export const fetchProducts = async (FETCH_PRODUCT?: DocumentNode): Promise<Produ
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: {
-          next: { tags: ["productsList"] },
+          next: { tags: ["productList"] },
         },
       },
     });

@@ -7,7 +7,6 @@ interface AuthUser {
   id: string;
   name: string;
   email: string;
-  role: string;
   __typename?: string;
 }
 
@@ -16,7 +15,6 @@ interface AuthContextType {
   login: (_data: AuthUser) => void;
   logout: () => void;
   isAuthenticated: boolean;
-  role: AuthUser["role"] | null;
   isLoading: boolean;
 }
 
@@ -69,19 +67,12 @@ export const AuthProvider = ({ children }: Props) => {
     } finally {
       setUser(null);
       localStorage.removeItem("AuthUser");
-
-      if (user?.role === "ADMIN" || user?.role === "SUPER_ADMIN") {
-        window.location.href = "/dashboard/Admin-login";
-      } else {
-        window.location.href = "/";
-      }
+      window.location.href = "/";
     }
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, login, logout, isAuthenticated: !!user, role: user?.role || null, isLoading }}
-    >
+    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -8,10 +8,13 @@ export const GET_USER_LIST_QUERY = gql`
       lastName
       email
       isEmailVerified
-      role
-      defaultShippingAddressId
-      defaultBillingAddressId
       addresses
+      defaultShippingAddress {
+        id
+      }
+      defaultBillingAddress {
+        id
+      }
       createdAt
       updatedAt
     }
@@ -22,14 +25,43 @@ export const GET_USER_BY_ID_QUERY = gql`
   query GetUserById($id: ID!) {
     userById(id: $id) {
       id
+      defaultShippingAddressId
+      defaultBillingAddressId
       firstName
       lastName
       email
-      isEmailVerified
-      role
-      defaultShippingAddressId
-      defaultBillingAddressId
       addresses
+      defaultBillingAddress {
+        id
+        userId
+        firstName
+        lastName
+        email
+        phone
+        state
+        country
+        city
+        address
+        addressType
+        createdAt
+        updatedAt
+      }
+      defaultShippingAddress {
+        id
+        userId
+        firstName
+        lastName
+        email
+        phone
+        state
+        country
+        city
+        address
+        addressType
+        createdAt
+        updatedAt
+      }
+      isEmailVerified
       createdAt
       updatedAt
     }
@@ -37,12 +69,42 @@ export const GET_USER_BY_ID_QUERY = gql`
 `;
 
 export const GET_USER_FOR_ADDRESS_QUERY = gql`
-  query GetUserById($id: ID!) {
+  query GetUserForAddress($id: ID!) {
     userById(id: $id) {
       id
+      addresses
       defaultShippingAddressId
       defaultBillingAddressId
-      addresses
+      defaultBillingAddress {
+        id
+        userId
+        firstName
+        lastName
+        email
+        phone
+        state
+        country
+        city
+        address
+        addressType
+        createdAt
+        updatedAt
+      }
+      defaultShippingAddress {
+        id
+        userId
+        firstName
+        lastName
+        email
+        phone
+        state
+        country
+        city
+        address
+        addressType
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

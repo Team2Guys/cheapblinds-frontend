@@ -16,7 +16,6 @@ interface RegisterFormValues {
   email: string;
   password: string;
   confirmPassword: string;
-  role: string;
   isNewsletterSubscribed: boolean;
 }
 
@@ -31,30 +30,45 @@ export const RegisterForm = () => {
     { resetForm }: FormikHelpers<RegisterFormValues>,
   ) => {
     try {
-      // 1️⃣ Create User Account
+      // 1️⃣ Create User Account (MAIN STEP)
       await signup({
         variables: {
           input: {
             firstName: values.firstName,
             lastName: values.lastName,
             email: values.email,
-            role: "USER",
             password: values.password,
           },
         },
       });
 
-      // 2️⃣ Create Newsletter Entry (true/false)
-      await createSubscriber({
-        variables: {
-          input: {
-            email: values.email,
-            isActive: values.isNewsletterSubscribed ? true : false,
-          },
-        },
-      });
+      // 2️⃣ Newsletter Subscription (OPTIONAL STEP)
+      if (values.isNewsletterSubscribed) {
+        try {
+          await createSubscriber({
+            variables: {
+              input: {
+                email: values.email,
+                isActive: true,
+              },
+            },
+          });
+        } catch (newsletterError) {
+          // ❌ Ignore "already exists" error silently
+          if (
+            newsletterError instanceof ApolloError &&
+            newsletterError.graphQLErrors?.[0]?.message
+              ?.toLowerCase()
+              .includes("newsletter subscriber already exists")
+          ) {
+            // do nothing
+          } else {
+            console.error("Newsletter error:", newsletterError);
+          }
+        }
+      }
 
-      // 3️⃣ Success Popup
+      // 3️⃣ Success Popup (ALWAYS SHOW)
       toast.success(
         <div className="text-center space-y-2 p-2">
           <h3 className="font-bold text-lg text-black">Account Created Successfully 🎉</h3>
@@ -76,12 +90,9 @@ export const RegisterForm = () => {
       resetForm();
     } catch (error: unknown) {
       if (error instanceof ApolloError) {
-        const gqlMessage = error.graphQLErrors?.[0]?.message?.toLowerCase() || "";
+        const message = error.graphQLErrors?.[0]?.message?.toLowerCase() || "";
 
-        if (
-          gqlMessage.includes("user already exists") ||
-          gqlMessage.includes("email already exists")
-        ) {
+        if (message.includes("user already exists") || message.includes("email already exists")) {
           toast.error("Account already exists. Please log in instead.");
         } else {
           toast.error("Something went wrong. Please try again later.");
@@ -103,7 +114,6 @@ export const RegisterForm = () => {
           email: "",
           password: "",
           confirmPassword: "",
-          role: "USER",
           isNewsletterSubscribed: false,
         }}
         validationSchema={signUp_validationSchema}

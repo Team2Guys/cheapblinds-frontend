@@ -30,6 +30,8 @@ export interface RelatedProductProps {
   title: string;
   description?: string;
   data: Product[];
+  category?: string;
+  subCategory?: string;
   titleStart?: boolean;
 }
 
