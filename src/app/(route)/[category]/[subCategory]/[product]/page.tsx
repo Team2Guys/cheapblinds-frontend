@@ -48,7 +48,7 @@ const ProductPage = async ({
     <>
       <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
       <div className="container mx-auto px-2">
-        <ProductDetail category={category} productData={SingleProduct!} />
+        <ProductDetail categorySlug={category} productData={SingleProduct!} />
         <RelatedProduct
           titleStart
           title="RELATED PRODUCTS"

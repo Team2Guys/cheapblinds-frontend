@@ -4,10 +4,10 @@ import { Thumbnail, ProductInfo, ProductTabs } from "@components";
 import { Product } from "@/types/category";
 
 export const ProductDetail = ({
-  category,
+  categorySlug,
   productData,
 }: {
-  category: string;
+  categorySlug: string;
   productData: Product;
 }) => {
   const {
@@ -28,7 +28,7 @@ export const ProductDetail = ({
         </div>
         <div className="col-span-12 md:col-span-6">
           <ProductInfo
-            category={category}
+            categorySlug={categorySlug}
             price={price}
             shortDescription={shortDescription}
             product={productData}

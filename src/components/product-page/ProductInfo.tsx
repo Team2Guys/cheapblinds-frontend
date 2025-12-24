@@ -16,13 +16,13 @@ import { useIndexedDb } from "@lib/useIndexedDb";
 import { fetchFabricPrice } from "@config/fetch";
 
 interface ProductDetailProps {
-  category: string;
+  categorySlug: string;
   price?: number | null;
   shortDescription?: string;
   product: Product;
 }
 
-export const ProductInfo = ({ category, price, shortDescription, product }: ProductDetailProps) => {
+export const ProductInfo = ({ categorySlug, price, shortDescription, product }: ProductDetailProps) => {
   const topRef = useRef<HTMLDivElement>(null);
 
   const [showForm, setShowForm] = useState(false);
@@ -95,7 +95,7 @@ const handleGetPrice = async () => {
 
   const handleFreeSample = async (product: Product) => {
     try {
-      await addFreeSampleItem(product, category || "");
+      await addFreeSampleItem(product, categorySlug || "");
     } catch {
       Toaster("error", "Failed to add Free Sample!");
     }
@@ -104,7 +104,7 @@ const handleGetPrice = async () => {
   return (
     <div className="space-y-6" ref={topRef}>
       {showForm && confirmedValues && (
-        <RomanBlindsForm values={confirmedValues} finalPrice={finalPrice} recessType={recessType} />
+        <RomanBlindsForm  categorySlug={categorySlug} values={confirmedValues} finalPrice={finalPrice} recessType={recessType} />
       )}
 
       <h2 className="flex items-center gap-2 font-semibold text-2xl md:text-3xl">
