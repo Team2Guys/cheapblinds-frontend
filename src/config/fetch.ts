@@ -15,12 +15,15 @@ import {
 import {
   addressProps,
   Category,
+  FabricPrice,
+  GetFabricPriceInput,
   NewsletterProps,
   Orders,
   Product,
   Subcategory,
   UserProps,
 } from "@/types/category";
+import { GET_FABRIC_PRICE_QUERY } from "@graphql/queries/price.queries";
 
 export const fetchCategories = async (FETCH_CATEGORY?: DocumentNode) => {
   try {
@@ -132,6 +135,29 @@ export const fetchSingleProduct = async (
     return data?.productBySlugs ?? null;
   } catch (error: unknown) {
     console.error("Error fetching product:", error);
+    return null;
+  }
+};
+
+export const fetchFabricPrice = async (
+  input: GetFabricPriceInput,
+  CUSTOM_QUERY?: DocumentNode,
+): Promise<FabricPrice | null> => {
+  try {
+    const { data } = await ApolloCustomClient.query({
+      query: CUSTOM_QUERY ?? GET_FABRIC_PRICE_QUERY,
+      variables: {
+        input,
+      },
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: { next: { tags: ["fabric-price"] } },
+      },
+    });
+
+    return data?.fabricPrice ?? null;
+  } catch (error: unknown) {
+    console.error("Error fetching fabric price:", error);
     return null;
   }
 };

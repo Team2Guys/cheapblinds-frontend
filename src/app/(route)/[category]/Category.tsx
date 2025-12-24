@@ -38,7 +38,7 @@ const useFilterOptions = (allProducts: Product[]) => {
       increment(counts.composition, product.composition);
 
       if (product.maxWidth !== undefined) {
-        increment(counts.width, `Up To ${product.maxWidth}cm Wide`);
+        increment(counts.width, `Up To ${product.maxWidth / 10}cm Wide`);
       }
 
       increment(counts.color, product.color);
