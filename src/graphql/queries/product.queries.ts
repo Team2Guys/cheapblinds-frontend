@@ -110,7 +110,10 @@ export const GET_PRODUCT_BY_SLUG_QUERY = gql`
       }
     ) {
       id
+      fabricId
+      blindTypeId
       name
+      sku
       description
       shortDescription
       slug

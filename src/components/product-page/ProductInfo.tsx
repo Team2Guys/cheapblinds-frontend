@@ -16,18 +16,11 @@ import { useIndexedDb } from "@lib/useIndexedDb";
 interface ProductDetailProps {
   category: string;
   price?: number | null;
-  discountPrice?: number | null;
   shortDescription?: string;
   product: Product;
 }
 
-export const ProductInfo = ({
-  category,
-  price,
-  discountPrice,
-  shortDescription,
-  product,
-}: ProductDetailProps) => {
+export const ProductInfo = ({ category, price, shortDescription, product }: ProductDetailProps) => {
   const [showForm, setShowForm] = useState(false);
   const [recessType, setRecessType] = useState("outside");
   const topRef = useRef<HTMLDivElement>(null);
@@ -74,27 +67,20 @@ export const ProductInfo = ({
       )}
 
       <h2 className="flex items-center gap-2 font-semibold text-2xl md:text-3xl">
-        {discountPrice && discountPrice < (price ?? 0) ? (
-          <>
-            From
-            <span className="font-currency text-2xl md:text-3xl font-normal"></span>
-            <span className="font-semibold text-2xl md:text-3xl">{discountPrice}</span>
-            {/* Original Price with strikethrough */}
-            <span className="font-currency text-2xl font-normal line-through"></span>
-            <span className="text-xl font-normal line-through">{price}</span>
-          </>
-        ) : (
-          <>
-            {/* Only Original Price */}
-            <span className="font-currency text-2xl md:text-3xl font-normal"></span>
-            <span className="font-semibold text-2xl md:text-3xl">{price}</span>
-          </>
-        )}
+        From
+        <span className="font-currency text-2xl md:text-3xl font-normal"></span>
+        <span className="font-semibold text-2xl md:text-3xl">{price}</span>
       </h2>
 
       <p>{shortDescription}</p>
 
-      <CalculationForm onValuesChange={setCalcValues} />
+      <CalculationForm
+        minHeight={product.minHeight}
+        maxHeight={product.maxHeight}
+        minWidth={product.minWidth}
+        maxWidth={product.maxWidth}
+        onValuesChange={setCalcValues}
+      />
 
       <HelpingModal />
       <RecessSelector selected={recessType} onChange={setRecessType} />

@@ -95,10 +95,8 @@ export const Card = ({
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 pt-6">
         {visibleProducts.map((card) => {
-          const basePrice = card.discountPrice ?? card.price ?? 0;
           const original = card.price ?? 0;
           const motor = card.motorPrice ?? 0;
-          const finalPrice = selectedMotorized ? basePrice + motor : basePrice;
           const originalPrice = selectedMotorized ? original + motor : original;
 
           return (
@@ -172,14 +170,7 @@ export const Card = ({
                     <p className="hidden sm:block">From:</p>
 
                     <span className="font-currency text-lg md:text-3xl"></span>
-                    <span className="font-semibold text-sm md:text-2xl">{finalPrice}</span>
-
-                    {card.discountPrice && (
-                      <>
-                        <span className="font-currency text-lg md:text-2xl"></span>
-                        <span className="line-through text-sm md:text-base">{originalPrice}</span>
-                      </>
-                    )}
+                    <span className="font-semibold text-sm md:text-2xl">{originalPrice}</span>                 
                   </div>
 
                   {IsDeleteButton && onDelete ? (

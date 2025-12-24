@@ -65,6 +65,9 @@ export const GET_SUBCATEGORY_BY_URLS_QUERY = gql`
       products {
         id
         name
+        fabricId
+        blindTypeId
+        sku
         slug
         price
         posterImageUrl

@@ -44,21 +44,8 @@ export const RelatedProduct = ({
 
                   {array.price && (
                     <p className="text-2xl font-rubik font-semibold flex items-center gap-2">
-                      {array.discountPrice ? (
-                        <>
-                          <span className="text-2xl font-currency mb-1"></span>
-                          <span>{array.discountPrice}</span>
-                          <span className="line-through text-base ml-2">
-                            <span className="font-currency text-lg"></span>
-                            {array.price}
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-2xl font-currency mb-1"></span>
-                          {array.price}
-                        </>
-                      )}
+                      <span className="text-2xl font-currency mb-1"></span>
+                      {array.price}
                     </p>
                   )}
                 </div>

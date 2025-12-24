@@ -37,8 +37,8 @@ const useFilterOptions = (allProducts: Product[]) => {
       increment(counts.pattern, product.pattern);
       increment(counts.composition, product.composition);
 
-      if (product.width !== undefined) {
-        increment(counts.width, `Up To ${product.width}cm Wide`);
+      if (product.maxWidth !== undefined) {
+        increment(counts.width, `Up To ${product.maxWidth}cm Wide`);
       }
 
       increment(counts.color, product.color);
@@ -116,7 +116,7 @@ const CategoryPage = ({
       const pattern = product.pattern ?? "";
       const composition = product.composition ?? "";
       const color = product.color ?? "";
-      const width = product.width ?? 0;
+      const width = product.maxWidth ?? 0;
 
       if (selectedType.length && !selectedType.includes(type)) return false;
       if (selectedPattern.length && !selectedPattern.includes(pattern)) return false;
@@ -125,7 +125,7 @@ const CategoryPage = ({
         return false;
       if (selectedColor.length && !selectedColor.includes(color)) return false;
 
-      const basePrice = product.discountPrice ?? product.price ?? 0;
+      const basePrice = product.price ?? 0;
       const finalPrice = selectedMotorized ? basePrice + (product.motorPrice ?? 0) : basePrice;
 
       if (finalPrice < selectedPrice[0] || finalPrice > selectedPrice[1]) return false;
@@ -147,7 +147,7 @@ const CategoryPage = ({
     const products = [...filteredProducts];
 
     const getPrice = (product: Product) => {
-      const base = product.discountPrice ?? product.price ?? 0;
+      const base = product.price ?? 0;
       return selectedMotorized ? base + (product.motorPrice ?? 0) : base;
     };
 

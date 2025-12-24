@@ -43,6 +43,9 @@ export interface Subcategory {
 export interface Product {
   id?: string | number;
   name: string;
+  fabricId?: string;
+  blindTypeId?: string;
+  sku?: string;
   description?: string;
   shortDescription?: string;
   slug?: string;
@@ -55,8 +58,6 @@ export interface Product {
   lastEditedBy?: string | null;
   seoSchema?: string;
   price?: number;
-  discountPrice?: number;
-  stock?: number;
   additionalInfo?: string;
   measuringGuide?: string;
   categoryId?: string;
@@ -70,8 +71,10 @@ export interface Product {
   pattern?: string;
   composition?: string;
   color?: string;
-  width?: string;
-  height?: string;
+  minHeight?: number;
+  maxHeight?: number;
+  minWidth?: number;
+  maxWidth?: number;
   isMotorized?: boolean;
   motorPrice?: number;
   url?: string;
