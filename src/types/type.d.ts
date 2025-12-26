@@ -12,6 +12,7 @@ export interface FormProps {
   values: { width: string; drop: string; unit: string };
   recessType: string;
   finalPrice: FabricPrice | null;
+  categorySlug?: string;
 }
 
 export interface ContactData {

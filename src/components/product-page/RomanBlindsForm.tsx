@@ -6,7 +6,7 @@ import { FormSelect } from "@components";
 import { Toaster } from "@components";
 import { controlOptions, headrailOptions, Lining, StackingStyle } from "@data/detail-page";
 
-export const RomanBlindsForm = ({ values, recessType, finalPrice }: FormProps) => {
+export const RomanBlindsForm = ({ values, recessType, finalPrice, categorySlug }: FormProps) => {
   const [headrail, setHeadrail] = useState("Classic");
   const [stackingStyle, setStackingStyle] = useState("Cascade");
   const [lining, setLining] = useState("Polycotton");
@@ -29,7 +29,7 @@ export const RomanBlindsForm = ({ values, recessType, finalPrice }: FormProps) =
         {values.unit} drop ({recessType})
       </h3>
       <p>TotalSalesAmt : {finalPrice?.TotalSalesAmt}</p>
-      
+
       {/* ✅ Headrail */}
       <FormSelect
         title="Headrail Type / Colour"
@@ -47,41 +47,42 @@ export const RomanBlindsForm = ({ values, recessType, finalPrice }: FormProps) =
         onChange={setHeadrail}
       />
 
-      {/* ✅ Stacking Style */}
-      <FormSelect
-        title="Stacking Style"
-        helpText="help"
-        helpContent={
-          <div className="space-y-2">
-            <p>
-              Stacking Style determines how the fabric folds when raised. Choose based on your room
-              style and preference.
-            </p>
-          </div>
-        }
-        options={StackingStyle}
-        selected={stackingStyle}
-        onChange={setStackingStyle}
-      />
+      {categorySlug === "roman-blinds" && (
+        <>
+          <FormSelect
+            title="Stacking Style"
+            helpText="help"
+            helpContent={
+              <div className="space-y-2">
+                <p>
+                  Stacking Style determines how the fabric folds when raised. Choose based on your
+                  room style and preference.
+                </p>
+              </div>
+            }
+            options={StackingStyle}
+            selected={stackingStyle}
+            onChange={setStackingStyle}
+          />
+          
+          <FormSelect
+            title="Lining"
+            helpText="help"
+            helpContent={
+              <div className="space-y-2">
+                <p>
+                  Lining affects light control and insulation. Choose blackout or thermal lining for
+                  better light blocking and warmth.
+                </p>
+              </div>
+            }
+            options={Lining}
+            selected={lining}
+            onChange={setLining}
+          />
+        </>
+      )}
 
-      {/* ✅ Lining */}
-      <FormSelect
-        title="Lining"
-        helpText="help"
-        helpContent={
-          <div className="space-y-2">
-            <p>
-              Lining affects light control and insulation. Choose blackout or thermal lining for
-              better light blocking and warmth.
-            </p>
-          </div>
-        }
-        options={Lining}
-        selected={lining}
-        onChange={setLining}
-      />
-
-      {/* ✅ Control Options */}
       <FormSelect
         title="Control Options"
         helpText="help"
@@ -109,7 +110,7 @@ export const RomanBlindsForm = ({ values, recessType, finalPrice }: FormProps) =
       {/* ✅ Price Display */}
       <div className="text-center mt-4">
         The Price You Pay <span className="font-currency text-xl"></span>
-        <span className="font-semibold">299.25</span>
+        <span className="font-semibold">{finalPrice?.TotalSalesAmt}</span>
       </div>
 
       {/* ✅ Add to Basket Button */}
