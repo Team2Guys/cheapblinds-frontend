@@ -16,14 +16,15 @@ import {
   addressProps,
   Category,
   FabricPrice,
-  GetFabricPriceInput,
+  GetPricingInput,
   NewsletterProps,
+  OptionsPrice,
   Orders,
   Product,
   Subcategory,
   UserProps,
 } from "@/types/category";
-import { GET_FABRIC_PRICE_QUERY } from "@graphql/queries/price.queries";
+import { GET_FABRIC_PRICE_QUERY, GET_OPTIONS_PRICE_QUERY } from "@graphql/queries/price.queries";
 
 export const fetchCategories = async (FETCH_CATEGORY?: DocumentNode) => {
   try {
@@ -140,7 +141,7 @@ export const fetchSingleProduct = async (
 };
 
 export const fetchFabricPrice = async (
-  input: GetFabricPriceInput,
+  input: GetPricingInput,
   CUSTOM_QUERY?: DocumentNode,
 ): Promise<FabricPrice | null> => {
   try {
@@ -161,6 +162,30 @@ export const fetchFabricPrice = async (
     return null;
   }
 };
+
+export const fetchOptionsPrice = async (
+  input: GetPricingInput,
+  CUSTOM_QUERY?: DocumentNode,
+): Promise<OptionsPrice[] | null> => {
+  try {
+    const { data } = await ApolloCustomClient.query({
+      query: CUSTOM_QUERY ?? GET_OPTIONS_PRICE_QUERY,
+      variables: {
+        input,
+      },
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: { next: { tags: ["options-price"] } },
+      },
+    });
+
+    return data?.optionsPrice ?? null;
+  } catch (error: unknown) {
+    console.error("Error fetching options price:", error);
+    return null;
+  }
+};
+
 
 export const fetchOrdersByUserId = async (
   id: string,

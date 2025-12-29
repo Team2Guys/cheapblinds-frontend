@@ -184,7 +184,7 @@ export interface UserProps {
   updatedAt: string;
 }
 
-interface GetFabricPriceInput {
+export interface GetPricingInput {
   drop: number;
   width: number;
   fabricId: number;
@@ -199,4 +199,16 @@ interface FabricPrice {
   TotalSalesAmt: number;
   TradeType: string;
   TaxPercentage: number;
+}
+
+export interface OptionsPrice {
+  UID: string;
+  Blindtypeid: string;
+  BlindTypeDescription: string;
+  OptionGroup_ID: string;
+  OptionGroup: string;
+  ChoiceCode: string;
+  ChoiceDescription?: string | null;
+  ChoiceID: string;
+  SalesPrice: number;
 }
