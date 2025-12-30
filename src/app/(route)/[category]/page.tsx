@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   return generateMeta({
     title: CategoryList.metaTitle,
     description: CategoryList.metaDescription,
-    canonicalTag: CategoryList.canonicalTag,
+    canonicalUrl: CategoryList.canonicalUrl,
     imageUrl: CategoryList?.posterImageUrl,
     imageAlt: CategoryList.name,
     fallbackPath: `/${category}`,

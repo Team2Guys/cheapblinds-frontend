@@ -11,9 +11,9 @@ import {
 } from "@components";
 import DeliveryIcon from "@components/svg/delivery";
 import { Toaster } from "@components";
-import { FabricPrice, Product } from "@/types/category";
+import { FabricPrice, OptionsPrice, Product } from "@/types/category";
 import { useIndexedDb } from "@lib/useIndexedDb";
-import { fetchFabricPrice } from "@config/fetch";
+import { fetchFabricPrice, fetchOptionsPrice } from "@config/fetch";
 
 interface ProductDetailProps {
   categorySlug: string;
@@ -28,6 +28,7 @@ export const ProductInfo = ({ categorySlug, price, shortDescription, product }: 
   const [showForm, setShowForm] = useState(false);
   const [recessType, setRecessType] = useState("outside");
   const [loadingPrice, setLoadingPrice] = useState(false);
+  const [optionsPrice, setOptionsPrice] = useState<OptionsPrice[] | null>(null);
   const [draftValues, setDraftValues] = useState({
     width: "",
     drop: "",
@@ -65,25 +66,35 @@ const handleGetPrice = async () => {
     Toaster("error", "Invalid product configuration.");
     return;
   }
+
   setLoadingPrice(true);
+
   try {
     const widthMM = toMM(draftValues.width, draftValues.unit);
     const dropMM = toMM(draftValues.drop, draftValues.unit);
 
-    const response = await fetchFabricPrice({
+    const pricingInput = {
       width: widthMM,
       drop: dropMM,
       fabricId: Number(product.fabricId),
       blindTypeId: Number(product.blindTypeId),
-    });
+    };
 
-    if (!response) {
-      Toaster("error", "No price returned");
+    const [fabricResponse, optionsResponse] = await Promise.all([
+      fetchFabricPrice(pricingInput),
+      fetchOptionsPrice(pricingInput),
+    ]);
+
+    if (!fabricResponse) {
+      Toaster("error", "No fabric price returned");
       return;
     }
-    setFinalPrice(response);
+
+    setFinalPrice(fabricResponse);
+    setOptionsPrice(optionsResponse ?? []);
     setConfirmedValues(draftValues);
     setShowForm(true);
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   } catch (error) {
     console.error(error);
@@ -93,6 +104,7 @@ const handleGetPrice = async () => {
   }
 };
 
+
   const handleFreeSample = async (product: Product) => {
     try {
       await addFreeSampleItem(product, categorySlug || "");
@@ -100,6 +112,10 @@ const handleGetPrice = async () => {
       Toaster("error", "Failed to add Free Sample!");
     }
   };
+
+  console.log(optionsPrice,"optionsPriceoptionsPrice")
+  console.log(finalPrice,"finalPricefinalPrice")
+
 
   return (
     <div className="space-y-6" ref={topRef}>

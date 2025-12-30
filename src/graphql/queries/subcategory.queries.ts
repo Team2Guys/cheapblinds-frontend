@@ -11,7 +11,7 @@ export const GET_SUBCATEGORY_LIST_QUERY = gql`
       slug
       metaTitle
       metaDescription
-      canonicalTag
+      canonicalUrl
       breadcrumb
       posterImageUrl
       createdAt
@@ -34,7 +34,7 @@ export const GET_SUBCATEGORY_BY_ID_QUERY = gql`
       slug
       metaTitle
       metaDescription
-      canonicalTag
+      canonicalUrl
       posterImageUrl
       breadcrumb
       seoSchema
@@ -56,7 +56,7 @@ export const GET_SUBCATEGORY_BY_URLS_QUERY = gql`
       slug
       metaTitle
       metaDescription
-      canonicalTag
+      canonicalUrl
       breadcrumb
       posterImageUrl
       lastEditedBy

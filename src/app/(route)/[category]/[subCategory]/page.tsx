@@ -21,7 +21,7 @@ export async function generateMetadata({
   return generateMeta({
     title: SubCategoryList.metaTitle,
     description: SubCategoryList.metaDescription,
-    canonicalTag: SubCategoryList.canonicalTag,
+    canonicalUrl: SubCategoryList.canonicalUrl,
     imageUrl: SubCategoryList?.posterImageUrl,
     imageAlt: SubCategoryList.name,
     fallbackPath: `/${category}/${SubCategoryList.slug || subCategory}`,

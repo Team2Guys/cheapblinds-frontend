@@ -13,7 +13,7 @@ export interface GlobalCommontypes {
   Banners?: ProductImage;
   breadCrumb?: string;
 
-  canonicalTag?: string;
+  canonicalUrl?: string;
   metaDescription?: string;
   metaTitle?: string;
   __typename?: string;
@@ -23,7 +23,7 @@ export interface ISEO_TAGS {
   posterImageUrl?: ProductImage;
   posterImage?: ProductImage;
   slug: string;
-  canonicalTag?: string;
+  canonicalUrl?: string;
   metaDescription?: string;
   metaTitle?: string;
   category?: { slug: string } | string;

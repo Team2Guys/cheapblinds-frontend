@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 type MetaInput = {
   title?: string | null;
   description?: string | null;
-  canonicalTag?: string | null;
+  canonicalUrl?: string | null;
   imageUrl?: string | null;
   imageAlt?: string | null;
   fallbackPath?: string;
@@ -60,7 +60,7 @@ export function generateMetadata({
 export async function generateMeta({
   title,
   description,
-  canonicalTag,
+  canonicalUrl,
   imageUrl,
   imageAlt,
   fallbackPath = "",
@@ -80,10 +80,10 @@ export async function generateMeta({
     fallbackPath += "/";
   }
 
-  const canonical = canonicalTag?.startsWith("http")
-    ? canonicalTag.endsWith("/")
-      ? canonicalTag
-      : canonicalTag + "/" // add trailing slash if missing
+  const canonical = canonicalUrl?.startsWith("http")
+    ? canonicalUrl.endsWith("/")
+      ? canonicalUrl
+      : canonicalUrl + "/" // add trailing slash if missing
     : `${fullUrl}${fallbackPath}`;
 
   const image = [

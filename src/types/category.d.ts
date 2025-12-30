@@ -8,7 +8,7 @@ export interface Category {
   slug?: string;
   metaTitle?: string;
   metaDescription?: string;
-  canonicalTag?: string;
+  canonicalUrl?: string;
   breadCrumb?: string;
   posterImageUrl?: string;
   seoSchema?: string;
@@ -28,7 +28,7 @@ export interface Subcategory {
   slug?: string;
   metaTitle?: string;
   metaDescription?: string;
-  canonicalTag?: string;
+  canonicalUrl?: string;
   breadCrumb?: string;
   posterImageUrl?: string;
   lastEditedBy?: string;
@@ -51,7 +51,7 @@ export interface Product {
   slug?: string;
   metaTitle?: string;
   metaDescription?: string;
-  canonicalTag?: string;
+  canonicalUrl?: string;
   breadcrumb?: string;
   posterImageUrl?: string;
   productImages?: string[];
@@ -95,7 +95,7 @@ export interface Category_Page {
   slug?: string;
   metaTitle?: string;
   metaDescription?: string;
-  canonicalTag?: string;
+  canonicalUrl?: string;
   breadCrumb?: string;
   seoSchema?: string;
   status?: ContentStatus;
@@ -184,7 +184,7 @@ export interface UserProps {
   updatedAt: string;
 }
 
-interface GetFabricPriceInput {
+export interface GetPricingInput {
   drop: number;
   width: number;
   fabricId: number;
@@ -199,4 +199,16 @@ interface FabricPrice {
   TotalSalesAmt: number;
   TradeType: string;
   TaxPercentage: number;
+}
+
+export interface OptionsPrice {
+  UID: string;
+  Blindtypeid: string;
+  BlindTypeDescription: string;
+  OptionGroup_ID: string;
+  OptionGroup: string;
+  ChoiceCode: string;
+  ChoiceDescription?: string | null;
+  ChoiceID: string;
+  SalesPrice: number;
 }

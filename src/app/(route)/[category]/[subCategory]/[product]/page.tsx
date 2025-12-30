@@ -16,7 +16,7 @@ export async function generateMetadata({
   return generateMeta({
     title: ProductList.metaTitle,
     description: ProductList.metaDescription,
-    canonicalTag: ProductList.canonicalTag,
+    canonicalUrl: ProductList.canonicalUrl,
     imageUrl: ProductList?.posterImageUrl,
     imageAlt: ProductList.name,
     fallbackPath: `/${category}/${subCategory}/${ProductList.slug}`,
@@ -43,7 +43,6 @@ const ProductPage = async ({
   const publishedProduct = productList?.products?.filter(
     (item: Product) => item?.status === "PUBLISHED",
   );
-  console.log(SingleProduct,"SingleProductSingleProduct")
   return (
     <>
       <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />

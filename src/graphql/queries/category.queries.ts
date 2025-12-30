@@ -13,7 +13,7 @@ export const GET_CATEGORY_LIST_QUERY = gql`
       slug
       metaTitle
       metaDescription
-      canonicalTag
+      canonicalUrl
       posterImageUrl
       lastEditedBy
       createdAt
@@ -32,7 +32,7 @@ export const GET_CATEGORY_BY_ID_QUERY = gql`
       slug
       metaTitle
       metaDescription
-      canonicalTag
+      canonicalUrl
       posterImageUrl
       createdAt
       updatedAt
@@ -66,7 +66,7 @@ export const GET_CATEGORY_BY_SLUG_QUERY = gql`
       slug
       metaTitle
       metaDescription
-      canonicalTag
+      canonicalUrl
       breadcrumb
       posterImageUrl
       lastEditedBy
@@ -83,7 +83,7 @@ export const GET_CATEGORY_BY_SLUG_QUERY = gql`
         slug
         metaTitle
         metaDescription
-        canonicalTag
+        canonicalUrl
         breadcrumb
         posterImageUrl
         lastEditedBy
