@@ -114,6 +114,8 @@ const handleGetPrice = async () => {
   };
 
   console.log(optionsPrice,"optionsPriceoptionsPrice")
+  console.log(finalPrice,"finalPricefinalPrice")
+
 
   return (
     <div className="space-y-6" ref={topRef}>

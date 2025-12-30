@@ -29,7 +29,7 @@ export const GET_PRODUCT_LIST_QUERY = gql`
       measuringGuide
       metaTitle
       metaDescription
-      canonicalTag
+      canonicalUrl
       breadcrumb
       seoSchema
       status
@@ -124,7 +124,7 @@ export const GET_PRODUCT_BY_SLUG_QUERY = gql`
       price
       metaTitle
       metaDescription
-      canonicalTag
+      canonicalUrl
       breadcrumb
       seoSchema
       additionalInfo

@@ -16,7 +16,7 @@ export async function generateMetadata({
   return generateMeta({
     title: ProductList.metaTitle,
     description: ProductList.metaDescription,
-    canonicalTag: ProductList.canonicalTag,
+    canonicalUrl: ProductList.canonicalUrl,
     imageUrl: ProductList?.posterImageUrl,
     imageAlt: ProductList.name,
     fallbackPath: `/${category}/${subCategory}/${ProductList.slug}`,
