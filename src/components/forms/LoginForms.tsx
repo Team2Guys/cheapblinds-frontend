@@ -15,7 +15,7 @@ interface LoginValues {
   password: string;
 }
 
-export const LoginForms = () => {
+export const LoginForms = React.memo(() => {
   const router = useRouter();
   const { login } = useAuth();
   const [signIn, { loading }] = useMutation(SIGN_IN_MUTATION);
@@ -91,4 +91,4 @@ export const LoginForms = () => {
       </Formik>
     </div>
   );
-};
+});

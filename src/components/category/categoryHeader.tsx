@@ -225,4 +225,4 @@ const CategoryHeader = ({
   );
 };
 
-export default CategoryHeader;
+export default React.memo(CategoryHeader);

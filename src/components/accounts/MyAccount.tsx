@@ -1,6 +1,6 @@
-import { UserProps } from '@/types/category';
-import Link from 'next/link';
-import React from 'react';
+import { UserProps } from "@/types/category";
+import Link from "next/link";
+import React from "react";
 
 interface MyAccountProps {
   userList: UserProps | null;
@@ -8,9 +8,7 @@ interface MyAccountProps {
 
 const AddressDisplay: React.FC<{
   title: string;
-  address?:
-    | UserProps['defaultBillingAddress']
-    | UserProps['defaultShippingAddress'];
+  address?: UserProps["defaultBillingAddress"] | UserProps["defaultShippingAddress"];
 }> = ({ title, address }) => (
   <div className="space-y-2">
     <h3 className="font-semibold">{title}</h3>
@@ -31,7 +29,7 @@ const AddressDisplay: React.FC<{
   </div>
 );
 
-export const MyAccount: React.FC<MyAccountProps> = ({ userList }) => {
+export const MyAccount: React.FC<MyAccountProps> = React.memo(({ userList }) => {
   if (!userList) return null;
 
   const { defaultBillingAddress, defaultShippingAddress } = userList;
@@ -42,9 +40,7 @@ export const MyAccount: React.FC<MyAccountProps> = ({ userList }) => {
 
       {/* Contact Info */}
       <div className="space-y-2">
-        <h2 className="text-xl font-medium font-alethia uppercase">
-          DEFAULT ADDRESSES
-        </h2>
+        <h2 className="text-xl font-medium font-alethia uppercase">DEFAULT ADDRESSES</h2>
         <hr className="border-b-2 border-black" />
         <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
           <div className="space-y-2">
@@ -58,10 +54,7 @@ export const MyAccount: React.FC<MyAccountProps> = ({ userList }) => {
           <div className="space-y-2">
             <h3 className="font-semibold">Newsletters</h3>
             <p>Edit your e-mail marketing consents</p>
-            <Link
-              href="/newsletter-subscriptions"
-              className="underline text-black cursor-pointer"
-            >
+            <Link href="/newsletter-subscriptions" className="underline text-black cursor-pointer">
               Edit
             </Link>
           </div>
@@ -69,25 +62,17 @@ export const MyAccount: React.FC<MyAccountProps> = ({ userList }) => {
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-medium font-alethia uppercase">
-            Address Book
-          </h2>
+          <h2 className="text-xl font-medium font-alethia uppercase">Address Book</h2>
           <Link href="/address-book" className="cursor-pointer">
             Manage Addresses
           </Link>
         </div>
         <hr className="border-b-2 border-black" />
         <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
-          <AddressDisplay
-            title="Default Billing Address"
-            address={defaultBillingAddress}
-          />
-          <AddressDisplay
-            title="Default Shipping Address"
-            address={defaultShippingAddress}
-          />
+          <AddressDisplay title="Default Billing Address" address={defaultBillingAddress} />
+          <AddressDisplay title="Default Shipping Address" address={defaultShippingAddress} />
         </div>
       </div>
     </div>
   );
-};
+});

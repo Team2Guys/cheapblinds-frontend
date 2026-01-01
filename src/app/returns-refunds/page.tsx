@@ -93,4 +93,4 @@ const RefundRefunds = () => {
   );
 };
 
-export default RefundRefunds;
+export default React.memo(RefundRefunds);

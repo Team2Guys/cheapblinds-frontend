@@ -5,7 +5,7 @@ import Link from "next/link";
 import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
 import { fittingTypes } from "@data/home";
 
-export const BlindFitting = () => {
+export const BlindFitting = React.memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerSlide = 8;
 
@@ -92,4 +92,4 @@ export const BlindFitting = () => {
       </div>
     </div>
   );
-};
+});

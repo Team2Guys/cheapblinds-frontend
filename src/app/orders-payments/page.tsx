@@ -106,4 +106,4 @@ const OrdersPayments = () => {
   );
 };
 
-export default OrdersPayments;
+export default React.memo(OrdersPayments);

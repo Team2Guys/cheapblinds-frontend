@@ -31,7 +31,6 @@ const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
   if (CategoryList.status !== "PUBLISHED") {
     notFound();
   }
-  console.log(CategoryList,"CategoryListCategoryList")
   const { name, slug, description, subcategories = [] } = CategoryList;
   return (
     <>

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-export const Banner = () => {
+export const Banner = React.memo(() => {
   return (
     <div className="space-y-4 flex justify-center items-center flex-col">
       <Image
@@ -14,4 +14,4 @@ export const Banner = () => {
       <h1 className="text-heading">Your Sample Basket</h1>
     </div>
   );
-};
+});

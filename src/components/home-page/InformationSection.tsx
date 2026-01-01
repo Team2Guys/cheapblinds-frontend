@@ -1,7 +1,8 @@
 import { infoItems } from "@data/home";
 import Image from "next/image";
+import React from "react";
 
-export const InformationSection = ({ className }: { className?: string }) => {
+export const InformationSection = React.memo(({ className }: { className?: string }) => {
   return (
     <div
       className={`container mx-auto flex flex-wrap justify-center md:grid md:grid-cols-5 ${className}`}
@@ -20,4 +21,4 @@ export const InformationSection = ({ className }: { className?: string }) => {
       ))}
     </div>
   );
-};
+});

@@ -14,7 +14,7 @@ interface OrderProductsProps {
   products: Product[];
 }
 
-export const OrderProducts = ({ products }: OrderProductsProps) => {
+export const OrderProducts = React.memo(({ products }: OrderProductsProps) => {
   return (
     <div>
       {products.map((product) => (
@@ -38,4 +38,4 @@ export const OrderProducts = ({ products }: OrderProductsProps) => {
       ))}
     </div>
   );
-};
+});

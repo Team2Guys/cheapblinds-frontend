@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-export const AccountSidebar = () => {
+export const AccountSidebar = React.memo(() => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -51,4 +51,4 @@ export const AccountSidebar = () => {
       </ul>
     </div>
   );
-};
+});

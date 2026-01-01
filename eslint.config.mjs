@@ -14,7 +14,7 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      "no-console": "warn", // Warns when using console.log
+      "no-console": "warn",
       "@typescript-eslint/no-explicit-any": [
         "error",
         {

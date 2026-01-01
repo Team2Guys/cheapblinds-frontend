@@ -95,4 +95,4 @@ const FormContact = () => {
   );
 };
 
-export default FormContact;
+export default React.memo(FormContact);

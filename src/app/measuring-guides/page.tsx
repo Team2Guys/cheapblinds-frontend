@@ -30,4 +30,4 @@ const MeasuringGuides = () => {
   );
 };
 
-export default MeasuringGuides;
+export default React.memo(MeasuringGuides);

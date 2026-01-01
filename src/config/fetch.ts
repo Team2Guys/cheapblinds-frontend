@@ -186,7 +186,6 @@ export const fetchOptionsPrice = async (
   }
 };
 
-
 export const fetchOrdersByUserId = async (
   id: string,
   CUSTOM_QUERY?: DocumentNode,

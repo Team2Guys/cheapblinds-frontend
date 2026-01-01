@@ -7,7 +7,7 @@ import { SwiperSlide } from "swiper/react";
 import { TestimonialBreakpoints } from "@data/Slider-breakpoints";
 import Image from "next/image";
 
-export const Testimonial = ({ reviews, showPaymentInfo = false }: TestimonialProps) => {
+export const Testimonial = React.memo(({ reviews, showPaymentInfo = false }: TestimonialProps) => {
   return (
     <div className="px-2 container mx-auto">
       {/* ---------- CONDITIONAL PAYMENT INFO BANNER ---------- */}
@@ -90,4 +90,4 @@ export const Testimonial = ({ reviews, showPaymentInfo = false }: TestimonialPro
       </div>
     </div>
   );
-};
+});
