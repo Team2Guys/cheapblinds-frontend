@@ -10,7 +10,7 @@ interface CategoryItem {
   slug: string;
 }
 
-export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] }) => {
+export const ShopBySlider = React.memo(({ CategoryList }: { CategoryList: CategoryItem[] }) => {
   const safeCategoryList = useMemo(() => {
     if (CategoryList.length === 0) return [];
     if (CategoryList.length < 4)
@@ -242,4 +242,4 @@ export const ShopBySlider = ({ CategoryList }: { CategoryList: CategoryItem[] })
       </div>
     </div>
   );
-};
+});

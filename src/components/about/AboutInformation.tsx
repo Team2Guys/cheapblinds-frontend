@@ -37,7 +37,7 @@ const AboutSection = ({ title, description, image, reverse = false }: AboutSecti
   );
 };
 
-export const AboutInformation = () => {
+export const AboutInformation = React.memo(() => {
   return (
     <div className="bg-primary-light py-12">
       <div className="container mx-auto px-2 space-y-16">
@@ -47,4 +47,4 @@ export const AboutInformation = () => {
       </div>
     </div>
   );
-};
+});

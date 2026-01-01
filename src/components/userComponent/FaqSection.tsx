@@ -3,7 +3,7 @@ import { AccordionItem } from "@components/ui/AccordionItem";
 import { faqData } from "@data/faqs";
 import React, { useState } from "react";
 
-export const FaqSection = () => {
+export const FaqSection = React.memo(() => {
   const [openIndex, setOpenIndex] = useState<{ [key: string]: number | null }>({});
 
   const toggleAccordion = (categoryId: string, index: number) => {
@@ -71,4 +71,4 @@ export const FaqSection = () => {
       </div>
     </section>
   );
-};
+});

@@ -4,8 +4,9 @@ import { RelatedBreakpoints } from "@data/Slider-breakpoints";
 import Image from "next/image";
 import { SwiperSlide } from "swiper/react";
 import { RelatedProductProps } from "@/types/common";
+import React from "react";
 
-export const JobDone = ({ title, description, data }: RelatedProductProps) => {
+export const JobDone = React.memo(({ title, description, data }: RelatedProductProps) => {
   return (
     <div className="container mx-auto px-2 space-y-3 mt-10 md:mt-16">
       <h2 className="text-heading text-center">{title}</h2>
@@ -34,4 +35,4 @@ export const JobDone = ({ title, description, data }: RelatedProductProps) => {
       </SwiperSlider>
     </div>
   );
-};
+});

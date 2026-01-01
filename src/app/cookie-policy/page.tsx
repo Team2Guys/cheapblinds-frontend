@@ -75,4 +75,4 @@ const CookiePolicy = () => {
   );
 };
 
-export default CookiePolicy;
+export default React.memo(CookiePolicy);

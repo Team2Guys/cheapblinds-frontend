@@ -10,7 +10,7 @@ interface MySampleProps {
   orderList: Orders[];
 }
 
-export const MySample: React.FC<MySampleProps> = ({ orderList }) => {
+export const MySample = React.memo(({ orderList }: MySampleProps) => {
   const [selectedOrder, setSelectedOrder] = useState<Orders | null>(null);
 
   const columns = [
@@ -159,4 +159,4 @@ export const MySample: React.FC<MySampleProps> = ({ orderList }) => {
       </Modal>
     </div>
   );
-};
+});

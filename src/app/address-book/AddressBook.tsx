@@ -52,4 +52,4 @@ const AddressBookPage = () => {
   );
 };
 
-export default AddressBookPage;
+export default React.memo(AddressBookPage);

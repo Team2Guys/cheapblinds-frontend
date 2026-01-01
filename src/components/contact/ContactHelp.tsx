@@ -26,7 +26,7 @@ const helpOptions = [
   },
 ];
 
-export const ContactHelp = () => {
+export const ContactHelp = React.memo(() => {
   return (
     <div className="container mx-auto px-2 my-10 space-y-6">
       <h2 className="text-center text-heading">How can we help you?</h2>
@@ -52,4 +52,4 @@ export const ContactHelp = () => {
       </div>
     </div>
   );
-};
+});

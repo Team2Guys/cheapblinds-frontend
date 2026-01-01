@@ -5,8 +5,9 @@ import Calender from "../svg/calender";
 import Link from "next/link";
 import FormContact from "./FormContact";
 import { GoogleMap } from "@components/userComponent";
+import React from "react";
 
-export const ContactPage = ({ IsHide }: { IsHide?: boolean }) => {
+export const ContactPage = React.memo(({ IsHide }: { IsHide?: boolean }) => {
   return (
     <>
       {!IsHide && (
@@ -65,4 +66,4 @@ export const ContactPage = ({ IsHide }: { IsHide?: boolean }) => {
       </div>
     </>
   );
-};
+});

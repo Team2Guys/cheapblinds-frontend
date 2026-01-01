@@ -14,7 +14,7 @@ interface FormValues {
   confirmPassword: string;
 }
 
-export const UpdatePassword = () => {
+export const UpdatePassword = React.memo(() => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const resetToken = searchParams.get("resetToken");
@@ -93,4 +93,4 @@ export const UpdatePassword = () => {
       </Formik>
     </div>
   );
-};
+});

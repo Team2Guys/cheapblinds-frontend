@@ -7,7 +7,7 @@ import { CartItems, CartOptions } from "@data/bin";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa6";
 
-export const CartPage = () => {
+export const CartPage = React.memo(() => {
   const [selected, setSelected] = useState("normal");
   const [quantities, setQuantities] = useState<Record<number, number>>(
     CartItems.reduce((acc, item) => ({ ...acc, [item.id]: 1 }), {}),
@@ -125,4 +125,4 @@ export const CartPage = () => {
       </div>
     </div>
   );
-};
+});

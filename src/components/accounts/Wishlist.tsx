@@ -8,7 +8,7 @@ import { Product } from "@/types/category";
 import { Toaster } from "@components/ui";
 import { useIndexedDb } from "@lib/useIndexedDb";
 
-export const Wishlist = () => {
+export const Wishlist = React.memo(() => {
   const router = useRouter();
   const { user, isLoading } = useAuth();
 
@@ -68,4 +68,4 @@ export const Wishlist = () => {
       )}
     </div>
   );
-};
+});

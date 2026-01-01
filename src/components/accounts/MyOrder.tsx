@@ -4,7 +4,7 @@ import { CustomTable, Modal } from "@components";
 import { Order } from "@/types/account";
 import { MyOrderData } from "@data/account";
 
-export const MyOrder = () => {
+export const MyOrder = React.memo(() => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const columns = [
@@ -108,4 +108,4 @@ export const MyOrder = () => {
       </Modal>
     </div>
   );
-};
+});

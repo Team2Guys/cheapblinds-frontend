@@ -19,7 +19,7 @@ interface RegisterFormValues {
   isNewsletterSubscribed: boolean;
 }
 
-export const RegisterForm = () => {
+export const RegisterForm = React.memo(() => {
   const router = useRouter();
 
   const [signup, { loading }] = useMutation(SIGN_UP_MUTATION);
@@ -158,4 +158,4 @@ export const RegisterForm = () => {
       </Formik>
     </div>
   );
-};
+});

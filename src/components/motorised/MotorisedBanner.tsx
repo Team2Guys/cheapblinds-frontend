@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-export const MotorisedBanner = () => {
+export const MotorisedBanner = React.memo(() => {
   return (
     <div className="bg-primary py-5">
       <div className="container mx-auto px-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -26,4 +26,4 @@ export const MotorisedBanner = () => {
       </div>
     </div>
   );
-};
+});

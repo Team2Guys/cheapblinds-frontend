@@ -7,7 +7,7 @@ import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
 
-export const WishlistPage = () => {
+export const WishlistPage = React.memo(() => {
   const { user, isLoading } = useAuth();
   const router = useRouter();
 
@@ -47,4 +47,4 @@ export const WishlistPage = () => {
       <Testimonial reviews={TestimonialReview} showPaymentInfo />
     </div>
   );
-};
+});

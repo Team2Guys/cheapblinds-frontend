@@ -15,7 +15,7 @@ interface ControlCardProps {
   CardData: CardItem[];
 }
 
-export const ControlCard = ({ heading, CardData }: ControlCardProps) => {
+export const ControlCard = React.memo(({ heading, CardData }: ControlCardProps) => {
   return (
     <div className="bg-primary-light pt-16 pb-10 mt-10">
       <div className="container mx-auto px-2 space-y-10">
@@ -62,4 +62,4 @@ export const ControlCard = ({ heading, CardData }: ControlCardProps) => {
       </div>
     </div>
   );
-};
+});

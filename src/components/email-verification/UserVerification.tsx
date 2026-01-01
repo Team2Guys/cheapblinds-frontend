@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Toaster } from "@/components/ui";
 import { FaSpinner } from "react-icons/fa";
 
-export const UserVerification = () => {
+export const UserVerification = React.memo(() => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const verificationToken = searchParams.get("verificationToken");
@@ -134,4 +134,4 @@ export const UserVerification = () => {
       </div>
     </div>
   );
-};
+});

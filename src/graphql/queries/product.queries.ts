@@ -49,7 +49,6 @@ export const GET_PRODUCT_LIST_QUERY = gql`
   }
 `;
 
-
 export const GET_CARD_PRODUCT_QUERY = gql`
   query ProductList {
     productList {

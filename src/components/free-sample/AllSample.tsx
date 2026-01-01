@@ -11,7 +11,7 @@ interface SampleProps {
   removeItem?: (_id: string) => void;
 }
 
-export const AllSample = ({ freeSamplesList, removeItem }: SampleProps) => {
+export const AllSample = React.memo(({ freeSamplesList, removeItem }: SampleProps) => {
   // Function to get color image based on sample color
   const getColorImage = (color?: string) => {
     if (!color) return "/assets/images/free-sample/add-sample.webp"; // fallback
@@ -74,4 +74,4 @@ export const AllSample = ({ freeSamplesList, removeItem }: SampleProps) => {
       </div>
     </div>
   );
-};
+});

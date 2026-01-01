@@ -7,7 +7,7 @@ import Link from "next/link";
 import { OrderProducts, Input } from "@components";
 import { OrderData } from "@data/bin";
 
-export const CheckoutPage = () => {
+export const CheckoutPage = React.memo(() => {
   return (
     <div className=" container mx-auto px-2 grid grid-cols-12 gap-4 my-10">
       {/* Billing Details */}
@@ -130,4 +130,4 @@ export const CheckoutPage = () => {
       </div>
     </div>
   );
-};
+});

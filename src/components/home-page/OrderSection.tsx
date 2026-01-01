@@ -3,51 +3,53 @@ import Link from "next/link";
 import React from "react";
 import { OrderSectionProps } from "@/types/common";
 
-export const OrderSection = ({
-  reverse,
-  image1,
-  image2,
-  btnText,
-  btnLink,
-  sampleSection,
-  buttonCenter,
-  className,
-}: OrderSectionProps) => {
-  return (
-    <div
-      className={`container mx-auto flex flex-col justify-center items-center mb-7 px-2 ${className} ${
-        reverse ? "sm:flex-row-reverse" : "sm:flex-row"
-      }`}
-    >
-      <div className="h-auto w-full">
-        <Image
-          className="bg-cover w-full h-[329px] lg:h-[616px]"
-          src={image1}
-          alt="order section main"
-          width={1000}
-          height={1000}
-        />
-      </div>
+export const OrderSection = React.memo(
+  ({
+    reverse,
+    image1,
+    image2,
+    btnText,
+    btnLink,
+    sampleSection,
+    buttonCenter,
+    className,
+  }: OrderSectionProps) => {
+    return (
       <div
-        className={`flex flex-col justify-center ${buttonCenter ? "items-center" : "items-start"} bg-primary space-y-5 lg:space-y-10 w-full h-[329px] lg:h-[616px]`}
+        className={`container mx-auto flex flex-col justify-center items-center mb-7 px-2 ${className} ${
+          reverse ? "sm:flex-row-reverse" : "sm:flex-row"
+        }`}
       >
-        <Image
-          className="h-[200px] lg:h-[402px] w-full object-contain"
-          src={image2}
-          alt="order section secondary"
-          width={1000}
-          height={1000}
-        />
-
-        <Link
-          href={btnLink}
-          className={`${
-            sampleSection ? "bg-white text-black" : "bg-black text-white"
-          } text-[21px] font-bold px-8 py-2 rounded-xl xl:py-4 xl:px-12 ${buttonCenter ? "" : "items-start ml-10"} `}
+        <div className="h-auto w-full">
+          <Image
+            className="bg-cover w-full h-[329px] lg:h-[616px]"
+            src={image1}
+            alt="order section main"
+            width={1000}
+            height={1000}
+          />
+        </div>
+        <div
+          className={`flex flex-col justify-center ${buttonCenter ? "items-center" : "items-start"} bg-primary space-y-5 lg:space-y-10 w-full h-[329px] lg:h-[616px]`}
         >
-          {btnText}
-        </Link>
+          <Image
+            className="h-[200px] lg:h-[402px] w-full object-contain"
+            src={image2}
+            alt="order section secondary"
+            width={1000}
+            height={1000}
+          />
+
+          <Link
+            href={btnLink}
+            className={`${
+              sampleSection ? "bg-white text-black" : "bg-black text-white"
+            } text-[21px] font-bold px-8 py-2 rounded-xl xl:py-4 xl:px-12 ${buttonCenter ? "" : "items-start ml-10"} `}
+          >
+            {btnText}
+          </Link>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);

@@ -7,7 +7,7 @@ interface ImageGridProps {
   rightImage: string;
 }
 
-export const ImageGrid: React.FC<ImageGridProps> = ({ leftImage, rightImage }) => {
+export const ImageGrid: React.FC<ImageGridProps> = React.memo(({ leftImage, rightImage }) => {
   return (
     <div className="container mx-auto px-2 my-10">
       <div className="grid grid-cols-1 md:grid-cols-2 items-center">
@@ -25,4 +25,4 @@ export const ImageGrid: React.FC<ImageGridProps> = ({ leftImage, rightImage }) =
       </div>
     </div>
   );
-};
+});

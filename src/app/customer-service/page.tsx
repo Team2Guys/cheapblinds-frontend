@@ -153,4 +153,4 @@ const CustomerService = () => {
   );
 };
 
-export default CustomerService;
+export default React.memo(CustomerService);

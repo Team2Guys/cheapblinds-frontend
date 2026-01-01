@@ -12,7 +12,7 @@ import { Toaster } from "@components/ui";
 import { useIndexedDb } from "@lib/useIndexedDb";
 import { useRouter } from "next/navigation";
 
-export const SampleCheckout = ({ freeSamplesList }: { freeSamplesList: Product[] }) => {
+export const SampleCheckout = React.memo(({ freeSamplesList }: { freeSamplesList: Product[] }) => {
   const { user } = useAuth();
   const [createOrder, { loading }] = useMutation(CREATE_ORDER_MUTATION);
   const { clearFreeSamples } = useIndexedDb();
@@ -127,4 +127,4 @@ export const SampleCheckout = ({ freeSamplesList }: { freeSamplesList: Product[]
       </Formik>
     </div>
   );
-};
+});

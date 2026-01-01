@@ -8,7 +8,7 @@ import { REQUEST_PASSWORD_RESET_MUTATION } from "@graphql";
 import { ForgotForm_validationSchema } from "@data/Validations";
 import { FaSpinner } from "react-icons/fa";
 
-export const ForgotForm = () => {
+export const ForgotForm = React.memo(() => {
   const [requestPasswordReset, { loading }] = useMutation(REQUEST_PASSWORD_RESET_MUTATION);
 
   return (
@@ -70,4 +70,4 @@ export const ForgotForm = () => {
       </Formik>
     </div>
   );
-};
+});

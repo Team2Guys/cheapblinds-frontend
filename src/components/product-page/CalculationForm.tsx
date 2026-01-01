@@ -48,34 +48,33 @@ export const CalculationForm = ({
     return value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
   };
 
-const validateValue = (field: "width" | "drop", value: string) => {
-  const numValue = Number(value);
-  const { minWidth, maxWidth, minHeight, maxHeight } = unitRanges[unit];
-  const min = field === "width" ? minWidth : minHeight;
-  const max = field === "width" ? maxWidth : maxHeight;
+  const validateValue = (field: "width" | "drop", value: string) => {
+    const numValue = Number(value);
+    const { minWidth, maxWidth, minHeight, maxHeight } = unitRanges[unit];
+    const min = field === "width" ? minWidth : minHeight;
+    const max = field === "width" ? maxWidth : maxHeight;
 
-  if (!value) {
-    setErrors((prev) => ({ ...prev, [field]: "" }));
-    return;
-  }
+    if (!value) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+      return;
+    }
 
-  const format = (v: number) => (unit === "Inches" ? v.toFixed(1) : v);
+    const format = (v: number) => (unit === "Inches" ? v.toFixed(1) : v);
 
-  if (numValue < min) {
-    setErrors((prev) => ({
-      ...prev,
-      [field]: `Value must be at least ${format(min)} ${unit}.`,
-    }));
-  } else if (numValue > max) {
-    setErrors((prev) => ({
-      ...prev,
-      [field]: `Value cannot exceed ${format(max)} ${unit}.`,
-    }));
-  } else {
-    setErrors((prev) => ({ ...prev, [field]: "" }));
-  }
-};
-
+    if (numValue < min) {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: `Value must be at least ${format(min)} ${unit}.`,
+      }));
+    } else if (numValue > max) {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: `Value cannot exceed ${format(max)} ${unit}.`,
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
+  };
 
   useEffect(() => {
     onValuesChange?.({ width, drop, unit });
