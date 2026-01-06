@@ -29,6 +29,7 @@ export const RecessSelector = ({ selected, onChange }: RecessSelectorProps) => {
 
             <div className="aspect-square w-full relative">
               <Image
+                unoptimized
                 src={opt.img}
                 alt={opt.label}
                 fill

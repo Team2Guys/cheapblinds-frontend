@@ -10,6 +10,7 @@ const Footer = () => {
     <footer className="bg-primary text-black mt-10">
       <div className="container mx-auto px-2 pt-10 pb-6 relative">
         <Image
+          unoptimized
           src="/assets/images/footer/footer-girl.png"
           alt="call support"
           width={500}
@@ -24,7 +25,13 @@ const Footer = () => {
 
             <div className="mt-4 space-y-3 text-sm z-0">
               <div className="flex items-start space-x-2">
-                <Image src="/assets/icons/calendar.png" alt="phone" width={44} height={44} />
+                <Image
+                  unoptimized
+                  src="/assets/icons/calendar.png"
+                  alt="phone"
+                  width={44}
+                  height={44}
+                />
                 <div className="leading-7">
                   <p>Mon-Sat: 8:30am-9:00pm</p>
                   <p>Sunday: 10:00am-6:00pm</p>
@@ -35,12 +42,19 @@ const Footer = () => {
                 href="tel:+971505974531"
                 className="flex items-center space-x-2 font-medium font-rubik text-xl"
               >
-                <Image src="/assets/icons/phone.png" alt="phone" width={24} height={24} />
+                <Image
+                  unoptimized
+                  src="/assets/icons/phone.png"
+                  alt="phone"
+                  width={24}
+                  height={24}
+                />
                 <span>+971 50 597 4531</span>
               </Link>
 
               <div className="flex items-start space-x-2">
                 <Image
+                  unoptimized
                   src="/assets/icons/location.png"
                   alt="location"
                   width={20}
@@ -73,10 +87,17 @@ const Footer = () => {
                 <p>Choose Your Payment Method</p>
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
-                    <Image src="/assets/icons/visa.png" alt="Visa" width={32} height={11} />
+                    <Image
+                      unoptimized
+                      src="/assets/icons/visa.png"
+                      alt="Visa"
+                      width={32}
+                      height={11}
+                    />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
                     <Image
+                      unoptimized
                       src="/assets/icons/applePay.png"
                       alt="Apple Pay"
                       width={26}
@@ -84,10 +105,17 @@ const Footer = () => {
                     />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
-                    <Image src="/assets/icons/tabby.png" alt="Tabby" width={37} height={15} />
+                    <Image
+                      unoptimized
+                      src="/assets/icons/tabby.png"
+                      alt="Tabby"
+                      width={37}
+                      height={15}
+                    />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
                     <Image
+                      unoptimized
                       src="/assets/icons/mastercard.png"
                       alt="Mastercard"
                       width={26}
@@ -95,10 +123,22 @@ const Footer = () => {
                     />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
-                    <Image src="/assets/icons/gPay.png" alt="GPay" width={29} height={12} />
+                    <Image
+                      unoptimized
+                      src="/assets/icons/gPay.png"
+                      alt="GPay"
+                      width={29}
+                      height={12}
+                    />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
-                    <Image src="/assets/icons/tamara.png" alt="Tamara" width={36} height={13} />
+                    <Image
+                      unoptimized
+                      src="/assets/icons/tamara.png"
+                      alt="Tamara"
+                      width={36}
+                      height={13}
+                    />
                   </div>
                 </div>
               </div>

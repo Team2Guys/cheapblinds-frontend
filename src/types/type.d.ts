@@ -1,3 +1,4 @@
+import { Product } from "@/types/category";
 import { FabricPrice } from "./category";
 
 export interface FormData {
@@ -12,7 +13,12 @@ export interface FormProps {
   values: { width: string; drop: string; unit: string };
   recessType: string;
   finalPrice: FabricPrice | null;
-  categorySlug?: string;
+  optionSections: Array<{
+    title: string;
+    helpContent?: React.ReactNode;
+    options: Array<{ code: string; label: string; price: number }>;
+  }>;
+  productList: Product;
 }
 
 export interface ContactData {

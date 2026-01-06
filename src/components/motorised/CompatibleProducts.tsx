@@ -15,6 +15,7 @@ export const CompatibleProducts = () => {
           <div className="flex flex-col items-center gap-3" key={index}>
             <div className="relative w-24 h-24 sm:w-28 sm:h-28">
               <Image
+                unoptimized
                 src={item.imageUrl}
                 alt={item.name}
                 fill

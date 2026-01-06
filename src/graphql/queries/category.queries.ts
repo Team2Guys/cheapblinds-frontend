@@ -104,7 +104,6 @@ export const GET_CATEGORY_BY_SLUG_QUERY = gql`
           maxWidth
           color
           pattern
-          composition
           isMotorized
           motorPrice
           status

@@ -22,6 +22,7 @@ const Header = () => {
         <div>
           <Link href="/">
             <Image
+              unoptimized
               className="h-auto hidden md:block"
               src="/assets/images/navbar/logo.png"
               priority
@@ -44,6 +45,7 @@ const Header = () => {
           <SearchBar className="hidden md:flex" />
           <Link href="/">
             <Image
+              unoptimized
               className="h-auto block md:hidden"
               src="/assets/images/navbar/logo.png"
               priority
@@ -67,7 +69,13 @@ const Header = () => {
         </div>
       </div>
       <Link className="fixed bottom-8 right-4" href="https://wa.me/+971505974531" target="_blank">
-        <Image src="/assets/images/whatsapp-icon.png" alt="icon" width={60} height={60} />
+        <Image
+          unoptimized
+          src="/assets/images/whatsapp-icon.png"
+          alt="icon"
+          width={60}
+          height={60}
+        />
       </Link>
     </div>
   );

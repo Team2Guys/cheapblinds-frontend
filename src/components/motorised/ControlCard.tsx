@@ -25,6 +25,7 @@ export const ControlCard = React.memo(({ heading, CardData }: ControlCardProps) 
             <div key={index} className="bg-white p-2">
               <div className="relative aspect-square w-full mb-3">
                 <Image
+                  unoptimized
                   src={option.imageSrc}
                   alt={option.title}
                   fill

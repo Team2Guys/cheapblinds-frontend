@@ -22,6 +22,7 @@ export const OrderSection = React.memo(
       >
         <div className="h-auto w-full">
           <Image
+            unoptimized
             className="bg-cover w-full h-[329px] lg:h-[616px]"
             src={image1}
             alt="order section main"
@@ -33,6 +34,7 @@ export const OrderSection = React.memo(
           className={`flex flex-col justify-center ${buttonCenter ? "items-center" : "items-start"} bg-primary space-y-5 lg:space-y-10 w-full h-[329px] lg:h-[616px]`}
         >
           <Image
+            unoptimized
             className="h-[200px] lg:h-[402px] w-full object-contain"
             src={image2}
             alt="order section secondary"

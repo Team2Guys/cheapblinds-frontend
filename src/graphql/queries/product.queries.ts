@@ -23,7 +23,7 @@ export const GET_PRODUCT_LIST_QUERY = gql`
       maxWidth
       color
       pattern
-      composition
+      material
       isMotorized
       additionalInfo
       measuringGuide
@@ -136,7 +136,7 @@ export const GET_PRODUCT_BY_SLUG_QUERY = gql`
       maxWidth
       color
       pattern
-      composition
+      material
     }
   }
 `;

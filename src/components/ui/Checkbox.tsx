@@ -28,6 +28,7 @@ export const Checkbox = ({ label, checked, onChange, price, imageUrl }: Checkbox
 
         {imageUrl && (
           <Image
+            unoptimized
             src={imageUrl}
             alt="option"
             className="w-[25px] h-[25px] object-cover rounded"

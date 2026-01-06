@@ -91,7 +91,7 @@ export const PaymentMethod = ({ showHeading, installments, isCheckout }: Payment
       <Modal isOpen={tabbyOpen} onClose={() => setTabbyOpen(false)} paymentModal>
         <h2 className="text-2xl font-bold py-2">Easy Monthly Installments</h2>
         <div className="py-5 ps-5 xs:ps-10 md:ps-20 pe-4 me-4 xs:me-7">
-          <Image height={130} width={130} src={tabbyLogo} alt="logo" />
+          <Image unoptimized height={130} width={130} src={tabbyLogo} alt="logo" />
           <h2 className="text-xl xs:text-2xl sm:text-lg md:text-xl font-bold mt-5 leading-10 xs:leading-tight">
             <span className="rounded-full bg-[#3BFFC1] px-4 py-0 text-nowrap">Shop now,</span>
             <br />
@@ -121,6 +121,7 @@ export const PaymentMethod = ({ showHeading, installments, isCheckout }: Payment
           <div className="flex justify-end gap-2 mt-5 px-6">
             {tabbyPayIcon.map((item, index) => (
               <Image
+                unoptimized
                 src={item.imageUrl}
                 alt="master"
                 className="sm:w-20 w-14 sm:h-20 object-contain"
@@ -136,7 +137,14 @@ export const PaymentMethod = ({ showHeading, installments, isCheckout }: Payment
         <h2 className="text-2xl font-bold text-center">Pay easier with Tamara</h2>
         <div className="py-8 px-5 xs:px-10 md:px-20 me-4 xs:me-7">
           <div className="text-center">
-            <Image height={130} width={130} src={tamaraLogo} alt="logo" className="mx-auto" />
+            <Image
+              unoptimized
+              height={130}
+              width={130}
+              src={tamaraLogo}
+              alt="logo"
+              className="mx-auto"
+            />
           </div>
           <h2 className="text-center font-bold text-2xl mt-5">Pay easier with Tamara</h2>
           <div className="px-4 py-2 bg-linear-to-r from-orange-300 via-blue-300 to-pink-300 mt-4 rounded-[70px]">

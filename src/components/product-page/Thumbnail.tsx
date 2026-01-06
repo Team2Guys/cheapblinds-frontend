@@ -58,6 +58,7 @@ export const Thumbnail = ({ images = [] }: { images?: string[] }) => {
               }`}
             >
               <Image
+                unoptimized
                 src={img}
                 alt={`Thumbnail ${index + 1}`}
                 fill

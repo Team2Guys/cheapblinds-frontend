@@ -11,9 +11,10 @@ import {
 } from "@components";
 import DeliveryIcon from "@components/svg/delivery";
 import { Toaster } from "@components";
-import { FabricPrice, OptionsPrice, Product } from "@/types/category";
+import { FabricPrice, Product } from "@/types/category";
 import { useIndexedDb } from "@lib/useIndexedDb";
 import { fetchFabricPrice, fetchOptionsPrice } from "@config/fetch";
+import { buildOptionSections, OptionSection } from "@utils/helperFunctions";
 
 interface ProductDetailProps {
   categorySlug: string;
@@ -32,8 +33,8 @@ export const ProductInfo = ({
 
   const [showForm, setShowForm] = useState(false);
   const [recessType, setRecessType] = useState("outside");
-  const [loadingPrice, setLoadingPrice] = useState(false);
-  const [optionsPrice, setOptionsPrice] = useState<OptionsPrice[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [optionSections, setOptionSections] = useState<OptionSection[]>([]);
   const [draftValues, setDraftValues] = useState({
     width: "",
     drop: "",
@@ -47,7 +48,6 @@ export const ProductInfo = ({
   } | null>(null);
 
   const [finalPrice, setFinalPrice] = useState<FabricPrice | null>(null);
-
   const { addFreeSampleItem } = useIndexedDb();
 
   useEffect(() => {
@@ -63,49 +63,45 @@ export const ProductInfo = ({
   };
   const handleGetPrice = async () => {
     if (!draftValues.width || !draftValues.drop) {
-      Toaster("error", "Please enter width and drop before getting the price.");
+      Toaster("error", "Please enter width and drop.");
       return;
     }
 
-    if (!product?.fabricId || !product?.blindTypeId) {
+    if (!product.fabricId || !product.blindTypeId) {
       Toaster("error", "Invalid product configuration.");
       return;
     }
 
-    setLoadingPrice(true);
+    setLoading(true);
 
     try {
-      const widthMM = toMM(draftValues.width, draftValues.unit);
-      const dropMM = toMM(draftValues.drop, draftValues.unit);
-
       const pricingInput = {
-        width: widthMM,
-        drop: dropMM,
+        width: toMM(draftValues.width, draftValues.unit),
+        drop: toMM(draftValues.drop, draftValues.unit),
         fabricId: Number(product.fabricId),
         blindTypeId: Number(product.blindTypeId),
       };
 
-      const [fabricResponse, optionsResponse] = await Promise.all([
+      const [fabricRes, optionsRes] = await Promise.all([
         fetchFabricPrice(pricingInput),
         fetchOptionsPrice(pricingInput),
       ]);
 
-      if (!fabricResponse) {
-        Toaster("error", "No fabric price returned");
-        return;
-      }
+      if (!fabricRes) throw new Error("No price returned");
 
-      setFinalPrice(fabricResponse);
-      setOptionsPrice(optionsResponse ?? []);
+      setFinalPrice(fabricRes);
+      setOptionSections(
+        buildOptionSections(
+          categorySlug as "roller-blinds" | "roman-blinds" | "zebra-blinds" | "vertical-blinds",
+          optionsRes ?? [],
+        ),
+      );
       setConfirmedValues(draftValues);
       setShowForm(true);
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (error) {
-      console.error(error);
+    } catch {
       Toaster("error", "Failed to calculate price");
     } finally {
-      setLoadingPrice(false);
+      setLoading(false);
     }
   };
 
@@ -117,17 +113,15 @@ export const ProductInfo = ({
     }
   };
 
-  console.log(optionsPrice, "optionsPriceoptionsPrice");
-  console.log(finalPrice, "finalPricefinalPrice");
-
   return (
     <div className="space-y-6" ref={topRef}>
       {showForm && confirmedValues && (
         <RomanBlindsForm
-          categorySlug={categorySlug}
           values={confirmedValues}
           finalPrice={finalPrice}
           recessType={recessType}
+          optionSections={optionSections}
+          productList={product}
         />
       )}
 
@@ -152,10 +146,10 @@ export const ProductInfo = ({
 
       <button
         onClick={handleGetPrice}
-        disabled={loadingPrice}
+        disabled={loading}
         className="bg-primary px-4 py-3 rounded-md w-full font-semibold hover:bg-primary/80 disabled:opacity-60 cursor-pointer"
       >
-        {loadingPrice ? "Calculating..." : "Get price"}
+        {loading ? "Calculating..." : "Get price"}
       </button>
 
       <PaymentMethod installments={200} showHeading />

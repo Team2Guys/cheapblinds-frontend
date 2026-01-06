@@ -69,7 +69,7 @@ export interface Product {
   updatedAt?: string | Date;
   parentSubcategoryUrl?: string;
   pattern?: string;
-  composition?: string;
+  material?: string;
   color?: string;
   minHeight?: number;
   maxHeight?: number;

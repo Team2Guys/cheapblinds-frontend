@@ -111,6 +111,7 @@ export const Card = React.memo(
                 >
                   <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
                     <Image
+                      unoptimized
                       src={card.posterImageUrl || "/assets/images/bin/product1.webp"}
                       alt={card.name}
                       fill
@@ -118,6 +119,7 @@ export const Card = React.memo(
                     <div className="absolute bottom-2 left-2">
                       <div className="relative h-9 md:h-16 w-8 md:w-16">
                         <Image
+                          unoptimized
                           src="/assets/images/van.png"
                           alt="image"
                           fill
@@ -147,6 +149,7 @@ export const Card = React.memo(
                       </h2>
                     </Link>
                     <Image
+                      unoptimized
                       src="/assets/images/blinds-icon.png"
                       alt="icon-image"
                       className="w-6 h-6 md:w-10 md:h-10"
@@ -163,6 +166,7 @@ export const Card = React.memo(
                     </button>
 
                     <Image
+                      unoptimized
                       src={getColorImage(card.color || "")}
                       alt={card.color || "color"}
                       className="w-6 h-6 md:w-10 md:h-10"

@@ -13,8 +13,7 @@
     "test:ui": "vitest --ui",
     "test:watch": "vitest --watch",
     "postinstall": "patch-package",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "check-format": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
     "@apollo/client": "^3.13.9",

@@ -139,6 +139,7 @@ export const MySample = React.memo(({ orderList }: MySampleProps) => {
                     className="bg-white border rounded-xl p-3 shadow-sm flex flex-col"
                   >
                     <Image
+                      unoptimized
                       src={item.posterImageUrl || "/images/no-image-placeholder.png"}
                       alt={item.name}
                       width={200}

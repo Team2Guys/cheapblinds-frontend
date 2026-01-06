@@ -175,6 +175,7 @@ export const ShopBySlider = React.memo(({ CategoryList }: { CategoryList: Catego
                 `}
               >
                 <Image
+                  unoptimized
                   src={item.posterImageUrl || "/assets/images/placeholder.png"}
                   alt={item.name}
                   fill

@@ -18,6 +18,7 @@ export default function CategoryFeatures({ categoryFeatures }: { categoryFeature
           <SwiperSlide key={index}>
             <div className="flex flex-col items-center gap-2">
               <Image
+                unoptimized
                 src={item.imageUrl}
                 alt={item.name}
                 width={80}

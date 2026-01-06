@@ -87,6 +87,7 @@ export const RollerBlindsForm = ({ values, recessType }: FormProps) => {
         Pay in 4 interest-free payments with{" "}
         <div className="p-2 rounded-md border bg-white">
           <Image
+            unoptimized
             className="h-5 w-auto"
             src="/assets/images/icon-payment/tamara.webp"
             alt="Tamara"
@@ -96,6 +97,7 @@ export const RollerBlindsForm = ({ values, recessType }: FormProps) => {
         </div>
         <div className="p-2 rounded-md border bg-white">
           <Image
+            unoptimized
             className="h-5 w-auto"
             src="/assets/images/icon-payment/tabby.webp"
             alt="Tabby"

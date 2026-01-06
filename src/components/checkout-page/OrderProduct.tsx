@@ -21,7 +21,7 @@ export const OrderProducts = React.memo(({ products }: OrderProductsProps) => {
         <div key={product.id} className="flex items-center justify-between p-2 gap-2">
           <div className="flex items-center gap-3">
             <div className="relative rounded overflow-hidden w-full h-full aspect-square max-h-20 max-w-20">
-              <Image src={product.image} alt={product.name} fill />
+              <Image unoptimized src={product.image} alt={product.name} fill />
             </div>
             <div>
               <p className="font-semibold">

@@ -18,6 +18,7 @@ export const JobDone = React.memo(({ title, description, data }: RelatedProductP
               <div className="relative overflow-hidden group">
                 <div className="relative w-full aspect-square">
                   <Image
+                    unoptimized
                     src={array.posterImageUrl ?? "/assets/images/bin/product3.webp"}
                     alt={array.name ?? ""}
                     fill

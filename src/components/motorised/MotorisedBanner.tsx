@@ -7,6 +7,7 @@ export const MotorisedBanner = React.memo(() => {
       <div className="container mx-auto px-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="relative aspect-3/2 w-full order-2 sm:order-1">
           <Image
+            unoptimized
             src="/assets/images/motorised/zebra-image.webp"
             alt="Motorised Blinds Banner"
             fill
@@ -16,6 +17,7 @@ export const MotorisedBanner = React.memo(() => {
         </div>
         <div className="relative aspect-3/2 w-full order-1 sm:order-2">
           <Image
+            unoptimized
             src="/assets/images/motorised/banner.webp"
             alt="Motorised Blinds Banner"
             fill

@@ -5,6 +5,7 @@ export const Banner = React.memo(() => {
   return (
     <div className="space-y-4 flex justify-center items-center flex-col">
       <Image
+        unoptimized
         className="w-24 md:w-32 h-24 md:h-32"
         src="/assets/images/free-sample/banner.webp"
         alt="free sample banner"
