@@ -28,7 +28,7 @@ export const Thumbnail = ({ images = [] }: { images?: string[] }) => {
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="main-swiper"
       >
-        {images.map((img, index) => (
+        {images &&images.map((img, index) => (
           <SwiperSlide key={index}>
             <SideBySideMagnifier
               imageSrc={img}

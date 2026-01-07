@@ -5,7 +5,6 @@ export * from "./ProductDetail";
 export * from "./ProductInfo";
 export * from "./ProductTabs";
 export * from "./RecessSelector";
-export * from "./RollerBlindsForm";
 export * from "./RomanBlindsForm";
 export * from "./SideBySideMagnifier";
 export * from "./Thumbnail";

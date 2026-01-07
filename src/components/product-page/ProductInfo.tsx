@@ -107,7 +107,7 @@ export const ProductInfo = ({
 
   const handleFreeSample = async (product: Product) => {
     try {
-      await addFreeSampleItem(product, categorySlug || "");
+      await addFreeSampleItem(product);
     } catch {
       Toaster("error", "Failed to add Free Sample!");
     }
@@ -134,8 +134,8 @@ export const ProductInfo = ({
       <p>{shortDescription}</p>
 
       <CalculationForm
-        minHeight={product.minHeight}
-        maxHeight={product.maxHeight}
+        minDrop={product.minDrop}
+        maxDrop={product.maxDrop}
         minWidth={product.minWidth}
         maxWidth={product.maxWidth}
         onValuesChange={setDraftValues}

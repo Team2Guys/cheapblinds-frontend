@@ -23,8 +23,7 @@ const DeliveryIcon = () => {
             transform="translate(0.0588235 0.0588235) scale(0.00172335)"
           />
         </pattern>
-        <Image
-          unoptimized
+        <image
           id="image0_3642_25747"
           width="512"
           height="512"

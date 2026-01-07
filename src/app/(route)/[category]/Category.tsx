@@ -69,7 +69,6 @@ const useFilterOptions = (allProducts: Product[]) => {
 const CategoryPage = ({
   categoryName,
   description,
-  categoryUrl,
   ProductList,
 }: CategoryPageProps) => {
   const [sort, setSort] = useState<"default" | "low" | "high" | "new">("default");
@@ -163,7 +162,7 @@ const CategoryPage = ({
 
   const handleFreeSample = async (product: Product) => {
     try {
-      await addFreeSampleItem(product, categoryUrl || "");
+      await addFreeSampleItem(product);
     } catch {
       Toaster("error", "Failed to add Free Sample!");
     }
@@ -234,7 +233,6 @@ const CategoryPage = ({
             <Card
               products={sortedProducts}
               categoryName={categoryName}
-              categoryUrl={categoryUrl}
               selectedMotorized={selectedMotorized}
               onFreeSample={handleFreeSample}
             />

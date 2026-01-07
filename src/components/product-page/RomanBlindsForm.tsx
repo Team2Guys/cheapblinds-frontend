@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FormSelect, Toaster } from "@components";
 import { FormProps } from "@/types/type";
 import { MODAL_CONTENTS } from "@data/detail-page";
-import { useIndexedDb } from "@lib/useIndexedDb";
+// import { useIndexedDb } from "@lib/useIndexedDb";
 
 const TITLE_MAP: Record<string, string> = {
   Finish: "Headrail Type / Colour",
@@ -26,7 +26,8 @@ export const RomanBlindsForm = ({
   optionSections,
   productList,
 }: FormProps) => {
-  const { addToCart } = useIndexedDb();
+
+  // const { addToCart } = useIndexedDb();
 
   const initialState: Record<string, string> = {};
   optionSections.forEach((section) => {

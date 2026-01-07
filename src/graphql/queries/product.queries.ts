@@ -11,14 +11,15 @@ export const GET_PRODUCT_LIST_QUERY = gql`
       sku
       name
       slug
+      productUrl
       shortDescription
       description
       posterImageUrl
       productImages
       price
       motorPrice
-      minHeight
-      maxHeight
+      minDrop
+      maxDrop
       minWidth
       maxWidth
       color
@@ -57,6 +58,7 @@ export const GET_CARD_PRODUCT_QUERY = gql`
       slug
       breadcrumb
       posterImageUrl
+      productUrl
       price
       status
       category {
@@ -80,6 +82,7 @@ export const GET_PRODUCT_BY_SEARCH_QUERY = gql`
       name
       slug
       posterImageUrl
+      productUrl
       status
       category {
         id
@@ -116,6 +119,7 @@ export const GET_PRODUCT_BY_SLUG_QUERY = gql`
       description
       shortDescription
       slug
+      productUrl
       categoryId
       subcategoryId
       posterImageUrl
@@ -130,8 +134,8 @@ export const GET_PRODUCT_BY_SLUG_QUERY = gql`
       measuringGuide
       status
       lastEditedBy
-      minHeight
-      maxHeight
+      minDrop
+      maxDrop
       minWidth
       maxWidth
       color

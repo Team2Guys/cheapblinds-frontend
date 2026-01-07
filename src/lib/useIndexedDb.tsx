@@ -1,83 +1,146 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { Product } from "@/types/category";
-import { addToStore, deleteFromStore, getAllFromStore, clearStore, STORES } from "@/lib/indexedDB";
+"use client";
+
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  addToStore,
+  deleteFromStore,
+  getAllFromStore,
+  clearStore,
+  STORES,
+} from "@/lib/indexedDB";
+
+import { CartItems, Product, WishlistItems } from "@/types/category";
 import { Toaster } from "@components/ui";
 
+/* -------------------- CONTEXT TYPE -------------------- */
+
 interface IndexedDbContextType {
-  wishlist: Product[];
-  freeSamples: Product[];
-  cart: Product[];
+  wishlist: WishlistItems[];
+  freeSamples: WishlistItems[];
+  cart: CartItems[];
 
-  addToWishlist: (_product: Product, _categoryUrl: string, _categoryName: string) => Promise<void>;
+  addToWishlist: (_product: Product) => Promise<void>;
+  addFreeSampleItem: (_product: Product) => Promise<void>;
+  addToCart: (
+    _product: Product,
+    _config: Partial<CartItems>
+  ) => Promise<void>;
+
   removeFromWishlist: (_id: string) => Promise<void>;
-  clearWishlist: () => Promise<void>;
-
-  addFreeSampleItem: (_product: Product, _categoryUrl: string) => Promise<void>;
   removeFreeSampleItem: (_id: string) => Promise<void>;
-  clearFreeSamples: () => Promise<void>;
-
-  addToCart: (_product: Product, _categoryUrl: string) => Promise<void>;
   removeFromCart: (_id: string) => Promise<void>;
+
+  clearWishlist: () => Promise<void>;
+  clearFreeSamples: () => Promise<void>;
   clearCart: () => Promise<void>;
 
   openWishlist: boolean;
   setOpenWishlist: React.Dispatch<React.SetStateAction<boolean>>;
-
   openFreeSample: boolean;
   setOpenFreeSample: React.Dispatch<React.SetStateAction<boolean>>;
-
   openCart: boolean;
   setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const IndexedDbContext = createContext<IndexedDbContextType | undefined>(undefined);
+const IndexedDbContext = createContext<IndexedDbContextType | undefined>(
+  undefined
+);
 
-export const IndexedDbProvider = ({ children }: { children: React.ReactNode }) => {
-  const [wishlist, setWishlist] = useState<Product[]>([]);
-  const [freeSamples, setFreeSamples] = useState<Product[]>([]);
-  const [cart, setCart] = useState<Product[]>([]);
+/* -------------------- PROVIDER -------------------- */
+
+export const IndexedDbProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [wishlist, setWishlist] = useState<WishlistItems[]>([]);
+  const [freeSamples, setFreeSamples] = useState<WishlistItems[]>([]);
+  const [cart, setCart] = useState<CartItems[]>([]);
 
   const [openWishlist, setOpenWishlist] = useState(false);
   const [openFreeSample, setOpenFreeSample] = useState(false);
   const [openCart, setOpenCart] = useState(false);
 
-  // Load all data on mount
+  /* -------------------- LOAD STORES -------------------- */
+
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       setWishlist(await getAllFromStore(STORES.WISHLIST));
       setFreeSamples(await getAllFromStore(STORES.FREESAMPLE));
       setCart(await getAllFromStore(STORES.CART));
-    };
-    fetchData();
+    })();
   }, []);
 
-  // -------------------- WISHLIST --------------------
-  const addToWishlist = async (product: Product, categoryUrl: string, categoryName: string) => {
-    try {
-      if (wishlist.find((p) => p.id === product.id)) {
-        Toaster("success", "Product already in Wishlist!");
-        return;
-      }
+  /* -------------------- HELPERS -------------------- */
 
-      const wishlistProduct = {
-        ...product,
-        categoryUrl,
-        categoryName,
-        url: `/${categoryUrl}/${product.parentSubcategoryUrl}/${product.slug}`,
-      };
+  const mapToWishlistItem = (product: Product): WishlistItems => ({
+    id: product.id,
+    name: product.name,
+    fabricId: product.fabricId,
+    blindTypeId: product.blindTypeId,
+    sku: product.sku,
+    productUrl: product.productUrl,
+    posterImageUrl: product.posterImageUrl,
+    price: product.price,
+    color: product.color,
+    isMotorized: product.isMotorized,
+    motorPrice: product.motorPrice,
+    status: product.status,
+  });
 
-      await addToStore(STORES.WISHLIST, wishlistProduct);
-      setWishlist((prev) => [wishlistProduct, ...prev]);
-      setOpenWishlist(true);
-    } catch (err) {
-      console.error(err);
-      Toaster("error", "Failed to add product to wishlist");
+const mapToCartItem = (
+  product: Product,
+  config: Partial<CartItems>
+): CartItems => ({
+  id: crypto.randomUUID(),
+
+  name: product.name,
+  fabricId: product.fabricId,
+  blindTypeId: product.blindTypeId,
+  sku: product.sku,
+  productUrl: product.productUrl,
+  posterImageUrl: product.posterImageUrl,
+  price: product.price,
+  color: product.color,
+  finalPrice: config.finalPrice,
+  width: config.width!,
+  drop: config.drop!,
+  isMotorized: false,
+  motorPrice: product.motorPrice ?? 0,
+  racessType: config.racessType,
+  options: {
+    headrailType: config.options?.headrailType,
+    stackingStyle: config.options?.stackingStyle,
+    lining: config.options?.lining,
+    chainControl: config.options?.chainControl,
+    chainSide: config.options?.chainSide,
+  },
+});
+
+
+  /* -------------------- WISHLIST -------------------- */
+
+  const addToWishlist = async (product: Product) => {
+    if (wishlist.some((p) => p.id === product.id)) {
+      Toaster("success", "Already in Wishlist");
+      return;
     }
+
+    const item = mapToWishlistItem(product);
+    await addToStore(STORES.WISHLIST, item);
+    setWishlist((prev) => [item, ...prev]);
+    setOpenWishlist(true);
   };
 
   const removeFromWishlist = async (id: string) => {
     await deleteFromStore(STORES.WISHLIST, id);
-    setWishlist((prev) => prev.filter((item) => item.id !== id));
+    setWishlist((prev) => prev.filter((i) => i.id !== id));
   };
 
   const clearWishlist = async () => {
@@ -85,39 +148,23 @@ export const IndexedDbProvider = ({ children }: { children: React.ReactNode }) =
     setWishlist([]);
   };
 
-  // -------------------- FREE SAMPLE --------------------
-  const addFreeSampleItem = async (product: Product, categoryUrl: string) => {
-    try {
-      if (freeSamples.find((p) => p.id === product.id)) {
-        Toaster("success", "Product already in Free Samples!");
-        return;
-      }
+  /* -------------------- FREE SAMPLE -------------------- */
 
-      const sampleProduct = {
-        ...product,
-        price: 0,
-        categoryUrl,
-        subcategoryUrl: product.parentSubcategoryUrl,
-      };
-
-      await addToStore(STORES.FREESAMPLE, sampleProduct);
-      setFreeSamples((prev) => [sampleProduct, ...prev]);
-      setOpenFreeSample(true);
-    } catch (err) {
-      console.error(err);
-      Toaster("error", "Failed to add product to Free Samples!");
+  const addFreeSampleItem = async (product: Product) => {
+    if (freeSamples.some((p) => p.id === product.id)) {
+      Toaster("success", "Already in Free Samples");
+      return;
     }
+
+    const item = { ...mapToWishlistItem(product), price: 0 };
+    await addToStore(STORES.FREESAMPLE, item);
+    setFreeSamples((prev) => [item, ...prev]);
+    setOpenFreeSample(true);
   };
 
   const removeFreeSampleItem = async (id: string) => {
-    try {
-      await deleteFromStore(STORES.FREESAMPLE, id);
-      const updated = await getAllFromStore(STORES.FREESAMPLE);
-      setFreeSamples(updated);
-    } catch (err) {
-      console.error(err);
-      Toaster("error", "Failed to remove sample!");
-    }
+    await deleteFromStore(STORES.FREESAMPLE, id);
+    setFreeSamples((prev) => prev.filter((i) => i.id !== id));
   };
 
   const clearFreeSamples = async () => {
@@ -125,38 +172,35 @@ export const IndexedDbProvider = ({ children }: { children: React.ReactNode }) =
     setFreeSamples([]);
   };
 
-  // -------------------- CART --------------------
-  const addToCart = async (product: Product, categoryUrl: string) => {
-    try {
-      if (cart.find((p) => p.id === product.id)) {
-        Toaster("success", "Product already in Cart!");
-        return;
-      }
+  /* -------------------- CART (NO MERGE EVER) -------------------- */
 
-      const cartItem = {
-        ...product,
-        categoryUrl,
-        quantity: 1,
-      };
-
-      await addToStore(STORES.CART, cartItem);
-      setCart((prev) => [cartItem, ...prev]);
-      setOpenCart(true);
-    } catch (err) {
-      console.error(err);
-      Toaster("error", "Failed to add to Cart!");
+  const addToCart = async (
+    product: Product,
+    config: Partial<CartItems>
+  ) => {
+    if (!config.width || !config.drop) {
+      Toaster("error", "Width and Drop are required");
+      return;
     }
+
+    const item = mapToCartItem(product, config);
+
+    await addToStore(STORES.CART, item);
+    setCart((prev) => [item, ...prev]);
+    setOpenCart(true);
   };
 
   const removeFromCart = async (id: string) => {
     await deleteFromStore(STORES.CART, id);
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    setCart((prev) => prev.filter((i) => i.id !== id));
   };
 
   const clearCart = async () => {
     await clearStore(STORES.CART);
     setCart([]);
   };
+
+  /* -------------------- PROVIDER -------------------- */
 
   return (
     <IndexedDbContext.Provider
@@ -166,23 +210,21 @@ export const IndexedDbProvider = ({ children }: { children: React.ReactNode }) =
         cart,
 
         addToWishlist,
-        removeFromWishlist,
-        clearWishlist,
-
         addFreeSampleItem,
-        removeFreeSampleItem,
-        clearFreeSamples,
-
         addToCart,
+
+        removeFromWishlist,
+        removeFreeSampleItem,
         removeFromCart,
+
+        clearWishlist,
+        clearFreeSamples,
         clearCart,
 
         openWishlist,
         setOpenWishlist,
-
         openFreeSample,
         setOpenFreeSample,
-
         openCart,
         setOpenCart,
       }}
@@ -192,8 +234,11 @@ export const IndexedDbProvider = ({ children }: { children: React.ReactNode }) =
   );
 };
 
+/* -------------------- HOOK -------------------- */
+
 export const useIndexedDb = () => {
-  const context = useContext(IndexedDbContext);
-  if (!context) throw new Error("useIndexedDb must be used within IndexedDbProvider");
-  return context;
+  const ctx = useContext(IndexedDbContext);
+  if (!ctx)
+    throw new Error("useIndexedDb must be used within IndexedDbProvider");
+  return ctx;
 };

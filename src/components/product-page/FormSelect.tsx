@@ -6,7 +6,7 @@ import { HiOutlineQuestionMarkCircle } from "react-icons/hi2";
 interface FormSelectProps {
   title: string;
   helpText?: string;
-  options?: { id: string; label: string; price?: number; imageUrl?: string }[];
+  options?: { id: string; label: string; price?: number | undefined; imageUrl?: string }[];
   selected: string;
   onChange: (_id: string) => void;
   helpContent?: React.ReactNode;

@@ -17,16 +17,12 @@ const page = async () => {
       <Breadcrumb title="Motorised Blinds" />
       <MotorisedBanner />
       <ControlCard heading="Control Options" CardData={controlOptions} />
-      <Image
-        unoptimized
-        Grid
+      <ImageGrid
         leftImage="/assets/images/motorised/zebra-image.webp"
         rightImage="/assets/images/motorised/right-image.webp"
       />
       <ControlCard CardData={controlOptions1} />
-      <Image
-        unoptimized
-        Grid
+      <ImageGrid
         leftImage="/assets/images/motorised/zebra-image.webp"
         rightImage="/assets/images/motorised/right-image.webp"
       />

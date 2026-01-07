@@ -4,7 +4,7 @@ import { Input } from "@components/ui/Input";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import React from "react";
-import { Orders, Product } from "@/types/category";
+import { Orders, WishlistItems } from "@/types/category";
 import { useAuth } from "@context/UserContext";
 import { CREATE_ORDER_MUTATION } from "@graphql";
 import { useMutation } from "@apollo/client";
@@ -12,7 +12,7 @@ import { Toaster } from "@components/ui";
 import { useIndexedDb } from "@lib/useIndexedDb";
 import { useRouter } from "next/navigation";
 
-export const SampleCheckout = React.memo(({ freeSamplesList }: { freeSamplesList: Product[] }) => {
+export const SampleCheckout = React.memo(({ freeSamplesList }: { freeSamplesList: WishlistItems[] }) => {
   const { user } = useAuth();
   const [createOrder, { loading }] = useMutation(CREATE_ORDER_MUTATION);
   const { clearFreeSamples } = useIndexedDb();
@@ -25,11 +25,11 @@ export const SampleCheckout = React.memo(({ freeSamplesList }: { freeSamplesList
     price: item.price,
     posterImageUrl: item.posterImageUrl,
     color: item.color,
-    slug: item.slug,
-    categoryUrl: item.categoryUrl,
-    subcategoryUrl: item.subcategoryUrl || "",
+    productUrl: item.productUrl,
+    sku: item.sku,
+    blindTypeId: item.blindTypeId,
+    fabricId: item.fabricId,
   }));
-
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),

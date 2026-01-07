@@ -134,7 +134,7 @@ export const MySample = React.memo(({ orderList }: MySampleProps) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {selectedOrder.items.map((item: Product) => (
                   <Link
-                    href={`/${item.categoryUrl}/${item.subcategoryUrl}/${item.slug}`}
+                    href={item.productUrl || ""}
                     key={item.id}
                     className="bg-white border rounded-xl p-3 shadow-sm flex flex-col"
                   >
