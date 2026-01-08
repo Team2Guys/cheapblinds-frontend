@@ -69,15 +69,16 @@ export const GET_SUBCATEGORY_BY_URLS_QUERY = gql`
         blindTypeId
         sku
         slug
+        productUrl
         price
         posterImageUrl
-        minHeight
-        maxHeight
+        minDrop
+        maxDrop
         minWidth
         maxWidth
         color
         pattern
-        composition
+        material
         isMotorized
         motorPrice
         status

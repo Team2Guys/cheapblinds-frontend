@@ -27,15 +27,15 @@ type CategoryHeaderProps = {
 
   typeOptions: FilterOption[];
   patternOptions: FilterOption[];
-  compositionOptions: FilterOption[];
+  materialOptions: FilterOption[];
   widthOptions: FilterOption[];
   colorOptions: ColorFilterOption[];
   selectedType: string[];
   setSelectedType: React.Dispatch<React.SetStateAction<string[]>>;
   selectedPattern: string[];
   setSelectedPattern: React.Dispatch<React.SetStateAction<string[]>>;
-  selectedComposition: string[];
-  setSelectedComposition: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedMaterial: string[];
+  setSelectedMaterial: React.Dispatch<React.SetStateAction<string[]>>;
   selectedWidth: string[];
   setSelectedWidth: React.Dispatch<React.SetStateAction<string[]>>;
   selectedColor: string[];
@@ -55,15 +55,15 @@ const CategoryHeader = ({
   setSort,
   typeOptions,
   patternOptions,
-  compositionOptions,
+  materialOptions,
   widthOptions,
   colorOptions,
   selectedType,
   setSelectedType,
   selectedPattern,
   setSelectedPattern,
-  selectedComposition,
-  setSelectedComposition,
+  selectedMaterial,
+  setSelectedMaterial,
   selectedWidth,
   setSelectedWidth,
   selectedColor,
@@ -130,6 +130,7 @@ const CategoryHeader = ({
           <div className="flex border cursor-pointer w-full md:w-1/2">
             <div className="flex items-center gap-3 px-3 py-2 bg-[#FEE7AC] grow">
               <Image
+                unoptimized
                 src="/assets/images/category/measuring.png"
                 width={28}
                 height={28}
@@ -153,6 +154,7 @@ const CategoryHeader = ({
           <div className="flex border cursor-pointer w-full md:w-1/2">
             <div className="flex items-center gap-3 px-3 py-2 bg-[#FEE7AC] grow">
               <Image
+                unoptimized
                 src="/assets/images/category/fitting-image.png"
                 width={28}
                 height={28}
@@ -179,7 +181,7 @@ const CategoryHeader = ({
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => setShowFilters(true)}
           >
-            <Image src="/assets/icons/filter.png" width={24} height={24} alt="filter" />
+            <Image unoptimized src="/assets/icons/filter.png" width={24} height={24} alt="filter" />
             <p className="font-semibold">Filters</p>
           </div>
 
@@ -188,15 +190,15 @@ const CategoryHeader = ({
               <Filters
                 typeOptions={typeOptions}
                 patternOptions={patternOptions}
-                compositionOptions={compositionOptions}
+                materialOptions={materialOptions}
                 widthOptions={widthOptions}
                 colorOptions={colorOptions}
                 selectedType={selectedType}
                 setSelectedType={setSelectedType}
                 selectedPattern={selectedPattern}
                 setSelectedPattern={setSelectedPattern}
-                selectedComposition={selectedComposition}
-                setSelectedComposition={setSelectedComposition}
+                selectedMaterial={selectedMaterial}
+                setSelectedMaterial={setSelectedMaterial}
                 selectedWidth={selectedWidth}
                 setSelectedWidth={setSelectedWidth}
                 selectedColor={selectedColor}

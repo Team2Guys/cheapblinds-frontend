@@ -66,6 +66,7 @@ const Navbar = ({ className }: { className?: string }) => {
                       >
                         {sub.desktopImage && (
                           <Image
+                            unoptimized
                             src={sub.desktopImage}
                             alt={sub.name}
                             width={20}

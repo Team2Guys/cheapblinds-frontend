@@ -96,15 +96,18 @@ export const GET_CATEGORY_BY_SLUG_QUERY = gql`
           id
           name
           slug
+          blindTypeId
+          fabricId
+          sku
+          productUrl
           posterImageUrl
           price
-          minHeight
-          maxHeight
+          minDrop
+          maxDrop
           minWidth
           maxWidth
           color
           pattern
-          composition
           isMotorized
           motorPrice
           status

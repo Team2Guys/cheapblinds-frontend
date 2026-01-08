@@ -7,7 +7,7 @@ import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import { ColorImage } from "@data/filter-colors";
 
-type SectionKeys = "type" | "color" | "width" | "pattern" | "composition" | "price" | "motorized";
+type SectionKeys = "type" | "color" | "width" | "pattern" | "material" | "price" | "motorized";
 
 // Define the shape of options with counts
 type FilterOption = {
@@ -24,15 +24,15 @@ type ColorFilterOption = {
 type FiltersProps = {
   typeOptions: FilterOption[];
   patternOptions: FilterOption[];
-  compositionOptions: FilterOption[];
+  materialOptions: FilterOption[];
   widthOptions: FilterOption[];
   colorOptions: ColorFilterOption[];
   selectedType: string[];
   setSelectedType: React.Dispatch<React.SetStateAction<string[]>>;
   selectedPattern: string[];
   setSelectedPattern: React.Dispatch<React.SetStateAction<string[]>>;
-  selectedComposition: string[];
-  setSelectedComposition: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedMaterial: string[];
+  setSelectedMaterial: React.Dispatch<React.SetStateAction<string[]>>;
   selectedWidth: string[];
   setSelectedWidth: React.Dispatch<React.SetStateAction<string[]>>;
   selectedColor: string[];
@@ -49,15 +49,15 @@ export const Filters = React.memo(
   ({
     typeOptions,
     patternOptions,
-    compositionOptions,
+    materialOptions,
     widthOptions,
     colorOptions,
     selectedType,
     setSelectedType,
     selectedPattern,
     setSelectedPattern,
-    selectedComposition,
-    setSelectedComposition,
+    selectedMaterial,
+    setSelectedMaterial,
     selectedWidth,
     setSelectedWidth,
     selectedColor,
@@ -74,7 +74,7 @@ export const Filters = React.memo(
       color: true,
       width: true,
       pattern: true,
-      composition: true,
+      material: true,
       price: true,
       motorized: true,
     });
@@ -84,7 +84,7 @@ export const Filters = React.memo(
       color: useRef(null),
       width: useRef(null),
       pattern: useRef(null),
-      composition: useRef(null),
+      material: useRef(null),
       price: useRef(null),
       motorized: useRef(null),
     };
@@ -104,7 +104,7 @@ export const Filters = React.memo(
     const activeFilters = [
       ...selectedType.map((v) => ({ key: "type", label: v })),
       ...selectedPattern.map((v) => ({ key: "pattern", label: v })),
-      ...selectedComposition.map((v) => ({ key: "composition", label: v })),
+      ...selectedMaterial.map((v) => ({ key: "material", label: v })),
       ...selectedWidth.map((v) => ({ key: "width", label: v })),
       ...selectedColor.map((v) => ({ key: "color", label: v })),
       ...(selectedMotorized ? [{ key: "motorized", label: "Motorized" }] : []),
@@ -121,8 +121,8 @@ export const Filters = React.memo(
         case "pattern":
           setSelectedPattern(selectedPattern.filter((v) => v !== filter.label));
           break;
-        case "composition":
-          setSelectedComposition(selectedComposition.filter((v) => v !== filter.label));
+        case "material":
+          setSelectedMaterial(selectedMaterial.filter((v) => v !== filter.label));
           break;
         case "width":
           setSelectedWidth(selectedWidth.filter((v) => v !== filter.label));
@@ -148,6 +148,7 @@ export const Filters = React.memo(
       <div className="flex flex-col gap-6 pb-8">
         <div className="flex items-center gap-4 border-b border-[#0000003D] px-2 pb-1">
           <Image
+            unoptimized
             src="/assets/images/category/filter-lighting.png"
             alt="icon"
             width={32}
@@ -249,6 +250,7 @@ export const Filters = React.memo(
                   className="flex items-center gap-3 capitalize cursor-pointer"
                 >
                   <Image
+                    unoptimized
                     src={getColorImage(item.name)}
                     alt={item.name}
                     width={30}
@@ -319,25 +321,23 @@ export const Filters = React.memo(
         </Accordion>
 
         <Accordion
-          title="Composition"
-          sectionKey="composition"
+          title="material"
+          sectionKey="material"
           openSections={openSections}
           toggleSection={toggleSection}
-          refObj={contentRefs.composition}
+          refObj={contentRefs.material}
         >
           <div className="flex flex-col gap-4 pt-4">
-            {compositionOptions.map((item) => (
+            {materialOptions.map((item) => (
               <button
                 key={item.name}
-                onClick={() =>
-                  toggleSelection(item.name, setSelectedComposition, selectedComposition)
-                }
+                onClick={() => toggleSelection(item.name, setSelectedMaterial, selectedMaterial)}
                 className="flex items-center gap-2 capitalize cursor-pointer"
               >
                 <span
-                  className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedComposition.includes(item.name) ? "border-primary bg-primary text-white" : "border-black"}`}
+                  className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedMaterial.includes(item.name) ? "border-primary bg-primary text-white" : "border-black"}`}
                 >
-                  {selectedComposition.includes(item.name) && <FaCheck />}
+                  {selectedMaterial.includes(item.name) && <FaCheck />}
                 </span>
                 <p>
                   {item.name} <span className="text-gray-500 text-sm">({item.count})</span>

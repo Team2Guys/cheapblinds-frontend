@@ -7,6 +7,7 @@ export const ChildSafety = React.memo(() => {
         <div className="shrink-0">
           <div className="w-24 h-24 relative flex items-center justify-center">
             <Image
+              unoptimized
               src="/assets/images/home/child-safety.png"
               alt="Image"
               width={100}

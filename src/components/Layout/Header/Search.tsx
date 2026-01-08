@@ -140,6 +140,7 @@ const SearchResults = ({
           >
             <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-gray-100 border border-gray-200">
               <Image
+                unoptimized
                 src={product.posterImageUrl || ""}
                 alt={product.name}
                 className="h-full w-full object-cover"

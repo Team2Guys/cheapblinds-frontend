@@ -33,6 +33,7 @@ export const BlindFitting = React.memo(() => {
         <div className="flex items-center justify-center gap-4">
           <div className="w-20 h-20 relative">
             <Image
+              unoptimized
               src="/assets/images/home/fitting.png"
               alt="Checklist Icon"
               fill
@@ -44,6 +45,7 @@ export const BlindFitting = React.memo(() => {
           </h2>
           <div className="w-20 h-20 relative">
             <Image
+              unoptimized
               src="/assets/images/home/fitting.png"
               alt="Checklist Icon"
               fill
@@ -76,6 +78,7 @@ export const BlindFitting = React.memo(() => {
             >
               <div className="w-16 h-16 md:w-24 md:h-24 relative">
                 <Image
+                  unoptimized
                   src="/assets/images/home/fitting.png"
                   alt={`${item.name} Icon`}
                   fill

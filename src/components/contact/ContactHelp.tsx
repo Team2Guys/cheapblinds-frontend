@@ -39,7 +39,13 @@ export const ContactHelp = React.memo(() => {
           >
             <div className="space-y-2">
               <div className="relative w-20 h-20 mx-auto">
-                <Image src={item.icon} alt={item.title} fill className="object-contain" />
+                <Image
+                  unoptimized
+                  src={item.icon}
+                  alt={item.title}
+                  fill
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-semibold">{item.title}</h3>
               <p className="text-sm">{item.desc}</p>

@@ -32,6 +32,7 @@ export const MobileMenus = ({ onClose }: { onClose: () => void }) => {
                 >
                   {item.image && (
                     <Image
+                      unoptimized
                       src={item.image}
                       alt={item.name}
                       width={22}
@@ -71,6 +72,7 @@ export const MobileMenus = ({ onClose }: { onClose: () => void }) => {
                   >
                     {sub.mobileImage && (
                       <Image
+                        unoptimized
                         src={sub.mobileImage}
                         alt={sub.name}
                         width={22}

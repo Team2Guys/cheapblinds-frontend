@@ -15,7 +15,8 @@ export const Wishlist = React.memo(() => {
   // IndexedDB state + functions
   const { wishlist, freeSamples, removeFromWishlist, addFreeSampleItem } = useIndexedDb();
 
-  // Redirect if not logged in
+  console.log(wishlist,"wishlistwishlist")
+
   React.useEffect(() => {
     if (!isLoading && !user) {
       router.push("/login");
@@ -39,7 +40,7 @@ export const Wishlist = React.memo(() => {
       return;
     }
 
-    await addFreeSampleItem(product, product.categoryUrl || "");
+    await addFreeSampleItem(product);
     await removeFromWishlist(String(product.id));
   };
 

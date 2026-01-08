@@ -41,6 +41,7 @@ export const Checkout = () => {
         <div className="flex flex-wrap">
           {PaymentOption.map((array, index) => (
             <Image
+              unoptimized
               src={array.image}
               className="w-16"
               alt="payment-method"

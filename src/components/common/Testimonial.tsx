@@ -18,6 +18,7 @@ export const Testimonial = React.memo(({ reviews, showPaymentInfo = false }: Tes
           </p>
           <div className="flex gap-3 justify-center md:justify-start">
             <Image
+              unoptimized
               src="/assets/images/cart/tabby.png"
               className="w-20 h-9 md:w-28 md:h-11 rounded-xl object-contain"
               alt="Tabby"
@@ -25,6 +26,7 @@ export const Testimonial = React.memo(({ reviews, showPaymentInfo = false }: Tes
               height={200}
             />
             <Image
+              unoptimized
               src="/assets/images/cart/tamara.png"
               className="w-20 h-9 md:w-28 md:h-11 rounded-xl object-contain"
               alt="Tamara"

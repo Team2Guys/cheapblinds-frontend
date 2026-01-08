@@ -45,6 +45,7 @@ export const AllOrders = () => {
           <div className="flex items-start gap-4">
             <div className="aspect-square h-full ">
               <Image
+                unoptimized
                 src={
                   item.price === 0
                     ? getColorImage(item.color || "")

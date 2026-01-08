@@ -59,6 +59,7 @@ export const SideBySideMagnifier = ({
       >
         <div className="bg-[#F7F7F7] h-auto">
           <Image
+            unoptimized
             src={imageSrc}
             fill
             alt={altText || "product image"}

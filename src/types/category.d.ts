@@ -1,3 +1,4 @@
+import { Product } from "./category.d";
 export type ContentStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
 
 export interface Category {
@@ -49,6 +50,7 @@ export interface Product {
   description?: string;
   shortDescription?: string;
   slug?: string;
+  productUrl?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalUrl?: string;
@@ -69,17 +71,15 @@ export interface Product {
   updatedAt?: string | Date;
   parentSubcategoryUrl?: string;
   pattern?: string;
-  composition?: string;
+  material?: string;
   color?: string;
-  minHeight?: number;
-  maxHeight?: number;
+  minDrop?: number;
+  maxDrop?: number;
   minWidth?: number;
   maxWidth?: number;
   isMotorized?: boolean;
   motorPrice?: number;
   url?: string;
-  categoryUrl?: string;
-  subcategoryUrl?: string;
 }
 
 export interface productImage {
@@ -118,30 +118,8 @@ export interface IProduct {
 
 export interface CategoryPageProps {
   categoryName: string;
-  categoryUrl: string;
   description: string;
   ProductList: Subcategory | Subcategory[];
-}
-
-export interface Orders {
-  id?: string;
-  userId: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  phone?: string;
-  country?: string;
-  state?: string | null;
-  city?: string;
-  address?: string;
-  totalAmount: number;
-  shippingCost: number;
-  notes?: string;
-  items: Product[];
-  lastEditedBy?: string;
-  paymentStatus?: string;
-  orderStatus?: string;
-  createdAt?: string;
 }
 
 export interface addressProps {
@@ -211,4 +189,74 @@ export interface OptionsPrice {
   ChoiceDescription?: string | null;
   ChoiceID: string;
   SalesPrice: number;
+}
+
+export interface Orders {
+  id?: string;
+  userId: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  country?: string;
+  state?: string | null;
+  city?: string;
+  address?: string;
+  totalAmount: number;
+  shippingCost: number;
+  notes?: string;
+  items: WishlistItems[] | CartItems[];
+  lastEditedBy?: string;
+  paymentStatus?: string;
+  orderStatus?: string;
+  createdAt?: string;
+}
+
+export interface WishlistItems {
+  id?: string | number;
+  name: string;
+  fabricId?: string;
+  blindTypeId?: string;
+  sku?: string;
+  productUrl?: string;
+  posterImageUrl?: string;
+  price?: number;
+  status?: ContentStatus;
+  color?: string;
+  isMotorized?: boolean;
+  motorPrice?: number;
+}
+
+
+export interface CartItemOptions {
+  headrailType?: string;
+  stackingStyle?: string;
+  lining?: string;
+  chainControl?: string;
+  chainSide?: string;
+}
+
+export interface CartItems {
+  id?: string | number;
+  name: string;
+
+  fabricId?: string;
+  blindTypeId?: string;
+  sku?: string;
+  productUrl?: string;
+  posterImageUrl?: string;
+
+  price?: number;
+  finalPrice?: number;
+  status?: ContentStatus;
+
+  color?: string;
+
+  isMotorized?: boolean;
+  motorPrice?: number;
+  width?: number;
+  drop?: number;
+  racessType?: string;
+
+  options?: CartItemOptions;
 }

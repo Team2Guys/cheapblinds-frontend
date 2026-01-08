@@ -28,6 +28,7 @@ export const RelatedProduct = React.memo(
                 <div className="overflow-hidden hover:shadow-md ">
                   <div className="relative w-full h-auto max-h-[350px] aspect-square">
                     <Image
+                      unoptimized
                       src={array.posterImageUrl ?? ""}
                       alt={array.name ?? ""}
                       fill

@@ -12,6 +12,7 @@ const AboutSection = ({ title, description, image, reverse = false }: AboutSecti
         }`}
       >
         <Image
+          unoptimized
           src={image}
           alt={title}
           fill

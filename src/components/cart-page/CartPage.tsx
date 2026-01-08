@@ -52,6 +52,7 @@ export const CartPage = React.memo(() => {
                 <div className="flex lg:flex-nowrap gap-4 pr-2 py-6">
                   <div className="relative aspect-square h-full max-h-[150px] w-3/12">
                     <Image
+                      unoptimized
                       src={item.image}
                       alt={item.name}
                       className="rounded-sm"

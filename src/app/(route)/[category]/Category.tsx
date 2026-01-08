@@ -20,7 +20,7 @@ const useFilterOptions = (allProducts: Product[]) => {
     const counts = {
       type: {} as Record<string, number>,
       pattern: {} as Record<string, number>,
-      composition: {} as Record<string, number>,
+      material: {} as Record<string, number>,
       width: {} as Record<string, number>,
       color: {} as Record<string, number>,
       motorized: 0,
@@ -35,7 +35,7 @@ const useFilterOptions = (allProducts: Product[]) => {
 
       increment(counts.type, product.parentSubcategoryUrl);
       increment(counts.pattern, product.pattern);
-      increment(counts.composition, product.composition);
+      increment(counts.material, product.material);
 
       if (product.maxWidth !== undefined) {
         increment(counts.width, `Up To ${product.maxWidth / 10}cm Wide`);
@@ -54,7 +54,7 @@ const useFilterOptions = (allProducts: Product[]) => {
     return {
       typeOptions: toOptionArray(counts.type),
       patternOptions: toOptionArray(counts.pattern),
-      compositionOptions: toOptionArray(counts.composition),
+      materialOptions: toOptionArray(counts.material),
       widthOptions: toOptionArray(counts.width),
       colorOptions: Object.entries(counts.color).map(([name, count]) => ({
         name,
@@ -69,14 +69,13 @@ const useFilterOptions = (allProducts: Product[]) => {
 const CategoryPage = ({
   categoryName,
   description,
-  categoryUrl,
   ProductList,
 }: CategoryPageProps) => {
   const [sort, setSort] = useState<"default" | "low" | "high" | "new">("default");
 
   const [selectedType, setSelectedType] = useState<string[]>([]);
   const [selectedPattern, setSelectedPattern] = useState<string[]>([]);
-  const [selectedComposition, setSelectedComposition] = useState<string[]>([]);
+  const [selectedMaterial, setSelectedMaterial] = useState<string[]>([]);
   const [selectedWidth, setSelectedWidth] = useState<string[]>([]);
   const [selectedPrice, setSelectedPrice] = useState<[number, number]>([0, 1000]);
   const [selectedColor, setSelectedColor] = useState<string[]>([]);
@@ -102,7 +101,7 @@ const CategoryPage = ({
   const {
     typeOptions,
     patternOptions,
-    compositionOptions,
+    materialOptions,
     widthOptions,
     colorOptions,
     motorizedCount,
@@ -114,13 +113,13 @@ const CategoryPage = ({
 
       const type = product.parentSubcategoryUrl ?? "";
       const pattern = product.pattern ?? "";
-      const composition = product.composition ?? "";
+      const material = product.material ?? "";
       const color = product.color ?? "";
       const width = product.maxWidth ?? 0;
 
       if (selectedType.length && !selectedType.includes(type)) return false;
       if (selectedPattern.length && !selectedPattern.includes(pattern)) return false;
-      if (selectedComposition.length && !selectedComposition.includes(composition)) return false;
+      if (selectedMaterial.length && !selectedMaterial.includes(material)) return false;
       if (selectedWidth.length && !selectedWidth.some((w) => w.includes(String(width))))
         return false;
       if (selectedColor.length && !selectedColor.includes(color)) return false;
@@ -136,7 +135,7 @@ const CategoryPage = ({
     allProducts,
     selectedType,
     selectedPattern,
-    selectedComposition,
+    selectedMaterial,
     selectedWidth,
     selectedColor,
     selectedPrice,
@@ -163,7 +162,7 @@ const CategoryPage = ({
 
   const handleFreeSample = async (product: Product) => {
     try {
-      await addFreeSampleItem(product, categoryUrl || "");
+      await addFreeSampleItem(product);
     } catch {
       Toaster("error", "Failed to add Free Sample!");
     }
@@ -180,7 +179,7 @@ const CategoryPage = ({
           <Filters
             typeOptions={typeOptions}
             patternOptions={patternOptions}
-            compositionOptions={compositionOptions}
+            materialOptions={materialOptions}
             widthOptions={widthOptions}
             colorOptions={colorOptions}
             motorizedCount={motorizedCount} // Pass motorized count
@@ -188,8 +187,8 @@ const CategoryPage = ({
             setSelectedType={setSelectedType}
             selectedPattern={selectedPattern}
             setSelectedPattern={setSelectedPattern}
-            selectedComposition={selectedComposition}
-            setSelectedComposition={setSelectedComposition}
+            selectedMaterial={selectedMaterial}
+            setSelectedMaterial={setSelectedMaterial}
             selectedWidth={selectedWidth}
             setSelectedWidth={setSelectedWidth}
             selectedColor={selectedColor}
@@ -210,7 +209,7 @@ const CategoryPage = ({
             setSort={setSort}
             typeOptions={typeOptions}
             patternOptions={patternOptions}
-            compositionOptions={compositionOptions}
+            materialOptions={materialOptions}
             widthOptions={widthOptions}
             colorOptions={colorOptions}
             motorizedCount={motorizedCount}
@@ -218,8 +217,8 @@ const CategoryPage = ({
             setSelectedType={setSelectedType}
             selectedPattern={selectedPattern}
             setSelectedPattern={setSelectedPattern}
-            selectedComposition={selectedComposition}
-            setSelectedComposition={setSelectedComposition}
+            selectedMaterial={selectedMaterial}
+            setSelectedMaterial={setSelectedMaterial}
             selectedWidth={selectedWidth}
             setSelectedWidth={setSelectedWidth}
             selectedColor={selectedColor}
@@ -234,7 +233,6 @@ const CategoryPage = ({
             <Card
               products={sortedProducts}
               categoryName={categoryName}
-              categoryUrl={categoryUrl}
               selectedMotorized={selectedMotorized}
               onFreeSample={handleFreeSample}
             />

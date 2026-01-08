@@ -13,7 +13,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface CardProps {
   products: Product[];
-  categoryUrl?: string;
   categoryName?: string;
   IsDeleteButton?: boolean;
   productsPerPage?: number;
@@ -25,7 +24,6 @@ interface CardProps {
 export const Card = React.memo(
   ({
     products,
-    categoryUrl,
     categoryName,
     IsDeleteButton,
     productsPerPage = 9,
@@ -107,10 +105,11 @@ export const Card = React.memo(
             return (
               <div key={card.id} className="relative p-2 hover:shadow-md">
                 <Link
-                  href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}
+                  href={card.productUrl || ""}
                 >
                   <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
                     <Image
+                      unoptimized
                       src={card.posterImageUrl || "/assets/images/bin/product1.webp"}
                       alt={card.name}
                       fill
@@ -118,6 +117,7 @@ export const Card = React.memo(
                     <div className="absolute bottom-2 left-2">
                       <div className="relative h-9 md:h-16 w-8 md:w-16">
                         <Image
+                          unoptimized
                           src="/assets/images/van.png"
                           alt="image"
                           fill
@@ -139,7 +139,7 @@ export const Card = React.memo(
                 <div className="pt-3 sm:space-y-2 px-2">
                   <div className="flex justify-between items-center">
                     <Link
-                      href={card.url ?? `/${categoryUrl}/${card.parentSubcategoryUrl}/${card.slug}`}
+                      href={card.productUrl || ""}
                     >
                       <p className="text-xs md:text-base">{categoryName}</p>
                       <h2 className="font-medium text-sm md:text-xl font-rubik md:underline ">
@@ -147,6 +147,7 @@ export const Card = React.memo(
                       </h2>
                     </Link>
                     <Image
+                      unoptimized
                       src="/assets/images/blinds-icon.png"
                       alt="icon-image"
                       className="w-6 h-6 md:w-10 md:h-10"
@@ -163,6 +164,7 @@ export const Card = React.memo(
                     </button>
 
                     <Image
+                      unoptimized
                       src={getColorImage(card.color || "")}
                       alt={card.color || "color"}
                       className="w-6 h-6 md:w-10 md:h-10"
@@ -191,7 +193,7 @@ export const Card = React.memo(
                       <button
                         className="w-6 md:w-10 h-6 md:h-10 border rounded-md flex justify-center items-center cursor-pointer border-black"
                         onClick={() =>
-                          card.id && addToWishlist(card, categoryUrl || "", categoryName || "")
+                          card.id && addToWishlist(card)
                         }
                       >
                         <FaRegHeart className="text-xs md:text-xl" />

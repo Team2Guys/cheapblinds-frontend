@@ -30,6 +30,7 @@ export const AllSample = React.memo(({ freeSamplesList, removeItem }: SampleProp
             {/* Show color image */}
             <div className="relative aspect-square w-full max-h-[200px]">
               <Image
+                unoptimized
                 src={getColorImage(sample.color)}
                 alt={sample.name}
                 fill
@@ -63,6 +64,7 @@ export const AllSample = React.memo(({ freeSamplesList, removeItem }: SampleProp
             className="relative aspect-square w-full max-h-[150px] flex items-center justify-center"
           >
             <Image
+              unoptimized
               src="/assets/images/free-sample/add-sample.webp"
               alt="Add sample"
               fill

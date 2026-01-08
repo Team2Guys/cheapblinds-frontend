@@ -34,6 +34,7 @@ export const ContactBanner = React.memo(() => {
         </div>
         <div className="flex justify-center items-center h-[200px] w-full sm:hidden mt-7">
           <Image
+            unoptimized
             className="bg-cover w-[300px]"
             alt="callPerson"
             height={200}

@@ -49,7 +49,6 @@ const Page = async ({ params }: { params: Promise<{ category: string; subCategor
       <CategoryPage
         categoryName={name}
         description={description || ""}
-        categoryUrl={category}
         ProductList={SubCategoryList}
       />
     </>

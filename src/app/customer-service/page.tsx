@@ -56,7 +56,7 @@ const CustomerService = () => {
           {supportItems.map((item) => (
             <Link key={item.id} href={`#${item.id}`} scroll>
               <div className="bg-white w-[150px] h-[150px] shadow-sm rounded-lg flex flex-col items-center justify-center gap-3 cursor-pointer hover:shadow-md transition">
-                <Image src={item.icon} alt={item.title} width={50} height={50} />
+                <Image unoptimized src={item.icon} alt={item.title} width={50} height={50} />
                 <p className="text-center font-semibold">{item.title}</p>
               </div>
             </Link>

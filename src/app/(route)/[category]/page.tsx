@@ -31,13 +31,12 @@ const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
   if (CategoryList.status !== "PUBLISHED") {
     notFound();
   }
-  const { name, slug, description, subcategories = [] } = CategoryList;
+  const { name, description, subcategories = [] } = CategoryList;
   return (
     <>
       <Breadcrumb title={category} />
       <CategoryPage
         categoryName={name}
-        categoryUrl={slug || ""}
         description={description || ""}
         ProductList={subcategories || []}
       />

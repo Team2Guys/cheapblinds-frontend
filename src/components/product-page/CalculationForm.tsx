@@ -3,16 +3,16 @@ import React, { useState, useEffect } from "react";
 
 interface CalculationProps {
   onValuesChange?: (_values: { width: string; drop: string; unit: string }) => void;
-  minHeight?: number | undefined;
-  maxHeight?: number | undefined;
+  minDrop?: number | undefined;
+  maxDrop?: number | undefined;
   minWidth?: number | undefined;
   maxWidth?: number | undefined;
 }
 
 export const CalculationForm = ({
   onValuesChange,
-  minHeight = 0,
-  maxHeight = 0,
+  minDrop = 0,
+  maxDrop = 0,
   minWidth = 0,
   maxWidth = 0,
 }: CalculationProps) => {
@@ -22,18 +22,18 @@ export const CalculationForm = ({
   const [errors, setErrors] = useState({ width: "", drop: "" });
 
   const unitRanges = {
-    mm: { minWidth, maxWidth, minHeight, maxHeight },
+    mm: { minWidth, maxWidth, minDrop, maxDrop },
     cm: {
       minWidth: minWidth / 10,
       maxWidth: maxWidth / 10,
-      minHeight: minHeight / 10,
-      maxHeight: maxHeight / 10,
+      minDrop: minDrop / 10,
+      maxDrop: maxDrop / 10,
     },
     Inches: {
       minWidth: minWidth / 25.4,
       maxWidth: maxWidth / 25.4,
-      minHeight: minHeight / 25.4,
-      maxHeight: maxHeight / 25.4,
+      minDrop: minDrop / 25.4,
+      maxDrop: maxDrop / 25.4,
     },
   };
 
@@ -50,9 +50,9 @@ export const CalculationForm = ({
 
   const validateValue = (field: "width" | "drop", value: string) => {
     const numValue = Number(value);
-    const { minWidth, maxWidth, minHeight, maxHeight } = unitRanges[unit];
-    const min = field === "width" ? minWidth : minHeight;
-    const max = field === "width" ? maxWidth : maxHeight;
+    const { minWidth, maxWidth, minDrop, maxDrop } = unitRanges[unit];
+    const min = field === "width" ? minWidth : minDrop;
+    const max = field === "width" ? maxWidth : maxDrop;
 
     if (!value) {
       setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -147,9 +147,9 @@ export const CalculationForm = ({
             placeholder={`Enter drop in ${unit}`}
           />
           <p className="mt-1 text-sm text-gray-500">
-            Min: {unit === "Inches" ? currentRange.minHeight.toFixed(1) : currentRange.minHeight}{" "}
+            Min: {unit === "Inches" ? currentRange.minDrop.toFixed(1) : currentRange.minDrop}{" "}
             {unit} | Max:{" "}
-            {unit === "Inches" ? currentRange.maxHeight.toFixed(1) : currentRange.maxHeight} {unit}
+            {unit === "Inches" ? currentRange.maxDrop.toFixed(1) : currentRange.maxDrop} {unit}
           </p>
           {errors.drop && <p className="text-red-500 mt-1">{errors.drop}</p>}
         </div>

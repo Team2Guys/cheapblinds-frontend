@@ -43,11 +43,13 @@ const ProductPage = async ({
   const publishedProduct = productList?.products?.filter(
     (item: Product) => item?.status === "PUBLISHED",
   );
+
+  console.log(SingleProduct,"SingleProductSingleProduct")
   return (
     <>
       <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
       <div className="container mx-auto px-2">
-        <ProductDetail categorySlug={category} productData={SingleProduct!} />
+        <ProductDetail categorySlug={category} productData={SingleProduct} />
         <RelatedProduct
           titleStart
           title="RELATED PRODUCTS"

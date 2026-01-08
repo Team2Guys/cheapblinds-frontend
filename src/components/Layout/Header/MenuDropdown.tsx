@@ -111,6 +111,7 @@ const MenuDropdown = ({
                   >
                     <div className="bg-gray-100 p-1 rounded-md h-fit">
                       <Image
+                        unoptimized
                         src={itemImage}
                         alt={item.name}
                         width={60}

@@ -35,8 +35,8 @@ export const UPDATE_ORDER_MUTATION = gql`
       lastName
       email
       phone
-      country
       state
+      country
       city
       address
       totalAmount
@@ -46,7 +46,6 @@ export const UPDATE_ORDER_MUTATION = gql`
       paymentStatus
       orderStatus
       lastEditedBy
-      updatedAt
     }
   }
 `;
