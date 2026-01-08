@@ -19,6 +19,7 @@ export interface FormProps {
     options: Array<{ code: string; label: string; price: number }>;
   }>;
   productList: Product;
+  setDynamicPrice?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface ContactData {
@@ -67,13 +68,6 @@ export interface CartOption {
   title: string;
   features: string[];
   price: string;
-}
-
-export interface SelectOptionProps {
-  selected: string;
-  setSelected: (_value: string) => void;
-  className?: string;
-  CartOptions: CartOption[];
 }
 
 export interface ITabbyList {

@@ -66,11 +66,7 @@ const useFilterOptions = (allProducts: Product[]) => {
   }, [allProducts]);
 };
 
-const CategoryPage = ({
-  categoryName,
-  description,
-  ProductList,
-}: CategoryPageProps) => {
+const CategoryPage = ({ categoryName, description, ProductList }: CategoryPageProps) => {
   const [sort, setSort] = useState<"default" | "low" | "high" | "new">("default");
 
   const [selectedType, setSelectedType] = useState<string[]>([]);

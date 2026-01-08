@@ -39,7 +39,7 @@ export const GET_ORDER_BY_ID_QUERY = gql`
       totalAmount
       shippingCost
       notes
-      items
+      orderItems
       lastEditedBy
       paymentStatus
       orderStatus
@@ -65,7 +65,7 @@ export const GET_ORDERS_BY_USER_ID_QUERY = gql`
       totalAmount
       shippingCost
       notes
-      items
+      orderItems
       lastEditedBy
       paymentStatus
       orderStatus

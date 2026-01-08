@@ -34,10 +34,10 @@ export const AllOrders = () => {
     <div className="bg-[#fff6e6] p-2 md:p-6 rounded-md space-y-3">
       <p>
         <span className="font-medium font-rubik md:text-xl">Order Summary </span>(
-        <span className="text-[#FF0000]">*Total {orders?.items.length} Items</span>)
+        <span className="text-[#FF0000]">*Total {orders?.orderItems.length} Items</span>)
       </p>
 
-      {orders?.items.map((item, index) => (
+      {orders?.orderItems.map((item, index) => (
         <div
           key={index}
           className="flex items-start justify-between border-t border-secondary pt-4"

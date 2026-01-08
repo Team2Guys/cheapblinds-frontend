@@ -125,6 +125,7 @@ export const GET_PRODUCT_BY_SLUG_QUERY = gql`
       posterImageUrl
       productImages
       price
+      motorPrice
       metaTitle
       metaDescription
       canonicalUrl

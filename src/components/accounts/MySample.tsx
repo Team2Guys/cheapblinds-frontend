@@ -132,7 +132,7 @@ export const MySample = React.memo(({ orderList }: MySampleProps) => {
             <div>
               <h3 className="font-semibold mb-3">Ordered Products</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {selectedOrder.items.map((item: Product) => (
+                {selectedOrder.orderItems.map((item: Product) => (
                   <Link
                     href={item.productUrl || ""}
                     key={item.id}

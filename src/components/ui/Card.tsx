@@ -104,9 +104,7 @@ export const Card = React.memo(
 
             return (
               <div key={card.id} className="relative p-2 hover:shadow-md">
-                <Link
-                  href={card.productUrl || ""}
-                >
+                <Link href={card.productUrl || ""}>
                   <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
                     <Image
                       unoptimized
@@ -138,9 +136,7 @@ export const Card = React.memo(
 
                 <div className="pt-3 sm:space-y-2 px-2">
                   <div className="flex justify-between items-center">
-                    <Link
-                      href={card.productUrl || ""}
-                    >
+                    <Link href={card.productUrl || ""}>
                       <p className="text-xs md:text-base">{categoryName}</p>
                       <h2 className="font-medium text-sm md:text-xl font-rubik md:underline ">
                         {card.name}
@@ -192,9 +188,7 @@ export const Card = React.memo(
                     ) : (
                       <button
                         className="w-6 md:w-10 h-6 md:h-10 border rounded-md flex justify-center items-center cursor-pointer border-black"
-                        onClick={() =>
-                          card.id && addToWishlist(card)
-                        }
+                        onClick={() => card.id && addToWishlist(card)}
                       >
                         <FaRegHeart className="text-xs md:text-xl" />
                       </button>
