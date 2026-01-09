@@ -1,21 +1,48 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Testimonial, MyOrder } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
+import { Orders } from "@/types/category";
+import { fetchOrdersByUserId } from "@config/fetch";
 
 const OrderPage = () => {
   const { user, isLoading } = useAuth();
+  const [orders, setOrders] = useState<Orders[] | null>(null);
   const router = useRouter();
-
   useEffect(() => {
     if (!isLoading && !user) {
       router.push("/login");
     }
   }, [user, isLoading, router]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    async function loadOrders() {
+      try {
+        const response = await fetchOrdersByUserId(user?.id || "");
+        const OrdersList = response
+          ? response
+              .filter(
+                (order: Orders) =>
+                  order.paymentStatus === "PAID" || order.paymentStatus === "CANCELED",
+              )
+              .sort(
+                (a, b) =>
+                  new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime(),
+              )
+          : [];
+        setOrders(OrdersList);
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      }
+    }
+    loadOrders();
+  }, [user]);
 
   if (isLoading) {
     return (
@@ -23,11 +50,7 @@ const OrderPage = () => {
         <div className="animate-pulse space-y-4">
           <div className="h-6 bg-gray-200 rounded w-1/3" />
           {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              className="h-4 bg-gray-200 rounded w-full"
-              style={{ width: `${80 - i * 10}%` }}
-            />
+            <div key={i} className="h-4 bg-gray-200 rounded" style={{ width: `${80 - i * 10}%` }} />
           ))}
         </div>
       </div>
@@ -36,13 +59,14 @@ const OrderPage = () => {
 
   if (!user) return null;
 
+  console.log(orders, "ordersorders");
   return (
     <div>
       {/* <AccountTabs /> */}
       <div className="container mx-auto px-2 flex flex-wrap md:flex-nowrap gap-4 my-10">
         <AccountSidebar />
         <div className="flex-1">
-          <MyOrder />
+          <MyOrder orderList={orders || []} />
         </div>
       </div>
       <Testimonial reviews={TestimonialReview} showPaymentInfo />

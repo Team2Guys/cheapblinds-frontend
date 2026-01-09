@@ -5,8 +5,8 @@ import {
   GET_CATEGORY_BY_SLUG_QUERY,
   GET_CATEGORY_LIST_QUERY,
   GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL_QUERY,
-  GET_ORDER_BY_ID_QUERY,
-  GET_ORDERS_BY_USER_ID_QUERY,
+  ORDER_BY_ID_QUERY,
+  ORDERS_BY_USER_ID_QUERY,
   GET_PRODUCT_BY_SLUG_QUERY,
   GET_PRODUCT_LIST_QUERY,
   GET_SUBCATEGORY_BY_URLS_QUERY,
@@ -192,7 +192,7 @@ export const fetchOrdersByUserId = async (
 ): Promise<Orders[] | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: CUSTOM_QUERY || GET_ORDERS_BY_USER_ID_QUERY,
+      query: CUSTOM_QUERY || ORDERS_BY_USER_ID_QUERY,
       variables: { id: id },
       fetchPolicy: "no-cache",
       context: { fetchOptions: { next: { tags: ["orders"] } } },
@@ -211,7 +211,7 @@ export const fetchSingleOrder = async (
 ): Promise<Orders | null> => {
   try {
     const { data } = await ApolloCustomClient.query({
-      query: CUSTOM_QUERY || GET_ORDER_BY_ID_QUERY,
+      query: CUSTOM_QUERY || ORDER_BY_ID_QUERY,
       variables: { id: id },
       fetchPolicy: "no-cache",
       context: { fetchOptions: { next: { tags: ["orders"] } } },

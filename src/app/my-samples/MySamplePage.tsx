@@ -13,27 +13,31 @@ const MySamplePage = () => {
   const { user, isLoading } = useAuth();
   const [orders, setOrders] = useState<Orders[] | null>(null);
   const router = useRouter();
-
-  // Redirect if not logged in
   useEffect(() => {
     if (!isLoading && !user) {
       router.push("/login");
     }
   }, [user, isLoading, router]);
 
-  // Fetch orders once user is available
   useEffect(() => {
     if (!user) return;
 
     async function loadOrders() {
       try {
         const response = await fetchOrdersByUserId(user?.id || "");
-        setOrders(response);
+        const OrdersList = response
+          ? response
+              .filter((order: Orders) => order.paymentStatus === "FREE")
+              .sort(
+                (a, b) =>
+                  new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime(),
+              )
+          : [];
+        setOrders(OrdersList);
       } catch (error) {
         console.error("Failed to fetch orders:", error);
       }
     }
-
     loadOrders();
   }, [user]);
 

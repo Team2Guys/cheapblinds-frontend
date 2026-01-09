@@ -4,7 +4,7 @@ import { Input } from "@components/ui/Input";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import React from "react";
-import { Orders, WishlistItems } from "@/types/category";
+import { WishlistItems } from "@/types/category";
 import { useAuth } from "@context/UserContext";
 import { CREATE_ORDER_MUTATION } from "@graphql";
 import { useMutation } from "@apollo/client";
@@ -12,12 +12,25 @@ import { Toaster } from "@components/ui";
 import { useIndexedDb } from "@lib/useIndexedDb";
 import { useRouter } from "next/navigation";
 
+interface FormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  notes: string;
+}
+
 export const SampleCheckout = React.memo(
   ({ freeSamplesList }: { freeSamplesList: WishlistItems[] }) => {
     const { user } = useAuth();
     const [createOrder, { loading }] = useMutation(CREATE_ORDER_MUTATION);
     const { clearFreeSamples } = useIndexedDb();
     const router = useRouter();
+
     const TotalPrice = freeSamplesList.reduce((total, item) => total + Number(item.price || 0), 0);
 
     const cleanedItems = freeSamplesList.map((item) => ({
@@ -31,6 +44,7 @@ export const SampleCheckout = React.memo(
       price: item.price,
       color: item.color,
     }));
+
     const validationSchema = Yup.object({
       firstName: Yup.string().required("First name is required"),
       lastName: Yup.string().required("Last name is required"),
@@ -39,37 +53,49 @@ export const SampleCheckout = React.memo(
       phone: Yup.string().required("Phone is required"),
       email: Yup.string().email("Invalid email").required("Email is required"),
     });
-    const initialValues: Orders = {
-      userId: user?.id || "",
+
+    const initialValues: FormValues = {
       firstName: "",
       lastName: "",
-      email: "",
+      email: user?.email || "",
       phone: "",
       address: "",
       city: "",
       state: "",
       country: "United Arab Emirates",
-      totalAmount: TotalPrice,
-      shippingCost: 0,
       notes: "",
-      orderItems: cleanedItems,
-      paymentStatus: "FREE",
-      orderStatus: "PENDING",
-      lastEditedBy: user?.name || "",
     };
-    const handleSubmit = async (values: Orders, { resetForm }: FormikHelpers<Orders>) => {
+
+    const handleSubmit = async (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
       try {
+        const addressData = {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          phone: values.phone,
+          address: values.address,
+          city: values.city,
+          state: values.state,
+          country: values.country,
+        };
+
         const response = await createOrder({
           variables: {
             input: {
-              ...values,
-            },
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/graphql-response+json",
+              userId: user?.id,
+              shippingAddress: addressData,
+              billingAddress: addressData,
+              totalAmount: TotalPrice,
+              shippingCost: 0,
+              notes: values.notes,
+              orderItems: cleanedItems,
+              paymentStatus: "FREE",
+              orderStatus: "PAID",
+              lastEditedBy: user?.name || "Customer",
             },
           },
         });
+
         const orderId = response.data.createOrder.id;
         await clearFreeSamples();
         resetForm();
@@ -80,6 +106,7 @@ export const SampleCheckout = React.memo(
         Toaster("error", "Failed to place order.");
       }
     };
+
     return (
       <div className="bg-primary-light p-2 rounded-md space-y-4">
         <h1 className="font-rubik font-medium text-xl mt-2 text-center">Shipping Address</h1>
@@ -119,7 +146,8 @@ export const SampleCheckout = React.memo(
 
               <button
                 type="submit"
-                className="w-full bg-primary font-semibold py-2 px-4 rounded-md hover:bg-primary/90 cursor-pointer"
+                disabled={loading}
+                className="w-full bg-primary font-semibold py-2 px-4 rounded-md hover:bg-primary/90 cursor-pointer disabled:bg-gray-400"
               >
                 {loading ? "Placing Order..." : "Place Order"}
               </button>

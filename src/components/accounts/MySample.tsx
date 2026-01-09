@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { CustomTable, Modal } from "@components";
-import { Orders, Product } from "@/types/category";
+import { CartItems, Orders } from "@/types/category";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,7 +22,8 @@ export const MySample = React.memo(({ orderList }: MySampleProps) => {
     {
       title: "Ship To",
       key: "shipTo",
-      render: (order: Orders) => ` ${order.address || ""}, ${order.city || ""}`,
+      render: (order: Orders) =>
+        ` ${order.shippingAddress?.address || ""}, ${order.shippingAddress?.city || ""}`,
     },
     {
       title: "Action",
@@ -42,7 +43,6 @@ export const MySample = React.memo(({ orderList }: MySampleProps) => {
     <div className="container mx-auto space-y-6 py-10">
       <h2 className="text-2xl font-bold text-center md:text-left">My Samples</h2>
 
-      {/* Desktop Table */}
       <div className="hidden md:block">
         <CustomTable<Orders>
           data={orderList}
@@ -52,7 +52,6 @@ export const MySample = React.memo(({ orderList }: MySampleProps) => {
         />
       </div>
 
-      {/* Mobile Cards */}
       <div className="block md:hidden space-y-4">
         {orderList.length === 0 ? (
           <p className="text-center">No orders found</p>
@@ -61,7 +60,8 @@ export const MySample = React.memo(({ orderList }: MySampleProps) => {
             <div key={item.id} className="border-t-2 border-secondary pt-4 space-y-2">
               <p className="font-semibold">#ORD-{(item.id || "").slice(0, 8)}</p>
               <p>
-                {item.firstName} {item.lastName} — {item.city}
+                {item.shippingAddress?.firstName} {item.shippingAddress?.lastName} —{" "}
+                {item.shippingAddress?.city}
               </p>
               <p>Total: {item.totalAmount} AED</p>
               <button
@@ -115,24 +115,23 @@ export const MySample = React.memo(({ orderList }: MySampleProps) => {
               </div>
             </div>
 
-            {/* Shipping Address */}
             <div className="bg-gray-50 p-4 rounded-xl border">
               <h3 className="font-semibold mb-2">Shipping Address</h3>
               <p>
-                {selectedOrder.firstName} {selectedOrder.lastName}
+                {selectedOrder.shippingAddress?.firstName} {selectedOrder.shippingAddress?.lastName}
               </p>
-              <p>{selectedOrder.address}</p>
+              <p>{selectedOrder.shippingAddress?.address}</p>
               <p>
-                {selectedOrder.city}, {selectedOrder.state}, {selectedOrder.country}
+                {selectedOrder.shippingAddress?.city}, {selectedOrder.shippingAddress?.state},{" "}
+                {selectedOrder.shippingAddress?.country}
               </p>
-              <p>{selectedOrder.phone}</p>
+              <p>{selectedOrder.shippingAddress?.phone}</p>
             </div>
 
-            {/* Ordered Products */}
             <div>
               <h3 className="font-semibold mb-3">Ordered Products</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {selectedOrder.orderItems.map((item: Product) => (
+                {selectedOrder.orderItems.map((item: CartItems) => (
                   <Link
                     href={item.productUrl || ""}
                     key={item.id}

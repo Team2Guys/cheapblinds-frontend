@@ -156,6 +156,8 @@ export interface UserProps {
   isEmailVerified: boolean;
   role: string;
   addresses?: addressProps[] | null | undefined;
+  defaultBillingAddressId?: string | null | undefined;
+  defaultShippingAddressId?: string | null | undefined;
   defaultBillingAddress?: addressProps | null | undefined;
   defaultShippingAddress?: addressProps | null | undefined;
   addresses?: addressProps[];
@@ -195,14 +197,9 @@ export interface OptionsPrice {
 export interface Orders {
   id?: string;
   userId: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  phone?: string;
-  country?: string;
-  state?: string | null;
-  city?: string;
-  address?: string;
+  shippingAddress: shipAddress;
+  billingAddress: shipAddress;
+  shipToDifferent: boolean;
   totalAmount: number;
   shippingCost: number;
   notes?: string;
@@ -211,6 +208,17 @@ export interface Orders {
   paymentStatus?: string;
   orderStatus?: string;
   createdAt?: string;
+}
+
+export interface shipAddress {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  country?: string;
+  state?: string | null;
+  city?: string;
+  address?: string;
 }
 
 export interface WishlistItems {

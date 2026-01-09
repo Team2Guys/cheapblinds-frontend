@@ -5,14 +5,8 @@ export const CREATE_ORDER_MUTATION = gql`
     createOrder(input: $input) {
       id
       userId
-      firstName
-      lastName
-      email
-      phone
-      country
-      state
-      city
-      address
+      shippingAddress
+      billingAddress
       totalAmount
       shippingCost
       notes
@@ -31,14 +25,8 @@ export const UPDATE_ORDER_MUTATION = gql`
     updateOrderById(id: $id, input: $input) {
       id
       userId
-      firstName
-      lastName
-      email
-      phone
-      state
-      country
-      city
-      address
+      shippingAddress
+      billingAddress
       totalAmount
       shippingCost
       notes
@@ -46,6 +34,7 @@ export const UPDATE_ORDER_MUTATION = gql`
       paymentStatus
       orderStatus
       lastEditedBy
+      updatedAt
     }
   }
 `;
@@ -54,9 +43,7 @@ export const DELETE_ORDER_MUTATION = gql`
   mutation RemoveOrderById($id: ID!) {
     removeOrderById(id: $id) {
       id
-      firstName
-      lastName
-      email
+      userId
     }
   }
 `;
