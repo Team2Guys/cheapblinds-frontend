@@ -12,9 +12,8 @@ interface SampleProps {
 }
 
 export const AllSample = React.memo(({ freeSamplesList, removeItem }: SampleProps) => {
-  // Function to get color image based on sample color
   const getColorImage = (color?: string) => {
-    if (!color) return "/assets/images/free-sample/add-sample.webp"; // fallback
+    if (!color) return "/assets/images/free-sample/add-sample.webp";
     const colorObj = ColorImage.find((c) => c.color.toLowerCase() === color.toLowerCase());
     return colorObj ? colorObj.image : "/assets/images/free-sample/add-sample.webp";
   };
@@ -45,9 +44,7 @@ export const AllSample = React.memo(({ freeSamplesList, removeItem }: SampleProp
                 <button
                   className="text-primary font-semibold hover:underline cursor-pointer"
                   onClick={() => {
-                    if (confirm("Are you sure you want to remove this sample?")) {
-                      removeItem(String(sample.id));
-                    }
+                    removeItem(String(sample.id));
                   }}
                 >
                   Remove

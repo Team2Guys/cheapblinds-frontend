@@ -52,22 +52,6 @@ const ContactForm = () => {
       onSubmit={formik.handleSubmit}
       className="bg-white shadow-xl rounded-2xl p-6 w-full md:max-w-sm"
     >
-      {/* Email */}
-      <div className="mb-4">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email*"
-          className={inputBase}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-        />
-        {formik.touched.email && formik.errors.email && (
-          <p className={errorClass}>{formik.errors.email}</p>
-        )}
-      </div>
-
       {/* Name */}
       <div className="mb-4">
         <input
@@ -97,6 +81,22 @@ const ContactForm = () => {
         />
         {formik.touched.phone && formik.errors.phone && (
           <p className={errorClass}>{formik.errors.phone}</p>
+        )}
+      </div>
+
+      {/* Email */}
+      <div className="mb-4">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email*"
+          className={inputBase}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+        />
+        {formik.touched.email && formik.errors.email && (
+          <p className={errorClass}>{formik.errors.email}</p>
         )}
       </div>
 

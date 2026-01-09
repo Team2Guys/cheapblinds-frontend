@@ -26,7 +26,7 @@ export const Card = React.memo(
     products,
     categoryName,
     IsDeleteButton,
-    productsPerPage = 9,
+    productsPerPage = 30,
     selectedMotorized = false,
     onDelete,
     onFreeSample,
