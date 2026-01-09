@@ -1,18 +1,12 @@
 import { gql } from "@apollo/client";
 
-export const GET_ORDER_LIST_QUERY = gql`
-  query GetOrderList {
+export const ORDER_LIST_QUERY = gql`
+  query OrderList {
     orderList {
       id
       userId
-      firstName
-      lastName
-      email
-      phone
-      country
-      state
-      city
-      address
+      shippingAddress
+      billingAddress
       totalAmount
       shippingCost
       paymentStatus
@@ -23,19 +17,13 @@ export const GET_ORDER_LIST_QUERY = gql`
   }
 `;
 
-export const GET_ORDER_BY_ID_QUERY = gql`
-  query GetOrderById($id: ID!) {
+export const ORDER_BY_ID_QUERY = gql`
+  query OrderById($id: ID!) {
     orderById(id: $id) {
       id
       userId
-      firstName
-      lastName
-      email
-      phone
-      country
-      state
-      city
-      address
+      shippingAddress
+      billingAddress
       totalAmount
       shippingCost
       notes
@@ -49,19 +37,13 @@ export const GET_ORDER_BY_ID_QUERY = gql`
   }
 `;
 
-export const GET_ORDERS_BY_USER_ID_QUERY = gql`
-  query GetOrdersByUserId($id: ID!) {
+export const ORDERS_BY_USER_ID_QUERY = gql`
+  query OrdersByUserId($id: ID!) {
     orderListByUserId(id: $id) {
       id
       userId
-      firstName
-      lastName
-      email
-      phone
-      country
-      state
-      city
-      address
+      shippingAddress
+      billingAddress
       totalAmount
       shippingCost
       notes

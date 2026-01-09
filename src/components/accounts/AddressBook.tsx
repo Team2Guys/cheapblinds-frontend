@@ -12,11 +12,12 @@ import { REMOVE_ADDRESS_BY_ID_MUTATION, UPDATE_USER_BY_ID_MUTATION } from "@grap
 interface AddressBookProps {
   userId: string;
   userList: UserProps;
-  setUserList?: (_user: UserProps) => void; // optional prop to update parent state
+  setUserList?: (_user: UserProps) => void;
+  onRefresh: () => void;
 }
 
 export const AddressBook: React.FC<AddressBookProps> = React.memo(
-  ({ userId, userList, setUserList }) => {
+  ({ userId, userList, setUserList, onRefresh }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingAddress, setEditingAddress] = useState<addressProps | null>(null);
 
@@ -38,6 +39,7 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
 
         if (data?.removeAddressById?.id) {
           Toaster("success", "Address removed successfully!");
+          onRefresh();
         }
       } catch (error) {
         console.error(error);
@@ -68,6 +70,7 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
             if (setUserList) setUserList({ ...userList, defaultShippingAddress: newShipping });
           }
         }
+        onRefresh();
       } catch (error) {
         console.error(error);
       }
@@ -142,14 +145,14 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
                   addresses.map((item) => (
                     <div key={item.id} className="relative p-3 border rounded-lg bg-white">
                       <button
-                        className="absolute top-2 right-2 text-red-500"
+                        className="absolute top-2 right-2 text-red-500 cursor-pointer"
                         onClick={handleDelete(item.id!)}
                       >
                         <FaTrash />
                       </button>
 
                       <button
-                        className="absolute top-2 right-10 text-primary"
+                        className="absolute top-2 right-10 text-primary cursor-pointer"
                         onClick={() => {
                           setEditingAddress(item);
                           setIsModalOpen(true);
@@ -173,7 +176,7 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
                       <div className="flex gap-2 mt-3">
                         <button
                           onClick={() => updateUserAddress("BILLING", item.id!)}
-                          className={`px-3 py-1 text-xs rounded border ${
+                          className={`px-3 py-1 text-xs rounded border cursor-pointer ${
                             defaultBillingAddress?.id === item.id
                               ? "bg-primary text-white border-primary"
                               : "border-gray-300"
@@ -184,7 +187,7 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
 
                         <button
                           onClick={() => updateUserAddress("SHIPPING", item.id!)}
-                          className={`px-3 py-1 text-xs rounded border ${
+                          className={`px-3 py-1 text-xs rounded border cursor-pointer ${
                             defaultShippingAddress?.id === item.id
                               ? "bg-primary text-white border-primary"
                               : "border-gray-300"
@@ -200,7 +203,7 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
 
             {/* ADD NEW */}
             <button
-              className="bg-primary text-white py-2 px-4 rounded mt-5"
+              className="bg-primary text-white py-2 px-4 rounded mt-5 cursor-pointer"
               onClick={() => {
                 setEditingAddress(null);
                 setIsModalOpen(true);
@@ -225,7 +228,7 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
               setEditingAddress(null);
             }}
             onAddressAdded={() => {
-              // Refetch or optimistically update user addresses
+              onRefresh();
             }}
           />
         </Modal>

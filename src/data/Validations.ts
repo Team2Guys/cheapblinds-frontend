@@ -37,3 +37,29 @@ export const UpdatePasswordSchema = Yup.object().shape({
     .oneOf([Yup.ref("password")], "Passwords must match")
     .required("Required"),
 });
+
+export const CheckoutValidationSchema = Yup.object({
+  billingAddress: Yup.object({
+    firstName: Yup.string().required("Required"),
+    lastName: Yup.string().required("Required"),
+    address: Yup.string().required("Required"),
+    city: Yup.string().required("Required"),
+    phone: Yup.string().required("Required"),
+    email: Yup.string().email("Invalid email").required("Required"),
+    state: Yup.string().required("Required"),
+  }),
+  shippingAddress: Yup.object().when("shipToDifferent", {
+    is: true,
+    then: () =>
+      Yup.object({
+        firstName: Yup.string().required("Required"),
+        lastName: Yup.string().required("Required"),
+        address: Yup.string().required("Required"),
+        city: Yup.string().required("Required"),
+        phone: Yup.string().required("Required"),
+        email: Yup.string().email("Invalid email").required("Required"),
+        state: Yup.string().required("Required"),
+      }),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+});

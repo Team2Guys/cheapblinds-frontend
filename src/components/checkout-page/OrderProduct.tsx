@@ -25,7 +25,7 @@ export const OrderProducts = React.memo(({ products }: OrderProductsProps) => {
           <p className="font-semibold whitespace-nowrap">
             <span className="font-normal"></span>{" "}
             <span className="font-currency text-xl font-normal"></span>
-            {product.finalPrice}
+            {product.finalPrice?.toFixed(2)}
           </p>
         </div>
       ))}

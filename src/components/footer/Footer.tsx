@@ -1,11 +1,15 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import SocialLink from "@components/Layout/Header/social";
 import { footerSections } from "@data/footer";
 import { Newsletter } from "./Newsletter";
+import { useAuth } from "@context/UserContext";
 
 const Footer = () => {
+  const { user } = useAuth();
+
   return (
     <footer className="bg-primary text-black mt-10">
       <div className="container mx-auto px-2 pt-10 pb-6 relative">
@@ -87,35 +91,21 @@ const Footer = () => {
                 <p>Choose Your Payment Method</p>
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
-                    <Image
-                      unoptimized
-                      src="/assets/icons/visa.png"
-                      alt="Visa"
-                      width={32}
-                      height={11}
-                    />
+                    <Image src="/assets/icons/visa.png" alt="Visa" width={32} height={11} />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
                     <Image
-                      unoptimized
-                      src="/assets/icons/applePay.png"
+                      src="/assets/icons/apple-pay.png"
                       alt="Apple Pay"
                       width={26}
                       height={12}
                     />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
-                    <Image
-                      unoptimized
-                      src="/assets/icons/tabby.png"
-                      alt="Tabby"
-                      width={37}
-                      height={15}
-                    />
+                    <Image src="/assets/icons/tabby.png" alt="Tabby" width={37} height={15} />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
                     <Image
-                      unoptimized
                       src="/assets/icons/mastercard.png"
                       alt="Mastercard"
                       width={26}
@@ -123,22 +113,10 @@ const Footer = () => {
                     />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
-                    <Image
-                      unoptimized
-                      src="/assets/icons/gPay.png"
-                      alt="GPay"
-                      width={29}
-                      height={12}
-                    />
+                    <Image src="/assets/icons/g-pay.png" alt="GPay" width={29} height={12} />
                   </div>
                   <div className="flex justify-center items-center rounded-md bg-white w-12 xs:w-14 h-8">
-                    <Image
-                      unoptimized
-                      src="/assets/icons/tamara.png"
-                      alt="Tamara"
-                      width={36}
-                      height={13}
-                    />
+                    <Image src="/assets/icons/tamara.png" alt="Tamara" width={36} height={13} />
                   </div>
                 </div>
               </div>
@@ -150,10 +128,14 @@ const Footer = () => {
       <div className="bg-black text-white text-sm">
         <div className="container mx-auto grid grid-cols-1 xl:grid-cols-3 gap-4 xl:gap-0 px-2 py-4 space-y-3 lg:space-y-0">
           <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-center xl:justify-start">
-            <Link href="/login">Sign In</Link>
-            <Link href="/forgot-password">Forgot Password</Link>
-            <Link href="/my-orders">Your Orders</Link>
-            <Link href="/order-tracking">Order Tracking</Link>
+            {!user && (
+              <>
+                <Link href="/login">Sign In</Link>
+                <Link href="/forgot-password">Forgot Password</Link>
+              </>
+            )}
+            <Link href={user ? "/my-orders" : "/login"}>Your Orders</Link>
+            <Link href={user ? "/order-tracking" : "/login"}>Order Tracking</Link>
           </div>
 
           <p className="text-center hidden md:block">
