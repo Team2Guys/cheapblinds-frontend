@@ -80,6 +80,7 @@ export interface Product {
   isMotorized?: boolean;
   motorPrice?: number;
   url?: string;
+  options?: ProductOptions;
 }
 
 export interface productImage {
@@ -205,7 +206,7 @@ export interface Orders {
   totalAmount: number;
   shippingCost: number;
   notes?: string;
-  items: WishlistItems[] | CartItems[];
+  orderItems: WishlistItems[] | CartItems[];
   lastEditedBy?: string;
   paymentStatus?: string;
   orderStatus?: string;
@@ -227,7 +228,6 @@ export interface WishlistItems {
   motorPrice?: number;
 }
 
-
 export interface CartItemOptions {
   headrailType?: string;
   stackingStyle?: string;
@@ -247,6 +247,7 @@ export interface CartItems {
   posterImageUrl?: string;
 
   price?: number;
+  subPrice?: number;
   finalPrice?: number;
   status?: ContentStatus;
 
@@ -254,9 +255,12 @@ export interface CartItems {
 
   isMotorized?: boolean;
   motorPrice?: number;
-  width?: number;
-  drop?: number;
-  racessType?: string;
+  width?: string;
+  drop?: string;
+  unit?: string;
+  recessType?: string;
 
   options?: CartItemOptions;
+
+  quantity?: number; // NEW: quantity for merged items
 }

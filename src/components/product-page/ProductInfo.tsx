@@ -35,6 +35,7 @@ export const ProductInfo = ({
   const [recessType, setRecessType] = useState("outside");
   const [loading, setLoading] = useState(false);
   const [optionSections, setOptionSections] = useState<OptionSection[]>([]);
+  const [dynamicPrice, setDynamicPrice] = useState<number>(0);
   const [draftValues, setDraftValues] = useState({
     width: "",
     drop: "",
@@ -122,6 +123,7 @@ export const ProductInfo = ({
           recessType={recessType}
           optionSections={optionSections}
           productList={product}
+          setDynamicPrice={setDynamicPrice} // <-- Pass setter
         />
       )}
 
@@ -152,7 +154,10 @@ export const ProductInfo = ({
         {loading ? "Calculating..." : "Get price"}
       </button>
 
-      <PaymentMethod installments={200} showHeading />
+      <PaymentMethod
+        installments={dynamicPrice > 0 ? dynamicPrice / 4 : Number(product.price) / 4}
+        showHeading
+      />
 
       <div className="bg-primary p-4 rounded-md flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="space-y-2">

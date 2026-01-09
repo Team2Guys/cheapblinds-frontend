@@ -16,14 +16,18 @@ const UserIcons = ({ className }: { className?: string }) => {
   const pathname = usePathname();
 
   const {
+    cart,
     wishlist,
     freeSamples,
+    removeFromCart,
     removeFromWishlist,
     removeFreeSampleItem,
+    openCart,
     openWishlist,
     openFreeSample,
     setOpenWishlist,
     setOpenFreeSample,
+    setOpenCart,
   } = useIndexedDb();
 
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
@@ -40,11 +44,14 @@ const UserIcons = ({ className }: { className?: string }) => {
   }, []);
 
   useEffect(() => {
-    if (pathname === "/wishlist") {
+    if (pathname === "/wishlist/") {
       setOpenWishlist(false);
     }
-    if (pathname === "/free-sample") {
+    if (pathname === "/free-sample/") {
       setOpenFreeSample(false);
+    }
+    if (pathname === "/cart/") {
+      setOpenCart(false);
     }
   }, [pathname, setOpenWishlist, setOpenFreeSample]);
 
@@ -98,7 +105,7 @@ const UserIcons = ({ className }: { className?: string }) => {
           viewLink="/wishlist"
           emptyMessage="Your wishlist is empty."
           removeItem={removeFromWishlist}
-          forceOpen={pathname !== "/wishlist" && openWishlist} // ✅ only auto-open on other pages
+          forceOpen={pathname !== "/wishlist/" && openWishlist}
         />
       </div>
 
@@ -112,7 +119,7 @@ const UserIcons = ({ className }: { className?: string }) => {
           viewLink="/free-sample"
           emptyMessage="No free samples found."
           removeItem={removeFreeSampleItem}
-          forceOpen={pathname !== "/free-sample" && openFreeSample}
+          forceOpen={pathname !== "/free-sample/" && openFreeSample}
         />
       </div>
 
@@ -121,10 +128,12 @@ const UserIcons = ({ className }: { className?: string }) => {
         <MenuDropdown
           icon={<MdOutlineShoppingCart size={25} />}
           title="Cart"
-          badgeCount={0}
-          items={[]}
+          badgeCount={cart.length}
+          items={cart}
           viewLink="/cart"
           emptyMessage="Your cart is empty."
+          removeItem={removeFromCart}
+          forceOpen={pathname !== "/cart/" && openCart}
         />
       </div>
     </div>

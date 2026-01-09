@@ -147,9 +147,9 @@ export const CalculationForm = ({
             placeholder={`Enter drop in ${unit}`}
           />
           <p className="mt-1 text-sm text-gray-500">
-            Min: {unit === "Inches" ? currentRange.minDrop.toFixed(1) : currentRange.minDrop}{" "}
-            {unit} | Max:{" "}
-            {unit === "Inches" ? currentRange.maxDrop.toFixed(1) : currentRange.maxDrop} {unit}
+            Min: {unit === "Inches" ? currentRange.minDrop.toFixed(1) : currentRange.minDrop} {unit}{" "}
+            | Max: {unit === "Inches" ? currentRange.maxDrop.toFixed(1) : currentRange.maxDrop}{" "}
+            {unit}
           </p>
           {errors.drop && <p className="text-red-500 mt-1">{errors.drop}</p>}
         </div>

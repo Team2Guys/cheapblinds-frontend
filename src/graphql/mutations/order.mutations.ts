@@ -16,7 +16,7 @@ export const CREATE_ORDER_MUTATION = gql`
       totalAmount
       shippingCost
       notes
-      items
+      orderItems
       paymentStatus
       orderStatus
       lastEditedBy
@@ -42,7 +42,7 @@ export const UPDATE_ORDER_MUTATION = gql`
       totalAmount
       shippingCost
       notes
-      items
+      orderItems
       paymentStatus
       orderStatus
       lastEditedBy

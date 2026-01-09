@@ -15,7 +15,7 @@ export const Wishlist = React.memo(() => {
   // IndexedDB state + functions
   const { wishlist, freeSamples, removeFromWishlist, addFreeSampleItem } = useIndexedDb();
 
-  console.log(wishlist,"wishlistwishlist")
+  console.log(wishlist, "wishlistwishlist");
 
   React.useEffect(() => {
     if (!isLoading && !user) {

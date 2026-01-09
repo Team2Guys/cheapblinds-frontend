@@ -1,26 +1,27 @@
 import React from "react";
 import { HiMiniMinus, HiMiniPlus } from "react-icons/hi2";
 
-interface CounterProps {
+export const Counter = ({
+  increase,
+  decrease,
+  quantity,
+}: {
+  increase: () => void;
+  decrease: () => void;
   quantity: number;
-  handleIncrement: () => void;
-  handleDecrement: () => void;
-}
-
-export const Counter = ({ quantity, handleIncrement, handleDecrement }: CounterProps) => {
+}) => {
   return (
     <div className="flex gap-1 items-center justify-center">
       <button
         className="bg-primary rounded-full p-1 disabled:opacity-50 cursor-pointer"
-        disabled={quantity <= 1}
-        onClick={handleDecrement}
+        onClick={decrease}
       >
         <HiMiniMinus />
       </button>
 
       <div className="h-8 w-8 flex items-center justify-center">{quantity}</div>
 
-      <button className="bg-primary rounded-full p-1 cursor-pointer" onClick={handleIncrement}>
+      <button className="bg-primary rounded-full p-1 cursor-pointer" onClick={increase}>
         <HiMiniPlus />
       </button>
     </div>

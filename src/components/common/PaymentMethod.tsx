@@ -121,7 +121,6 @@ export const PaymentMethod = ({ showHeading, installments, isCheckout }: Payment
           <div className="flex justify-end gap-2 mt-5 px-6">
             {tabbyPayIcon.map((item, index) => (
               <Image
-                
                 src={item.imageUrl}
                 alt="master"
                 className="sm:w-20 w-14 sm:h-20 object-contain"
@@ -137,14 +136,7 @@ export const PaymentMethod = ({ showHeading, installments, isCheckout }: Payment
         <h2 className="text-2xl font-bold text-center">Pay easier with Tamara</h2>
         <div className="py-8 px-5 xs:px-10 md:px-20 me-4 xs:me-7">
           <div className="text-center">
-            <Image
-              
-              height={130}
-              width={130}
-              src={tamaraLogo}
-              alt="logo"
-              className="mx-auto"
-            />
+            <Image height={130} width={130} src={tamaraLogo} alt="logo" className="mx-auto" />
           </div>
           <h2 className="text-center font-bold text-2xl mt-5">Pay easier with Tamara</h2>
           <div className="px-4 py-2 bg-linear-to-r from-orange-300 via-blue-300 to-pink-300 mt-4 rounded-[70px]">

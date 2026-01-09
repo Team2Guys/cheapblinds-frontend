@@ -28,17 +28,18 @@ export const Thumbnail = ({ images = [] }: { images?: string[] }) => {
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="main-swiper"
       >
-        {images &&images.map((img, index) => (
-          <SwiperSlide key={index}>
-            <SideBySideMagnifier
-              imageSrc={img}
-              largeImageSrc={img}
-              zoomScale={1.5}
-              inPlace
-              alignTop
-            />
-          </SwiperSlide>
-        ))}
+        {images &&
+          images.map((img, index) => (
+            <SwiperSlide key={index}>
+              <SideBySideMagnifier
+                imageSrc={img}
+                largeImageSrc={img}
+                zoomScale={1.5}
+                inPlace
+                alignTop
+              />
+            </SwiperSlide>
+          ))}
       </Swiper>
 
       <Swiper

@@ -5,14 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { PaymentMethod } from "@components/common";
 
-export const Checkout = () => {
+export const Checkout = ({ totalPrice }: { totalPrice: number }) => {
   return (
     <div className="bg-primary-light p-2">
       <div className="border space-y-3">
         <div className="flex justify-between items-center font-semibold p-2 border-b border-secondary">
           <p>Subtotal</p>
           <p>
-            <span className="font-currency text-xl font-normal"></span>1,915
+            <span className="font-currency text-xl font-normal"></span>
+            {totalPrice.toFixed(2)}
           </p>
         </div>
         <div className="p-2 space-y-2">
@@ -25,7 +26,8 @@ export const Checkout = () => {
         <div className="flex justify-between items-center font-medium text-xl p-2 border">
           <p>Total</p>
           <p>
-            <span className="font-currency text-2xl font-normal"></span>1,915
+            <span className="font-currency text-2xl font-normal"></span>
+            {totalPrice.toFixed(2)}
           </p>
         </div>
         <p className="font-semibold py-2">Prices are inclusive of VAT</p>
@@ -36,7 +38,7 @@ export const Checkout = () => {
           <FaLock size={20} /> Proceed to checkout
         </Link>
         <p className="font-semibold">Buy Now, Pay Later</p>
-        <PaymentMethod installments={1000} isCheckout />
+        <PaymentMethod installments={totalPrice / 4} isCheckout />
         <p className="font-semibold">Guaranteed Safe Checkout</p>
         <div className="flex flex-wrap">
           {PaymentOption.map((array, index) => (
