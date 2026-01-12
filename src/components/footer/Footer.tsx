@@ -11,8 +11,8 @@ const Footer = () => {
   const { user } = useAuth();
 
   const goToTop = () => {
-  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-};
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  };
 
   return (
     <footer className="bg-primary text-black mt-10">
@@ -134,12 +134,20 @@ const Footer = () => {
           <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-center xl:justify-start">
             {!user && (
               <>
-                <Link href="/login" onClick={goToTop}>Sign In</Link>
-                <Link href="/forgot-password" onClick={goToTop}>Forgot Password</Link>
+                <Link href="/login" onClick={goToTop}>
+                  Sign In
+                </Link>
+                <Link href="/forgot-password" onClick={goToTop}>
+                  Forgot Password
+                </Link>
               </>
             )}
-            <Link href={user ? "/my-orders" : "/login"} onClick={goToTop}>Your Orders</Link>
-            <Link href={user ? "/order-tracking" : "/login"} onClick={goToTop}>Order Tracking</Link>
+            <Link href={user ? "/my-orders" : "/login"} onClick={goToTop}>
+              Your Orders
+            </Link>
+            <Link href={user ? "/order-tracking" : "/login"} onClick={goToTop}>
+              Order Tracking
+            </Link>
           </div>
 
           <p className="text-center hidden md:block">
