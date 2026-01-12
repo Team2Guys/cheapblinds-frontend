@@ -3,26 +3,31 @@ export const infoItems = [
     id: 1,
     image: "/assets/images/home/information/anniversary.png",
     text: "25 Years Experience in UAE",
+    link: "/about-us/",
   },
   {
     id: 2,
     image: "/assets/images/home/information/affordable.png",
     text: "Affordable",
+    link: "/measuring-guides/",
   },
   {
     id: 3,
     image: "/assets/images/home/information/free-sample.png",
     text: "Free Samples",
+    link: "/roller-blinds/",
   },
   {
     id: 4,
     image: "/assets/images/home/information/warranty.png",
     text: "5 Years Warranty",
+    link: "/terms-conditions/",
   },
   {
     id: 5,
     image: "/assets/images/home/information/free-delivery.png",
     text: "Free Next Day Delivery",
+    link: "/delivery-policy/",
   },
 ];
 

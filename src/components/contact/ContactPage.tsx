@@ -17,7 +17,10 @@ export const ContactPage = React.memo(({ IsHide }: { IsHide?: boolean }) => {
       )}
       <div className="container mx-auto text-black flex flex-col md:flex-row w-full my-10">
         {/* Contact */}
-
+        <div className="p-2 w-full md:w-[50%]">
+          <FormContact />
+        </div>
+        <div className="hidden md:block w-[3px] md:h-[800px] lg:h-[780px] xl:h-[730px] bg-gray-400" />
         <div className="bg-primary-light p-2 mx-2 md:w-[50%]">
           <h2 className="font-rubik font-semibold text-[36px] leading-[1.2]">
             Let us know how to contact you
@@ -57,11 +60,6 @@ export const ContactPage = React.memo(({ IsHide }: { IsHide?: boolean }) => {
           <div className="mt-4">
             <GoogleMap />
           </div>
-        </div>
-        <div className="hidden md:block w-[3px] md:h-[800px] lg:h-[780px] xl:h-[730px] bg-gray-400" />
-
-        <div className="p-2 w-full md:w-[50%]">
-          <FormContact />
         </div>
       </div>
     </>

@@ -19,9 +19,9 @@ const helpOptions = [
   },
   {
     id: 3,
-    title: "Help with delivery",
-    desc: "If you would like help with delivery, click below.",
-    button: "Delivery Help",
+    title: "Sale Care",
+    desc: "If you would like help with sale delivery, click below.",
+    button: "Sale Help",
     icon: "/assets/images/contact/box.png",
   },
 ];

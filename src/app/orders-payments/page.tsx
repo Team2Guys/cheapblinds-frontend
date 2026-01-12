@@ -45,7 +45,11 @@ const OrdersPayments = () => {
           <li>
             Your made-to-measure blinds and accessories will be produced, dispatched, and delivered
             within 4 working days, depending on the items ordered. For more information about our
-            delivery services, please visit our Delivery Page.
+            delivery services, please visit our{" "}
+            <Link className="underline text-primary" href="/delivery-policy/">
+              Delivery Page
+            </Link>
+            .
           </li>
         </ul>
         <p>

@@ -128,7 +128,8 @@ export const Card = React.memo(
                           3pm
                         </span>
                         <br />
-                        Same Day Express Delivery
+                        <p>Select lightning service</p>
+                        Receive you order next day (Dubai)
                       </p>
                     </div>
                   </div>

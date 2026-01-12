@@ -119,7 +119,7 @@ const MenuDropdown = ({
                         className="w-20 object-cover"
                       />
                     </div>
-                    <div className="flex flex-col justify-between text-start w-full">
+                    <div className="flex flex-col justify-between text-start w-full pr-3">
                       <p className="text-sm font-medium line-clamp-2">{item.name}</p>
                       {item.price !== undefined && (
                         <p className="text-xs mt-1">
@@ -144,7 +144,7 @@ const MenuDropdown = ({
               <TbShoppingBag size={45} />
               <p className="capitalize text-sm font-semibold">{emptyMessage}</p>
               <Link
-                href="/collections"
+                href="/roller-blinds"
                 onClick={() => setIsOpen(false)}
                 className="bg-black text-white px-4 py-2 rounded-md hover:bg-black/90 transition"
               >
@@ -158,15 +158,15 @@ const MenuDropdown = ({
               <Link
                 href={viewLink}
                 onClick={() => setIsOpen(false)}
-                className="w-full block text-center bg-black text-white py-1"
+                className="w-full block text-center bg-black text-white py-2"
               >
                 View {title}
               </Link>
-              <div className="border text-center w-full border-black hover:bg-black hover:text-white transition duration-300 py-1">
+              {/* <div className="border text-center w-full border-black hover:bg-black hover:text-white transition duration-300 py-1">
                 <Link href="/" onClick={() => setIsOpen(false)} className="text-center px-4 py-2">
                   Continue Shopping
                 </Link>
-              </div>
+              </div> */}
             </div>
           )}
         </div>
