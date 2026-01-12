@@ -111,13 +111,22 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
       const pattern = product.pattern ?? "";
       const material = product.material ?? "";
       const color = product.color ?? "";
-      const width = product.maxWidth ?? 0;
+
+      // 1. Generate the SAME label used in the filter options
+      const productWidthLabel =
+        product.maxWidth !== undefined ? `Up To ${product.maxWidth / 10}cm Wide` : null;
 
       if (selectedType.length && !selectedType.includes(type)) return false;
       if (selectedPattern.length && !selectedPattern.includes(pattern)) return false;
       if (selectedMaterial.length && !selectedMaterial.includes(material)) return false;
-      if (selectedWidth.length && !selectedWidth.some((w) => w.includes(String(width))))
-        return false;
+
+      // 2. Fix: Check if the product's label is inside the selectedWidth array
+      if (selectedWidth.length) {
+        if (!productWidthLabel || !selectedWidth.includes(productWidthLabel)) {
+          return false;
+        }
+      }
+
       if (selectedColor.length && !selectedColor.includes(color)) return false;
 
       const basePrice = product.price ?? 0;
