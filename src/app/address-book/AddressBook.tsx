@@ -15,7 +15,6 @@ const AddressBookPage = () => {
   const [userList, setUser] = useState<UserProps | null>(null);
   const router = useRouter();
 
-  // 1. Wrap the loading logic in useCallback so we can pass it to children
   const loadUser = useCallback(async () => {
     if (!user) return;
     try {

@@ -267,33 +267,6 @@ export const Filters = React.memo(
         </Accordion>
 
         <Accordion
-          title="Width Available"
-          sectionKey="width"
-          openSections={openSections}
-          toggleSection={toggleSection}
-          refObj={contentRefs.width}
-        >
-          <div className="flex flex-col gap-4 pt-4 ">
-            {widthOptions.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => toggleSelection(item.name, setSelectedWidth, selectedWidth)}
-                className="flex items-center gap-2 capitalize cursor-pointer"
-              >
-                <span
-                  className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedWidth.includes(item.name) ? "border-primary bg-primary text-white" : "border-black"}`}
-                >
-                  {selectedWidth.includes(item.name) && <FaCheck />}
-                </span>
-                <p>
-                  {item.name} <span className="text-gray-500 text-sm">({item.count})</span>
-                </p>
-              </button>
-            ))}
-          </div>
-        </Accordion>
-
-        <Accordion
           title="Pattern"
           sectionKey="pattern"
           openSections={openSections}
@@ -346,9 +319,34 @@ export const Filters = React.memo(
             ))}
           </div>
         </Accordion>
-
         <Accordion
-          title="Price Range"
+          title="Filter by Width"
+          sectionKey="width"
+          openSections={openSections}
+          toggleSection={toggleSection}
+          refObj={contentRefs.width}
+        >
+          <div className="flex flex-col gap-4 pt-4 ">
+            {widthOptions.map((item) => (
+              <button
+                key={item.name}
+                onClick={() => toggleSelection(item.name, setSelectedWidth, selectedWidth)}
+                className="flex items-center gap-2 capitalize cursor-pointer"
+              >
+                <span
+                  className={`border rounded-sm w-4 h-4 flex justify-center items-center text-[10px] ${selectedWidth.includes(item.name) ? "border-primary bg-primary text-white" : "border-black"}`}
+                >
+                  {selectedWidth.includes(item.name) && <FaCheck />}
+                </span>
+                <p>
+                  {item.name} <span className="text-gray-500 text-sm">({item.count})</span>
+                </p>
+              </button>
+            ))}
+          </div>
+        </Accordion>
+        <Accordion
+          title="Price Range per SQM"
           sectionKey="price"
           openSections={openSections}
           toggleSection={toggleSection}

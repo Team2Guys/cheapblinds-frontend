@@ -6,6 +6,7 @@ export interface HeroProps {
   isHome?: boolean;
   className?: string;
   alt?: string;
+  link?: string;
 }
 
 export interface OrderSectionProps {

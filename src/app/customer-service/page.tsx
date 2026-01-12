@@ -117,7 +117,7 @@ const CustomerService = () => {
         </p>
         <p>
           To find out more about delivery services, please{" "}
-          <Link className="text-primary underline" href="/delivery-information">
+          <Link className="text-primary underline" href="/delivery-policy/">
             click here
           </Link>
         </p>

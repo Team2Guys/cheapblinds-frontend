@@ -43,6 +43,7 @@ const Home = async () => {
           desktopImage="/assets/images/home/free-order/free-order.webp"
           mobileImage="/assets/images/home/free-order/free-order-mobile.png"
           className="container mx-auto h-[400px] md:h-auto md:max-h-[500px] 2xl:max-h-[600px]"
+          link="/roller-blinds/"
         />
         <HeroSection
           desktopImage="/assets/images/home/payment.jpg"
