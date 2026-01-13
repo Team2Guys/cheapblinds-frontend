@@ -1,8 +1,8 @@
 import { Breadcrumb } from "@components";
 import CategoryPage from "../Category";
-import { fetchSingleSubCategory } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import { Subcategory } from "@/types/category";
-import { GET_SUBCATEGORY_BY_URLS_QUERY } from "@graphql";
+import { SUBCATEGORY_BY_PATH } from "@graphql";
 import { notFound } from "next/navigation";
 import { generateMeta } from "@utils/seoMetadata";
 
@@ -12,44 +12,47 @@ export async function generateMetadata({
   params: Promise<{ category: string; subCategory: string }>;
 }) {
   const { category, subCategory } = await params;
-  const SubCategoryList = await fetchSingleSubCategory(
-    subCategory,
-    category,
-    GET_SUBCATEGORY_BY_URLS_QUERY,
+  const categoryPath = `/${category}/${subCategory}`;
+  const subCategoryList: Subcategory | null = await queryData<Subcategory | null>(
+    SUBCATEGORY_BY_PATH,
+    "subcategoryByPath",
+    { path: categoryPath },
   );
-  if (!SubCategoryList || SubCategoryList.status !== "PUBLISHED") notFound();
+  if (!subCategoryList || subCategoryList.status !== "PUBLISHED") notFound();
   return generateMeta({
-    title: SubCategoryList.metaTitle,
-    description: SubCategoryList.metaDescription,
-    canonicalUrl: SubCategoryList.canonicalUrl,
-    imageUrl: SubCategoryList?.posterImageUrl,
-    imageAlt: SubCategoryList.name,
-    fallbackPath: `/${category}/${SubCategoryList.slug || subCategory}`,
+    title: subCategoryList.metaTitle,
+    description: subCategoryList.metaDescription,
+    canonicalUrl: subCategoryList.canonicalUrl,
+    imageUrl: subCategoryList?.posterImageUrl,
+    imageAlt: subCategoryList.name,
+    fallbackPath: subCategoryList.newPath,
   });
 }
 
 const Page = async ({ params }: { params: Promise<{ category: string; subCategory: string }> }) => {
   const { category, subCategory } = await params;
-  const SubCategoryList: Subcategory | null = await fetchSingleSubCategory(
-    subCategory,
-    category,
-    GET_SUBCATEGORY_BY_URLS_QUERY,
+  const categoryPath = `/${category}/${subCategory}`;
+  const subCategoryList: Subcategory | null = await queryData<Subcategory | null>(
+    SUBCATEGORY_BY_PATH,
+    "subcategoryByPath",
+    { path: categoryPath },
   );
-  if (!SubCategoryList) {
+
+  if (!subCategoryList) {
     notFound();
   }
-  if (SubCategoryList.status !== "PUBLISHED") {
+  if (subCategoryList.status !== "PUBLISHED") {
     notFound();
   }
 
-  const { name, description } = SubCategoryList;
+  const { name, description } = subCategoryList;
   return (
     <>
-      <Breadcrumb slug={category} title={subCategory} />
+      <Breadcrumb newPath={category} title={subCategory} />
       <CategoryPage
         categoryName={name}
         description={description || ""}
-        ProductList={SubCategoryList}
+        ProductList={subCategoryList}
       />
     </>
   );

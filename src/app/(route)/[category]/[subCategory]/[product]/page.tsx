@@ -1,8 +1,8 @@
 import { OrderSection, RelatedProduct, Breadcrumb, BlindFitting, ProductDetail } from "@components";
-import { fetchSingleProduct, fetchSingleSubCategory } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import { notFound } from "next/navigation";
-import { GET_SUBCATEGORY_BY_URLS_QUERY } from "@graphql";
-import { Product } from "@/types/category";
+import { PRODUCT_BY_PATH, SUBCATEGORY_BY_PATH } from "@graphql";
+import { Product, Subcategory } from "@/types/category";
 import { generateMeta } from "@utils/seoMetadata";
 
 export async function generateMetadata({
@@ -11,7 +11,12 @@ export async function generateMetadata({
   params: Promise<{ category: string; subCategory: string; product: string }>;
 }) {
   const { category, subCategory, product } = await params;
-  const ProductList = await fetchSingleProduct(category, subCategory, product);
+  const ProductList: Product | null = await queryData<Product | null>(
+    PRODUCT_BY_PATH,
+    "productByPath",
+    { path: `/${category}/${subCategory}/${product}/` },
+  );
+
   if (!ProductList || ProductList.status !== "PUBLISHED") notFound();
   return generateMeta({
     title: ProductList.metaTitle,
@@ -19,7 +24,7 @@ export async function generateMetadata({
     canonicalUrl: ProductList.canonicalUrl,
     imageUrl: ProductList?.posterImageUrl,
     imageAlt: ProductList.name,
-    fallbackPath: `/${category}/${subCategory}/${ProductList.slug}`,
+    fallbackPath: ProductList.newPath,
   });
 }
 
@@ -29,11 +34,18 @@ const ProductPage = async ({
   params: Promise<{ category: string; subCategory: string; product: string }>;
 }) => {
   const { category, subCategory, product } = await params;
-  const [productList, SingleProduct] = await Promise.all([
-    fetchSingleSubCategory(subCategory, category, GET_SUBCATEGORY_BY_URLS_QUERY),
-    fetchSingleProduct(category, subCategory, product),
-  ]);
 
+  const SingleProduct: Product | null = await queryData<Product | null>(
+    PRODUCT_BY_PATH,
+    "productByPath",
+    { path: `/${category}/${subCategory}/${product}/` },
+  );
+
+  const productList: Subcategory | null = await queryData<Subcategory | null>(
+    SUBCATEGORY_BY_PATH,
+    "subcategoryByPath",
+    { path: `/${category}/${subCategory}` },
+  );
   if (!SingleProduct) {
     notFound();
   }
@@ -45,16 +57,10 @@ const ProductPage = async ({
   );
   return (
     <>
-      <Breadcrumb slug={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
+      <Breadcrumb newPath={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
       <div className="container mx-auto px-2">
         <ProductDetail categorySlug={category} productData={SingleProduct} />
-        <RelatedProduct
-          titleStart
-          title="RELATED PRODUCTS"
-          category={category}
-          subCategory={subCategory}
-          data={publishedProduct || []}
-        />
+        <RelatedProduct titleStart title="RELATED PRODUCTS" data={publishedProduct || []} />
         <BlindFitting />
         <OrderSection
           className="mt-10 md:mt-16"

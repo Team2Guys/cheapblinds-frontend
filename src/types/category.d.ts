@@ -6,7 +6,7 @@ export interface Category {
   name: string;
   description?: string;
   shortDescription?: string;
-  slug?: string;
+  newPath?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalUrl?: string;
@@ -26,7 +26,7 @@ export interface Subcategory {
   name: string;
   description?: string;
   shortDescription?: string;
-  slug?: string;
+  newPath?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalUrl?: string;
@@ -49,8 +49,7 @@ export interface Product {
   sku?: string;
   description?: string;
   shortDescription?: string;
-  slug?: string;
-  productUrl?: string;
+  newPath?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalUrl?: string;
@@ -69,7 +68,7 @@ export interface Product {
   status?: ContentStatus;
   createdAt?: string | Date;
   updatedAt?: string | Date;
-  parentSubcategoryUrl?: string;
+  subcategoryName?: string;
   pattern?: string;
   material?: string;
   color?: string;
@@ -93,7 +92,7 @@ export interface Category_Page {
   id?: string | number;
   name?: string;
   description?: string;
-  slug?: string;
+  newPath?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalUrl?: string;
@@ -106,14 +105,14 @@ export interface Category_Page {
 export interface ISubcategory {
   id?: string | number;
   name?: string;
-  slug?: string;
+  newPath?: string;
   status?: ContentStatus;
 }
 
 export interface IProduct {
   id?: string | number;
   name?: string;
-  slug?: string;
+  newPath?: string;
   status?: ContentStatus;
 }
 
@@ -227,7 +226,7 @@ export interface WishlistItems {
   fabricId?: string;
   blindTypeId?: string;
   sku?: string;
-  productUrl?: string;
+  newPath?: string;
   posterImageUrl?: string;
   price?: number;
   status?: ContentStatus;
@@ -251,7 +250,7 @@ export interface CartItems {
   fabricId?: string;
   blindTypeId?: string;
   sku?: string;
-  productUrl?: string;
+  newPath?: string;
   posterImageUrl?: string;
 
   price?: number;

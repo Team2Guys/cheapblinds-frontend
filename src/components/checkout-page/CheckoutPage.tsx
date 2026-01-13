@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import { OrderProducts, Input, Toaster } from "@components";
 import { useAuth } from "@context/UserContext";
 import { Orders, UserProps } from "@/types/category";
-import { fetchUserById } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import { useIndexedDb } from "@lib/useIndexedDb";
 import { useMutation } from "@apollo/client";
-import { CREATE_ORDER_MUTATION } from "@graphql";
+import { CREATE_ORDER_MUTATION, USER_BY_ID } from "@graphql";
 import { CheckoutValidationSchema } from "@data/Validations";
 
 export const CheckoutPage = React.memo(() => {
@@ -27,7 +27,9 @@ export const CheckoutPage = React.memo(() => {
     if (!user) return;
     const loadData = async () => {
       try {
-        const userResponse = await fetchUserById(user.id);
+         const userResponse: UserProps | null = await queryData(USER_BY_ID, "userById", {
+          id: user?.id || "",
+        });
         setUser(userResponse || null);
       } catch (error) {
         console.error("Failed to fetch addresses:", error);
@@ -90,7 +92,7 @@ export const CheckoutPage = React.memo(() => {
         fabricId: item.fabricId,
         sku: item.sku,
         name: item.name,
-        productUrl: item.productUrl,
+        newPath: item.newPath,
         posterImageUrl: item.posterImageUrl,
         quantity: item.quantity,
         options: item.options,

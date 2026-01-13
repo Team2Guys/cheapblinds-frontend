@@ -5,19 +5,21 @@ import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
 import Link from "next/link";
 
 interface CategoryItem {
-  posterImageUrl: string | null;
+  posterImageUrl?: string | null;
   name: string;
-  slug: string;
+  newPath?: string;
+  status?: string;
+  id?: string | number;
 }
 
-export const ShopBySlider = React.memo(({ CategoryList }: { CategoryList: CategoryItem[] }) => {
+export const ShopBySlider = React.memo(({ categoryList }: { categoryList: CategoryItem[] }) => {
   const safeCategoryList = useMemo(() => {
-    if (CategoryList.length === 0) return [];
-    if (CategoryList.length < 4)
-      return [...CategoryList, ...CategoryList, ...CategoryList, ...CategoryList];
-    if (CategoryList.length < 6) return [...CategoryList, ...CategoryList];
-    return CategoryList;
-  }, [CategoryList]);
+    if (categoryList.length === 0) return [];
+    if (categoryList.length < 4)
+      return [...categoryList, ...categoryList, ...categoryList, ...categoryList];
+    if (categoryList.length < 6) return [...categoryList, ...categoryList];
+    return categoryList;
+  }, [categoryList]);
 
   const [activeIndex, setActiveIndex] = useState(3);
   const [isVisible, setIsVisible] = useState(false);
@@ -148,7 +150,7 @@ export const ShopBySlider = React.memo(({ CategoryList }: { CategoryList: Catego
 
         return (
           <div
-            key={`${item.slug}-${index}`}
+            key={`${item.newPath}-${index}`}
             className={`
                 absolute top-0 
                 transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] 
@@ -157,7 +159,7 @@ export const ShopBySlider = React.memo(({ CategoryList }: { CategoryList: Catego
             `}
           >
             <Link
-              href={`/${item.slug}`}
+              href={item.newPath ?? "/"}
               className="relative block w-full group cursor-pointer"
               onClick={() => setActiveIndex(index)}
             >

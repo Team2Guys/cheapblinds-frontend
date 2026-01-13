@@ -1,37 +1,49 @@
 import { Breadcrumb } from "@components";
-import { fetchSingleCategory } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import CategoryPage from "./Category";
 import { notFound } from "next/navigation";
 import { Category } from "@/types/category";
 import { generateMeta } from "@utils/seoMetadata";
+import { CATEGORY_BY_PATH } from "@graphql";
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
-  const CategoryList = await fetchSingleCategory(category);
+     const categoryPath = `/${category}`;
+  const categoryList: Category | null = await queryData<Category | null>(
+    CATEGORY_BY_PATH,
+    'categoryByPath',
+    { path: categoryPath } 
+  );
 
-  if (!CategoryList || CategoryList.status !== "PUBLISHED") {
+  if (!categoryList || categoryList.status !== "PUBLISHED") {
     notFound();
   }
 
   return generateMeta({
-    title: CategoryList.metaTitle,
-    description: CategoryList.metaDescription,
-    canonicalUrl: CategoryList.canonicalUrl,
-    imageUrl: CategoryList?.posterImageUrl,
-    imageAlt: CategoryList.name,
-    fallbackPath: `/${category}`,
+    title: categoryList.metaTitle,
+    description: categoryList.metaDescription,
+    canonicalUrl: categoryList.canonicalUrl,
+    imageUrl: categoryList?.posterImageUrl,
+    imageAlt: categoryList.name,
+    fallbackPath: categoryList.newPath,
   });
 }
 
 const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;
-  const CategoryList: Category | null = await fetchSingleCategory(category);
-  if (!CategoryList) {
+   const categoryPath = `/${category}`;
+  const categoryList: Category | null = await queryData<Category | null>(
+    CATEGORY_BY_PATH,
+    'categoryByPath',
+    { path: categoryPath } 
+  );
+
+  if (!categoryList) {
     notFound();
   }
-  if (CategoryList.status !== "PUBLISHED") {
+  if (categoryList.status !== "PUBLISHED") {
     notFound();
   }
-  const { name, description, subcategories = [] } = CategoryList;
+  const { name, description, subcategories = [] } = categoryList;
   return (
     <>
       <Breadcrumb title={category} />

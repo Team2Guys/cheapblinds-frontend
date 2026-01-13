@@ -7,7 +7,8 @@ import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
 import { Orders } from "@/types/category";
-import { fetchOrdersByUserId } from "@config/fetch";
+import { queryData } from "@config/fetch";
+import { ORDERS_BY_USER_ID } from "@graphql";
 
 const OrderPage = () => {
   const { user, isLoading } = useAuth();
@@ -24,7 +25,9 @@ const OrderPage = () => {
 
     async function loadOrders() {
       try {
-        const response = await fetchOrdersByUserId(user?.id || "");
+        const response: Orders[] | null = await queryData(ORDERS_BY_USER_ID, "orderListByUserId", {
+          id: user?.id || "",
+        });
         const OrdersList = response
           ? response
               .filter(
@@ -59,7 +62,6 @@ const OrderPage = () => {
 
   if (!user) return null;
 
-  console.log(orders, "ordersorders");
   return (
     <div>
       {/* <AccountTabs /> */}

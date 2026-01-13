@@ -21,8 +21,8 @@ export const GET_USER_LIST_QUERY = gql`
   }
 `;
 
-export const GET_USER_BY_ID_QUERY = gql`
-  query GetUserById($id: ID!) {
+export const USER_BY_ID = gql`
+  query UserById($id: ID!) {
     userById(id: $id) {
       id
       defaultShippingAddressId
@@ -68,8 +68,8 @@ export const GET_USER_BY_ID_QUERY = gql`
   }
 `;
 
-export const GET_USER_FOR_ADDRESS_QUERY = gql`
-  query GetUserForAddress($id: ID!) {
+export const USER_FOR_ADDRESS = gql`
+  query UserForAddress($id: ID!) {
     userById(id: $id) {
       id
       addresses

@@ -8,7 +8,7 @@ export const GET_SUBCATEGORY_LIST_QUERY = gql`
       categoryId
       description
       shortDescription
-      slug
+      newPath
       metaTitle
       metaDescription
       canonicalUrl
@@ -31,7 +31,7 @@ export const GET_SUBCATEGORY_BY_ID_QUERY = gql`
       categoryId
       description
       shortDescription
-      slug
+      newPath
       metaTitle
       metaDescription
       canonicalUrl
@@ -46,14 +46,14 @@ export const GET_SUBCATEGORY_BY_ID_QUERY = gql`
   }
 `;
 
-export const GET_SUBCATEGORY_BY_URLS_QUERY = gql`
-  query GetSubcategoryBySlugs($subcategorySlug: String!, $categorySlug: String!) {
-    subcategoryBySlugs(input: { subcategorySlug: $subcategorySlug, categorySlug: $categorySlug }) {
+export const SUBCATEGORY_BY_PATH = gql`
+  query SubcategoryByPath($path: String!) {
+    subcategoryByPath(input: { path: $path }) {
       id
       name
       description
       shortDescription
-      slug
+      newPath
       metaTitle
       metaDescription
       canonicalUrl
@@ -68,8 +68,7 @@ export const GET_SUBCATEGORY_BY_URLS_QUERY = gql`
         fabricId
         blindTypeId
         sku
-        slug
-        productUrl
+        newPath
         price
         posterImageUrl
         minDrop

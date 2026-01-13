@@ -10,8 +10,7 @@ export const GET_PRODUCT_LIST_QUERY = gql`
       blindTypeId
       sku
       name
-      slug
-      productUrl
+      newPath
       shortDescription
       description
       posterImageUrl
@@ -37,12 +36,12 @@ export const GET_PRODUCT_LIST_QUERY = gql`
       category {
         id
         name
-        slug
+        newPath
       }
       subcategory {
         id
         name
-        slug
+        newPath
       }
       updatedAt
       createdAt
@@ -50,67 +49,45 @@ export const GET_PRODUCT_LIST_QUERY = gql`
   }
 `;
 
-export const GET_CARD_PRODUCT_QUERY = gql`
+export const CARD_PRODUCT = gql`
   query ProductList {
     productList {
       id
       name
-      slug
+      newPath
       breadcrumb
       posterImageUrl
-      productUrl
       price
       status
-      category {
-        id
-        name
-        slug
-      }
-      subcategory {
-        id
-        name
-        slug
-      }
     }
   }
 `;
 
-export const GET_PRODUCT_BY_SEARCH_QUERY = gql`
+export const PRODUCT_BY_SEARCH = gql`
   query GetProductList {
     productList {
       id
       name
-      slug
+      newPath
       posterImageUrl
-      productUrl
       status
       category {
         id
         name
-        slug
+        newPath
       }
       subcategory {
         id
         name
-        slug
+        newPath
       }
     }
   }
 `;
 
-export const GET_PRODUCT_BY_SLUG_QUERY = gql`
-  query GetProductBySlugs(
-    $categorySlug: String!
-    $subcategorySlug: String!
-    $productSlug: String!
-  ) {
-    productBySlugs(
-      input: {
-        categorySlug: $categorySlug
-        subcategorySlug: $subcategorySlug
-        productSlug: $productSlug
-      }
-    ) {
+export const PRODUCT_BY_PATH = gql`
+  query ProductByPath($path: String!) {
+    productByPath(input: { path: $path }) {
       id
       fabricId
       blindTypeId
@@ -118,8 +95,7 @@ export const GET_PRODUCT_BY_SLUG_QUERY = gql`
       sku
       description
       shortDescription
-      slug
-      productUrl
+      newPath
       categoryId
       subcategoryId
       posterImageUrl

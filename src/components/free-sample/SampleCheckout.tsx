@@ -40,7 +40,7 @@ export const SampleCheckout = React.memo(
       sku: item.sku,
       name: item.name,
       posterImageUrl: item.posterImageUrl,
-      productUrl: item.productUrl,
+      newPath: item.newPath,
       price: item.price,
       color: item.color,
     }));

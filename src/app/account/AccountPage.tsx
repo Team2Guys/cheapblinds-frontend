@@ -6,8 +6,9 @@ import { Testimonial, MyAccount } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
-import { fetchUserById } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import { UserProps } from "@/types/category";
+import { USER_BY_ID } from "@graphql";
 
 const AccountPage = () => {
   const { user, isLoading } = useAuth();
@@ -18,7 +19,11 @@ const AccountPage = () => {
 
     const loadData = async () => {
       try {
-        const userResponse = await fetchUserById(user.id);
+        const userResponse: UserProps | null = await queryData<UserProps | null>(
+          USER_BY_ID,
+          "userById",
+          { id: user.id },
+        );
 
         setUser(userResponse || null);
       } catch (error) {

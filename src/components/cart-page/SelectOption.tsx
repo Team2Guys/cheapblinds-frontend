@@ -27,7 +27,7 @@ export const SelectOption = ({ className, cartData, updateMotorized }: SelectOpt
     isMotorized,
     motorPrice = 0,
     subPrice = 0,
-    productUrl,
+    newPath,
   } = cartData || {};
 
   /** ---------- BASE OPTIONS (COMMON) ---------- */
@@ -86,7 +86,7 @@ export const SelectOption = ({ className, cartData, updateMotorized }: SelectOpt
         >
           <div>
             <Link
-              href={productUrl ?? "/"}
+              href={newPath ?? "/"}
               className="text-sm md:text-base font-semibold text-primary mt-2 block"
             >
               {name}

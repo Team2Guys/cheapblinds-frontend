@@ -104,7 +104,7 @@ export const Card = React.memo(
 
             return (
               <div key={card.id} className="relative p-2 hover:shadow-md">
-                <Link href={card.productUrl || ""}>
+                <Link href={card.newPath || ""}>
                   <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
                     <Image
                       unoptimized
@@ -137,7 +137,7 @@ export const Card = React.memo(
 
                 <div className="pt-3 sm:space-y-2 px-2">
                   <div className="flex justify-between items-center">
-                    <Link href={card.productUrl || ""}>
+                    <Link href={card.newPath || ""}>
                       <p className="text-xs md:text-base">{categoryName}</p>
                       <h2 className="font-medium text-sm md:text-xl font-rubik md:underline ">
                         {card.name}
