@@ -23,9 +23,13 @@ const NewsletterPage = () => {
     if (!user) return;
     async function loadNewsletter() {
       try {
-        const response: NewsletterProps = await queryData(NEWSLETTER_SUBSCRIBER_BY_EMAIL, "newsletterSubscriberByEmail", {
-          email: user?.email || "",
-        });
+        const response: NewsletterProps = await queryData(
+          NEWSLETTER_SUBSCRIBER_BY_EMAIL,
+          "newsletterSubscriberByEmail",
+          {
+            email: user?.email || "",
+          },
+        );
         setNewsletter(response);
       } catch (error) {
         Toaster("error", "Failed to fetch newsletter subscriber.");

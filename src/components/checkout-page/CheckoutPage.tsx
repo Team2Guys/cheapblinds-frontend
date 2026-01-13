@@ -27,7 +27,7 @@ export const CheckoutPage = React.memo(() => {
     if (!user) return;
     const loadData = async () => {
       try {
-         const userResponse: UserProps | null = await queryData(USER_BY_ID, "userById", {
+        const userResponse: UserProps | null = await queryData(USER_BY_ID, "userById", {
           id: user?.id || "",
         });
         setUser(userResponse || null);

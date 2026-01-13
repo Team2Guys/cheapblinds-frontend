@@ -1,26 +1,21 @@
 import { DocumentNode } from "@apollo/client";
 import ApolloCustomClient from "@utils/apollo-client";
-import {
-  FabricPrice,
-  GetPricingInput,
-  OptionsPrice,
-} from "@/types/category";
+import { FabricPrice, GetPricingInput, OptionsPrice } from "@/types/category";
 import { GET_FABRIC_PRICE_QUERY, GET_OPTIONS_PRICE_QUERY } from "@graphql/queries/price.queries";
-
 
 export const queryData = async <T>(
   query: DocumentNode,
   queryName: string,
-  variables?: { [key: string]: string | number }
+  variables?: { [key: string]: string | number },
 ): Promise<T> => {
   try {
     const { data } = await ApolloCustomClient.query({
       query: query,
       variables: variables,
-      fetchPolicy: 'no-cache',
+      fetchPolicy: "no-cache",
       context: {
-        fetchOptions: { next: { tags: ['apiRequest'] } }
-      }
+        fetchOptions: { next: { tags: ["apiRequest"] } },
+      },
     });
 
     return data?.[queryName];
@@ -28,7 +23,6 @@ export const queryData = async <T>(
     throw error;
   }
 };
-
 
 export const fetchFabricPrice = async (
   input: GetPricingInput,
@@ -75,5 +69,3 @@ export const fetchOptionsPrice = async (
     return null;
   }
 };
-
-

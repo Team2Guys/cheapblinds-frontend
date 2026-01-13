@@ -7,11 +7,11 @@ import { generateMeta } from "@utils/seoMetadata";
 import { CATEGORY_BY_PATH } from "@graphql";
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
-     const categoryPath = `/${category}`;
+  const categoryPath = `/${category}`;
   const categoryList: Category | null = await queryData<Category | null>(
     CATEGORY_BY_PATH,
-    'categoryByPath',
-    { path: categoryPath } 
+    "categoryByPath",
+    { path: categoryPath },
   );
 
   if (!categoryList || categoryList.status !== "PUBLISHED") {
@@ -30,11 +30,11 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 
 const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;
-   const categoryPath = `/${category}`;
+  const categoryPath = `/${category}`;
   const categoryList: Category | null = await queryData<Category | null>(
     CATEGORY_BY_PATH,
-    'categoryByPath',
-    { path: categoryPath } 
+    "categoryByPath",
+    { path: categoryPath },
   );
 
   if (!categoryList) {

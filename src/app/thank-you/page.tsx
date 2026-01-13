@@ -8,7 +8,7 @@ import React, { Suspense } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 
 const ThankYou = async () => {
-const productList: Product[] = await queryData<Product[]>(CARD_PRODUCT, "productList");
+  const productList: Product[] = await queryData<Product[]>(CARD_PRODUCT, "productList");
   const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
 
   return (
