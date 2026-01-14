@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoIosClose } from "react-icons/io";
 import { TbShoppingBag } from "react-icons/tb";
-import { Product } from "@/types/category";
+import { CartItems } from "@/types/category";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { ColorImage } from "@data/filter-colors";
 
@@ -13,11 +13,11 @@ interface DropdownPanelProps {
   icon: React.ReactNode;
   title: string;
   badgeCount?: number;
-  items: Product[];
+  items: CartItems[];
   viewLink?: string;
   emptyMessage?: string;
   removeItem?: (_id: string) => void;
-  forceOpen?: boolean; // NEW
+  forceOpen?: boolean;
 }
 
 const MenuDropdown = ({
@@ -123,7 +123,9 @@ const MenuDropdown = ({
                       <p className="text-sm font-medium line-clamp-2">{item.name}</p>
                       {item.price !== undefined && (
                         <p className="text-xs mt-1">
-                          {item.price === 0 ? "Free" : `Price: ${item.price}`}
+                          {item.price === 0
+                            ? "Free"
+                            : `Price: ${item?.subPrice?.toFixed(2) ?? item.price}`}
                         </p>
                       )}
                       {removeItem && (

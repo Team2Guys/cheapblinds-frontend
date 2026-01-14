@@ -22,6 +22,7 @@ const Home = async () => {
   const productList: Product[] = await queryData<Product[]>(CARD_PRODUCT, "productList");
   const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
   const publishedCategory = categoryList?.filter((item: Category) => item?.status === "PUBLISHED");
+
   return (
     <>
       <HeroSection

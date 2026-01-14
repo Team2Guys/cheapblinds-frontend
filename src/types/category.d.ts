@@ -233,6 +233,8 @@ export interface WishlistItems {
   color?: string;
   isMotorized?: boolean;
   motorPrice?: number;
+  quantity?: number;
+  subPrice?: number;
 }
 
 export interface CartItemOptions {
@@ -268,6 +270,5 @@ export interface CartItems {
   recessType?: string;
 
   options?: CartItemOptions;
-
-  quantity?: number; // NEW: quantity for merged items
+  quantity?: number;
 }

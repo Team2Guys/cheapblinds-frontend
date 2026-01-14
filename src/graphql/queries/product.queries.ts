@@ -50,7 +50,7 @@ export const GET_PRODUCT_LIST_QUERY = gql`
 `;
 
 export const CARD_PRODUCT = gql`
-  query ProductList {
+  query GetProductList {
     productList {
       id
       name

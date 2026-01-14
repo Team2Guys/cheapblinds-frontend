@@ -45,13 +45,15 @@ export const GET_CATEGORY_BY_ID_QUERY = gql`
 `;
 
 export const CARD_CATEGORY = gql`
-  query CategoryList {
+  query GetCategoryList {
     categoryList {
       id
       name
       status
       newPath
       posterImageUrl
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -108,6 +110,7 @@ export const CATEGORY_BY_PATH = gql`
           maxWidth
           color
           pattern
+          material
           isMotorized
           motorPrice
           status
