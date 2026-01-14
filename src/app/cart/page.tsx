@@ -1,13 +1,14 @@
 import { RelatedProduct, Testimonial, CartPage } from "@components";
-import { fetchProducts } from "@config/fetch";
 import { TestimonialReview } from "@data/detail-page";
-import { GET_CARD_PRODUCT_QUERY } from "@graphql";
 import { Product } from "@/types/category";
 import React from "react";
+import { queryData } from "@config/fetch";
+import { CARD_PRODUCT } from "@graphql";
 
 const Cart = async () => {
-  const productList = await fetchProducts(GET_CARD_PRODUCT_QUERY);
+  const productList: Product[] = await queryData<Product[]>(CARD_PRODUCT, "productList");
   const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
+
   return (
     <>
       <CartPage />

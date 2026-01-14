@@ -11,11 +11,7 @@ import { useIndexedDb } from "@lib/useIndexedDb";
 export const Wishlist = React.memo(() => {
   const router = useRouter();
   const { user, isLoading } = useAuth();
-
-  // IndexedDB state + functions
   const { wishlist, freeSamples, removeFromWishlist, addFreeSampleItem } = useIndexedDb();
-
-  console.log(wishlist, "wishlistwishlist");
 
   React.useEffect(() => {
     if (!isLoading && !user) {
@@ -26,12 +22,10 @@ export const Wishlist = React.memo(() => {
   if (isLoading) return <p>Loading...</p>;
   if (!user) return null;
 
-  // Delete from Wishlist
   const handleDelete = async (id: string) => {
     await removeFromWishlist(id);
   };
 
-  // Add to Free Sample (with duplicate check)
   const handleFreeSample = async (product: Product) => {
     const alreadyExists = freeSamples.some((p) => String(p.id) === String(product.id));
 

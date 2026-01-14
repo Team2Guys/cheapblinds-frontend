@@ -1,10 +1,11 @@
 "use client";
-import { fetchSingleOrder } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import { Orders } from "@/types/category";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { ColorImage } from "@data/filter-colors";
+import { ORDER_BY_ID } from "@graphql";
 
 export const AllOrders = () => {
   const searchParams = useSearchParams();
@@ -15,7 +16,9 @@ export const AllOrders = () => {
 
     async function loadOrders() {
       try {
-        const response = await fetchSingleOrder(orderId || "");
+        const response: Orders | null = await queryData(ORDER_BY_ID, "orderById", {
+          id: orderId || "",
+        });
         setOrders(response);
       } catch (error) {
         console.error("Failed to fetch orders:", error);

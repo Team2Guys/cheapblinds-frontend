@@ -6,8 +6,9 @@ import { Testimonial, NewsletterSubscriptions, Toaster } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
-import { fetchNewsletterByEmail } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import { NewsletterProps } from "@/types/category";
+import { NEWSLETTER_SUBSCRIBER_BY_EMAIL } from "@graphql";
 
 const NewsletterPage = () => {
   const { user, isLoading } = useAuth();
@@ -22,7 +23,13 @@ const NewsletterPage = () => {
     if (!user) return;
     async function loadNewsletter() {
       try {
-        const response = await fetchNewsletterByEmail(user?.email || "");
+        const response: NewsletterProps = await queryData(
+          NEWSLETTER_SUBSCRIBER_BY_EMAIL,
+          "newsletterSubscriberByEmail",
+          {
+            email: user?.email || "",
+          },
+        );
         setNewsletter(response);
       } catch (error) {
         Toaster("error", "Failed to fetch newsletter subscriber.");

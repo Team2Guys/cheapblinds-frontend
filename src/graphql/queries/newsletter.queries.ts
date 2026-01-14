@@ -24,8 +24,8 @@ export const GET_NEWSLETTER_SUBSCRIBER_BY_ID_QUERY = gql`
   }
 `;
 
-export const GET_NEWSLETTER_SUBSCRIBER_BY_EMAIL_QUERY = gql`
-  query GetNewsletterSubscriberByEmail($email: String!) {
+export const NEWSLETTER_SUBSCRIBER_BY_EMAIL = gql`
+  query NewsletterSubscriberByEmail($email: String!) {
     newsletterSubscriberByEmail(email: $email) {
       id
       email

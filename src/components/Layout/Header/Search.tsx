@@ -1,9 +1,9 @@
 import { Modal } from "@components";
-import { fetchProducts } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import Link from "next/link";
 import React, { useEffect, useState, useMemo } from "react";
 import { IoSearch, IoClose } from "react-icons/io5";
-import { GET_PRODUCT_BY_SEARCH_QUERY } from "@graphql";
+import { PRODUCT_BY_SEARCH } from "@graphql";
 import { Product } from "@/types/category";
 import Image from "next/image";
 
@@ -16,7 +16,8 @@ const SearchBar = ({ className }: { className?: string }) => {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const response = await fetchProducts(GET_PRODUCT_BY_SEARCH_QUERY);
+        const response: Product[] = await queryData(PRODUCT_BY_SEARCH, "productList");
+
         setProducts(response);
       } catch (error) {
         console.error("Failed to fetch products:", error);
@@ -134,7 +135,7 @@ const SearchResults = ({
       {results.map((product) => (
         <li key={product.id}>
           <Link
-            href={`/${product.category?.slug}/${product.subcategory?.slug}/${product.slug}`}
+            href={`/${product.category?.newPath}/${product.subcategory?.newPath}/${product.newPath}`}
             onClick={onLinkClick}
             className="flex items-center gap-4 p-3 hover:bg-gray-50 transition-colors cursor-pointer"
           >

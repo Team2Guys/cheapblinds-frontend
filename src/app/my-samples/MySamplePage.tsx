@@ -6,8 +6,9 @@ import { Testimonial, MySample } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
-import { fetchOrdersByUserId } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import { Orders } from "@/types/category";
+import { ORDERS_BY_USER_ID } from "@graphql";
 
 const MySamplePage = () => {
   const { user, isLoading } = useAuth();
@@ -24,7 +25,9 @@ const MySamplePage = () => {
 
     async function loadOrders() {
       try {
-        const response = await fetchOrdersByUserId(user?.id || "");
+        const response: Orders[] | null = await queryData(ORDERS_BY_USER_ID, "orderListByUserId", {
+          id: user?.id || "",
+        });
         const OrdersList = response
           ? response
               .filter((order: Orders) => order.paymentStatus === "FREE")

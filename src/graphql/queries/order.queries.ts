@@ -17,7 +17,7 @@ export const ORDER_LIST_QUERY = gql`
   }
 `;
 
-export const ORDER_BY_ID_QUERY = gql`
+export const ORDER_BY_ID = gql`
   query OrderById($id: ID!) {
     orderById(id: $id) {
       id
@@ -37,7 +37,7 @@ export const ORDER_BY_ID_QUERY = gql`
   }
 `;
 
-export const ORDERS_BY_USER_ID_QUERY = gql`
+export const ORDERS_BY_USER_ID = gql`
   query OrdersByUserId($id: ID!) {
     orderListByUserId(id: $id) {
       id

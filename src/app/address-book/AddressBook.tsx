@@ -6,9 +6,9 @@ import { Testimonial, AddressBook } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
 import { UserProps } from "@/types/category";
-import { fetchUserById } from "@config/fetch";
+import { queryData } from "@config/fetch";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
-import { GET_USER_FOR_ADDRESS_QUERY } from "@graphql";
+import { USER_FOR_ADDRESS } from "@graphql";
 
 const AddressBookPage = () => {
   const { user, isLoading } = useAuth();
@@ -18,7 +18,11 @@ const AddressBookPage = () => {
   const loadUser = useCallback(async () => {
     if (!user) return;
     try {
-      const userResponse = await fetchUserById(user.id, GET_USER_FOR_ADDRESS_QUERY);
+      const userResponse: UserProps | null = await queryData<UserProps | null>(
+        USER_FOR_ADDRESS,
+        "userById",
+        { id: user.id },
+      );
 
       if (userResponse?.addresses?.length) {
         userResponse.addresses = [...userResponse.addresses].sort(

@@ -9,18 +9,19 @@ import {
   HeroSection,
   BlindFitting,
 } from "@components";
-import { fetchCategories, fetchProducts } from "@config/fetch";
 import { chooseImage } from "@data/home";
-import { Product } from "@/types/category";
+import { Category, Product } from "@/types/category";
 import { generateMetadata } from "@utils/seoMetadata";
 import { metaData } from "@data/meta-data";
+import { CARD_CATEGORY, CARD_PRODUCT } from "@graphql";
+import { queryData } from "@config/fetch";
 export const metadata = generateMetadata(metaData.home);
 
 const Home = async () => {
-  const [productList, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
+  const categoryList: Category[] = await queryData<Category[]>(CARD_CATEGORY, "categoryList");
+  const productList: Product[] = await queryData<Product[]>(CARD_PRODUCT, "productList");
   const publishedProduct = productList?.filter((item: Product) => item?.status === "PUBLISHED");
-  const publishedCategory = categoryList?.filter((item: Product) => item?.status === "PUBLISHED");
-
+  const publishedCategory = categoryList?.filter((item: Category) => item?.status === "PUBLISHED");
   return (
     <>
       <HeroSection
@@ -30,7 +31,7 @@ const Home = async () => {
       />
       <InformationSection className="hidden md:grid" />
       <ChildSafety />
-      <ShopBySlider CategoryList={publishedCategory || []} />
+      <ShopBySlider categoryList={publishedCategory || []} />
       <OrderSection
         reverse={false}
         image1="/assets/images/home/blind-image.webp"

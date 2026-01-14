@@ -33,7 +33,7 @@ const useFilterOptions = (allProducts: Product[]) => {
         obj[key] = (obj[key] || 0) + 1;
       };
 
-      increment(counts.type, product.parentSubcategoryUrl);
+      increment(counts.type, product.subcategoryName);
       increment(counts.pattern, product.pattern);
       increment(counts.material, product.material);
 
@@ -90,7 +90,7 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
         .filter((product) => product.status === "PUBLISHED")
         .map((product) => ({
           ...product,
-          parentSubcategoryUrl: subCat.slug,
+          subcategoryName: subCat.name,
         })),
     );
   }, [subcategoryArray]);
@@ -107,7 +107,7 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
     return allProducts.filter((product) => {
       if (selectedMotorized && !product.isMotorized) return false;
 
-      const type = product.parentSubcategoryUrl ?? "";
+      const type = product.subcategoryName ?? "";
       const pattern = product.pattern ?? "";
       const material = product.material ?? "";
       const color = product.color ?? "";

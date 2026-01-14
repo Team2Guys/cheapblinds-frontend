@@ -8,7 +8,7 @@ import { SwiperSlide } from "swiper/react";
 import { RelatedProductProps } from "@/types/common";
 
 export const RelatedProduct = React.memo(
-  ({ title, description, data, titleStart, category, subCategory }: RelatedProductProps) => {
+  ({ title, description, data, titleStart }: RelatedProductProps) => {
     return (
       <div className="container mx-auto px-2 space-y-3 mt-10 md:mt-16 ">
         <h2 className={`text-heading pb-5 ${titleStart ? "text-start" : "text-center"}`}>
@@ -18,13 +18,7 @@ export const RelatedProduct = React.memo(
         <SwiperSlider navigation spaceBetween={10} loop breakpoints={RelatedBreakpoints}>
           {data.slice(0, 12).map((array) => (
             <SwiperSlide key={array.id} className="mb-5">
-              <Link
-                href={
-                  (array.category?.slug || category) && (array.subcategory?.slug || subCategory)
-                    ? `/${array.category?.slug ?? category}/${array.subcategory?.slug ?? subCategory}/${array.slug}`
-                    : `/${array.slug}`
-                }
-              >
+              <Link href={array.newPath ?? "/"}>
                 <div className="overflow-hidden hover:shadow-md ">
                   <div className="relative w-full h-auto max-h-[350px] aspect-square">
                     <Image

@@ -4,13 +4,13 @@ import Link from "next/link";
 
 interface BreadcrumbProps {
   title?: string;
-  slug?: string;
+  newPath?: string;
   subcategory?: string;
   className?: string;
 }
 
 export const Breadcrumb = React.memo(
-  ({ title = "", slug = "", subcategory = "", className = "" }: BreadcrumbProps) => {
+  ({ title = "", newPath = "", subcategory = "", className = "" }: BreadcrumbProps) => {
     const arrow = (
       <svg
         width="10"
@@ -29,11 +29,11 @@ export const Breadcrumb = React.memo(
             Home
           </Link>
 
-          {slug && (
+          {newPath && (
             <>
               {arrow}
-              <Link href={`/${slug.toLowerCase()}/`} className="capitalize">
-                {slug.replace(/-/g, " ")}
+              <Link href={`/${newPath.toLowerCase()}/`} className="capitalize">
+                {newPath.replace(/-/g, " ")}
               </Link>
             </>
           )}
@@ -43,7 +43,7 @@ export const Breadcrumb = React.memo(
               {arrow}
               {title ? (
                 <Link
-                  href={`/${slug.toLowerCase()}/${subcategory.toLowerCase()}/`}
+                  href={`/${newPath.toLowerCase()}/${subcategory.toLowerCase()}/`}
                   className="capitalize"
                 >
                   {subcategory.replace(/-/g, " ")}

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const GET_CATEGORY_LIST_QUERY = gql`
-  query GetCategoryList {
+export const CATEGORY_LIST = gql`
+  query CategoryList {
     categoryList {
       id
       name
@@ -10,7 +10,7 @@ export const GET_CATEGORY_LIST_QUERY = gql`
       breadcrumb
       seoSchema
       status
-      slug
+      newPath
       metaTitle
       metaDescription
       canonicalUrl
@@ -23,13 +23,13 @@ export const GET_CATEGORY_LIST_QUERY = gql`
 `;
 
 export const GET_CATEGORY_BY_ID_QUERY = gql`
-  query GetCategoryById($id: ID!) {
+  query CategoryById($id: ID!) {
     categoryById(id: $id) {
       id
       name
       description
       shortDescription
-      slug
+      newPath
       metaTitle
       metaDescription
       canonicalUrl
@@ -44,26 +44,26 @@ export const GET_CATEGORY_BY_ID_QUERY = gql`
   }
 `;
 
-export const GET_CARD_CATEGORY_QUERY = gql`
-  query GetCategoryList {
+export const CARD_CATEGORY = gql`
+  query CategoryList {
     categoryList {
       id
       name
       status
-      slug
+      newPath
       posterImageUrl
     }
   }
 `;
 
-export const GET_CATEGORY_BY_SLUG_QUERY = gql`
-  query GetCategoryBySlug($slug: String!) {
-    categoryBySlug(input: { slug: $slug }) {
+export const CATEGORY_BY_PATH = gql`
+  query CategoryByPath($path: String!) {
+    categoryByPath(input: { path: $path }) {
       id
       name
       description
       shortDescription
-      slug
+      newPath
       metaTitle
       metaDescription
       canonicalUrl
@@ -80,7 +80,7 @@ export const GET_CATEGORY_BY_SLUG_QUERY = gql`
         name
         description
         shortDescription
-        slug
+        newPath
         metaTitle
         metaDescription
         canonicalUrl
@@ -95,11 +95,11 @@ export const GET_CATEGORY_BY_SLUG_QUERY = gql`
         products {
           id
           name
-          slug
+          newPath
           blindTypeId
           fabricId
           sku
-          productUrl
+          newPath
           posterImageUrl
           price
           minDrop
