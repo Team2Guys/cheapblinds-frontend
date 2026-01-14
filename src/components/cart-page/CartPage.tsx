@@ -1,15 +1,26 @@
 "use client";
 import Image from "next/image";
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { SelectOption, Counter, Checkout } from "@components";
 import { HiOutlineTrash } from "react-icons/hi2";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useIndexedDb } from "@lib/useIndexedDb";
+import { useAuth } from "@context/UserContext";
+import { useRouter } from "next/navigation";
 
 export const CartPage = memo(() => {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity, updateMotorized } =
     useIndexedDb();
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/login");
+    }
+  }, [user, isLoading, router]);
+
+  if (!user) return null;
 
   const totalPrice = cart.reduce((total, item) => total + (item.finalPrice || 0), 0);
 

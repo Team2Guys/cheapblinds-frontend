@@ -14,6 +14,7 @@ export const queryData = async <T>(
       variables: variables,
       fetchPolicy: "no-cache",
       context: {
+        caches: "no-cache",
         fetchOptions: { next: { tags: ["apiRequest"] } },
       },
     });

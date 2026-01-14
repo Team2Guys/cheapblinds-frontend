@@ -14,7 +14,7 @@ import { CREATE_ORDER_MUTATION, USER_BY_ID } from "@graphql";
 import { CheckoutValidationSchema } from "@data/Validations";
 
 export const CheckoutPage = React.memo(() => {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const { cart, clearCart } = useIndexedDb();
   const router = useRouter();
   const [userList, setUser] = useState<UserProps | null>(null);
@@ -22,6 +22,12 @@ export const CheckoutPage = React.memo(() => {
 
   const termsRef = useRef<HTMLInputElement>(null);
   const [submitAttempted, setSubmitAttempted] = useState(false);
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/login");
+    }
+  }, [user, isLoading, router]);
 
   useEffect(() => {
     if (!user) return;
@@ -134,6 +140,8 @@ export const CheckoutPage = React.memo(() => {
       setSubmitting(false);
     }
   };
+
+  if (!user) return null;
 
   return (
     <Formik

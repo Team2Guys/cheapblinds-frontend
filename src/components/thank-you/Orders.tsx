@@ -28,6 +28,8 @@ export const AllOrders = () => {
     loadOrders();
   }, [orderId]);
 
+  console.log(orders, "ordersorders");
+
   const getColorImage = (color: string) => {
     const found = ColorImage.find((c) => c.color.toLowerCase() === color.toLowerCase());
     return found ? found.image : "/assets/images/colors/white.png";
@@ -61,13 +63,16 @@ export const AllOrders = () => {
             </div>
             <div className="max-w-52">
               <p className="font-semibold">{item.name}</p>
+              <p className="text-sm capitalize">Qty: {item?.quantity || 1}x</p>
               <p className="block sm:hidden">
-                <span className=" font-currency text-xl font-normal"></span> {item.price}
+                <span className=" font-currency text-xl font-normal"></span>{" "}
+                {item.subPrice ?? item.price}
               </p>
             </div>
           </div>
           <p className="hidden sm:block">
-            <span className=" font-currency text-xl font-normal"></span> {item.price}
+            <span className=" font-currency text-xl font-normal"></span>{" "}
+            {item.subPrice ?? item.price}
           </p>
         </div>
       ))}

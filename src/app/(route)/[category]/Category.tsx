@@ -112,7 +112,6 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
       const material = product.material ?? "";
       const color = product.color ?? "";
 
-      // 1. Generate the SAME label used in the filter options
       const productWidthLabel =
         product.maxWidth !== undefined ? `Up To ${product.maxWidth / 10}cm Wide` : null;
 
@@ -120,7 +119,6 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
       if (selectedPattern.length && !selectedPattern.includes(pattern)) return false;
       if (selectedMaterial.length && !selectedMaterial.includes(material)) return false;
 
-      // 2. Fix: Check if the product's label is inside the selectedWidth array
       if (selectedWidth.length) {
         if (!productWidthLabel || !selectedWidth.includes(productWidthLabel)) {
           return false;
