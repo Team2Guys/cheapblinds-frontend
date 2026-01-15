@@ -73,6 +73,7 @@
   --font-open_Sans: var(--font-open-sans);
   --font-rubik: var(--font-rubik);
   --font-currency: var(--font-currency);
+  --breakpoint-3xl: 2000px;
 }
 
 @media (prefers-color-scheme: dark) {
