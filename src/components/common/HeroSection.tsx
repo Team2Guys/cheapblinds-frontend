@@ -12,15 +12,6 @@ export const HeroSection = React.memo(
     alt = "hero-banner",
     link,
   }: HeroProps) => {
-    const wrapperClasses = `relative w-full overflow-hidden aspect-square sm:aspect-21/9
-      ${
-        isHome
-          ? "h-auto max-h-[280px] sm:max-h-[520px] 2xl:max-h-[650px]"
-          : className
-            ? className
-            : "h-auto max-h-[400px]"
-      }`;
-
     const content = (
       <>
         <Image
@@ -30,6 +21,8 @@ export const HeroSection = React.memo(
           fill
           priority
           fetchPriority="high"
+          quality={100}
+          sizes="100vw"
           className={mobileImage ? "hidden sm:block" : "block"}
         />
 
@@ -48,11 +41,32 @@ export const HeroSection = React.memo(
     );
 
     return link ? (
-      <Link href={link} className={`${wrapperClasses} block`}>
+      <Link
+        href={link}
+        className={`relative w-full overflow-hidden 
+      ${
+        isHome
+          ? "h-full aspect-square sm:aspect-21/8"
+          : className
+            ? className
+            : "h-full aspect-square sm:aspect-21/5"
+      } block`}
+      >
         {content}
       </Link>
     ) : (
-      <div className={wrapperClasses}>{content}</div>
+      <div
+        className={`relative w-full overflow-hidden  
+      ${
+        isHome
+          ? "h-full aspect-square sm:aspect-21/8"
+          : className
+            ? className
+            : "h-full aspect-square sm:aspect-21/5"
+      } `}
+      >
+        {content}
+      </div>
     );
   },
 );
