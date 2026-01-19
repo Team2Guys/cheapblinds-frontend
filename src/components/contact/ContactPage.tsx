@@ -32,9 +32,9 @@ export const ContactPage = React.memo(({ IsHide }: { IsHide?: boolean }) => {
           </p>
 
           <div className="space-y-4 mt-6">
-            <Link href="mailto:help@cheapblinds.ae" className="flex items-start gap-3">
+            <Link href="mailto:cs@cheapblinds.ae" className="flex items-start gap-3">
               <Email />
-              <span>help@cheapblinds.ae</span>
+              <span>cs@cheapblinds.ae</span>
             </Link>
 
             <Link href="tel:+971 50 597 4531" className="flex items-start gap-3">

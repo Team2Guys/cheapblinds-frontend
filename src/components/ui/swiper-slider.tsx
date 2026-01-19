@@ -28,7 +28,7 @@ interface ArrowProps {
 const NextArrow: React.FC<ArrowProps> = ({ onClick, isCart }) => (
   <div
     className={`absolute z-20 cursor-pointer text-black rounded-full p-1 hover:scale-105 transition-transform shadow
-      ${isCart ? "top-1/2 -translate-y-1/2 right-2 bg-primary-light hover:bg-primary" : "-top-5 md:top-0 right-2 bg-secondary"}
+      ${isCart ? "top-1/2 -translate-y-1/2 right-0 bg-primary-light hover:bg-primary" : "-top-5 md:top-0 right-0 bg-secondary"}
     `}
     onClick={onClick}
   >
@@ -39,7 +39,7 @@ const NextArrow: React.FC<ArrowProps> = ({ onClick, isCart }) => (
 const PrevArrow: React.FC<ArrowProps> = ({ onClick, isCart }) => (
   <div
     className={`absolute z-20 cursor-pointer text-black rounded-full p-1 hover:scale-105 transition-transform shadow
-      ${isCart ? "top-1/2 -translate-y-1/2 left-2 bg-primary-light hover:bg-primary" : "-top-5 md:top-0 left-2 bg-secondary"}
+      ${isCart ? "top-1/2 -translate-y-1/2 left-0 bg-primary-light hover:bg-primary" : "-top-5 md:top-0 left-0 bg-secondary"}
     `}
     onClick={onClick}
   >

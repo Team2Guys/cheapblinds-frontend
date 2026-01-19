@@ -12,22 +12,23 @@ export const faqData: FaqCategory[] = [
     icon: Package,
     items: [
       {
-        question: "Our measuring and fitting guides help?",
+        question: "Q1: What types of blinds do you offer?",
         answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+          "We offer affordable roller blinds, zebra blinds, vertical blinds, and Venetian blinds with motorised options.  They are designed to provide privacy, light control, and excellent value for money.",
       },
       {
-        question: "Do you offer custom blinds?",
-        answer: "Yes, custom sizing and design options are available.",
-      },
-      {
-        question: "Are your products child safe?",
-        answer: "Absolutely, all our blinds comply with child-safety regulations.",
-      },
-      {
-        question: "Our measuring and fitting guides help?",
+        question: "Q2: Are your blinds durable, even though they are budget-friendly?",
         answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+          "Yes. Our blinds are made from quality-tested materials to ensure durability, smooth operation, and long-lasting performance.",
+      },
+      {
+        question: "Q3: Can I order fabric samples before buying?",
+        answer:
+          "Yes, you can order up to 5 free fabric samples, delivered within 24 hours, so you can confidently choose the right colour and texture.",
+      },
+      {
+        question: "Q4: Do your blinds come with a warranty?",
+        answer: "Yes, all our blinds include a limited warranty against manufacturing defects.",
       },
     ],
   },
@@ -37,12 +38,14 @@ export const faqData: FaqCategory[] = [
     icon: Measure,
     items: [
       {
-        question: "How to measure for blinds?",
-        answer: "Follow our guide to measure both recess and exact fits accurately.",
+        question: "Q1: How do I measure my windows correctly?",
+        answer:
+          "Measure the width and height using a steel tape measure. Always measure twice to ensure accuracy.",
       },
       {
-        question: "Do I need special tools?",
-        answer: "A tape measure and pencil are enough.",
+        question: "Q2: What if I measure wrong?",
+        answer:
+          "Our team will assist you with proper measurement guidance to help ensure the correct sizing before placing your order.",
       },
       {
         question: "Our measuring and fitting guides help?",
@@ -50,9 +53,13 @@ export const faqData: FaqCategory[] = [
           "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
       },
       {
-        question: "Our measuring and fitting guides help?",
+        question: "Q3: Do you offer a professional measuring service?",
         answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+          "Yes. We can arrange a professional measuring service at a small additional charge for accurate measurements and a perfect fit.",
+      },
+      {
+        question: "Q4: What units should I use when submitting measurements?",
+        answer: "Please provide all measurements in centimetres (cm) without rounding.",
       },
     ],
   },
@@ -62,23 +69,23 @@ export const faqData: FaqCategory[] = [
     icon: Fitting,
     items: [
       {
-        question: "Can I fit blinds myself?",
-        answer: "Yes, our blinds come with easy fitting instructions.",
+        question: "Q1: Do you provide installation services?",
+        answer:
+          "No, we currently do not provide installation services. All blinds are supplied for easy DIY installation.",
       },
       {
-        question: "Our measuring and fitting guides help?",
-        answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+        question: "Q2: Are installation instructions included?",
+        answer: "Yes, every order includes clear fitting instructions and mounting accessories.",
       },
       {
-        question: "Our measuring and fitting guides help?",
+        question: "Q3: Are the blinds easy to install by myself?",
         answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+          "Yes. Basic tools and step-by-step instructions make installation simple for most homes.",
       },
       {
-        question: "Our measuring and fitting guides help?",
+        question: "Q4: Can I get help if I face installation issues?",
         answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+          "Our support team can provide basic guidance, but installation remains the customer’s responsibility.",
       },
     ],
   },
@@ -88,23 +95,21 @@ export const faqData: FaqCategory[] = [
     icon: Support,
     items: [
       {
-        question: "How do I contact support?",
-        answer: "You can reach us via email or our contact form.",
+        question: "Q1: How can I contact customer support?",
+        answer: "You can contact us via phone, WhatsApp, email, or live chat for quick assistance.",
       },
       {
-        question: "Our measuring and fitting guides help?",
-        answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+        question: "Q2: What are your customer support hours?",
+        answer: "Live chat support is available 7 days a week from 9:00 AM to 9:00 PM.",
       },
       {
-        question: "Our measuring and fitting guides help?",
+        question: "Q3: Can you help me choose the right blinds?",
         answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+          "Yes! Our team can help you select blinds based on budget, room type, and privacy needs.",
       },
       {
-        question: "Our measuring and fitting guides help?",
-        answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+        question: "Q4: What should I do if my blinds arrive damaged or defective?",
+        answer: "Contact us within 7 days of delivery with clear photos and your order number.",
       },
     ],
   },
@@ -114,23 +119,20 @@ export const faqData: FaqCategory[] = [
     icon: Delivery,
     items: [
       {
-        question: "How long does delivery take?",
-        answer: "Typically 3–5 working days after confirmation.",
+        question: "Q1: How long does delivery take?",
+        answer: "Most customised orders are delivered within 1–4 working days.",
       },
       {
-        question: "Our measuring and fitting guides help?",
-        answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+        question: "Q2: Do you offer free delivery?",
+        answer: "Yes, free delivery is available on selected orders and locations.",
       },
       {
-        question: "Our measuring and fitting guides help?",
-        answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+        question: "Q3: How long do free samples take to arrive?",
+        answer: "Free samples (up to 5) are delivered within 24 hours.",
       },
       {
-        question: "Our measuring and fitting guides help?",
-        answer:
-          "Yes, our measuring and fitting guides provide step-by-step instructions for all products.",
+        question: "Q4: Can I track my order?",
+        answer: "Yes, tracking details will be shared once your order is dispatched.",
       },
     ],
   },

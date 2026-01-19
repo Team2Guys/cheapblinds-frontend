@@ -8,3 +8,4 @@ export * from "./ReviewsSection";
 export * from "./Testimonial";
 export * from "./AddressForm";
 export * from "./HeroSection";
+export * from "./ScrollToTop";

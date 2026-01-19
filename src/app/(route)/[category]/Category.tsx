@@ -114,11 +114,9 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
 
       const productWidthLabel =
         product.maxWidth !== undefined ? `Up To ${product.maxWidth / 10}cm Wide` : null;
-
       if (selectedType.length && !selectedType.includes(type)) return false;
       if (selectedPattern.length && !selectedPattern.includes(pattern)) return false;
       if (selectedMaterial.length && !selectedMaterial.includes(material)) return false;
-
       if (selectedWidth.length) {
         if (!productWidthLabel || !selectedWidth.includes(productWidthLabel)) {
           return false;
@@ -126,10 +124,8 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
       }
 
       if (selectedColor.length && !selectedColor.includes(color)) return false;
-
       const basePrice = product.price ?? 0;
       const finalPrice = selectedMotorized ? basePrice + (product.motorPrice ?? 0) : basePrice;
-
       if (finalPrice < selectedPrice[0] || finalPrice > selectedPrice[1]) return false;
 
       return true;
@@ -185,7 +181,7 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
             materialOptions={materialOptions}
             widthOptions={widthOptions}
             colorOptions={colorOptions}
-            motorizedCount={motorizedCount} // Pass motorized count
+            motorizedCount={motorizedCount}
             selectedType={selectedType}
             setSelectedType={setSelectedType}
             selectedPattern={selectedPattern}

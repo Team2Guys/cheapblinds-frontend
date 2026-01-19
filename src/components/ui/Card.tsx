@@ -96,7 +96,7 @@ export const Card = React.memo(
           </div>
         )}
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 pt-6">
+        <div className="grid grid-cols-2 xl:grid-cols-3 gap-1 sm:gap-2 pt-6">
           {visibleProducts.map((card) => {
             const original = card.price ?? 0;
             const motor = card.motorPrice ?? 0;
@@ -122,7 +122,7 @@ export const Card = React.memo(
                           className="ms-1 md:ms-2"
                         />
                       </div>
-                      <p className="text-[9px] md:text-base font-semibold text-primary text-border">
+                      <p className="text-[9px] md:text-[16px] 2xl:text-lg font-semibold text-primary text-border  capitalize">
                         Order by{" "}
                         <span className="text-sm md:text-2xl text-primary font-semibold text-border">
                           3pm

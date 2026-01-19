@@ -59,6 +59,10 @@ export const CARD_PRODUCT = gql`
       posterImageUrl
       price
       status
+      category {
+        id
+        name
+      }
     }
   }
 `;

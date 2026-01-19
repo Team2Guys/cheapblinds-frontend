@@ -5,6 +5,7 @@ import { Subcategory } from "@/types/category";
 import { SUBCATEGORY_BY_PATH } from "@graphql";
 import { notFound } from "next/navigation";
 import { generateMeta } from "@utils/seoMetadata";
+import ScrollToTop from "@components/common/ScrollToTop";
 
 export async function generateMetadata({
   params,
@@ -48,6 +49,7 @@ const Page = async ({ params }: { params: Promise<{ category: string; subCategor
   const { name, description } = subCategoryList;
   return (
     <>
+      <ScrollToTop />
       <Breadcrumb newPath={category} title={subCategory} />
       <CategoryPage
         categoryName={name}

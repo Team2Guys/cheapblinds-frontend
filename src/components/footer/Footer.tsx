@@ -26,7 +26,7 @@ const Footer = () => {
           className="opacity-80 absolute top-16 sm:top-0 left-0 w-full h-[250px] sm:w-2/5 sm:h-[360px] lg:h-full"
         />
         <div className="flex flex-col sm:flex-row gap-6 2xl:gap-10 items-start">
-          <div className="w-full sm:w-1/3 flex flex-col items-start justify-between relative h-[360px]">
+          <div className="w-full sm:w-1/3 flex flex-col items-start justify-end relative h-[360px]">
             <div className="flex items-center space-x-2 font-medium font-rubik text-lg border-b-2 border-black pb-1">
               <p>Order online ANYTIME, or give us a call.</p>
             </div>
@@ -69,9 +69,13 @@ const Footer = () => {
                   height={20}
                   className="mt-2 w-5"
                 />
-                <p className="w-[190px] leading-7">
-                  Unit 43 22nd St – Al Quoz Industrial Area 4 – Dubai UAE
-                </p>
+                <Link
+                  target="_blank"
+                  href="https://maps.app.goo.gl/DAUuZetzspv71pCR6"
+                  className="w-[190px] leading-7"
+                >
+                  J1 Warehouses, Jebel Ali Industrial Area 1 - Dubai
+                </Link>
               </div>
             </div>
           </div>

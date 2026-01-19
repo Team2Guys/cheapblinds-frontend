@@ -16,16 +16,10 @@ export const Checkbox = ({ label, checked, onChange, price, imageUrl }: Checkbox
     <div
       onClick={onChange}
       className={`relative border rounded-md p-3 cursor-pointer flex justify-between items-center transition-all
-        ${checked ? "bg-secondary" : ""}
+        ${checked ? "bg-secondary drop-shadow" : " bg-white hover:bg-secondary hover:drop-shadow"}
       `}
     >
       <div className="flex items-center gap-2">
-        {checked && (
-          <span className="absolute -top-2 -left-2 bg-primary rounded-full w-5 h-5 p-0.5 flex items-center justify-center">
-            <IoMdCheckmark size={20} />
-          </span>
-        )}
-
         {imageUrl && (
           <Image
             unoptimized
@@ -40,12 +34,19 @@ export const Checkbox = ({ label, checked, onChange, price, imageUrl }: Checkbox
         <span>{label}</span>
       </div>
 
-      {price && (
-        <span>
-          <span className="font-currency text-xl"></span>
-          {price}
-        </span>
-      )}
+      <div className="flex gap-2 items-center">
+        {price && (
+          <span>
+            <span className="font-currency text-xl"></span>
+            {price}
+          </span>
+        )}
+        {checked && (
+          <span className=" bg-primary rounded-full w-5 h-5 p-0.5 flex items-center justify-center">
+            <IoMdCheckmark size={20} />
+          </span>
+        )}
+      </div>
     </div>
   );
 };

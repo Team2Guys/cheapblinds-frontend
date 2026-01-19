@@ -12,10 +12,10 @@ export const InformationSection = React.memo(({ className }: { className?: strin
         <Link
           href={`${item.link}`}
           key={item.id}
-          className={`w-4/12 md:w-auto flex flex-col items-center justify-center text-center max-md:mb-2 py-6 px-4
+          className={`w-4/12 md:w-auto flex flex-col items-center justify-center text-center max-md:mb-2 lg:py-6 px-4
             ${index % 2 === 0 ? "bg-primary-light" : "bg-primary text-white"}`}
         >
-          <div className="relative w-16 h-16 md:w-24 md:h-24 mb-3">
+          <div className="relative w-12 h-12 lg:w-24 lg:h-24 mb-3">
             <Image unoptimized src={item.image} alt={item.text} fill className="object-contain" />
           </div>
           <p className="text-sm md:text-base font-semibold leading-snug">{item.text}</p>

@@ -19,7 +19,7 @@ const helpOptions = [
   },
   {
     id: 3,
-    title: "Sale Care",
+    title: "After Sale Care",
     desc: "If you would like help with sale delivery, click below.",
     button: "Sale Help",
     icon: "/assets/images/contact/box.png",
@@ -35,10 +35,10 @@ export const ContactHelp = React.memo(() => {
         {helpOptions.map((item) => (
           <div
             key={item.id}
-            className="bg-primary-light p-2 md:p-4 flex flex-col justify-between items-center text-center space-y-3"
+            className="bg-primary-light p-2 md:p-4 flex flex-col justify-between items-center text-center space-y-3 capitalize"
           >
             <div className="space-y-2">
-              <div className="relative w-20 h-20 mx-auto">
+              <div className="relative aspect-square w-20 h-20 mx-auto">
                 <Image
                   unoptimized
                   src={item.icon}

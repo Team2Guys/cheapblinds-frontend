@@ -43,8 +43,8 @@ const CustomerService = () => {
         </Link>
         <p className="text-sm">
           Alternatively, you can email us on{" "}
-          <Link className="text-primary underline" href="mailto:info@cheapblinds.ae">
-            info@cheapblinds.ae
+          <Link className="text-primary underline" href="mailto:cs@cheapblinds.ae">
+            cs@cheapblinds.ae
           </Link>
         </p>
         <hr className="border-b-2 text-secondary mx-4" />

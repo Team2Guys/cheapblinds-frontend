@@ -201,7 +201,6 @@ export const IndexedDbProvider = ({ children }: { children: React.ReactNode }) =
       });
 
       setOpenCart(true);
-      Toaster("success", "Added another item to cart");
       return;
     }
 
@@ -216,7 +215,6 @@ export const IndexedDbProvider = ({ children }: { children: React.ReactNode }) =
     await addToStore(STORES.CART, newItem);
     setCart((prev) => [newItem, ...prev]);
     setOpenCart(true);
-    Toaster("success", "Added to cart");
   };
 
   const updateMotorized = async (id: string, isMotorized: boolean) => {
