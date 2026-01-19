@@ -1,23 +1,48 @@
+"use client";
+
 import { Modal } from "@components";
 import { queryData } from "@config/fetch";
 import Link from "next/link";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { IoSearch, IoClose } from "react-icons/io5";
 import { PRODUCT_BY_SEARCH } from "@graphql";
 import { Product } from "@/types/category";
 import Image from "next/image";
 
+/* ---------------------------------- */
+/* Debounce Hook */
+/* ---------------------------------- */
+function useDebounce<T>(value: T, delay = 300) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+/* ---------------------------------- */
+/* Main Component */
+/* ---------------------------------- */
 const SearchBar = ({ className }: { className?: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(20);
 
+  const debouncedQuery = useDebounce(searchQuery, 300);
+
+  /* Fetch products once */
   useEffect(() => {
     async function loadProducts() {
       try {
-        const response: Product[] = await queryData(PRODUCT_BY_SEARCH, "productList");
-
+        const response: Product[] = await queryData(
+          PRODUCT_BY_SEARCH,
+          "productList"
+        );
         setProducts(response);
       } catch (error) {
         console.error("Failed to fetch products:", error);
@@ -27,36 +52,49 @@ const SearchBar = ({ className }: { className?: string }) => {
     }
     loadProducts();
   }, []);
-  const filteredProducts = useMemo(() => {
-    if (!searchQuery.trim()) return [];
-    const query = searchQuery.toLowerCase();
-    return products.filter((item) => {
-      const isPublished = item?.status === "PUBLISHED";
-      const matchesName = item?.name?.toLowerCase().includes(query);
-      return isPublished && matchesName;
-    });
-  }, [searchQuery, products]);
 
-  const handleOpen = () => setIsModalOpen(true);
+  /* Reset pagination when query changes */
+  useEffect(() => {
+    setVisibleCount(20);
+  }, [debouncedQuery]);
+
+  /* Filtered products */
+  const filteredProducts = useMemo(() => {
+    if (!debouncedQuery.trim()) return [];
+
+    const query = debouncedQuery.toLowerCase();
+
+    return products.filter(
+      (item) =>
+        item.status === "PUBLISHED" &&
+        item.name?.toLowerCase().includes(query)
+    );
+  }, [debouncedQuery, products]);
+
+  /* Visible products */
+  const visibleProducts = useMemo(() => {
+    return filteredProducts.slice(0, visibleCount);
+  }, [filteredProducts, visibleCount]);
+
   const handleClose = () => {
     setIsModalOpen(false);
     setSearchQuery("");
   };
 
-  const handleLinkClick = () => {
-    setSearchQuery("");
-    handleClose();
+  const loadMore = () => {
+    setVisibleCount((prev) => prev + 20);
   };
 
   return (
     <div className={`relative ${className} z-40`}>
+      {/* DESKTOP SEARCH */}
       <div className="hidden md:flex flex-col relative w-full">
-        <div className="flex border rounded-full border-black px-4 gap-2 p-2 items-center w-full bg-white">
+        <div className="flex border rounded-full border-black px-4 gap-2 p-2 items-center bg-white">
           <IoSearch size={22} />
           <input
-            className="outline-none w-full text-sm bg-transparent"
             type="text"
             placeholder="Search products..."
+            className="outline-none w-full bg-transparent text-[16px] md:text-sm"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -68,28 +106,36 @@ const SearchBar = ({ className }: { className?: string }) => {
         </div>
 
         {searchQuery && (
-          <div className="absolute top-full mt-2 left-0 w-full bg-white border border-gray-200 shadow-xl rounded-xl overflow-hidden max-h-[400px] overflow-y-auto z-50">
+          <div className="absolute top-full mt-2 left-0 w-full bg-white border shadow-xl rounded-xl max-h-[400px] overflow-y-auto z-50">
             <SearchResults
-              results={filteredProducts}
+              results={visibleProducts}
               isLoading={isLoading}
-              onLinkClick={handleLinkClick}
+              onClose={handleClose}
+              hasMore={visibleProducts.length < filteredProducts.length}
+              onLoadMore={loadMore}
             />
           </div>
         )}
       </div>
 
-      <button className="md:hidden p-2" onClick={handleOpen} aria-label="Open search modal">
+      {/* MOBILE BUTTON */}
+      <button
+        className="md:hidden p-2"
+        onClick={() => setIsModalOpen(true)}
+        aria-label="Open search"
+      >
         <IoSearch size={25} />
       </button>
 
+      {/* MOBILE MODAL */}
       <Modal isOpen={isModalOpen} onClose={handleClose}>
-        <div className="flex flex-col gap-4 h-auto">
-          <div className="flex items-center gap-3 border border-gray-300 rounded-full p-3">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-3 border rounded-full p-3">
             <IoSearch size={22} />
             <input
               type="text"
               placeholder="Search products..."
-              className="w-full outline-none text-sm"
+              className="w-full outline-none text-[16px]"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               autoFocus
@@ -100,11 +146,14 @@ const SearchBar = ({ className }: { className?: string }) => {
               </button>
             )}
           </div>
-          <div className="flex-1 overflow-y-auto max-h-[400px]">
+
+          <div className="max-h-[400px] overflow-y-auto">
             <SearchResults
-              results={filteredProducts}
+              results={visibleProducts}
               isLoading={isLoading}
-              onLinkClick={handleLinkClick}
+              onClose={handleClose}
+              hasMore={visibleProducts.length < filteredProducts.length}
+              onLoadMore={loadMore}
             />
           </div>
         </div>
@@ -113,50 +162,84 @@ const SearchBar = ({ className }: { className?: string }) => {
   );
 };
 
+/* ---------------------------------- */
+/* Search Results */
+/* ---------------------------------- */
 const SearchResults = ({
   results,
   isLoading,
-  onLinkClick,
+  onClose,
+  hasMore,
+  onLoadMore,
 }: {
   results: Product[];
   isLoading: boolean;
-  onLinkClick: () => void;
+  onClose: () => void;
+  hasMore: boolean;
+  onLoadMore: () => void;
 }) => {
   if (isLoading) {
-    return <div className="p-4 text-center text-gray-500 text-sm">Loading...</div>;
+    return (
+      <div className="p-4 text-center text-gray-500 text-sm">
+        Loading...
+      </div>
+    );
   }
 
   if (results.length === 0) {
-    return <div className="p-4 text-center text-gray-500 text-sm">No products found.</div>;
+    return (
+      <div className="p-4 text-center text-gray-500 text-sm">
+        No products found.
+      </div>
+    );
   }
 
   return (
-    <ul className="flex flex-col divide-y divide-gray-100">
-      {results.map((product) => (
-        <li key={product.id}>
-          <Link
-            href={`/${product.category?.newPath}/${product.subcategory?.newPath}/${product.newPath}`}
-            onClick={onLinkClick}
-            className="flex items-center gap-4 p-3 hover:bg-gray-50 transition-colors cursor-pointer"
-          >
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-gray-100 border border-gray-200">
-              <Image
-                unoptimized
-                src={product.posterImageUrl || ""}
-                alt={product.name}
-                className="h-full w-full object-cover"
-                fill
-              />
-            </div>
+    <>
+      <ul className="divide-y">
+        {results.map((product) => (
+          <li key={product.id}>
+            <Link
+              href={product.newPath || "/"}
+              onClick={onClose}
+              className="flex items-center gap-4 p-3 hover:bg-gray-50"
+            >
+              <div className="relative h-12 w-12 rounded-md overflow-hidden border">
+                <Image
+                  unoptimized
+                  src={
+                    product.posterImageUrl ||
+                    "/assets/images/placeholder.png"
+                  }
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <p className="text-sm font-medium line-clamp-1">
+                  {product.name}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {product.subcategory?.name}
+                </p>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
 
-            <div className="flex flex-col">
-              <span className="text-sm font-medium line-clamp-1">{product.name}</span>
-              <span className="text-xs">{product.subcategory?.name}</span>
-            </div>
-          </Link>
-        </li>
-      ))}
-    </ul>
+      {hasMore && (
+        <div className="p-3 flex justify-center">
+          <button
+            onClick={onLoadMore}
+            className="text-sm font-medium px-4 py-2 border rounded-full hover:bg-gray-100"
+          >
+            Load more
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 

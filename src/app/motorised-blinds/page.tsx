@@ -7,6 +7,7 @@ import { generateMetadata } from "@utils/seoMetadata";
 import { metaData } from "@data/meta-data";
 import { queryData } from "@config/fetch";
 import { CARD_CATEGORY } from "@graphql";
+import ScrollToTop from "@components/common/ScrollToTop";
 export const metadata = generateMetadata(metaData.motorised_blinds);
 
 const page = async () => {
@@ -14,6 +15,7 @@ const page = async () => {
   const publishedCategory = categoryList?.filter((item: Category) => item?.status === "PUBLISHED");
   return (
     <>
+      <ScrollToTop />
       <Breadcrumb title="Motorised Blinds" />
       <MotorisedBanner />
       <ControlCard heading="Control Options" CardData={controlOptions} />
