@@ -7,6 +7,9 @@ export interface HeroProps {
   className?: string;
   alt?: string;
   link?: string;
+
+  modalContent?: React.ReactNode;
+  modalTitle?: string;
 }
 
 export interface OrderSectionProps {

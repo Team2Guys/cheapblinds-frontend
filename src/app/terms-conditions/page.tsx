@@ -132,8 +132,8 @@ const TermsConditions = () => {
           </p>
           <p>
             <strong>Email:</strong>{" "}
-            <Link className="text-primary underline " href="mailto:info@cheapblinds.ae">
-              info@cheapblinds.ae
+            <Link className="text-primary underline " href="mailto:cs@cheapblinds.ae">
+              cs@cheapblinds.ae
             </Link>
           </p>
           <p>

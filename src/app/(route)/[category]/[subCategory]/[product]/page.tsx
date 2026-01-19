@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PRODUCT_BY_PATH, SUBCATEGORY_BY_PATH } from "@graphql";
 import { Product, Subcategory } from "@/types/category";
 import { generateMeta } from "@utils/seoMetadata";
+import ScrollToTop from "@components/common/ScrollToTop";
 
 export async function generateMetadata({
   params,
@@ -57,6 +58,7 @@ const ProductPage = async ({
   );
   return (
     <>
+      <ScrollToTop />
       <Breadcrumb newPath={category} subcategory={subCategory} title={SingleProduct?.breadcrumb} />
       <div className="container mx-auto px-2">
         <ProductDetail categorySlug={category} productData={SingleProduct} />

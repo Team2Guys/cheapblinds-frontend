@@ -31,7 +31,7 @@ const getSectionLabel = (title: string) => {
   switch (title) {
     case "Finish":
     case "System":
-      return "Hydreal Type / Colour";
+      return "Headrail Type / Colour";
     case "Type":
       return "Stacking Style";
     case "Chain":

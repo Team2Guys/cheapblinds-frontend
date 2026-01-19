@@ -146,7 +146,7 @@ export const CATEGORY_OPTION_CONFIG = {
 };
 
 export const MODAL_CONTENTS: Record<string, React.ReactNode> = {
-  "Hydreal Type / Colour": React.createElement(
+  "Headrail Type / Colour": React.createElement(
     React.Fragment,
     null,
     "The headrail is the top section that houses the blind mechanism. Choose “Cassette” for a sleek look for remote operation. You can also select a classic finish for manual operation. Consider matching the colour to your interior style.",

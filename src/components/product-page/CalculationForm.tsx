@@ -114,10 +114,10 @@ export const CalculationForm = ({
               setWidth(numericValue);
               validateValue("width", numericValue);
             }}
-            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-1 ${
+            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-2 ${
               errors.width
                 ? "border-red-400 focus:ring-red-400"
-                : "border-secondary focus:ring-primary"
+                : "border-primary focus:ring-primary"
             }`}
             placeholder={`Enter width in ${unit}`}
           />
@@ -139,10 +139,10 @@ export const CalculationForm = ({
               setDrop(numericValue);
               validateValue("drop", numericValue);
             }}
-            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-1 ${
+            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-2 ${
               errors.drop
                 ? "border-red-400 focus:ring-red-400"
-                : "border-secondary focus:ring-primary"
+                : "border-primary focus:ring-primary"
             }`}
             placeholder={`Enter drop in ${unit}`}
           />

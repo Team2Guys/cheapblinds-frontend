@@ -44,12 +44,20 @@ const Home = async () => {
         <HeroSection
           desktopImage="/assets/images/home/free-order/free-order.webp"
           mobileImage="/assets/images/home/free-order/free-order-mobile.png"
-          className="container mx-auto h-[400px] md:h-auto md:max-h-[500px] 2xl:max-h-[600px]"
-          link="/roller-blinds/"
+          className="container mx-auto h-full aspect-12/9 sm:aspect-21/8 my-10"
+          modalTitle="Free Samples"
+          modalContent={
+            <div className="space-y-4">
+              <p>
+                You can add up to 5 samples to your basket and we’ll deliver them to your door free
+                of charge.
+              </p>
+            </div>
+          }
         />
         <HeroSection
           desktopImage="/assets/images/home/payment.jpg"
-          className="container mx-auto h-auto  md:max-h-[450px] 2xl:max-h-[550px] mt-10 md:mt-16"
+          className="container mx-auto h-full aspect-12/8 sm:aspect-21/8"
         />
       </div>
       <RelatedProduct title="Browse Products" data={publishedProduct || []} />

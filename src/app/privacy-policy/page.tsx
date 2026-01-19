@@ -86,8 +86,8 @@ const PrivacyPolicy = () => {
       <ul className="list-disc px-6">
         <li>
           <strong>Email:</strong>{" "}
-          <Link className="text-primary underline " href="mailto:help@cheapblinds.ae">
-            help@cheapblinds.ae
+          <Link className="text-primary underline " href="mailto:cs@cheapblinds.ae">
+            cs@cheapblinds.ae
           </Link>
         </li>
         <li>

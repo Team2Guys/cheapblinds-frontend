@@ -42,7 +42,7 @@ export default function RootLayout({
       </head>
       <body className={`${openSans.variable} ${rubik.variable} ${currency.variable} antialiased`}>
         <PathnameWrapper>
-          <ToastContainer autoClose={1500} />
+          <ToastContainer autoClose={2500} />
           <Analytics />
           <SpeedInsights />
           {children}

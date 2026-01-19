@@ -49,7 +49,7 @@ const SearchBar = ({ className }: { className?: string }) => {
   };
 
   return (
-    <div className={`relative ${className} z-50`}>
+    <div className={`relative ${className} z-40`}>
       <div className="hidden md:flex flex-col relative w-full">
         <div className="flex border rounded-full border-black px-4 gap-2 p-2 items-center w-full bg-white">
           <IoSearch size={22} />

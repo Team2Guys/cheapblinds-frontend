@@ -206,7 +206,7 @@ export const Filters = React.memo(
 
         {showTypeFilter && (
           <Accordion
-            title="Type"
+            title="Filter By Type"
             sectionKey="type"
             openSections={openSections}
             toggleSection={toggleSection}
@@ -234,7 +234,7 @@ export const Filters = React.memo(
         )}
 
         <Accordion
-          title="Colour"
+          title="Filter By Colour"
           sectionKey="color"
           openSections={openSections}
           toggleSection={toggleSection}
@@ -267,7 +267,7 @@ export const Filters = React.memo(
         </Accordion>
 
         <Accordion
-          title="Pattern"
+          title="Filter By Pattern"
           sectionKey="pattern"
           openSections={openSections}
           toggleSection={toggleSection}
@@ -294,7 +294,7 @@ export const Filters = React.memo(
         </Accordion>
 
         <Accordion
-          title="material"
+          title="Filter By Material"
           sectionKey="material"
           openSections={openSections}
           toggleSection={toggleSection}

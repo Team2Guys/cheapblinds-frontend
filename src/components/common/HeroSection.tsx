@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import React, { useState } from "react";
 import { HeroProps } from "@/types/common";
-import React from "react";
+import { Modal } from "@components/ui";
 
 export const HeroSection = React.memo(
   ({
@@ -11,7 +14,22 @@ export const HeroSection = React.memo(
     className,
     alt = "hero-banner",
     link,
+
+    // NEW
+    modalContent,
+    modalTitle,
   }: HeroProps) => {
+    const [open, setOpen] = useState(false);
+
+    const wrapperClasses = `relative w-full overflow-hidden ${modalContent ? "cursor-pointer" : ""}
+      ${
+        isHome
+          ? "h-full aspect-[12/9] sm:aspect-21/8"
+          : className
+            ? className
+            : "h-full aspect-video sm:aspect-21/5"
+      }`;
+
     const content = (
       <>
         <Image
@@ -21,8 +39,6 @@ export const HeroSection = React.memo(
           fill
           priority
           fetchPriority="high"
-          quality={100}
-          sizes="100vw"
           className={mobileImage ? "hidden sm:block" : "block"}
         />
 
@@ -40,33 +56,28 @@ export const HeroSection = React.memo(
       </>
     );
 
-    return link ? (
-      <Link
-        href={link}
-        className={`relative w-full overflow-hidden 
-      ${
-        isHome
-          ? "h-full aspect-square sm:aspect-21/8"
-          : className
-            ? className
-            : "h-full aspect-square sm:aspect-21/5"
-      } block`}
-      >
-        {content}
-      </Link>
-    ) : (
-      <div
-        className={`relative w-full overflow-hidden  
-      ${
-        isHome
-          ? "h-full aspect-square sm:aspect-21/8"
-          : className
-            ? className
-            : "h-full aspect-square sm:aspect-21/5"
-      } `}
-      >
-        {content}
-      </div>
-    );
+    if (modalContent) {
+      return (
+        <>
+          <div className={wrapperClasses} onClick={() => setOpen(true)}>
+            {content}
+          </div>
+
+          <Modal isOpen={open} onClose={() => setOpen(false)} title={modalTitle}>
+            {modalContent}
+          </Modal>
+        </>
+      );
+    }
+    if (link) {
+      return (
+        <Link href={link} className={`${wrapperClasses} block`}>
+          {content}
+        </Link>
+      );
+    }
+
+    // ✅ CASE 3: Normal image (unchanged)
+    return <div className={wrapperClasses}>{content}</div>;
   },
 );
