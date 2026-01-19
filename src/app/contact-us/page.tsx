@@ -10,8 +10,9 @@ const page = () => {
       <div className="bg-primary-light">
         <HeroSection
           desktopImage="/assets/images/call-banner.webp"
-          mobileImage="/assets/images/call-banner-mobile.webp"
-          className="container mx-auto h-[300px] lg:h-[350px]"
+          mobileImage="/assets/images/call-banner-mobile.png"
+          className="aspect-16/18 sm:aspect-21/5"
+          link="tel:+971 50 597 4531"
         />
       </div>
       <ContactHelp />
@@ -20,11 +21,11 @@ const page = () => {
         <HeroSection
           desktopImage="/assets/images/home/free-order/free-order.webp"
           mobileImage="/assets/images/home/free-order/free-order-mobile.png"
-          className="container mx-auto h-[400px] md:h-auto md:max-h-[500px]"
+          className="container mx-auto aspect-12/9 sm:aspect-21/8"
         />
         <HeroSection
           desktopImage="/assets/images/home/payment.jpg"
-          className="container mx-auto h-auto md:max-h-[500px] mt-10 md:mt-16"
+          className="container mx-auto aspect-12/9 sm:aspect-21/8 mt-10 md:mt-16"
         />
       </div>
     </>

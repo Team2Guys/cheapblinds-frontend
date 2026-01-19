@@ -153,6 +153,7 @@ export const Filters = React.memo(
             alt="icon"
             width={32}
             height={32}
+            className="w-auto h-auto"
           />
           <p>Express delivery</p>
         </div>

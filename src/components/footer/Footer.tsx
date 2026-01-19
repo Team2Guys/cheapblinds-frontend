@@ -10,10 +10,6 @@ import { useAuth } from "@context/UserContext";
 const Footer = () => {
   const { user } = useAuth();
 
-  const goToTop = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  };
-
   return (
     <footer className="bg-primary text-black mt-10">
       <div className="container mx-auto px-2 pt-10 pb-6 relative">
@@ -86,7 +82,7 @@ const Footer = () => {
                 <ul className="mt-4 space-y-2 text-sm">
                   {section.items.map((item) => (
                     <li key={item.label}>
-                      <Link href={item.href} className="hover:underline z-0" onClick={goToTop}>
+                      <Link href={item.href} className="hover:underline z-0">
                         {item.label}
                       </Link>
                     </li>
@@ -138,18 +134,18 @@ const Footer = () => {
           <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-center xl:justify-start">
             {!user && (
               <>
-                <Link href="/login" onClick={goToTop}>
+                <Link href="/login">
                   Sign In
                 </Link>
-                <Link href="/forgot-password" onClick={goToTop}>
+                <Link href="/forgot-password">
                   Forgot Password
                 </Link>
               </>
             )}
-            <Link href={user ? "/my-orders" : "/login"} onClick={goToTop}>
+            <Link href={user ? "/my-orders" : "/login"}>
               Your Orders
             </Link>
-            <Link href={user ? "/order-tracking" : "/login"} onClick={goToTop}>
+            <Link href={user ? "/order-tracking" : "/login"}>
               Order Tracking
             </Link>
           </div>

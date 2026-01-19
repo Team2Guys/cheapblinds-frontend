@@ -11,13 +11,14 @@ export const ContactBanner = React.memo(() => {
         {/* left section */}
         <div className="flex flex-col w-full sm:w-[50%] lg:w-[78%] lg:p-10 mb-5">
           <p className="text-primary text-[51px] lg:text-[57px] font-rubik font-semibold leading-[0.7]">
-            Ready{" "}
-            <span className="font-medium text-[27px] text-black">
-              to Decide? <br />
-              Let&lsquo;s Set It Up{" "}
-            </span>
+            Ready <span className="font-medium text-[27px] text-black">to decide?</span>
             <br />
-            <span className="ml-8 block mt-5"> Instantly!</span>
+            <span className="font-medium text-[27px] text-black">Need some</span>{" "}
+            <sub className="text-[51px] lg:text-[57px]">Help?</sub>
+            <br />
+            <span className="font-medium text-[27px] text-black">Let&apos;s set it up</span>
+            <br/>
+            <sub className="text-[51px] lg:text-[60px] ml-20">instantly</sub>
           </p>
           <Link href="tel:+971 50 597 4531" className="flex items-start gap-3 mt-10">
             <p>

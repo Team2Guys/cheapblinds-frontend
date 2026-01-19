@@ -17,8 +17,6 @@ const AboutSection = ({ title, description, image, reverse = false }: AboutSecti
           alt={title}
           fill
           className="object-cover object-center"
-          fetchPriority="high"
-          quality={100}
           priority
         />
       </div>
