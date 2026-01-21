@@ -69,8 +69,8 @@ const Navbar = ({ className }: { className?: string }) => {
                             unoptimized
                             src={sub.desktopImage}
                             alt={sub.name}
-                            width={20}
-                            height={20}
+                            width={25}
+                            height={25}
                             className="h-auto"
                           />
                         )}

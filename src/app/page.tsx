@@ -30,7 +30,7 @@ const Home = async () => {
         mobileImage="/assets/images/home/banner-mobile.webp"
         isHome
       />
-      <InformationSection className="hidden md:grid" />
+      <InformationSection />
       <ChildSafety />
       <ShopBySlider categoryList={publishedCategory || []} />
       <OrderSection
@@ -44,7 +44,7 @@ const Home = async () => {
         <HeroSection
           desktopImage="/assets/images/home/free-order/free-order.webp"
           mobileImage="/assets/images/home/free-order/free-order-mobile.png"
-          className="container mx-auto h-full aspect-12/9 sm:aspect-21/8 my-10"
+          className="container mx-auto h-full aspect-square sm:aspect-21/8 my-10"
           modalTitle="Free Samples"
           modalContent={
             <div className="space-y-4">

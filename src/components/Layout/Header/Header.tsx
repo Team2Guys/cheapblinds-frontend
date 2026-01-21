@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <div className="sticky top-0 z-50 bg-white">
       <div className="flex lg:hidden justify-between items-center py-2 border-b border-[#0000001F] px-2 container mx-auto">
-        <SocialLink />
+        <SocialLink isBlack />
         <UserIcons className="flex md:hidden" />
       </div>
       <div className="container mx-auto flex items-center justify-between w-full py-2 px-2">
@@ -65,7 +65,7 @@ const Header = () => {
           <div className="mx-auto">
             <Navbar />
           </div>
-          <SocialLink className="hidden lg:flex" />
+          <SocialLink isBlack className="hidden lg:flex" />
         </div>
       </div>
       <Link className="fixed bottom-8 right-4" href="https://wa.me/+971505974531" target="_blank">

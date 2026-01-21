@@ -134,7 +134,6 @@ export const ShopBySlider = React.memo(({ categoryList }: { categoryList: Catego
       extendedCategoryList.map((item, index) => {
         const isActive = index === activeIndex;
 
-        // Common Inner Content
         const CardContent = (
           <>
             <div
@@ -176,7 +175,6 @@ export const ShopBySlider = React.memo(({ categoryList }: { categoryList: Catego
             className={`absolute top-0 transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] flex flex-col items-center ${getPositionClass(index)}`}
           >
             {isActive ? (
-              /* ACTIVE CARD: Uses Link (Shows URL in browser status bar) */
               <Link
                 href={item.newPath ?? "/"}
                 className="relative block w-full group cursor-pointer"
@@ -184,7 +182,6 @@ export const ShopBySlider = React.memo(({ categoryList }: { categoryList: Catego
                 {CardContent}
               </Link>
             ) : (
-              /* BACK CARDS: Uses Div (Does NOT show URL on hover) */
               <div
                 onClick={() => setActiveIndex(index)}
                 className="relative block w-full group cursor-pointer"
@@ -205,25 +202,10 @@ export const ShopBySlider = React.memo(({ categoryList }: { categoryList: Catego
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Title Section */}
       <div className="container mx-auto px-4 mb-10">
-        <div className="flex-1 text-center">
+        <div className="text-center">
           <h2 className="text-heading">Shop By Type</h2>
-        </div>
-        <div className="flex items-center justify-between relative">
-          <button
-            onClick={handlePrev}
-            className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer transition-all z-20"
-            aria-label="Previous"
-          >
-            <HiArrowSmallLeft size={24} />
-          </button>
-          <button
-            onClick={handleNext}
-            className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer transition-all z-20"
-            aria-label="Next"
-          >
-            <HiArrowSmallRight size={24} />
-          </button>
         </div>
       </div>
 
@@ -232,7 +214,29 @@ export const ShopBySlider = React.memo(({ categoryList }: { categoryList: Catego
         onTouchEnd={onTouchEnd}
         className="relative flex items-center justify-center h-[380px] md:h-[550px] container mx-auto px-2 overflow-visible perspective-1000"
       >
+        <button
+          onClick={handlePrev}
+          className="absolute left-2 top-[40%] z-40 cursor-pointer rounded-full p-2
+              bg-white/80 hover:bg-white text-black
+              shadow-md transition-all hover:scale-105
+              disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Previous"
+        >
+          <HiArrowSmallLeft size={25} />
+        </button>
+
         {slideElements}
+
+        <button
+          onClick={handleNext}
+          className="absolute right-2 top-[40%] z-40 cursor-pointer rounded-full p-2
+              bg-white/80 hover:bg-white text-black
+              shadow-md transition-all hover:scale-105
+              disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Next"
+        >
+          <HiArrowSmallRight size={25} />
+        </button>
       </div>
     </div>
   );

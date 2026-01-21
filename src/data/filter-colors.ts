@@ -4,6 +4,14 @@ export const ColorImage = [
     image: "/assets/images/colors/black.png",
   },
   {
+    color: "Red",
+    image: "/assets/images/colors/red.png",
+  },
+  {
+    color: "Brown",
+    image: "/assets/images/colors/brown.png",
+  },
+  {
     color: "Blue",
     image: "/assets/images/colors/blue.png",
   },
@@ -31,7 +39,6 @@ export const ColorImage = [
     color: "White",
     image: "/assets/images/colors/white.png",
   },
-
   {
     color: "Yellow",
     image: "/assets/images/colors/yellow.png",

@@ -33,8 +33,8 @@ const Footer = () => {
                   unoptimized
                   src="/assets/icons/calendar.png"
                   alt="phone"
-                  width={44}
-                  height={44}
+                  width={22}
+                  height={22}
                 />
                 <div className="leading-7">
                   <p>Mon-Sat: 8:30am-9:00pm</p>
@@ -42,16 +42,13 @@ const Footer = () => {
                 </div>
               </div>
 
-              <Link
-                href="tel:+971505974531"
-                className="flex items-center space-x-2 font-medium font-rubik text-xl"
-              >
+              <Link href="tel:+971505974531" className="flex items-start space-x-2">
                 <Image
                   unoptimized
                   src="/assets/icons/phone.png"
                   alt="phone"
-                  width={24}
-                  height={24}
+                  width={22}
+                  height={22}
                 />
                 <span>+971 50 597 4531</span>
               </Link>
@@ -61,8 +58,8 @@ const Footer = () => {
                   unoptimized
                   src="/assets/icons/location.png"
                   alt="location"
-                  width={20}
-                  height={20}
+                  width={22}
+                  height={22}
                   className="mt-2 w-5"
                 />
                 <Link
@@ -78,8 +75,8 @@ const Footer = () => {
           <div className="w-full sm:w-2/3 h-full grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-x-10 lg:gap-y-12 items-start z-0">
             {footerSections.map((section) => (
               <div key={section.title}>
-                <h3 className="font-semibold">{section.title}</h3>
-                <ul className="mt-4 space-y-2 text-sm">
+                <h3 className="font-semibold text-xl">{section.title}</h3>
+                <ul className="mt-4 space-y-2">
                   {section.items.map((item) => (
                     <li key={item.label}>
                       <Link href={item.href} className="hover:underline z-0">
@@ -134,20 +131,12 @@ const Footer = () => {
           <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-center xl:justify-start">
             {!user && (
               <>
-                <Link href="/login">
-                  Sign In
-                </Link>
-                <Link href="/forgot-password">
-                  Forgot Password
-                </Link>
+                <Link href="/login">Sign In</Link>
+                <Link href="/forgot-password">Forgot Password</Link>
               </>
             )}
-            <Link href={user ? "/my-orders" : "/login"}>
-              Your Orders
-            </Link>
-            <Link href={user ? "/order-tracking" : "/login"}>
-              Order Tracking
-            </Link>
+            <Link href={user ? "/my-orders" : "/login"}>Your Orders</Link>
+            <Link href={user ? "/order-tracking" : "/login"}>Order Tracking</Link>
           </div>
 
           <p className="text-center hidden md:block">

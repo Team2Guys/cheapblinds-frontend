@@ -10,7 +10,7 @@ const SocialLink = ({ className, isBlack }: { className?: string; isBlack?: bool
           key={id}
           href={href}
           target="_blank"
-          className={`border rounded-full border-black ${!isBlack && "md:border-white"} p-0.5 hover:bg-white hover:text-black transition`}
+          className={`border rounded-full  ${isBlack ? " border-black" : "border-white"} p-0.5 hover:bg-white hover:text-black transition`}
         >
           <Icon className="w-5 h-5" />
         </Link>
