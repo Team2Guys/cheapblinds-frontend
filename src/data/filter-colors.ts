@@ -21,7 +21,7 @@ export const ColorImage = [
   },
   {
     color: "Grey",
-    image: "/assets/images/colors/grey.png",
+    image: "/assets/images/colors/grey-color.png",
   },
   {
     color: "Natural",

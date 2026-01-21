@@ -1,34 +1,36 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react"; // Added useCallback
+import React, { useCallback, useEffect, useState } from "react"; // Added useCallback
 import { useRouter } from "next/navigation";
 import { Testimonial, AddressBook } from "@components";
 import { TestimonialReview } from "@data/detail-page";
 import { useAuth } from "@context/UserContext";
-import { UserProps } from "@/types/category";
+import { addressProps, UserProps } from "@/types/category";
 import { queryData } from "@config/fetch";
 import { AccountSidebar } from "@components/accounts/AccountSidebar";
-import { USER_FOR_ADDRESS } from "@graphql";
+import { ADDRESS_BY_USER_ID, USER_BY_ID } from "@graphql";
 
 const AddressBookPage = () => {
   const { user, isLoading } = useAuth();
   const [userList, setUser] = useState<UserProps | null>(null);
+  const [addressList, setAddress] = useState<addressProps[] | null>(null);
   const router = useRouter();
 
   const loadUser = useCallback(async () => {
     if (!user) return;
     try {
+      const addressResponse: addressProps[] | null = await queryData<addressProps[] | null>(
+        ADDRESS_BY_USER_ID,
+        "addressListByUserId",
+        { userId: user.id },
+      );
+
       const userResponse: UserProps | null = await queryData<UserProps | null>(
-        USER_FOR_ADDRESS,
+        USER_BY_ID,
         "userById",
         { id: user.id },
       );
-
-      if (userResponse?.addresses?.length) {
-        userResponse.addresses = [...userResponse.addresses].sort(
-          (a, b) => new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime(),
-        );
-      }
+      setAddress(addressResponse || null);
       setUser(userResponse || null);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
@@ -42,7 +44,10 @@ const AddressBookPage = () => {
   }, [user, isLoading, router]);
 
   useEffect(() => {
-    loadUser();
+    const fetchUser = async () => {
+      await loadUser();
+    };
+    fetchUser();
   }, [loadUser]);
 
   if (!user || !userList) return null;
@@ -52,8 +57,12 @@ const AddressBookPage = () => {
       <div className="container mx-auto px-2 flex flex-wrap md:flex-nowrap gap-4 my-10">
         <AccountSidebar />
         <div className="flex-1">
-          {/* 2. Pass the loadUser function as onRefresh */}
-          <AddressBook userId={user.id} userList={userList} onRefresh={loadUser} />
+          <AddressBook
+            userId={user.id}
+            addressList={addressList}
+            userList={userList}
+            onRefresh={loadUser}
+          />
         </div>
       </div>
       <Testimonial reviews={TestimonialReview} showPaymentInfo />

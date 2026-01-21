@@ -12,19 +12,19 @@ import { REMOVE_ADDRESS_BY_ID_MUTATION, UPDATE_USER_BY_ID_MUTATION } from "@grap
 interface AddressBookProps {
   userId: string;
   userList: UserProps;
+  addressList: addressProps[] | null;
   setUserList?: (_user: UserProps) => void;
   onRefresh: () => void;
 }
 
 export const AddressBook: React.FC<AddressBookProps> = React.memo(
-  ({ userId, userList, setUserList, onRefresh }) => {
+  ({ userId, userList, setUserList, addressList, onRefresh }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingAddress, setEditingAddress] = useState<addressProps | null>(null);
 
     const [removeAddressById] = useMutation(REMOVE_ADDRESS_BY_ID_MUTATION);
     const [updateUserById] = useMutation(UPDATE_USER_BY_ID_MUTATION);
 
-    const { addresses } = userList;
     const [defaultBillingAddress, setDefaultBillingAddress] = useState<
       addressProps | null | undefined
     >(userList.defaultBillingAddress);
@@ -32,7 +32,6 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
       addressProps | null | undefined
     >(userList.defaultShippingAddress);
 
-    // DELETE ADDRESS
     const handleDelete = (id: string) => async () => {
       try {
         const { data } = await removeAddressById({ variables: { id } });
@@ -61,11 +60,11 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
         if (data?.updateUserById?.id) {
           Toaster("success", `Default ${type.toLowerCase()} address updated!`);
           if (type === "BILLING") {
-            const newBilling = addresses?.find((a) => a.id === addressId) ?? null;
+            const newBilling = userList.addresses?.find((a) => a.id === addressId) ?? null;
             setDefaultBillingAddress(newBilling);
             if (setUserList) setUserList({ ...userList, defaultBillingAddress: newBilling });
           } else {
-            const newShipping = addresses?.find((a) => a.id === addressId) ?? null;
+            const newShipping = userList.addresses?.find((a) => a.id === addressId) ?? null;
             setDefaultShippingAddress(newShipping);
             if (setUserList) setUserList({ ...userList, defaultShippingAddress: newShipping });
           }
@@ -90,7 +89,7 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
                 <h3 className="font-semibold">Default Billing Address</h3>
                 {defaultBillingAddress ? (
                   <div>
-                    <p className="text-primary">
+                    <p className="text-black">
                       {defaultBillingAddress.firstName} {defaultBillingAddress.lastName}
                     </p>
                     <p className="text-sm">
@@ -112,7 +111,7 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
                 <h3 className="font-semibold">Default Shipping Address</h3>
                 {defaultShippingAddress ? (
                   <div>
-                    <p className="text-primary">
+                    <p className="text-black">
                       {defaultShippingAddress.firstName} {defaultShippingAddress.lastName}
                     </p>
                     <p className="text-sm">
@@ -137,12 +136,12 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
             <h2 className="text-xl font-medium font-rubik uppercase">Additional Address Entries</h2>
             <hr className="border-b-2 border-secondary" />
 
-            {addresses && addresses.length === 0 ? (
+            {addressList && addressList.length === 0 ? (
               <p className="text-sm text-gray-500">You have no other address entries.</p>
             ) : (
               <div className="mt-3 max-h-96 overflow-y-auto space-y-2 pr-2">
-                {addresses &&
-                  addresses.map((item) => (
+                {addressList &&
+                  addressList.map((item) => (
                     <div key={item.id} className="relative p-3 border rounded-lg bg-white">
                       <button
                         className="absolute top-2 right-2 text-red-500 cursor-pointer"
@@ -214,7 +213,6 @@ export const AddressBook: React.FC<AddressBookProps> = React.memo(
           </div>
         </div>
 
-        {/* ================= MODAL ================= */}
         <Modal
           isOpen={isModalOpen}
           title={editingAddress ? "Edit Address" : "Add Address"}
