@@ -13,7 +13,7 @@ interface Features {
 export default function CategoryFeatures({ categoryFeatures }: { categoryFeatures: Features[] }) {
   return (
     <div className="pt-6">
-      <SwiperSlider pagination spaceBetween={10} breakpoints={CategoryBreakpoints}>
+      <SwiperSlider pagination loop spaceBetween={10} breakpoints={CategoryBreakpoints}>
         {categoryFeatures.map((item, index) => (
           <SwiperSlide key={index}>
             <div className="flex flex-col items-center gap-2">

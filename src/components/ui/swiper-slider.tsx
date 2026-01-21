@@ -38,7 +38,7 @@ export const SwiperSlider: React.FC<SwiperSliderProps> = ({
   const [nextEl, setNextEl] = useState<HTMLElement | null>(null);
 
   return (
-    <div className="relative w-full group">
+    <div className="relative w-full">
       {/* Custom Navigation Arrows */}
       {navigation && (
         <>
