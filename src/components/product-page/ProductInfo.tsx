@@ -40,6 +40,7 @@ export const ProductInfo = ({
     width: "",
     drop: "",
     unit: "cm",
+    isValid: false,
   });
 
   const [confirmedValues, setConfirmedValues] = useState<{
@@ -148,8 +149,10 @@ export const ProductInfo = ({
 
       <button
         onClick={handleGetPrice}
-        disabled={loading}
-        className="bg-primary px-4 py-3 rounded-md w-full font-semibold hover:bg-primary/80 disabled:opacity-60 cursor-pointer"
+        disabled={loading || !draftValues.isValid}
+        className={`w-full py-3 rounded-md font-semibold bg-primary hover:bg-primary/80 ${
+          loading || !draftValues.isValid ? "cursor-not-allowed" : ""
+        }`}
       >
         {loading ? "Calculating..." : "Get price"}
       </button>
