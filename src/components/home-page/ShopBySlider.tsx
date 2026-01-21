@@ -161,7 +161,7 @@ export const ShopBySlider = React.memo(({ categoryList }: { categoryList: Catego
             </div>
             <div className="mt-4 text-center">
               <p
-                className={`font-bold leading-tight transition-colors duration-300 ${isActive ? "text-2xl" : "text-xl"}`}
+                className={`font-semibold leading-tight transition-colors duration-300 ${isActive ? "text-lg" : "text-base"}`}
               >
                 {item.name}
               </p>
