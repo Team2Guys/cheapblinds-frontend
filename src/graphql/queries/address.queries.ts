@@ -39,3 +39,23 @@ export const ADDRESS_BY_ID_QUERY = gql`
     }
   }
 `;
+
+export const ADDRESS_BY_USER_ID = gql`
+  query AddressListByUserId($userId: ID!) {
+    addressListByUserId(userId: $userId) {
+      id
+      userId
+      firstName
+      lastName
+      email
+      phone
+      country
+      city
+      state
+      address
+      addressType
+      createdAt
+      updatedAt
+    }
+  }
+`;

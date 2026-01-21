@@ -21,11 +21,11 @@ const page = () => {
         <HeroSection
           desktopImage="/assets/images/home/free-order/free-order.webp"
           mobileImage="/assets/images/home/free-order/free-order-mobile.png"
-          className="container mx-auto aspect-12/9 sm:aspect-21/8"
+          className="container mx-auto aspect-square sm:aspect-21/8"
         />
         <HeroSection
           desktopImage="/assets/images/home/payment.jpg"
-          className="container mx-auto aspect-12/9 sm:aspect-21/8 mt-10 md:mt-16"
+          className="container mx-auto aspect-video sm:aspect-21/8 mt-10 md:mt-16"
         />
       </div>
     </>

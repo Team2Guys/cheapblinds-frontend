@@ -57,7 +57,7 @@ const Home = async () => {
         />
         <HeroSection
           desktopImage="/assets/images/home/payment.jpg"
-          className="container mx-auto h-full aspect-12/8 sm:aspect-21/8"
+          className="container mx-auto h-full aspect-video sm:aspect-21/8"
         />
       </div>
       <RelatedProduct title="Browse Products" data={publishedProduct || []} />

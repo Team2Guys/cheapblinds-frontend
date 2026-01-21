@@ -1,13 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
+type Unit = "mm" | "cm" | "Inches";
+
 interface CalculationProps {
-  onValuesChange?: (_values: { width: string; drop: string; unit: string }) => void;
-  minDrop?: number | undefined;
-  maxDrop?: number | undefined;
-  minWidth?: number | undefined;
-  maxWidth?: number | undefined;
+  onValuesChange?: (_values: {
+    width: string;
+    drop: string;
+    unit: Unit;
+    isValid: boolean;
+  }) => void;
+  minDrop?: number;
+  maxDrop?: number;
+  minWidth?: number;
+  maxWidth?: number;
 }
+
+const UNITS: readonly Unit[] = ["mm", "cm", "Inches"] as const;
 
 export const CalculationForm = ({
   onValuesChange,
@@ -16,12 +25,20 @@ export const CalculationForm = ({
   minWidth = 0,
   maxWidth = 0,
 }: CalculationProps) => {
-  const [unit, setUnit] = useState<"mm" | "cm" | "Inches">("cm");
+  const [unit, setUnit] = useState<Unit>("cm");
   const [width, setWidth] = useState("");
   const [drop, setDrop] = useState("");
-  const [errors, setErrors] = useState({ width: "", drop: "" });
+  const [errors, setErrors] = useState<{ width: string; drop: string }>({
+    width: "",
+    drop: "",
+  });
 
-  const unitRanges = {
+  const unitRanges: Record<Unit, {
+    minWidth: number;
+    maxWidth: number;
+    minDrop: number;
+    maxDrop: number;
+  }> = {
     mm: { minWidth, maxWidth, minDrop, maxDrop },
     cm: {
       minWidth: minWidth / 10,
@@ -37,121 +54,127 @@ export const CalculationForm = ({
     },
   };
 
-  const handleUnitChange = (value: "mm" | "cm" | "Inches") => {
-    setUnit(value);
-    setErrors({ width: "", drop: "" });
-    setWidth("");
-    setDrop("");
-  };
-
-  const handleNumericInput = (value: string) => {
-    return value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
-  };
+  const handleNumericInput = (value: string) =>
+    value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
 
   const validateValue = (field: "width" | "drop", value: string) => {
     const numValue = Number(value);
-    const { minWidth, maxWidth, minDrop, maxDrop } = unitRanges[unit];
-    const min = field === "width" ? minWidth : minDrop;
-    const max = field === "width" ? maxWidth : maxDrop;
+    const range = unitRanges[unit];
+    const min = field === "width" ? range.minWidth : range.minDrop;
+    const max = field === "width" ? range.maxWidth : range.maxDrop;
 
     if (!value) {
       setErrors((prev) => ({ ...prev, [field]: "" }));
       return;
     }
 
-    const format = (v: number) => (unit === "Inches" ? v.toFixed(1) : v);
-
     if (numValue < min) {
       setErrors((prev) => ({
         ...prev,
-        [field]: `Value must be at least ${format(min)} ${unit}.`,
+        [field]: `Minimum allowed is ${min}`,
       }));
     } else if (numValue > max) {
       setErrors((prev) => ({
         ...prev,
-        [field]: `Value cannot exceed ${format(max)} ${unit}.`,
+        [field]: `Maximum allowed is ${max}`,
       }));
     } else {
       setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
+  const isValid =
+    width !== "" &&
+    drop !== "" &&
+    errors.width === "" &&
+    errors.drop === "";
+
   useEffect(() => {
-    onValuesChange?.({ width, drop, unit });
-  }, [width, drop, unit, onValuesChange]);
+    onValuesChange?.({
+      width,
+      drop,
+      unit,
+      isValid,
+    });
+  }, [width, drop, unit, isValid, onValuesChange]);
 
   const currentRange = unitRanges[unit];
 
   return (
     <>
-      <div className="flex items-center justify-between mx-auto max-w-sm">
-        {["mm", "cm", "Inches"].map((u) => (
-          <label key={u} className="flex items-center gap-2 cursor-pointer select-none">
+      {/* Unit Selector */}
+      <div className="flex justify-center gap-6">
+        {UNITS.map((u) => (
+          <label key={u} className="flex items-center gap-2 cursor-pointer">
             <input
               type="radio"
               name="unit"
               value={u}
               checked={unit === u}
-              onChange={() => handleUnitChange(u as "mm" | "cm" | "Inches")}
-              className="hidden"
+              onChange={() => {
+                setUnit(u);
+                setWidth("");
+                setDrop("");
+                setErrors({ width: "", drop: "" });
+              }}
+              hidden
             />
-            <span className="w-5 h-5 rounded-full border-4 flex items-center justify-center transition-all duration-200 border-secondary">
-              {unit === u && <span className="w-2.5 h-2.5 bg-primary rounded-full" />}
+            <span className="w-4 h-4 rounded-full border border-primary flex items-center justify-center">
+              {unit === u && (
+                <span className="w-2 h-2 bg-primary rounded-full" />
+              )}
             </span>
-            <span>{u}</span>
+            {u}
           </label>
         ))}
       </div>
 
+      {/* Inputs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+        {/* Width */}
         <div>
-          <label className="block mb-1">Width ({unit})</label>
+          <label>Width ({unit})</label>
           <input
             type="text"
             value={width}
             onChange={(e) => {
-              const numericValue = handleNumericInput(e.target.value);
-              setWidth(numericValue);
-              validateValue("width", numericValue);
+              const v = handleNumericInput(e.target.value);
+              setWidth(v);
+              validateValue("width", v);
             }}
-            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-2 ${
-              errors.width
-                ? "border-red-400 focus:ring-red-400"
-                : "border-primary focus:ring-primary"
+            className={`w-full p-2 border rounded ${
+              errors.width ? "border-red-500" : "border-primary"
             }`}
-            placeholder={`Enter width in ${unit}`}
           />
-          <p className="mt-1 text-sm text-gray-500">
-            Min: {unit === "Inches" ? currentRange.minWidth.toFixed(1) : currentRange.minWidth}{" "}
-            {unit} | Max:{" "}
-            {unit === "Inches" ? currentRange.maxWidth.toFixed(1) : currentRange.maxWidth} {unit}
+          <p className="text-xs text-gray-500">
+            Min: {currentRange.minWidth} | Max: {currentRange.maxWidth}
           </p>
-          {errors.width && <p className="text-red-500 mt-1">{errors.width}</p>}
+          {errors.width && (
+            <p className="text-red-500 text-sm">{errors.width}</p>
+          )}
         </div>
 
+        {/* Height */}
         <div>
-          <label className="block mb-1">Height ({unit})</label>
+          <label>Height ({unit})</label>
           <input
             type="text"
             value={drop}
             onChange={(e) => {
-              const numericValue = handleNumericInput(e.target.value);
-              setDrop(numericValue);
-              validateValue("drop", numericValue);
+              const v = handleNumericInput(e.target.value);
+              setDrop(v);
+              validateValue("drop", v);
             }}
-            className={`w-full border rounded-md p-2 h-12 focus:outline-none focus:ring-2 ${
-              errors.drop
-                ? "border-red-400 focus:ring-red-400"
-                : "border-primary focus:ring-primary"
+            className={`w-full p-2 border rounded ${
+              errors.drop ? "border-red-500" : "border-primary"
             }`}
-            placeholder={`Enter drop in ${unit}`}
           />
-          <p className="mt-1 text-sm text-gray-500">
-            Min: {unit === "Inches" ? currentRange.minDrop.toFixed(1) : currentRange.minDrop} {unit}{" "}
-            | Max: {unit === "Inches" ? currentRange.maxDrop.toFixed(1) : currentRange.maxDrop}{" "}
-            {unit}
+          <p className="text-xs text-gray-500">
+            Min: {currentRange.minDrop} | Max: {currentRange.maxDrop}
           </p>
-          {errors.drop && <p className="text-red-500 mt-1">{errors.drop}</p>}
+          {errors.drop && (
+            <p className="text-red-500 text-sm">{errors.drop}</p>
+          )}
         </div>
       </div>
     </>
