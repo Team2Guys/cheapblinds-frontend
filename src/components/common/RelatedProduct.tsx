@@ -15,35 +15,43 @@ export const RelatedProduct = React.memo(
           {title}
         </h2>
         <p className="text-center">{description}</p>
-        <SwiperSlider navigation spaceBetween={10} loop breakpoints={RelatedBreakpoints}>
-          {data.slice(0, 12).map((array) => (
-            <SwiperSlide key={array.id} className="mb-5">
-              <Link href={array.newPath ?? "/"}>
-                <div className="overflow-hidden hover:shadow-md ">
-                  <div className="relative w-full h-auto max-h-[350px] aspect-square">
-                    <Image
-                      unoptimized
-                      src={array.posterImageUrl ?? ""}
-                      alt={array.name ?? ""}
-                      fill
-                      className="h-auto"
-                    />
-                  </div>
-                  <div className="py-3 space-y-1 px-2">
-                    <h3>{array.category?.name}</h3>
-                    <p className="text-medium underline">{array.name}</p>
+        <SwiperSlider
+          navigation
+          prevArrowClassName="top-[40%] -translate-y-1/2 left-0"
+          nextArrowClassName="top-[40%] -translate-y-1/2 right-0"
+          spaceBetween={10}
+          loop
+          breakpoints={RelatedBreakpoints}
+        >
+          {data &&
+            data.slice(0, 12).map((array) => (
+              <SwiperSlide key={array.id} className="mb-5">
+                <Link href={array.newPath ?? "/"}>
+                  <div className="overflow-hidden hover:shadow-md ">
+                    <div className="relative w-full h-auto max-h-[350px] aspect-square">
+                      <Image
+                        unoptimized
+                        src={array.posterImageUrl ?? ""}
+                        alt={array.name ?? ""}
+                        fill
+                        className="h-auto"
+                      />
+                    </div>
+                    <div className="py-3 space-y-1 px-2">
+                      <h3>{array.category?.name}</h3>
+                      <p className="text-medium underline">{array.name}</p>
 
-                    {array.price && (
-                      <p className="text-2xl font-rubik font-semibold flex items-center gap-2">
-                        <span className="text-2xl font-currency mb-1"></span>
-                        {array.price}
-                      </p>
-                    )}
+                      {array.price && (
+                        <p className="text-2xl font-rubik font-semibold flex items-center gap-2">
+                          <span className="text-2xl font-currency mb-1"></span>
+                          {array.price}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </SwiperSlide>
-          ))}
+                </Link>
+              </SwiperSlide>
+            ))}
         </SwiperSlider>
       </div>
     );

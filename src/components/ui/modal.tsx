@@ -45,20 +45,6 @@ export const Modal = ({
       onClose?.();
     }
   };
-  useEffect(() => {
-    if (showModal) {
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
-    } else {
-      document.body.style.position = "";
-      document.body.style.width = "";
-    }
-
-    return () => {
-      document.body.style.position = "";
-      document.body.style.width = "";
-    };
-  }, [showModal]);
 
   if (!showModal) return null;
 

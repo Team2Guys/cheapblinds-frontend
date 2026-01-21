@@ -3,31 +3,47 @@ export const infoItems = [
     id: 1,
     image: "/assets/images/home/information/anniversary.png",
     text: "25 Years Experience in UAE",
-    link: "/about-us/",
+    modal: {
+      title: "25 Years Experience",
+      description:
+        "We have been serving customers in the UAE for over 25 years with premium quality blinds.",
+    },
   },
   {
     id: 2,
     image: "/assets/images/home/information/affordable.png",
     text: "Affordable",
-    link: "/measuring-guides/",
+    modal: {
+      title: "Affordable Pricing",
+      description: "High quality blinds at competitive prices without compromising quality.",
+    },
   },
   {
     id: 3,
     image: "/assets/images/home/information/free-sample.png",
     text: "Free Samples",
-    link: "/roller-blinds/",
+    modal: {
+      title: "Free Samples",
+      description: "Order free samples to choose the perfect fabric and color for your space.",
+    },
   },
   {
     id: 4,
     image: "/assets/images/home/information/warranty.png",
     text: "5 Years Warranty",
-    link: "/terms-conditions/",
+    modal: {
+      title: "5 Years Warranty",
+      description: "All our products come with a 5-year warranty for your peace of mind.",
+    },
   },
   {
     id: 5,
     image: "/assets/images/home/information/free-delivery.png",
     text: "Free Next Day Delivery",
-    link: "/delivery-policy/",
+    modal: {
+      title: "Fast Delivery",
+      description: "Enjoy free next-day delivery across the UAE.",
+    },
   },
 ];
 

@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import { Swiper, SwiperClass } from "swiper/react";
+import React, { useState } from "react";
+import { Swiper } from "swiper/react"; // Added SwiperSlide for context
 import { Pagination, Navigation, Autoplay, A11y } from "swiper/modules";
 import { HiArrowSmallRight, HiArrowSmallLeft } from "react-icons/hi2";
 import type { SwiperOptions } from "swiper/types";
-import "../../styles/swiper.css";
 
 interface SwiperSliderProps {
   children: React.ReactNode;
@@ -16,36 +15,10 @@ interface SwiperSliderProps {
   pagination?: boolean;
   navigation?: boolean;
   loop?: boolean;
-  isCart?: boolean; // ✅ new prop
   className?: string;
+  prevArrowClassName?: string;
+  nextArrowClassName?: string;
 }
-
-interface ArrowProps {
-  onClick?: () => void;
-  isCart?: boolean;
-}
-
-const NextArrow: React.FC<ArrowProps> = ({ onClick, isCart }) => (
-  <div
-    className={`absolute z-20 cursor-pointer text-black rounded-full p-1 hover:scale-105 transition-transform shadow
-      ${isCart ? "top-1/2 -translate-y-1/2 right-0 bg-primary-light hover:bg-primary" : "-top-5 md:top-0 right-0 bg-secondary"}
-    `}
-    onClick={onClick}
-  >
-    <HiArrowSmallRight size={25} />
-  </div>
-);
-
-const PrevArrow: React.FC<ArrowProps> = ({ onClick, isCart }) => (
-  <div
-    className={`absolute z-20 cursor-pointer text-black rounded-full p-1 hover:scale-105 transition-transform shadow
-      ${isCart ? "top-1/2 -translate-y-1/2 left-0 bg-primary-light hover:bg-primary" : "-top-5 md:top-0 left-0 bg-secondary"}
-    `}
-    onClick={onClick}
-  >
-    <HiArrowSmallLeft size={25} />
-  </div>
-);
 
 export const SwiperSlider: React.FC<SwiperSliderProps> = ({
   children,
@@ -56,86 +29,75 @@ export const SwiperSlider: React.FC<SwiperSliderProps> = ({
   pagination = false,
   navigation = false,
   loop = false,
-  isCart = false,
   className = "",
+  prevArrowClassName = "top-1/2 -translate-y-1/2 left-2",
+  nextArrowClassName = "top-1/2 -translate-y-1/2 right-2",
 }) => {
-  const prevRef = useRef<HTMLDivElement | null>(null);
-  const nextRef = useRef<HTMLDivElement | null>(null);
-  const swiperRef = useRef<SwiperClass | null>(null);
-
-  useEffect(() => {
-    if (navigation && swiperRef.current && prevRef.current && nextRef.current) {
-      type NavParams = {
-        prevEl?: HTMLElement | string | null;
-        nextEl?: HTMLElement | string | null;
-      };
-      const paramsNav = (
-        swiperRef.current.params as unknown as {
-          navigation?: NavParams;
-        }
-      ).navigation;
-      if (paramsNav) {
-        paramsNav.prevEl = prevRef.current;
-        paramsNav.nextEl = nextRef.current;
-      } else {
-        (swiperRef.current.params as unknown as { navigation?: NavParams }).navigation = {
-          prevEl: prevRef.current,
-          nextEl: nextRef.current,
-        };
-      }
-
-      if (swiperRef.current.navigation) {
-        swiperRef.current.navigation.init();
-        swiperRef.current.navigation.update();
-      }
-    }
-  }, [navigation]);
+  // Use state instead of useRef to store the DOM elements
+  const [prevEl, setPrevEl] = useState<HTMLElement | null>(null);
+  const [nextEl, setNextEl] = useState<HTMLElement | null>(null);
 
   return (
-    <div className={`relative w-full ${navigation ? (isCart ? "px-14" : "pt-14") : ""}`}>
+    <div className="relative w-full group">
+      {/* Custom Navigation Arrows */}
       {navigation && (
         <>
-          <PrevArrow onClick={() => prevRef.current?.click()} isCart={isCart} />
-          <NextArrow onClick={() => nextRef.current?.click()} isCart={isCart} />
+          <button
+            ref={(node) => setPrevEl(node)}
+            className={`
+              absolute z-30 cursor-pointer rounded-full p-2
+              bg-white/80 hover:bg-white text-black
+              shadow-md transition-all hover:scale-105
+              disabled:opacity-50 disabled:cursor-not-allowed
+              ${prevArrowClassName}
+            `}
+            aria-label="Previous slide"
+          >
+            <HiArrowSmallLeft size={25} />
+          </button>
+          <button
+            ref={(node) => setNextEl(node)}
+            className={`
+              absolute z-30 cursor-pointer rounded-full p-2
+              bg-white/80 hover:bg-white text-black
+              shadow-md transition-all hover:scale-105
+              disabled:opacity-50 disabled:cursor-not-allowed
+              ${nextArrowClassName}
+            `}
+            aria-label="Next slide"
+          >
+            <HiArrowSmallRight size={25} />
+          </button>
         </>
       )}
 
       <Swiper
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
         modules={[Pagination, Navigation, Autoplay, A11y]}
         spaceBetween={spaceBetween}
         slidesPerView={slidesPerView}
         loop={loop}
-        autoplay={
-          autoplay
-            ? {
-                delay: 3000,
-                disableOnInteraction: false,
-              }
-            : false
-        }
+        breakpoints={breakpoints}
+        autoplay={autoplay ? { delay: 3000, disableOnInteraction: false } : false}
         pagination={
           pagination
             ? {
                 clickable: true,
                 el: ".custom-pagination",
-                renderBullet: (_, className) => `<span class="${className} custom-bullet"></span>`,
               }
             : false
         }
-        breakpoints={breakpoints}
+        navigation={{
+          prevEl,
+          nextEl,
+        }}
+        // This key forces a re-render when the navigation buttons are found
+        key={navigation ? (prevEl && nextEl ? "ready" : "not-ready") : "no-nav"}
         className={className}
       >
         {children}
       </Swiper>
 
-      {pagination && <div className="custom-pagination flex justify-center gap-2 mt-4"></div>}
-
-      {/* Hidden elements for Swiper navigation control */}
-      <div ref={prevRef} className="hidden" />
-      <div ref={nextRef} className="hidden" />
+      {pagination && <div className="custom-pagination flex justify-center gap-2 mt-4" />}
     </div>
   );
 };

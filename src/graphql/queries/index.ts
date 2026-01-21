@@ -6,3 +6,5 @@ export * from "./inquiry.queries";
 export * from "./newsletter.queries";
 export * from "./address.queries";
 export * from "./user.queries";
+export * from "./price.queries";
+export * from "./search.queries";

@@ -7,21 +7,18 @@ const helpOptions = [
     id: 1,
     title: "Help making an order",
     desc: "If you would like help placing an order, click below.",
-    button: "Sales Help",
     icon: "/assets/images/contact/order.png",
   },
   {
     id: 2,
     title: "Help with an existing order",
     desc: "If you would like help with an existing order, click below.",
-    button: "Order Help",
     icon: "/assets/images/contact/help.png",
   },
   {
     id: 3,
     title: "After Sale Care",
     desc: "If you would like help with sale delivery, click below.",
-    button: "Sale Help",
     icon: "/assets/images/contact/box.png",
   },
 ];
@@ -50,9 +47,6 @@ export const ContactHelp = React.memo(() => {
               <h3 className="font-semibold">{item.title}</h3>
               <p className="text-sm">{item.desc}</p>
             </div>
-            <button className="bg-primary px-4 py-2 rounded-md font-medium hover:bg-primary/80">
-              {item.button}
-            </button>
           </div>
         ))}
       </div>
