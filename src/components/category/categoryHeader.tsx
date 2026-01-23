@@ -22,8 +22,8 @@ type ColorFilterOption = {
 type CategoryHeaderProps = {
   description: string;
   categoryName: string;
-  sort: "default" | "low" | "high" | "new";
-  setSort: (_value: "default" | "low" | "high" | "new") => void;
+  sort: "default" | "low" | "high" | "new" | "show upto 50" | "view all";
+  setSort: (_value: "default" | "low" | "high" | "new" | "show upto 50" | "view all") => void;
 
   typeOptions: FilterOption[];
   patternOptions: FilterOption[];

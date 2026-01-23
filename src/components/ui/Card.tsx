@@ -38,17 +38,20 @@ export const Card = React.memo(
 
     const currentPage = Number(searchParams.get("page")) || 1;
     const totalPages = Math.ceil(products.length / productsPerPage);
+
+    // Sync current page if total pages decrease due to sorting/filtering
     useEffect(() => {
       if (currentPage > totalPages && totalPages > 0) {
         const params = new URLSearchParams(searchParams.toString());
         params.set("page", "1");
         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
       }
-    }, [currentPage, totalPages, pathname, router, searchParams]);
+    }, [totalPages, currentPage, pathname, router, searchParams]);
 
     const handlePageChange = (newPage: number) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set("page", newPage.toString());
+      // params.get('sort') is already in 'params', so it is preserved!
       router.push(`${pathname}?${params.toString()}`, { scroll: false });
       window.scrollTo({ top: 800, behavior: "smooth" });
     };
@@ -62,29 +65,21 @@ export const Card = React.memo(
       const found = ColorImage.find((c) => c.color.toLowerCase() === color.toLowerCase());
       return found ? found.image : "/assets/images/colors/white.png";
     };
+
     const getPaginationRange = () => {
       let delta = 2;
-
       if (typeof window !== "undefined") {
         delta = window.innerWidth < 640 ? 1 : 2;
       }
-
       const range: (number | string)[] = [];
       const left = Math.max(2, currentPage - delta);
       const right = Math.min(totalPages - 1, currentPage + delta);
 
       range.push(1);
-
       if (left > 2) range.push("...");
-
-      for (let i = left; i <= right; i++) {
-        range.push(i);
-      }
-
+      for (let i = left; i <= right; i++) range.push(i);
       if (right < totalPages - 1) range.push("...");
-
       if (totalPages > 1) range.push(totalPages);
-
       return range;
     };
 
