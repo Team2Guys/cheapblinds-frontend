@@ -4,8 +4,6 @@ import localFont from "next/font/local";
 import "../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import PathnameWrapper from "@components/PathnameWrapper";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -43,8 +41,6 @@ export default function RootLayout({
       <body className={`${openSans.variable} ${rubik.variable} ${currency.variable} antialiased`}>
         <PathnameWrapper>
           <ToastContainer autoClose={2500} />
-          <Analytics />
-          <SpeedInsights />
           {children}
         </PathnameWrapper>
       </body>
