@@ -2,8 +2,8 @@
 import { useState } from "react";
 
 interface SortDropdownProps {
-  value: "default" | "low" | "high" | "new";
-  onChange: (_value: "default" | "low" | "high" | "new") => void;
+  value: "default" | "low" | "high" | "new" | "show upto 50" | "view all";
+  onChange: (_value: "default" | "low" | "high" | "new" | "show upto 50" | "view all") => void;
 }
 
 export const SortDropdown = ({ value, onChange }: SortDropdownProps) => {
@@ -14,6 +14,8 @@ export const SortDropdown = ({ value, onChange }: SortDropdownProps) => {
     { label: "Low to High", value: "low" },
     { label: "High to Low", value: "high" },
     { label: "Newest", value: "new" },
+    { label: "Show Upto 50", value: "show upto 50" },
+    { label: "View All", value: "view all" },
   ];
 
   const selectedOption = options.find((o) => o.value === value)?.label || "Default";

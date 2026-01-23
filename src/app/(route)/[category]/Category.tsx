@@ -5,6 +5,8 @@ import React, { useState, useMemo, Suspense } from "react";
 import { CategoryPageProps, Product } from "@/types/category";
 import CategoryHeader from "@components/category/categoryHeader";
 import { useIndexedDb } from "@lib/useIndexedDb";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+
 export type FilterOption = {
   name: string;
   count: number;
@@ -15,6 +17,7 @@ export type ColorFilterOption = {
   color: string;
   count: number;
 };
+
 const useFilterOptions = (allProducts: Product[]) => {
   return useMemo(() => {
     const counts = {
@@ -27,7 +30,6 @@ const useFilterOptions = (allProducts: Product[]) => {
     };
 
     allProducts.forEach((product) => {
-      // Helper to increment counts
       const increment = (obj: Record<string, number>, key: string | undefined | null) => {
         if (!key) return;
         obj[key] = (obj[key] || 0) + 1;
@@ -42,11 +44,9 @@ const useFilterOptions = (allProducts: Product[]) => {
       }
 
       increment(counts.color, product.color);
-
-      if (product.isMotorized) {
-        counts.motorized += 1;
-      }
+      if (product.isMotorized) counts.motorized += 1;
     });
+
     const toOptionArray = (obj: Record<string, number>): FilterOption[] => {
       return Object.entries(obj).map(([name, count]) => ({ name, count }));
     };
@@ -67,7 +67,27 @@ const useFilterOptions = (allProducts: Product[]) => {
 };
 
 const CategoryPage = ({ categoryName, description, ProductList }: CategoryPageProps) => {
-  const [sort, setSort] = useState<"default" | "low" | "high" | "new">("default");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const sort = (searchParams.get("sort") || "default") as
+    | "default"
+    | "show upto 50"
+    | "view all"
+    | "low"
+    | "high"
+    | "new";
+
+  const setSort = (newSort: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("sort", newSort);
+    if (newSort === "view all") {
+      params.set("page", "1");
+    }
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   const [selectedType, setSelectedType] = useState<string[]>([]);
   const [selectedPattern, setSelectedPattern] = useState<string[]>([]);
@@ -76,6 +96,7 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
   const [selectedPrice, setSelectedPrice] = useState<[number, number]>([0, 1000]);
   const [selectedColor, setSelectedColor] = useState<string[]>([]);
   const [selectedMotorized, setSelectedMotorized] = useState<boolean>(false);
+
   const { addFreeSampleItem } = useIndexedDb();
 
   const subcategoryArray = Array.isArray(ProductList)
@@ -94,6 +115,7 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
         })),
     );
   }, [subcategoryArray]);
+
   const {
     typeOptions,
     patternOptions,
@@ -114,16 +136,17 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
 
       const productWidthLabel =
         product.maxWidth !== undefined ? `Up To ${product.maxWidth / 10}cm Wide` : null;
+
       if (selectedType.length && !selectedType.includes(type)) return false;
       if (selectedPattern.length && !selectedPattern.includes(pattern)) return false;
       if (selectedMaterial.length && !selectedMaterial.includes(material)) return false;
-      if (selectedWidth.length) {
-        if (!productWidthLabel || !selectedWidth.includes(productWidthLabel)) {
-          return false;
-        }
-      }
-
+      if (
+        selectedWidth.length &&
+        (!productWidthLabel || !selectedWidth.includes(productWidthLabel))
+      )
+        return false;
       if (selectedColor.length && !selectedColor.includes(color)) return false;
+
       const basePrice = product.price ?? 0;
       const finalPrice = selectedMotorized ? basePrice + (product.motorPrice ?? 0) : basePrice;
       if (finalPrice < selectedPrice[0] || finalPrice > selectedPrice[1]) return false;
@@ -141,9 +164,15 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
     selectedMotorized,
   ]);
 
+  // Handle items per page based on sort
+  const itemsPerPage = useMemo(() => {
+    if (sort === "show upto 50") return 50;
+    if (sort === "view all") return filteredProducts.length > 0 ? filteredProducts.length : 30;
+    return 30;
+  }, [sort, filteredProducts.length]);
+
   const sortedProducts = useMemo(() => {
     const products = [...filteredProducts];
-
     const getPrice = (product: Product) => {
       const base = product.price ?? 0;
       return selectedMotorized ? base + (product.motorPrice ?? 0) : base;
@@ -151,11 +180,11 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
 
     if (sort === "low") products.sort((a, b) => getPrice(a) - getPrice(b));
     if (sort === "high") products.sort((a, b) => getPrice(b) - getPrice(a));
-    if (sort === "new")
+    if (sort === "new") {
       products.sort(
         (a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime(),
       );
-
+    }
     return products;
   }, [filteredProducts, sort, selectedMotorized]);
 
@@ -228,12 +257,13 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
             selectedMotorized={selectedMotorized}
             setSelectedMotorized={setSelectedMotorized}
           />
-          <Suspense fallback={<div>Loading Product ...</div>}>
+          <Suspense fallback={<div>Loading Products...</div>}>
             <Card
               products={sortedProducts}
               categoryName={categoryName}
               selectedMotorized={selectedMotorized}
               onFreeSample={handleFreeSample}
+              productsPerPage={itemsPerPage}
             />
           </Suspense>
         </div>

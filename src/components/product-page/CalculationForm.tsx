@@ -4,12 +4,7 @@ import React, { useState, useEffect } from "react";
 type Unit = "mm" | "cm" | "Inches";
 
 interface CalculationProps {
-  onValuesChange?: (_values: {
-    width: string;
-    drop: string;
-    unit: Unit;
-    isValid: boolean;
-  }) => void;
+  onValuesChange?: (_values: { width: string; drop: string; unit: Unit; isValid: boolean }) => void;
   minDrop?: number;
   maxDrop?: number;
   minWidth?: number;
@@ -33,12 +28,15 @@ export const CalculationForm = ({
     drop: "",
   });
 
-  const unitRanges: Record<Unit, {
-    minWidth: number;
-    maxWidth: number;
-    minDrop: number;
-    maxDrop: number;
-  }> = {
+  const unitRanges: Record<
+    Unit,
+    {
+      minWidth: number;
+      maxWidth: number;
+      minDrop: number;
+      maxDrop: number;
+    }
+  > = {
     mm: { minWidth, maxWidth, minDrop, maxDrop },
     cm: {
       minWidth: minWidth / 10,
@@ -83,11 +81,7 @@ export const CalculationForm = ({
     }
   };
 
-  const isValid =
-    width !== "" &&
-    drop !== "" &&
-    errors.width === "" &&
-    errors.drop === "";
+  const isValid = width !== "" && drop !== "" && errors.width === "" && errors.drop === "";
 
   useEffect(() => {
     onValuesChange?.({
@@ -120,9 +114,7 @@ export const CalculationForm = ({
               hidden
             />
             <span className="w-4 h-4 rounded-full border border-primary flex items-center justify-center">
-              {unit === u && (
-                <span className="w-2 h-2 bg-primary rounded-full" />
-              )}
+              {unit === u && <span className="w-2 h-2 bg-primary rounded-full" />}
             </span>
             {u}
           </label>
@@ -149,9 +141,7 @@ export const CalculationForm = ({
           <p className="text-xs text-gray-500">
             Min: {currentRange.minWidth} | Max: {currentRange.maxWidth}
           </p>
-          {errors.width && (
-            <p className="text-red-500 text-sm">{errors.width}</p>
-          )}
+          {errors.width && <p className="text-red-500 text-sm">{errors.width}</p>}
         </div>
 
         {/* Height */}
@@ -172,9 +162,7 @@ export const CalculationForm = ({
           <p className="text-xs text-gray-500">
             Min: {currentRange.minDrop} | Max: {currentRange.maxDrop}
           </p>
-          {errors.drop && (
-            <p className="text-red-500 text-sm">{errors.drop}</p>
-          )}
+          {errors.drop && <p className="text-red-500 text-sm">{errors.drop}</p>}
         </div>
       </div>
     </>
