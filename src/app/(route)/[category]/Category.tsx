@@ -201,6 +201,7 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
       <HeroSection
         desktopImage="/assets/images/category/desktop-banner.jpg"
         mobileImage="/assets/images/category/mobile-banner.png"
+        className="h-full aspect-16/12 sm:aspect-21/6"
       />
       <div className="container mx-auto px-2 flex gap-6 xl:gap-10 mt-10">
         <div className="hidden lg:block lg:w-[25%]">
