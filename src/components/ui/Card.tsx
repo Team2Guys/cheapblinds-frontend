@@ -10,6 +10,7 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { ColorImage } from "@data/filter-colors";
 import { useIndexedDb } from "@lib/useIndexedDb";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import CardDelivery from "@components/svg/CardDelivery";
 
 interface CardProps {
   products: Product[];
@@ -99,7 +100,7 @@ export const Card = React.memo(
 
             return (
               <div key={card.id} className="relative p-2 hover:shadow-md">
-                <Link href={card.newPath || ""}>
+                <Link href={card.newPath || ""} className="relative">
                   <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
                     <Image
                       unoptimized
@@ -107,29 +108,11 @@ export const Card = React.memo(
                       alt={card.name}
                       fill
                     />
-                    <div className="absolute bottom-2 left-2">
-                      <div className="relative h-9 md:h-16 w-8 md:w-16">
-                        <Image
-                          unoptimized
-                          src="/assets/images/van.png"
-                          alt="image"
-                          fill
-                          className="ms-1 md:ms-2"
-                        />
-                      </div>
-                      <p className="text-[9px] md:text-[16px] 2xl:text-lg font-semibold text-primary text-border  capitalize">
-                        Order by{" "}
-                        <span className="text-sm md:text-2xl text-primary font-semibold text-border">
-                          3pm
-                        </span>
-                        <br />
-                        <p>Select lightning service</p>
-                        Receive you order next day (Dubai)
-                      </p>
-                    </div>
+                  </div>
+                  <div className="absolute -bottom-3 left-2 z-20">
+                    <CardDelivery />
                   </div>
                 </Link>
-
                 <div className="pt-3 sm:space-y-2 px-2">
                   <div className="flex justify-between items-center">
                     <Link href={card.newPath || ""}>
