@@ -88,7 +88,7 @@ const OrderTracking = () => {
       </div>
 
       {/* 3-Step Tracking Component */}
-      <div className="bg-white rounded-3xl p-8 shadow-sm border border-secondary mb-8">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-sm border border-secondary mb-8">
         <div className="flex items-center justify-between relative max-w-3xl mx-auto">
           {/* Step 1: Ready */}
           <div className="flex flex-col items-center z-10">
@@ -148,7 +148,7 @@ const OrderTracking = () => {
 
       {/* Addresses Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-3xl border border-secondary shadow-sm">
+        <div className="bg-white p-4 sm:p-6 rounded-3xl border border-secondary shadow-sm">
           <h3 className="flex items-center gap-2 text-xl font-black uppercase tracking-widest mb-4">
             <FaMapMarkerAlt className="text-primary" /> Shipping Address
           </h3>
@@ -167,7 +167,7 @@ const OrderTracking = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-3xl border border-secondary shadow-sm">
+        <div className="bg-white p-4 sm:p-6 rounded-3xl border border-secondary shadow-sm">
           <h3 className="flex items-center gap-2 text-xl font-black uppercase tracking-widest mb-4">
             <FaMapMarkerAlt className="text-primary" /> Billing Address
           </h3>
@@ -204,7 +204,7 @@ const OrderTracking = () => {
                 alt={item.name}
                 width={200}
                 height={200}
-                className="w-28 h-20 object-cover rounded-2xl border border-secondary"
+                className="w-28 h-20 sm:h-28 object-cover rounded-2xl border border-secondary"
               />
               <div className="w-full sm:flex-1">
                 <h4 className="font-bold leading-tight">{item.name}</h4>
