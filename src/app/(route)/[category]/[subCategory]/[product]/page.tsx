@@ -66,7 +66,7 @@ const ProductPage = async ({
           className="mt-10 md:mt-16"
           reverse
           image1="/assets/images/home/cheap.webp"
-          image2="/assets/images/home/sample.webp"
+          image2="/assets/images/home/sample.png"
           btnText="Order Free Samples"
           btnLink="/sample"
           sampleSection

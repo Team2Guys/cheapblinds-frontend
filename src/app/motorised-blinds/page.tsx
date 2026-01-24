@@ -18,12 +18,12 @@ const page = async () => {
       <MotorisedBanner />
       <ControlCard heading="Control Options" CardData={controlOptions} />
       <ImageGrid
-        leftImage="/assets/images/motorised/zebra-image.webp"
+        leftImage="/assets/images/motorised/zebra-image.png"
         rightImage="/assets/images/motorised/right-image.webp"
       />
       <ControlCard CardData={controlOptions1} />
       <ImageGrid
-        leftImage="/assets/images/motorised/zebra-image.webp"
+        leftImage="/assets/images/motorised/zebra-image.png"
         rightImage="/assets/images/motorised/right-image.webp"
       />
       <RelatedProduct title="Browse Products" data={publishedCategory || []} />

@@ -8,11 +8,10 @@ export const MotorisedBanner = React.memo(() => {
         <div className="relative aspect-3/2 w-full order-2 sm:order-1">
           <Image
             unoptimized
-            src="/assets/images/motorised/zebra-image.webp"
+            src="/assets/images/motorised/zebra-image.png"
             alt="Motorised Blinds Banner"
             fill
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
         <div className="relative aspect-3/2 w-full order-1 sm:order-2">
@@ -22,7 +21,6 @@ export const MotorisedBanner = React.memo(() => {
             alt="Motorised Blinds Banner"
             fill
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       </div>

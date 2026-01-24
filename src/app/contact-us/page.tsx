@@ -24,7 +24,7 @@ const page = () => {
           className="container mx-auto aspect-square sm:aspect-21/8"
         />
         <HeroSection
-          desktopImage="/assets/images/home/payment.jpg"
+          desktopImage="/assets/images/home/payment.webp"
           className="container mx-auto aspect-video sm:aspect-21/8 mt-10 md:mt-16"
         />
       </div>

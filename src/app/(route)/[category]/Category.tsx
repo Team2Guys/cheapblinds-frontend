@@ -66,7 +66,12 @@ const useFilterOptions = (allProducts: Product[]) => {
   }, [allProducts]);
 };
 
-const CategoryPage = ({ categoryName, description, ProductList }: CategoryPageProps) => {
+const CategoryPage = ({
+  categoryName,
+  description,
+  ProductList,
+  categoryPath,
+}: CategoryPageProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -234,6 +239,7 @@ const CategoryPage = ({ categoryName, description, ProductList }: CategoryPagePr
           <CategoryHeader
             categoryName={categoryName}
             description={description}
+            categoryPath={categoryPath}
             sort={sort}
             setSort={setSort}
             typeOptions={typeOptions}

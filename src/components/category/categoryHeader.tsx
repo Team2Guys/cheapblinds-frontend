@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import CategoryFeatures from "./CategoryFeatures";
-import { categoryFeatures } from "@data/data";
 import { decodeHtml } from "@utils/helperFunctions";
 import { SortDropdown } from "@components/ui";
 import Image from "next/image";
 import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
 import { Filters } from "@components/filters";
+import { CATEGORY_FEATURES_MAP, CATEGORY_PDF_MAP } from "@data/data";
 type FilterOption = {
   name: string;
   count: number;
@@ -22,6 +22,7 @@ type ColorFilterOption = {
 type CategoryHeaderProps = {
   description: string;
   categoryName: string;
+  categoryPath: string;
   sort: "default" | "low" | "high" | "new" | "show upto 50" | "view all";
   setSort: (_value: "default" | "low" | "high" | "new" | "show upto 50" | "view all") => void;
 
@@ -51,6 +52,7 @@ type CategoryHeaderProps = {
 const CategoryHeader = ({
   description,
   categoryName,
+  categoryPath,
   sort,
   setSort,
   typeOptions,
@@ -79,6 +81,13 @@ const CategoryHeader = ({
   const [isTruncated, setIsTruncated] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
+  const features = CATEGORY_FEATURES_MAP[categoryPath] || [];
+
+  const pdf = CATEGORY_PDF_MAP[categoryPath] || {
+    measuring: "/assets/pdf/how-to-measure.pdf",
+    fitting: "/assets/pdf/how-to-measure.pdf",
+  };
+
   // mobile description truncate
   useEffect(() => {
     const handleResize = () => {
@@ -97,6 +106,8 @@ const CategoryHeader = ({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [description]);
+
+  console.log(categoryPath, "categoryPathcategoryPath");
 
   return (
     <>
@@ -120,7 +131,7 @@ const CategoryHeader = ({
       </div>
 
       <div className="pt-6">
-        <CategoryFeatures categoryFeatures={categoryFeatures} />
+        <CategoryFeatures categoryFeatures={features} />
       </div>
 
       <div className="flex flex-wrap lg:flex-nowrap justify-between bg-white w-full py-4 gap-4 mt-6 border-t border-[#0000003D] border-b md:border-b-0">
@@ -142,7 +153,7 @@ const CategoryHeader = ({
               </div>
             </div>
             <Link
-              href="/assets/pdf/how-to-measure.pdf"
+              href={pdf.measuring}
               download
               className="bg-[#FFB800] h-[72px] w-28 flex justify-center items-center font-semibold text-center"
             >
@@ -166,7 +177,7 @@ const CategoryHeader = ({
               </div>
             </div>
             <Link
-              href="/assets/pdf/how-to-measure.pdf"
+              href={pdf.fitting}
               download
               className="bg-[#FFB800] h-[72px] w-28 flex justify-center items-center font-semibold text-center"
             >

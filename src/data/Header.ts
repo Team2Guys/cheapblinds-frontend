@@ -58,7 +58,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     name: "Roman Blinds",
-    link: "/roman-blinds/dimout",
+    link: "/roman-blinds",
     image: "/assets/images/navbar/roman-blinds.png",
     // submenu: [
     //   {
