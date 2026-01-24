@@ -4,9 +4,9 @@ export const infoItems = [
     image: "/assets/images/home/information/anniversary.png",
     text: "25 Years Experience in UAE",
     modal: {
-      title: "25 Years Experience",
+      title: "25 Years of Experience",
       description:
-        "We have been serving customers in the UAE for over 25 years with premium quality blinds.",
+        "With over 25 years of experience in the UAE, we understand our customers' needs. You can count on our local expertise to guide you every step of the way.",
     },
   },
   {
@@ -15,7 +15,8 @@ export const infoItems = [
     text: "Affordable",
     modal: {
       title: "Affordable Pricing",
-      description: "High quality blinds at competitive prices without compromising quality.",
+      description:
+        "Exceptional quality shouldn’t be expensive. We deliver stylish, long-lasting solutions at competitive prices, making premium interiors accessible to every budget.",
     },
   },
   {
@@ -24,7 +25,8 @@ export const infoItems = [
     text: "Free Samples",
     modal: {
       title: "Free Samples",
-      description: "Order free samples to choose the perfect fabric and color for your space.",
+      description:
+        "Not sure which fabric or finish to choose? Order free samples to see how each option looks and feels in your home before making a decision",
     },
   },
   {
@@ -33,7 +35,8 @@ export const infoItems = [
     text: "5 Years Warranty",
     modal: {
       title: "5 Years Warranty",
-      description: "All our products come with a 5-year warranty for your peace of mind.",
+      description:
+        "All our products are backed by a comprehensive 5-year warranty, ensuring long-term performance, durability, and complete peace of mind with your investment.",
     },
   },
   {
@@ -42,7 +45,8 @@ export const infoItems = [
     text: "Free Next Day Delivery",
     modal: {
       title: "Fast Delivery",
-      description: "Enjoy free next-day delivery across the UAE.",
+      description:
+        "Enjoy fast, reliable delivery across the UAE with free next-day delivery on most orders, so you can upgrade your space without unnecessary delays.",
     },
   },
 ];

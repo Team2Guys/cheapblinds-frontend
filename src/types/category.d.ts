@@ -120,6 +120,7 @@ export interface CategoryPageProps {
   categoryName: string;
   description: string;
   ProductList: Subcategory | Subcategory[];
+  categoryPath: string;
 }
 
 export interface addressProps {

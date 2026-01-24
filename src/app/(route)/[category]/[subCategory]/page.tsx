@@ -51,6 +51,7 @@ const Page = async ({ params }: { params: Promise<{ category: string; subCategor
       <Breadcrumb newPath={category} title={subCategory} />
       <CategoryPage
         categoryName={name}
+        categoryPath={category}
         description={description || ""}
         ProductList={subCategoryList}
       />

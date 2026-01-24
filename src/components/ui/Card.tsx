@@ -99,8 +99,8 @@ export const Card = React.memo(
             const originalPrice = selectedMotorized ? original + motor : original;
 
             return (
-              <div key={card.id} className="relative p-2 hover:shadow-md">
-                <Link href={card.newPath || ""} className="relative">
+              <div key={card.id} className="relative! p-2 hover:shadow-md">
+                <Link href={card.newPath || ""} className="relative! block">
                   <div className="relative w-full aspect-square max-h-[350px] overflow-hidden rounded-md">
                     <Image
                       unoptimized
@@ -109,7 +109,15 @@ export const Card = React.memo(
                       fill
                     />
                   </div>
-                  <div className="absolute -bottom-3 left-2 z-20">
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "-8px",
+                      left: "8px",
+                      zIndex: 5,
+                      pointerEvents: "none",
+                    }}
+                  >
                     <CardDelivery />
                   </div>
                 </Link>

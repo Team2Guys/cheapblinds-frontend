@@ -49,6 +49,7 @@ const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
     <>
       <Breadcrumb title={category} />
       <CategoryPage
+        categoryPath={category}
         categoryName={name}
         description={description || ""}
         ProductList={subcategories || []}

@@ -151,7 +151,7 @@ export const ProductInfo = ({
         onClick={handleGetPrice}
         disabled={loading || !draftValues.isValid}
         className={`w-full py-3 rounded-md font-semibold bg-primary hover:bg-primary/80 ${
-          loading || !draftValues.isValid ? "cursor-not-allowed" : ""
+          loading || !draftValues.isValid ? "cursor-not-allowed" : "cursor-pointer"
         }`}
       >
         {loading ? "Calculating..." : "Get price"}

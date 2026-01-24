@@ -149,30 +149,30 @@ export const MODAL_CONTENTS: Record<string, React.ReactNode> = {
   "Headrail Type / Colour": React.createElement(
     React.Fragment,
     null,
-    "The headrail is the top section that houses the blind mechanism. Choose “Cassette” for a sleek look for remote operation. You can also select a classic finish for manual operation. Consider matching the colour to your interior style.",
+    "Choose the headrail style and colour that best suits your blind. Options influence appearance and operation, offering modern or classic designs to complement interiors and suit different mounting needs.",
   ),
 
   "Stacking Style": React.createElement(
     React.Fragment,
     null,
-    "Stacking Style determines how the fabric folds when raised. 'Cascade' folds neatly in layers, while 'Flat' lies flush against the window. Choose a style that complements your room layout and window size.",
+    "Select how the fabric folds when raised. Cascade creates soft, elegant folds for a classic look, while stacked delivers a compact, tidy finish, ideal for smaller windows or minimalist interiors.",
   ),
 
   Lining: React.createElement(
     React.Fragment,
     null,
-    "Lining affects light control, privacy, and insulation. Blackout lining completely blocks light, while thermal lining provides extra warmth. Standard polycotton lining allows some light through but softens glare.",
+    "Select a lining to manage light, privacy, and insulation. From light-filtering to blackout options, linings help control brightness, improve energy efficiency, and enhance overall room comfort.",
   ),
 
   "Control Options": React.createElement(
     React.Fragment,
     null,
-    "Control options define how you operate your blinds. Nickel and Brass offer premium finishes, while White and Black are standard. Consider the location and frequency of use when selecting the control type.",
+    "Decide which side the control chain will be placed. Choosing left or right depends on window access, furniture layout, and convenience to ensure smooth, comfortable everyday operation.",
   ),
 
   "Chain Side": React.createElement(
     React.Fragment,
     null,
-    "Select which side you want the control chain on. 'Left' positions the chain on the left-hand side, 'Right' positions it on the right-hand side. Choose the side that best fits your window placement and room layout.",
+    "Choose the chain type and colour used to operate your blind. Plastic chains are lightweight and practical, while metal chains offer a premium look and enhanced durability for frequent daily use.",
   ),
 };

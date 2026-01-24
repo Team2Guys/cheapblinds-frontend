@@ -36,7 +36,7 @@ const Home = async () => {
       <OrderSection
         reverse={false}
         image1="/assets/images/home/blind-image.webp"
-        image2="/assets/images/home/zebra-image.webp"
+        image2="/assets/images/home/zebra-image.png"
         btnText="Explore More"
         btnLink="/motorised-blinds"
       />
@@ -56,7 +56,7 @@ const Home = async () => {
           }
         />
         <HeroSection
-          desktopImage="/assets/images/home/payment.jpg"
+          desktopImage="/assets/images/home/payment.webp"
           className="container mx-auto h-full aspect-video sm:aspect-21/8"
         />
       </div>
@@ -65,7 +65,7 @@ const Home = async () => {
         className="mt-10 md:mt-16"
         reverse
         image1="/assets/images/home/cheap.webp"
-        image2="/assets/images/home/sample.webp"
+        image2="/assets/images/home/sample.png"
         btnText="Order Free Samples"
         btnLink="/roller-blinds"
         buttonCenter

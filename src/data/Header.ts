@@ -60,26 +60,26 @@ export const menuItems: MenuItem[] = [
     name: "Roman Blinds",
     link: "/roman-blinds",
     image: "/assets/images/navbar/roman-blinds.png",
-    submenu: [
-      {
-        name: "Blackout Roman Blinds",
-        link: "/roman-blinds/blackout",
-        mobileImage: "/assets/images/navbar/mobile/blackout-roman.png",
-        desktopImage: "/assets/images/navbar/desktop/blackout-roman.png",
-      },
-      {
-        name: "Dimout Roman Blinds",
-        link: "/roman-blinds/dimout",
-        mobileImage: "/assets/images/navbar/mobile/dimout-roman.png",
-        desktopImage: "/assets/images/navbar/desktop/dimout-roman.png",
-      },
-      {
-        name: "See Through",
-        link: "/roman-blinds/see-through",
-        mobileImage: "/assets/images/navbar/mobile/see-roman.png",
-        desktopImage: "/assets/images/navbar/desktop/see-roman.png",
-      },
-    ],
+    // submenu: [
+    //   {
+    //     name: "Blackout Roman Blinds",
+    //     link: "/roman-blinds/blackout",
+    //     mobileImage: "/assets/images/navbar/mobile/blackout-roman.png",
+    //     desktopImage: "/assets/images/navbar/desktop/blackout-roman.png",
+    //   },
+    //   {
+    //     name: "Dimout Roman Blinds",
+    //     link: "/roman-blinds/dimout",
+    //     mobileImage: "/assets/images/navbar/mobile/dimout-roman.png",
+    //     desktopImage: "/assets/images/navbar/desktop/dimout-roman.png",
+    //   },
+    //   {
+    //     name: "See Through",
+    //     link: "/roman-blinds/see-through",
+    //     mobileImage: "/assets/images/navbar/mobile/see-roman.png",
+    //     desktopImage: "/assets/images/navbar/desktop/see-roman.png",
+    //   },
+    // ],
   },
   {
     name: "Zebra Blinds",
