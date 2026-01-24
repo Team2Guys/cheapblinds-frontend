@@ -3,7 +3,7 @@ const CardDelivery = () => {
     <svg
       viewBox="0 0 237 60"
       xmlns="http://www.w3.org/2000/svg"
-        style={{
+      style={{
         width: "90%",
         display: "block",
       }}
