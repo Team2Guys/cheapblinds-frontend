@@ -136,7 +136,7 @@ const Footer = () => {
               </>
             )}
             <Link href={user ? "/my-orders" : "/login"}>Your Orders</Link>
-            <Link href={user ? "/order-tracking" : "/login"}>Order Tracking</Link>
+            <Link href="/order-tracking">Order Tracking</Link>
           </div>
 
           <p className="text-center hidden md:block">
