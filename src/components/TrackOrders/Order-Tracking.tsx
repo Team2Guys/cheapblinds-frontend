@@ -93,7 +93,7 @@ const OrderTracking = () => {
           {/* Step 1: Ready */}
           <div className="flex flex-col items-center z-10">
             <div
-              className={`w-14 h-14 rounded-2xl flex items-center justify-center text-xl transition-colors ${["ready", "delivering", "complete"].includes(orderData.status) ? "bg-primary text-white shadow-lg shadow-blue-200" : "bg-secondary "}`}
+              className={`w-14 h-14 rounded-2xl flex items-center justify-center text-xl transition-colors ${["ready", "delivering", "complete"].includes(orderData.status) ? "bg-primary text-white shadow-lg shadow-blue-200" : "bg-secondary text-gray-400"}`}
             >
               <FaBoxOpen />
             </div>
@@ -107,7 +107,7 @@ const OrderTracking = () => {
           {/* Step 2: Delivery */}
           <div className="flex flex-col items-center z-10">
             <div
-              className={`w-14 h-14 rounded-2xl flex items-center justify-center text-xl transition-colors ${["delivering", "complete"].includes(orderData.status) ? "bg-primary text-white shadow-lg shadow-blue-200" : "bg-secondary"}`}
+              className={`w-14 h-14 rounded-2xl flex items-center justify-center text-xl transition-colors ${["delivering", "complete"].includes(orderData.status) ? "bg-primary text-white shadow-lg shadow-blue-200" : "bg-secondary text-gray-400"}`}
             >
               <FaTruck />
             </div>
@@ -204,9 +204,9 @@ const OrderTracking = () => {
                 alt={item.name}
                 width={200}
                 height={200}
-                className="w-20 h-20 object-cover rounded-2xl border border-secondary"
+                className="w-28 h-20 object-cover rounded-2xl border border-secondary"
               />
-              <div className="sm:flex-1">
+              <div className="w-full sm:flex-1">
                 <h4 className="font-bold leading-tight">{item.name}</h4>
                 <p className="text-xs text-gray-400 mt-1">{item.variant}</p>
                 <div className="flex justify-between items-center w-full">
